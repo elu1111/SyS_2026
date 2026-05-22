@@ -1,0 +1,380 @@
+\chapter{Filtros}
+
+\section{Introducci\'{o}n}
+
+\subsection{\textquestiondown Qu\'{e} es un filtro?}
+
+\begin{enumerate} 
+	
+	\item Un filtro es un sistema din\'{a}mico con una respuesta en frecuencia especial que nos permite procesar la entrada para obtener una salida con un contenido arm\'{o}nico conveniente.
+	\item Todos los sistemas f\'{\i}sicos act\'{u}an en cierta medida como filtros de sus entradas.
+	\item El filtrado es un important\'{\i}simo m\'{e}todo de procesamiento de se\~{n}ales.
+	\item Vamos a estudiar filtros lineales de tiempo continuo:
+	\begin{enumerate}
+		\item Estudio te\'{o}rico, en base a las Transformadas de Laplace y Fourier.
+		\item Estudio pr\'{a}ctico, con implementaci\'{o}n de filtros (típicamente abarcado en Teor\'{\i}a de Circuitos II).
+	\end{enumerate}
+	
+	\item Vamos a estudiar filtros lineales de tiempo discreto: 
+	\begin{enumerate}
+		\item Estudio te\'{o}rico, en base a las Transformadas Zeta y Fourier.
+		\item Estudio pr\'{a}ctico, con implementaci\'{o}n de filtros en computadora (algoritmos DSP).
+	\end{enumerate}
+	
+	\item Los filtros que estudiamos se usan para:
+	\begin{enumerate}
+		\item Separar componentes de la entrada pertenecientes a distintas bandas de frecuencia, permitiendo el paso a la salida de los componentes dentro de ciertas bandas y rechazando el paso de los otros (ej. ecualizadores musicales, crossovers).
+		\item Generar cierto desfasaje entre entrada y salida (\'{u}til para compensar retardos en sistemas de comunicaci\'{o}n).
+		\item Generar estimaciones de la derivada o la integral de la entrada.
+		\item Eliminaci\'{o}n de ruido e interferencia.
+		\item Otras aplicaciones.
+	\end{enumerate}
+	
+	\item Los filtros lineales se basan en el concepto de respuesta en frecuencia de un sistema: 
+	\begin{enumerate}
+		\item Recordemos que la respuesta en frecuencia en tiempo continuo es la transformada de Laplace de la respuesta al impulso evaluada sobre el eje imaginario $s = j \omega$. Dado que la relaci\'{o}n entre entrada y salida en tiempo continuo es:
+		\begin{equation}
+			Y(s) = H(s) X(s),
+		\end{equation}
+		tenemos que el factor $H( j \omega)$ determina la amplitud y fase de la salida para una entrada senoidal dada:
+		\begin{equation}
+			Y(j \omega) = H(j \omega) X(j \omega).
+		\end{equation}
+		
+		\item Recordemos que la respuesta en frecuencia en tiempo discreto es la transformada Zeta de la respuesta al impulso evaluada sobre el c\'{\i}rculo unitario $z = e^{j \omega}$. Dado que la relaci\'{o}n entre entrada y salida en tiempo discreto es:
+		\begin{equation}
+			Y(z) = H(z) X(z),
+		\end{equation}
+		tenemos que el factor $H(e^{j \omega})$ determina el comportamiento armónico en frecuencia:
+		\begin{equation}
+			Y(e^{j \omega}) = H(e^{j \omega}) X(e^{j \omega}).
+		\end{equation}
+	\end{enumerate}
+	
+\end{enumerate}
+
+\section{Definiciones b\'{a}sicas}
+
+\begin{enumerate}
+	\item La \textbf{banda de paso} es el rango de frecuencia de entrada dentro de la cual la magnitud de la respuesta debe aproximarse a $1$ (o $0$ dB) con una tolerancia $\pm \delta _{1}.$
+	\item La \textbf{banda de rechazo} es el rango de frecuencia de entrada dentro de la cual la magnitud de la respuesta debe aproximarse a $0$ (o gran atenuación) con una tolerancia $\pm \delta _{2}.$
+	\item La \textbf{banda de transici\'{o}n} est\'{a} ubicada entre la banda de paso y la banda de rechazo, donde la magnitud cae desde el nivel de paso al nivel de rechazo.
+\end{enumerate}
+
+\subsection{Especificaciones para filtros}
+
+Los filtros se especifican definiendo:
+\begin{enumerate}
+	\item Los l\'{\i}mites de la banda de paso ($\omega_p$).
+	\item Los l\'{\i}mites de la banda de transici\'{o}n.
+	\item Los l\'{\i}mites de la banda de rechazo ($\omega_r$ u $\omega_s$).
+	\item La tolerancia (o rizado) de paso $\delta _{1}$ (frecuentemente dada en dB).
+	\item La tolerancia (o atenuación mínima) de rechazo $\delta _{2}$ (frecuentemente dada en dB).
+\end{enumerate}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3in]{./graphics/pasabajoideal.eps}
+	\caption{Forma de la respuesta en frecuencia para un filtro pasabajo ideal.}
+	\label{pasabajoidealeps}
+\end{figure}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3in]{./graphics/pasabajoposible.eps}
+	\caption{Respuesta en frecuencia para un filtro pasabajo real.}
+	\label{pasabajoposibleeps}
+\end{figure}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3in]{./graphics/pasabajolimitereal.eps}
+	\caption{L\'{\i}mites de tolerancia (plantilla de diseño) de la respuesta en frecuencia para un pasabajo real.}
+	\label{pasabajolimiterealeps}
+\end{figure}
+
+\section{Ejemplos de Filtros Simples}
+\subsection{Un filtro pasabajos de tiempo continuo (Circuito RC)}
+
+La ecuación diferencial de un circuito RC serie tomando la salida en el capacitor es:
+\begin{equation}
+	RC\frac{dv_{c}(t)}{dt} + v_{c}(t) = v_{s}(t).
+\end{equation}
+Si $v_{s}(t) = e^{j\omega t}$, entonces $v_{c}(t) = H(j\omega) e^{j\omega t}$ y adem\'{a}s:
+\begin{equation}
+	RC\frac{dH(j\omega) e^{j\omega t}}{dt} + H(j\omega) e^{j\omega t} = e^{j\omega t}.
+\end{equation}
+Derivando obtenemos:
+\begin{equation}
+	RC j\omega H(j\omega) e^{j\omega t} + H(j\omega) e^{j\omega t} = e^{j\omega t}.
+\end{equation}
+Simplificando y agrupando:
+\begin{equation}
+	(RC j\omega + 1) H(j\omega) = 1.
+\end{equation}
+As\'{\i} obtenemos finalmente la respuesta en frecuencia:
+\begin{equation}
+	H(j\omega) = \frac{1}{R C j\omega + 1}.
+\end{equation}
+cuya magnitud es:
+\begin{equation}
+	|H(j\omega)| = \frac{1}{\sqrt{R^{2} C^{2} \omega^{2} + 1}},
+\end{equation}
+y su fase es:
+\begin{equation}
+	\angle H(j\omega) = -\arctan(\omega R C).
+\end{equation}
+La respuesta al impulso correspondiente es:
+\begin{equation}
+	h(t) = \frac{1}{RC} e^{-\frac{t}{RC}} u(t),
+\end{equation}
+y la respuesta al escalón:
+\begin{equation}
+	s(t) = \left( 1 - e^{-\frac{t}{RC}} \right) u(t).
+\end{equation}
+
+\subsubsection{Programa MATLAB (Filtro Pasabajo)}
+
+El siguiente programa MATLAB genera los gr\'{a}ficos de magnitud y fase de $H(j\omega)$ en funci\'{o}n de la frecuencia para $RC=1$.
+
+\begin{lstlisting}[language=Matlab]
+	% Constante RC = 1
+	rc = 1;
+	
+	% Numerador y denominador de la funcion de transferencia H(s) = 1 / (s*RC + 1)
+	num = [1];
+	den = [rc, 1];
+	
+	% Generacion de 100 valores de frecuencia en escala logaritmica
+	w = logspace(-2, 2, 100);
+	
+	% Calculo de magnitud y fase de la respuesta en frecuencia
+	[mag, fase] = bode(num, den, w);
+	
+	% Mag y Fase vienen en arreglos 3D, los convertimos a 1D
+	mag = squeeze(mag);
+	fase = squeeze(fase);
+	
+	% Grafico de magnitud
+	figure;
+	semilogx(w, 20*log10(mag));
+	title('Magnitud de Bode (Pasabajos)');
+	xlabel('Frecuencia (rad/s)');
+	ylabel('Magnitud (dB)');
+	grid on;
+	
+	% Grafico de fase
+	figure;
+	semilogx(w, fase);
+	title('Fase de Bode (Pasabajos)');
+	xlabel('Frecuencia (rad/s)');
+	ylabel('Fase (grados)');
+	grid on;
+\end{lstlisting}
+
+\subsection{Un filtro pasaaltos de tiempo continuo (Circuito CR)}
+
+La ecuación diferencial de un circuito RC serie tomando la salida en la resistencia es:
+\begin{equation}
+	RC\frac{dv_{r}(t)}{dt} + v_{r}(t) = RC\frac{dv_{s}(t)}{dt}.
+\end{equation}
+Si $v_{s}(t) = e^{j\omega t}$, entonces $v_{r}(t) = G(j\omega) e^{j\omega t}$ y adem\'{a}s:
+\begin{equation}
+	RC\frac{dG(j\omega) e^{j\omega t}}{dt} + G(j\omega) e^{j\omega t} = RC j\omega e^{j\omega t}.
+\end{equation}
+Simplificando y reagrupando:
+\begin{equation}
+	(RC j\omega + 1) G(j\omega) = R C j\omega.
+\end{equation}
+As\'{\i} obtenemos finalmente la respuesta en frecuencia:
+\begin{equation}
+	G(j\omega) = \frac{RC j\omega}{RC j\omega + 1}.
+\end{equation}
+cuya magnitud es:
+\begin{equation}
+	|G(j\omega)| = \frac{\omega R C}{\sqrt{\omega^{2} R^{2} C^{2} + 1}} = \frac{1}{\sqrt{\frac{1}{\omega^{2} R^{2} C^{2}} + 1}},
+\end{equation}
+y su fase es:
+\begin{equation}
+	\angle G(j\omega) = \frac{\pi}{2} - \arctan(\omega R C) = \arctan\left(\frac{1}{\omega R C}\right).
+\end{equation}
+
+\subsubsection{Programa MATLAB (Filtro Pasaalto)}
+
+\begin{lstlisting}[language=Matlab]
+	% Constante RC = 1
+	rc = 1;
+	
+	% Numerador y denominador de G(s) = (s*RC) / (s*RC + 1)
+	num = [rc, 0];
+	den = [rc, 1];
+	
+	w = logspace(-2, 2, 100);
+	[mag, fase] = bode(num, den, w);
+	mag = squeeze(mag);
+	fase = squeeze(fase);
+	
+	figure;
+	semilogx(w, 20*log10(mag));
+	title('Magnitud de Bode (Pasaaltos)');
+	xlabel('Frecuencia (rad/s)');
+	ylabel('Magnitud (dB)');
+	grid on;
+	
+	figure;
+	semilogx(w, fase);
+	title('Fase de Bode (Pasaaltos)');
+	xlabel('Frecuencia (rad/s)');
+	ylabel('Fase (grados)');
+	grid on;
+\end{lstlisting}
+
+\section{Filtros especiales de tiempo continuo}
+
+\begin{enumerate}
+	\item Los filtros vistos en los ejemplos anteriores (de primer orden) carecen de un rechazo rápido, teniendo bandas de transición muy amplias. Se ha probado que existen sistemas lineales de orden superior con funciones de transferencia adecuadas para satisfacer requerimientos estrictos y que pueden ser f\'{a}cilmente construidos.
+	\item Primero veremos c\'{o}mo son las funciones de transferencia de filtros pasabajos normalizados. A continuaci\'{o}n mostraremos c\'{o}mo, mediante un cambio de variables, pueden obtenerse las funciones de transferencia de otros tipos de filtro (pasabandas, pasaaltos, suprimebandas, etc).
+	\item El dise\~{n}o de este tipo de filtros est\'{a} automatizado mediante funciones de MATLAB o Python (SciPy). En la pr\'{a}ctica profesional se usan dichas herramientas para ahorrar tiempo, pero es esencial conocer la base analítica de los polinomios que dictan su forma.
+\end{enumerate}
+
+\subsection{Filtros Butterworth}
+
+\begin{enumerate}
+	\item Son aquellos filtros definidos por la propiedad de tener una respuesta en frecuencia cuya magnitud es \textbf{m\'{a}ximamente plana} en la banda de paso.
+	\item El cuadrado de la magnitud de la respuesta en frecuencia es:
+	\begin{equation}
+		|H(j\omega)|^{2} = H(j\omega) H(-j\omega) = \frac{1}{1 + \left( \frac{\omega}{\omega_c} \right)^{2N}}.
+	\end{equation}
+	Para un filtro pasabajo de estas caracter\'{\i}sticas suceden dos cosas:
+	\begin{enumerate}
+		\item Las primeras $2N-1$ derivadas del cuadrado de la magnitud de la respuesta en frecuencia se anulan para $\omega = 0$.
+		\item Cuando $\omega = \omega_c,$ $|H(j\omega)|^{2} = \frac{1}{2},$ y por lo tanto el ancho de la banda pasante (a $-3$ dB) se define directamente por $\omega_c.$
+	\end{enumerate}
+	
+	\item A medida que el orden $N$ crece, las caracter\'{\i}sticas del filtro se acent\'{u}an: 
+	\begin{enumerate}
+		\item La magnitud de la respuesta se acerca m\'{a}s a $1$ en una mayor parte de la banda de paso.
+		\item La magnitud se acerca m\'{a}s a cero en la banda de rechazo.
+		\item La banda de transici\'{o}n se vuelve más pronunciada (caída de $-20N$ dB/década).
+	\end{enumerate}
+	
+	\item Un filtro Butterworth pasabajo de tiempo continuo de orden $n$ y frecuencia de corte $\omega_c$ tiene determinados sus polos estables (en el semiplano izquierdo) por la igualdad:
+	\begin{equation}
+		s_{k} = \omega_c e^{j \pi \left(\frac{1}{2} + \frac{2k-1}{2n}\right)}, \quad  k \in [1,n],
+	\end{equation}
+	y su funci\'{o}n de transferencia es:
+	\begin{equation}
+		H(s) = \frac{\omega_c^n}{\prod_{k=1}^{n} (s - s_{k})}.
+	\end{equation}
+	
+	\item Si la atenuaci\'{o}n a una frecuencia $\omega_{r}$ debe ser $\ge A$ (donde $A$ es un factor lineal, ej. 10 para -20dB), entonces el orden mínimo del filtro se obtiene con:
+	\begin{equation}
+		n \ge \frac{\log_{10}(A^{2}-1)}{2 \log_{10}\left(\frac{\omega_{r}}{\omega_{c}}\right)}.
+	\end{equation}
+\end{enumerate}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3in]{./graphics/butterworth.eps}
+	\caption{Respuesta en frecuencia para un pasabajo Butterworth de distintos órdenes.}
+	\label{butterwortheps}
+\end{figure}
+
+\subsection{Filtros Chebyshev}
+
+\begin{enumerate}
+	\item Se basan en el polin\'{o}mio de Chebyshev de orden $n$, $V_{n}(x)$, definido rigurosamente por:
+	\begin{equation}
+		V_{n}(x) = 
+		\begin{cases} 
+			\cos(n \arccos(x)) & \text{si } |x| \leq 1 \\
+			\cosh(n \operatorname{arccosh}(x)) & \text{si } |x| > 1
+		\end{cases}
+	\end{equation}
+	o equivalentemente por la relaci\'{o}n de recurrencia:
+	\begin{align}
+		V_{0}(x) &= 1, \\
+		V_{1}(x) &= x, \\
+		V_{n}(x) &= 2 x V_{n-1}(x) - V_{n-2}(x).
+	\end{align}
+	
+	\item Puede probarse que $V_{n}^{2}(x)$ oscila (tiene \textit{ripple}) entre $0$ y $1$ mientras $0 \leq x \leq 1$, y que crece monot\'{o}nicamente rápido para $x > 1$.
+	\item Existen dos tipos de filtro Chebyshev:
+	\begin{enumerate}
+		\item \textbf{Tipo I:} Presentan ondulación (ripple) en la banda de paso y caída monótona en la banda de rechazo.
+		\item \textbf{Tipo II (Inversos):} Respuesta plana en la banda de paso y ondulación en la banda de rechazo.
+	\end{enumerate}
+	
+	\item \textbf{Filtros Chebyshev tipo I:}
+	Su magnitud al cuadrado es:
+	\begin{equation}
+		|H(j\omega)|^{2} = \frac{1}{1 + \epsilon^{2} V_{n}^{2}\left(\frac{\omega}{\omega_p}\right)},
+	\end{equation}
+	donde $\omega_p$ es la frecuencia de corte de la banda de paso y $\epsilon$ controla la amplitud del ripple.
+	
+	\item Para asegurar una atenuación $A$ en una frecuencia $\omega_r > \omega_p$, el orden necesario se calcula mediante:
+	\begin{equation}
+		n = \frac{\operatorname{arccosh}\left(\frac{\sqrt{A^{2}-1}}{\epsilon}\right)}{\operatorname{arccosh}\left(\frac{\omega_r}{\omega_p}\right)}.
+	\end{equation}
+	
+	\item Los polos de un filtro Chebyshev tipo I est\'{a}n sobre una elipse centrada en el origen del plano $s$.
+	
+	\item \textbf{Filtros Chebyshev tipo II:}
+	Su magnitud es:
+	\begin{equation}
+		|H(j\omega)|^{2} = \frac{1}{1 + \left[ \epsilon^{2} \frac{V_{n}^{2}(\omega_s / \omega_p)}{V_{n}^{2}(\omega_s / \omega)} \right]^{-1}},
+	\end{equation}
+	garantizando atenuación en la banda de stop $\omega > \omega_s$.
+\end{enumerate}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3in]{./graphics/chebyuno.eps}
+	\caption{Respuesta en frecuencia para un pasabajo Chebyshev Tipo I.}
+	\label{chebyunoeps}
+\end{figure}
+
+\subsection{Filtros El\'{\i}pticos (de Cauer)}
+
+\begin{enumerate}
+	\item Los filtros el\'{\i}pticos pasabajos son aquellos cuya magnitud tiene la forma:
+	\begin{equation}
+		|H(j\omega)|^{2} = \frac{1}{1+ \epsilon^{2} U_{n}^{2}\left(\frac{\omega}{\omega_p}\right)}
+	\end{equation}
+	donde $U_{n}$ es una funci\'{o}n racional Jacobiana el\'{\i}ptica.
+	\item Estos filtros permiten obtener ondulación controlada (ripple) tanto en la banda de paso como en la de rechazo. A cambio de esta doble ondulación, la \textbf{banda de transici\'{o}n es la m\'{a}s estrecha posible} para un orden $n$ dado en comparación con Butterworth o Chebyshev.
+\end{enumerate}
+
+\section{Transformaciones de Frecuencia}
+
+Las tablas estándar de diseño entregan funciones de transferencia $H(s)$ correspondientes a un filtro \textbf{pasabajo normalizado} (cuya frecuencia de corte es $1$ rad/s). Para diseñar cualquier otro filtro, se toma el prototipo normalizado y se aplica una sustitución algebraica a la variable $s$.
+
+\subsection{Pasabajo, frecuencia no normalizada}
+
+Para obtener un filtro \textbf{pasabajo} con frecuencia de corte deseada $\omega_c$, se cambia la variable $s$ del prototipo por:
+\begin{equation}
+	s \longrightarrow \frac{s}{\omega_c}
+\end{equation}
+
+\subsection{Transformaci\'{o}n de pasabajo a pasaalto}
+
+Para obtener un filtro \textbf{pasaalto} con frecuencia de corte $\omega_c$, se invierte la variable de frecuencia:
+\begin{equation}
+	s \longrightarrow \frac{\omega_c}{s}
+\end{equation}
+
+\subsection{Transformaci\'{o}n de pasabajo a pasabanda}
+
+Para obtener un \textbf{pasabanda} delimitado por una frecuencia inferior $\omega_1$ y superior $\omega_2$ (con un ancho de banda $\Delta\omega = \omega_2 - \omega_1$ y frecuencia central $\omega_0 = \sqrt{\omega_1 \omega_2}$), se sustituye $s$ por:
+\begin{equation}
+	s \longrightarrow \frac{s^2 + \omega_0^2}{s \Delta\omega} = \frac{s^2 + \omega_1 \omega_2}{s (\omega_2 - \omega_1)}
+\end{equation}
+*(Nota: El orden del sistema resultante será el doble que el del prototipo pasabajo).*
+
+\subsection{Transformaci\'{o}n de pasabajo a suprimebanda}
+
+Para obtener un \textbf{suprimebanda} (rechazabanda o *notch*) que elimine las frecuencias entre $\omega_1$ y $\omega_2$, se invierte la sustitución del pasabanda:
+\begin{equation}
+	s \longrightarrow \frac{s \Delta\omega}{s^2 + \omega_0^2} = \frac{s (\omega_2 - \omega_1)}{s^2 + \omega_1 \omega_2}
+\end{equation}
+*(Nota: El orden del sistema resultante también se duplica).*

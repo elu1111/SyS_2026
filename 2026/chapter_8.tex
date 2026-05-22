@@ -1,0 +1,146 @@
+\chapter{Sistemas LIT y la integral de convolución}
+
+% corresponde al archivo sys_2023/chapter-12.tex
+
+\section{Introducción}
+
+Hemos visto que la integral de convolución 
+\begin{equation}
+	y(t) = \int_{-\infty }^{\infty } x(\tau) \, h(t-\tau) \, d\tau = x(t) * h(t) ,
+\end{equation}
+define la respuesta $y(t)$ de un sistema LIT para una entrada $x(t)$ si conocemos la respuesta al impulso $h(t)$. Por lo tanto, en este capítulo usaremos la convolución como herramienta para estudiar distintas propiedades de los sistemas LIT en tiempo continuo.
+
+\section{Propiedades de los sistemas LIT}
+
+\subsection{La propiedad conmutativa}
+
+El resultado de la convolución es independiente del ordenamiento de las señales, o en otras palabras, un sistema LIT de respuesta al impulso $h(t)$ excitado con una entrada $x(t)$ genera una salida similar a la de un sistema LIT de respuesta al impulso $x(t)$ excitado con una entrada $h(t)$.
+
+Consideremos la operación de convolución:
+\begin{equation}
+	y(t) = \int_{-\infty }^{\infty } x(\tau) \, h(t-\tau) \, d\tau = \int_{-\infty }^{\infty } h(\tau) \, x(t-\tau) \, d\tau .
+\end{equation}
+
+Realizamos un cambio de variable $\upsilon = t - \tau$ y por consecuencia definimos $\tau = t - \upsilon$. Al cambiar los límites de integración (cuando $\tau \to \infty$, $\upsilon \to -\infty$), obtenemos:
+\begin{equation}
+	y(t) = -\int_{\infty }^{-\infty } x(t-\upsilon) \, h(\upsilon) \, d\upsilon = \int_{-\infty }^{\infty } x(t-\upsilon) \, h(\upsilon) \, d\upsilon .
+\end{equation}
+
+\subsection{La propiedad distributiva}
+
+La salida de un sistema LIT cuya respuesta al impulso es $h_{a} + h_{b}$ para una entrada $x$ es similar a la suma de las salidas de dos sistemas con respuestas al impulso $h_{a}$ y $h_{b}$ frente a una entrada $x$.
+
+Se puede probar la distributividad de la convolución respecto a la suma de señales:
+\begin{align}
+	y(t) &= x(t) * \left( h_a(t) + h_{b}(t) \right) , \\
+	y(t) &= x(t) * h_a(t) + x(t) * h_{b}(t),
+\end{align}
+pues para la integral vale la siguiente propiedad de linealidad:
+\begin{equation}
+	\int_{a}^{b} x(v) \, (f(v) + g(v)) \, dv = \int_{a}^{b} x(v) \, f(v) \, dv + \int_{a}^{b} x(v) \, g(v) \, dv.
+\end{equation}
+
+\subsection{La propiedad asociativa}
+
+Queda como ejercicio para el alumno la prueba de esta propiedad (similar a la demostración en tiempo discreto).
+\begin{align}
+	y(t) &= x(t) * \left( h_a(t) * h_{b}(t) \right) , \\
+	y(t) &= \left( x(t) * h_a(t) \right) * h_{b}(t) , \\
+	y(t) &= x(t) * h_a(t) * h_{b}(t) .
+\end{align}
+
+\subsection{Preguntas}
+
+\begin{enumerate}
+	\item ¿Qué significado tiene la propiedad conmutativa de los sistemas lineales?
+	\item ¿Qué significado tiene la propiedad distributiva de los sistemas lineales?
+	\item ¿Qué significado tiene la propiedad asociativa de los sistemas lineales?
+	\item Dé algún ejemplo concreto de estas tres propiedades.
+\end{enumerate}
+
+\subsection{Sistemas LIT con y sin memoria}
+
+Un sistema no tiene memoria si su salida en cualquier momento depende solamente de la entrada de ese mismo momento. Si un sistema no tiene memoria entonces su respuesta al impulso debe ser $h(t) = 0$ para todo $t \neq 0$, y por lo tanto toma la forma:
+\begin{equation}
+	h(t) = K \, \delta(t) .
+\end{equation}
+Si un sistema tiene una respuesta al impulso $h(t)$ que no es idénticamente cero para $t \neq 0$, entonces el sistema tiene memoria.
+
+\subsection{Preguntas}
+
+\begin{enumerate}
+	\item ¿Conoce algún sistema físico que no tenga memoria?
+	\item ¿Conoce algún sistema físico que tenga memoria?
+\end{enumerate}
+
+\subsection{Sistemas LIT causales y no causales}
+
+Si $y(t)$ no depende de la entrada en instantes futuros ($x(t_{1})$ para $t_{1} > t$), entonces un sistema LIT es causal. Esto implica que la función $h(t-\tau)$ que multiplica a $x(\tau)$ debe ser cero para $\tau > t$, o sea que:
+\begin{equation}
+	h(t) = 0, \quad \text{para } t < 0.
+\end{equation}
+Por lo tanto, la integral de convolución para un sistema LIT causal restringe su límite superior:
+\begin{equation}
+	y(t) = \int_{-\infty}^{t} x(\tau) \, h(t-\tau) \, d\tau .
+\end{equation}
+Adicionalmente, si sabemos que la \textbf{entrada también es causal} (es decir, $x(t) = 0$ para $t < 0$), el límite inferior de la integral también se modifica, resultando en:
+\begin{equation}
+	y(t) = \int_{0}^{t} x(\tau) \, h(t-\tau) \, d\tau .
+\end{equation}
+
+\subsection{Sistemas LIT estables e inestables}
+
+\subsubsection{Estabilidad BIBO}
+
+El criterio de estabilidad \textbf{BIBO} (Bounded Input Bounded Output o entrada acotada, salida acotada) se puede expresar matemáticamente estableciendo que si la magnitud de la entrada está acotada por un valor finito:
+\begin{equation}
+	|x(t)| \leq M_{x} < \infty,
+\end{equation}
+entonces la salida debe estar acotada por un valor finito:
+\begin{equation}
+	|y(t)| \leq M_{y} < \infty.
+\end{equation}
+
+Analizando la integral de convolución y aplicando la desigualdad de valor absoluto, el sistema será estable si:
+\begin{equation}
+	|y(t)| = \left| \int_{-\infty }^{\infty } x(\tau) \, h(t-\tau) \, d\tau \right| \leq \int_{-\infty }^{\infty } |x(\tau)| \, |h(t-\tau)| \, d\tau .
+\end{equation}
+Dado que sabemos que $|x(\tau)| \leq M_x$, podemos extraer esta cota constante de la integral:
+\begin{equation}
+	|y(t)| \leq M_{x} \int_{-\infty }^{\infty } |h(t-\tau)| \, d\tau.
+\end{equation}
+Haciendo un cambio de variable $\upsilon = t - \tau$, la integral sobre todo el eje real no se ve alterada por el desplazamiento $t$. Para garantizar que la salida $|y(t)|$ siempre sea finita (menor que $M_y$), la integral del valor absoluto de la respuesta al impulso debe ser un valor finito:
+\begin{equation}
+	\int_{-\infty }^{\infty } |h(\tau)| \, d\tau < \infty.
+\end{equation}
+A esta condición necesaria y suficiente se la denomina poseer una respuesta al impulso \textbf{absolutamente integrable}.
+
+\subsection{Preguntas}
+
+\begin{enumerate}
+	\item ¿Conoce algún sistema físico inestable?
+	\item Dé ejemplos de sistemas estables e inestables.
+	\item Indicar si las siguientes afirmaciones son verdaderas o falsas, en el caso de un sistema lineal invariante en el tiempo:
+	\begin{enumerate}
+		\item Si la entrada es nula para todo tiempo, entonces la salida es nula para todo tiempo.
+		\item Si la relación entre entrada y salida es $y(t) = x(t) \cos(t)$, entonces el sistema es LTI.
+		\item Si la relación entre entrada y salida es $y(t) = \int_{-\infty}^{t} x(\tau) \, d\tau$, entonces el sistema es LTI.
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{Respuestas a las afirmaciones}
+
+\begin{enumerate}
+	\item \textbf{Verdadero.} Si la entrada es nula ($x(t)=0$), la integral de convolución se evalúa como cero para todo $t$.
+	
+	\item \textbf{Falso.} Porque el sistema es variante en el tiempo. La respuesta a un impulso depende del instante de tiempo en que el impulso ocurre. Si aplicamos $x(t) = \delta(t - t_0)$, la salida será:
+	\begin{equation}
+		y(t) = \delta(t - t_{0}) \cos(t) = \delta(t - t_{0}) \cos(t_{0}).
+	\end{equation}
+	La amplitud del impulso de salida depende de cuándo se aplicó ($t_0$), lo cual viola la propiedad de invarianza.
+	
+	\item \textbf{Verdadero.} Dicha relación corresponde al comportamiento de un integrador ideal, el cual es un sistema LTI, y su salida puede escribirse formalmente como la convolución de la entrada con un escalón unitario $u(t)$:
+	\begin{equation}
+		y(t) = \int_{-\infty}^{t} x(\tau) \, d\tau = \int_{-\infty}^{\infty} x(\tau) \, u(t-\tau) \, d\tau = x(t) * u(t).
+	\end{equation}
+\end{enumerate}

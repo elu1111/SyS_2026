@@ -1,0 +1,479 @@
+\chapter{Ejemplos}
+
+\section{FFT con eje de frecuencia}
+
+\begin{verbatim}
+function [X,w] = contfft(x,T);
+% CONTFFT [X,w] = contfft(x,T)
+%  
+% Computes the Fourier transform of a continuous time signal
+%  using the FFT.  The input is the sampled continuous
+%  time signal x and the sampling time T.  The output is
+%  the Fourier transform X(w) and the frequency vector w.
+%
+[n,m] = size(x);
+if n<m,
+  x = x';
+end
+Xn = fft(x);
+N = length(x);
+n = 0:N-1;
+n(1) = eps;
+X = (1-exp(-j*2*pi*n/N))./(j*2*pi*n/N/T).*Xn.';
+w = 2*pi*n/N/T;
+\end{verbatim}
+
+\section{Filtro y FTT}
+\begin{verbatim}
+% Frecuencia de muestreo en muestras por segundo
+Fm  = 20000;  
+% La mitad de la frecuencia de muestreo
+Fmm = Fm/2;
+% Frecuencia en Hz a la que tiene que haber rp decibeles de atenuacion   
+wp  = 5000;
+% Atenuacion en dB a la frecuencia de corte   
+rp  = 3;
+% Frecuencia en Hz a la cual tiene que haber rs decibeles de atenuacion      
+ws  = 6000; 
+% Atenuacion minima en la banda de rechazo  
+rs  = 40;     
+
+% buscamos el orden necesario
+[n1,wn1] = buttord(wp/Fmm, ws/Fmm, rp, rs);
+
+% calculamos el filtro
+[b1,a1] = butter(n1,wn1);
+
+% graficamos la respuesta en frecuencia del filtro
+figure(1); 
+clf; 
+[h1,w1] = freqz(b1,a1,512);
+figure(1);  
+clf;
+subplot(2,1,1); plot(w1*Fmm/pi,abs(h1));
+subplot(2,1,2); plot(w1*Fmm/pi,unwrap(angle(h1)));
+
+% graficamos la respuesta temporal
+t   = (1:30000)/Fm;
+s1  = sin(2*pi*t*1000);
+s2  = sin(2*pi*t*5000);
+s3  = sin(2*pi*t*6000);
+s   = s1 + 2*s2 + 1/4*s3;
+sf1 = filter(b1,a1,s);
+ns  = 20;
+S1  = fft(s,ns)/(ns/2);
+s2  = s1(20:1:(1024-1));
+S2  = fft(S2,ns);
+SF1 = fft(sf1,ns)/(ns/2);
+w1  = [0:(ns/2-1)]/(ns/2)*Fmm;
+figure(2); 
+clf;
+plot(w1,abs([S1(1:ns/2)' SF1(1:ns/2)']));
+
+\end{verbatim}
+
+
+\section{Dise\~{n}o de filtros de tiempo discreto}
+
+\subsection{Filtro Butterworth pasabajo}
+
+\begin{verbatim}
+	% filtro Butterworth pasabajo de tiempo discreto
+	
+	Wm = 8500;  % frecuencia de muestreo
+	Wmm = Wm/2; % mitad de la frecuencia de muestreo
+	W1=1500;    % frecuencia superior banda de paso                     
+	Wp=W1/Wmm;  % frecuencia superior banda de paso normalizada 
+	rp=3;       % ripple banda de paso en dB
+	W2=1.1*W1;  % frecuencia inferior banda de rechazo 
+	Ws=W2/Wmm;  % frecuencia inferior banda de rechazo normalizada
+	rs=20;      % atenuacion banda de rechazo en dB 
+	
+	% usamos buttord para dimensionar el filtro
+	[N,Wn]=buttord(Wp,Ws,rp,rs);
+	
+	% calculamos el filtro
+	[b,a]=butter(N,Wn);
+	
+	% graficamos respuesta en frecuencia
+	dbode(b,a,1/Wm);
+\end{verbatim}
+
+\subsection{Filtro Butterworth pasabanda}
+
+\begin{verbatim}
+	%   FILTRO Butterworth pasabanda
+	Wm  = 11000;    % frecuencia de muestreo
+	Wmm = Wm/2;     % mitad de la frecuencia de muestreo
+	W1  = 2800;     % frecuencia minima banda de paso
+	W2  = 4000;     % frecuencia maxima banda de paso
+	W0 = 0.9*W1;    % frecuencia maxima banda de rechazo inferior
+	W3 = 1.1*W2;    % frecuencia minima banda de rechazo superior
+	rp = 3;         % ripple banda de paso
+	rs = 20;        % atenuacion banda de rechazo
+	
+	% usamos buttord para dimensionar el filtro
+	[N,Wn]=buttord([W1/Fmm W2/Fmm],[W0/Fmm W3/Fmm],rp,rs)
+	
+	% calculamos el filtro
+	[b,a]=butter(N,Wn);
+	
+	% graficamos respuesta en frecuencia
+	dbode(b,a,1/Wm);
+\end{verbatim}
+
+\subsection{Filtro eliptico pasabanda}
+
+\begin{verbatim}
+	Wm = 100;               % frecuencia de muestreo
+	t  = (1:100)/Wm;        % vector tiempo    
+	s1 = sin(2*pi*t*5);     % componente de la se~nal a filtrar
+	s2 = sin(2*pi*t*15);    % componente de la se~nal a filtrar
+	s3 = sin(2*pi*t*30);    % componente de la se~nal a filtrar
+	s  = s1 + s2 + s3;      % se~nal a filtrar
+	plot(t,s);              % grafico de la se~nal a filtrar
+	
+	% Para dise~nar un filtro para mantener la sinusoide de 
+	% 15 Hz y eliminar las sinusoides de 5 y 30 Hz, vamos a 
+	% usar un filtro eliptico con una pasabanda de 10 a 20 Hz
+	[b,a]=ellip(4,0.1,40,[10 20]*2/Wm); 
+	%^ dise~no de filtro de tiempo discreto
+	[H,w]=freqz(b,a,512);               
+	%^ calculo de la respuesta en frecuencia
+	plot(w*Wm/(2*pi),abs(H));           
+	%^ grafico de la respuesta en frecuencia
+	sf = filter(b,a,s);                 
+	%^ filtrado
+	plot(t,sf);                         
+	%^ grafico de la señal filtrada
+	xlabel('Tiempo (segundos)');        
+	%^ rotulo x
+	ylabel('Señal filtrada');           
+	%^ rotulo y
+	axis([0,1,-1,1]);                   
+	%^ marco del grafico
+	
+	S=fft(s,512);                       
+	%^ transformada rapida de Fourier
+	SF=fft(sf,512);                     
+	%^ transformada rapida de Fourier
+	w=(0:255)/256*(Wm/2);               
+	%^ vector de frecuencias para graficar el espectro
+	
+	% Observe que los picos de 5 y 30 Hz han sido eliminados
+	plot(w,abs[S(1:256)' SF(1:256)']));
+	xlabel('Frecuencia (Hz)');
+	ylabel('Magnitud de la transformada de Fourier'); 
+\end{verbatim}
+
+\subsection{Filtro eliptico suprimebanda}
+
+\begin{verbatim}
+	Wm=11000;
+	Wmm=Wm/2;
+	W1=2800;
+	W2=4000;
+	W0=1.1*W1;
+	W3=0.9*W2;
+	rp=3;
+	rs=40;
+	
+	[N,Wn]=ellipord([W1/Wmm W2/Wmm],[W0/Wmm W3/Wmm],rp,rs)
+	
+	[b,a]=ellip(N,rp,rs,Wn,'stop');
+	
+	dbode(b,a,1/Wm);
+	
+\end{verbatim}
+
+\begin{verbatim}
+	Wm = 8000;
+	t  = (1:500)/Wm;
+	s1 = sin(2*pi*t*500);
+	s2 = sin(2*pi*t*1500);
+	s3 = sin(2*pi*t*2500);
+	s = s1 + s2 + s3;
+	subplot(5,1,1); plot(t(400:500),s(400:500));
+	subplot(5,1,2); plot(t(400:500),s1(400:500));
+	subplot(5,1,3); plot(t(400:500),s2(400:500));
+	subplot(5,1,4); plot(t(400:500),s3(400:500));
+	
+	dp = 0.1;
+	rs = 40;
+	n = 4;
+	[b,a]=ellip(4,dp,rs,[1000,2000]*2/Wm);
+	sf = filter(b,a,s);
+	subplot(5,1,5); plot(t(400:500),sf(400:500));
+\end{verbatim}
+
+
+\chapter{Puntos sin terminar}
+
+\section{Conclusiones sobre filtros de tiempo discreto}
+
+\begin{tabular}{ll}
+        Ubicaci\'{o}n singularidad                                      & Filtro                        \\
+        Polos reales entre $z=0$ y $z=1$                                & pasabajo                      \\ 
+        Ceros reales entre $z=-1$ y $z=0$                               & pasabajo                      \\ 
+        Polos reales entre $z=-1$ y $z=0$                               & pasaalto                      \\ 
+        Ceros reales entre $z=0$ y $z=1$                                & pasaalto                      \\ 
+        Polos complejos conjugados dentro del c\'{\i}rculo unitario     & pasabanda                     \\ 
+        Ceros complejos conjugados dentro del c\'{\i}rculo unitario     & suprimebanda 
+\end{tabular}
+
+\begin{enumerate}
+\item  Los filtros con polos complejos conjugados $\left| \alpha \right| e^{j\Omega }$ tienen 
+frecuencias centrales que se incrementan cuando $\Omega $ se incrementa.
+
+\item  Los filtros con ceros y polos complejos conjugados m\'{a}s cercanos al c\'{\i}rculo unidad 
+tienen menor ancho de banda.
+\end{enumerate}
+
+\section{Transformaci\'{o}n de filtros de tiempo continuo a tiempo discreto}
+
+Con las siguientes transformaciones de funciones de transferencias de tiempo continuo a tiempo 
+discreto podemos convertir un filtro de tiempo continuo a tiempo discreto y viceversa.
+
+\begin{center}
+Aproximaci\'{o}n de la integral
+
+\begin{tabular}{ll}
+Transformaci\'{o}n & f\'{o}rmula \\
+rectangular hacia adelante & $s\Leftrightarrow \frac{1-z^{-1}}{Tz^{-1}}$ \label{adelante} \\
+rectangular hacia atras & $s\Leftrightarrow \frac{1-z^{-1}}{T}$ \label{atras}\\
+trapezoidal & $s\Leftrightarrow \frac{2}{T}\frac{1-z^{-1}}{1+z^{-1}}$ \label{trapezoidal}
+\end{tabular}
+\end{center}
+
+\begin{center}
+Aproximaci\'{o}n de la diferenciaci\'{o}n
+
+\begin{tabular}{ll}
+Transformacion & f\'{o}rmula \\
+diferencia hacia atras & $s\Leftrightarrow \frac{1-z^{-1}}{T}$
+\end{tabular}
+\end{center}
+
+\subsection{Transformaci\'{o}n bilineal}
+
+Supongamos la ecuaci\'{o}n diferencial de primer orden 
+\begin{equation}
+c_{1}\frac{dy\left( t\right) }{dt}+c_{0}y\left( t\right) =d_{0}x\left(
+t\right) ,
+\end{equation}
+con la funci\'{o}n de transferencia 
+\begin{equation}
+H\left( s\right) =\frac{d_{0}}{c_{1}s+c_{0}}.
+\end{equation}
+Puede plantearse la siguiente relaci\'{o}n 
+\begin{equation}
+y\left( t\right) -y\left( t_{0}\right) =\int_{t_{0}}^{t}\frac{dy\left( \tau
+\right) }{d\tau }d\tau ,
+\end{equation}
+y en particular 
+\begin{equation}
+y\left( nT\right) -y\left( \left( n-1\right) T\right) =\int_{\left(
+n-1\right) T}^{nT}\frac{dy\left( \tau \right) }{d\tau }d\tau .
+\end{equation}
+Aproximando la integral por una regla trapezoidal, podemos escribir 
+\begin{equation}
+y\left( nT\right) -y\left( \left( n-1\right) T\right) =\frac{T}{2}\left( %
+\left[ \frac{dy\left( \tau \right) }{d\tau }\right] _{\tau =nT}-\left[ 
+\frac{dy\left( \tau \right) }{d\tau }\right] _{\tau =\left( n-1\right)
+T}\right) ,
+\end{equation}
+y teniendo en cuenta que 
+\begin{equation}
+c_{1}\left[ \frac{dy\left( \tau \right) }{d\tau }\right] _{\tau
+=nT}+c_{0}y\left( nT\right) =d_{0}x\left( nT\right) ,
+\end{equation}
+podemos finalmente obtener una ecuaci\'{o}n de diferencias asociada a la funci\'{o}n de transferencia 
+\begin{equation}
+H\left( z\right) =\frac{d_{0}}{c_{1}\frac{2}{T}\frac{1-z^{-1}}{1+z^{-1}}%
++c_{0}}.
+\end{equation}
+Vemos entonces que podemos directamente usar la transformaci\'{o}n bilineal 
+\begin{equation}
+s=\frac{2}{T}\frac{1-z^{-1}}{1+z^{-1}},
+\end{equation}
+y 
+\begin{equation}
+z=\frac{1+\frac{T}{2}s}{1-\frac{T}{2}s}.
+\end{equation}
+
+Aplicando la transformaci\'{o}n bilineal obtenemos 
+\begin{equation}
+s_{p}=\left( -1\right) ^{\frac{1}{2N}}j\omega _{c}=\frac{2}{T}\frac{%
+1-z_{p}^{-1}}{1+z_{p}^{-1}},
+\end{equation}
+o 
+\begin{equation}
+z_{p}=\frac{1+\frac{T}{2}
+  \left( -1\right)^{\frac{1}{2N}}j\omega _{c}}{1-\frac{T}{2}\left( -1\right) ^{\frac{1}{2N}}j\omega _{c}}.
+\end{equation}
+
+Por ejemplo, para un controlador PID de tiempo continuo tenemos una funci\'{o}n de transferencia
+\begin{equation}
+        H(s) = K_{p} + \frac{K_{i}}{s} + K_{d} s
+\end{equation}
+
+Aplicando la transformaci\'{o}n rectangular hacia adelante (\ref{adelante}) obtenemos
+\begin{equation}
+        H(z) = \frac{(K_{d} - K_{p} T + K_{i} T^{2}) +
+                        (K_{p} T - 2 K_{d}) z + K_{d} z^2}
+                    {T (z - 1)}.
+\end{equation}
+
+Aplicando la transformaci\'{o}n rectangular hacia atr\'{a}s (\ref{atras}) obtenemos
+\begin{equation}
+        H(z) = \frac{K_{d} -
+                        (K_{p} T + 2 K_{d}) z + (K_{d} + K_{p} T + K_{i} T^{2}) z^2}
+                    {T (z - 1) z}.
+\end{equation}
+
+\section{Sumario de representaciones de se\~{n}ales en los dominios del tiempo y la frecuencia}
+
+\begin{tabular}{lll}
+Categoria & Dominio del tiempo & Dominio de la frecuencia \\ 
+CTFT & $x\left( t\right) =\int_{-\infty }^{\infty }\chi \left( f\right)
+e^{j2\pi ft}df$ & $\chi \left( f\right) =\int_{-\infty }^{\infty }x\left(
+t\right) e^{-j2\pi ft}dt$ \\ 
+CTFS & $x\left( t\right) =\sum_{m=-\infty }^{\infty }\chi \left[ m\right] e^{%
+\frac{j2\pi mt}{T}}$ & $\chi \left[ m\right] =\frac{1}{T}\int_{-\frac{T}{2%
+}}^{\frac{T}{2}}x\left( t\right) e^{-\frac{j2\pi mt}{T}}dt$ \\ 
+DTFT & $x\left[ n\right] =\int_{-\frac{1}{2}}^{\frac{1}{2}}\bar{\chi}%
+\left( \phi \right) e^{j2\pi \phi n}d\phi $ & $\bar{\chi}\left( \phi \right)
+=\sum_{m=-\infty }^{\infty }x\left[ n\right] e^{-j2\pi \phi n}$ \\ 
+DTFS & $x\left[ n\right] =\sum_{m=0}^{N-1}\bar{\chi}\left[ m\right] e^{j2\pi 
+\frac{mn}{N}}$ & $\bar{\chi}\left[ m\right] =\frac{1}{N}\sum_{n=0}^{N-1}x%
+\left[ n\right] e^{-j2\pi \frac{mn}{N}}$%
+\end{tabular}
+
+\end{document}
+
+\section{Propiedades comunes de los sistemas de los ejemplos}
+
+Los sistemas definidos por las ecs. (\ref{sisUno}), (\ref{sisDos}), (\ref
+{sisTres}), y (\ref{sisCuatro}) tienen las siguientes propiedades en
+com\'{u}n:
+
+\begin{enumerate}
+\item  Lineales, porque las ecs. s\'{o}lo contienen operadores lineales.
+
+\item  Con memoria, por las integrales, las derivadas y sumatorias.
+
+\item  Causales, porque en las ecuaciones no aparecen valores futuros de la
+entrada, s\'{o}lo valores actuales o pasados.
+\end{enumerate}
+
+\section{Transformadas Laplace unilaterales}
+
+\subsection{Funciones trigonom\'{e}tricas, primera parte}
+
+\begin{center}
+\begin{tabular}{ll}
+$f\left( t\right)$ & $F\left( s\right) =L\left\{f(t)\right\}$ \\ 
+$\sin \left( \omega t\right) $ & $\frac{\omega }{s^{2}+\omega ^{2}}$
+\\ 
+$\cos \left( \omega t\right) $ & $\frac{s}{s^{2}+\omega ^{2}}$ \\ 
+$\sin ^{2}\left( \omega t\right) $ & $\frac{2\omega ^{2}}{s\left(
+s^{2}+4\omega ^{2}\right) }$ \\ 
+$\cos ^{2}\left( \omega t\right) $ & $\frac{s^{2}+2\omega ^{2}}{s\left(
+s^{2}+4\omega ^{2}\right) }$ \\ 
+$t\sin \left( \omega t\right) $ & $\frac{2\omega s}{\left( s^{2}+\omega
+^{2}\right) ^{2}}$ \\ 
+$t\cos \left( \omega t\right) $ & $\frac{s^{2}-\omega ^{2}}{\left(
+s^{2}+\omega ^{2}\right) ^{2}}$ \\ 
+$\frac{2\left( 1-\cos \left( \omega t\right) \right) }{t} $ & $\ln 
+\frac{s^{2}+\omega ^{2}}{s^{2}}$ \\ 
+$\frac{\sin \left( \omega t\right) }{t}$ & $\arctan \left( \frac{\omega }{s%
+}\right) $
+\end{tabular}
+\end{center}
+  
+\subsection{Funciones trigonom\'{e}tricas, segunda parte} 
+
+\begin{center}
+\begin{tabular}{ll}
+$f\left( t\right)$ & $F\left( s\right) =L\left\{f(t)\right\}$ \\ 
+$\sin \left( \omega t\right) +\omega t\cos \left( \omega t\right) $ & $%
+\frac{2\omega s^{2}}{\left( s^{2}+\omega ^{2}\right) ^{2}}$ \\ 
+$\sin \left( \omega t\right) -\omega t\cos \left( \omega t\right) $ & $%
+\frac{2\omega ^{3}}{\left( s^{2}-\omega ^{2}\right) ^{2}}$ \\ 
+$1-\cos \left( \omega t\right) $ & $\frac{\omega ^{2}}{s\left( s^{2}+\omega
+^{2}\right) }$ \\ 
+$\left( \omega t\right) -\sin \left( \omega t\right) $ & $\frac{\omega ^{3}%
+}{s^{2}\left( s^{2}+\omega ^{2}\right) }$ \\ 
+$\frac{a\sin \left( bt\right) -b\sin \left( at\right) }{ab\left(
+a^{2}-b^{2}\right) } $ & $\frac{1}{\left( s^{2}+a^{2}\right) \left(
+s^{2}+b^{2}\right) }$ \\ 
+$\frac{\cos \left( bt\right) -\cos \left( at\right) }{a^{2}-b^{2}}$ & $%
+\frac{s}{\left( s^{2}+a^{2}\right) \left( s^{2}+b^{2}\right) }$ \\ 
+$\frac{\sin \left( at\right) \cos \left( bt\right) }{t}$ & $\frac{1}{2}%
+\arctan \left( \frac{a+b}{s}\right) +\frac{1}{2}\arctan \left( \frac{a-b}{%
+s}\right) $ \\ 
+\end{tabular}
+
+\end{center}
+
+\subsection{Funciones hiperb\'{o}licas, primera parte}
+
+\begin{center}
+\begin{tabular}{ll}
+$f\left( t\right)$ & $F\left( s\right) =L\left\{f(t)\right\}$ \\ 
+$\sinh kt$ & $\frac{k}{s^{2}-k^{2}} $ \\ 
+$\cosh kt$ & $\frac{s}{s^{2}-k^{2}} $ \\ 
+$\sinh ^{2}kt$ & $\frac{2k^{2}}{s\left( s^{2}-4k^{2}\right) } $ \\ 
+$\cosh ^{2}kt $ & $\frac{s^{2}-2k^{2}}{s\left( s^{2}-4k^{2}\right) }$%
+\end{tabular}
+\end{center}
+
+\subsection{Funciones hiperb\'{o}licas, primera parte}
+
+\begin{center}
+\begin{tabular}{ll}
+$f\left( t\right)$ & $F\left( s\right) =L\left\{f(t)\right\}$ \\ 
+$t\sinh kt$ & $\frac{2ks}{\left( s^{2}-k^{2}\right) ^{2}} $ \\ 
+$t\cosh kt$ & $\frac{s^{2}+k^{2}}{\left( s^{2}-k^{2}\right) ^{2}} $\\ 
+$\frac{2\left( 1-\cosh kt\right) }{t}$ & $\ln \frac{s^{2}-k^{2}}{s^{2}}$ \\ 
+\end{tabular}
+\end{center}
+
+\subsection{Funciones exponenciales}
+
+\begin{center}
+\begin{tabular}{ll}
+$f\left( t\right)$ & $F\left( s\right) =L\left\{f(t)\right\}$ \\ 
+$e^{at}$                        & $\frac{1}{s-a} $                                              \\ 
+$te^{at}$                       & $\frac{1}{\left( s-a\right) ^{2}} $                           \\ 
+$t^ne^{at}$                     & $\frac{n!}{\left( s-a\right) ^{n+1}} $, $n\geq 0,$            \\ 
+$\frac{e^{bt}-e^{at}}{t} $      & $\ln \frac{s-a}{s-b}$                                         \\
+$\frac{1}{\sqrt{\pi t}}e^{-a^{2}/4t}$ & $\frac{e^{-a\sqrt{s}}}{\sqrt{s}}$                       \\ 
+$\frac{2\sqrt{\pi t^{3}}}e^{-a^{2}/4t} $ & $e^{-a\sqrt{s}} $                                    \\ 
+$\frac{e^{at}-e^{bt}}{a-b}$ & $\frac{1}{\left( s-a\right) \left(s-b\right) } $                  \\ 
+$\frac{ae^{at}-be^{bt}}{a-b}$ & $\frac{s}{\left( s-a\right) \left(s-b\right) }$
+\end{tabular}
+
+\end{center}
+
+
+\section{Libros}
+\begin{enumerate}
+
+\item Boaz Proat, 
+  A Course in Digital Signal Processing, 
+  Wiley, 1997. 
+
+\item James McClellan et al., 
+  Computer-Based Exercises for Signal Processing Using MATLAB 5,
+  Prentice Hall, 1998.
+
+\item Ronald N. Bracewell, 
+  The Fourier Transform and Its Applications. 
+  McGraw-Hill: New York, 1986.
+
+\item Roland E. Thomas and Albert J. Rosa, 
+  The Analysis and Design of Linear Circuts.
+  Prentice Hall, New Jersey, 1994.
+
+\end{enumerate}

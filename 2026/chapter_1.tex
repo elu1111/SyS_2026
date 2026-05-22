@@ -1,0 +1,324 @@
+\chapter{Señales (y sistemas)}
+
+\section{Definiciones}
+
+% https://es.wikipedia.org/wiki/Teoría_de_la_información#Mensaje
+% https://en.wikipedia.org/wiki/Signal
+% http://www.dspguide.com/
+
+En este capítulo vemos las definiciones de señales y sistemas, sus representaciones y propiedades. Por el momento ponemos más énfasis en el concepto de señales.
+
+\subsection{Señales}
+
+\begin{enumerate}
+	
+	\item Una señal es un fenómeno natural que se propaga de un punto (emisor) a otro (receptor) del espacio y el tiempo.
+	\item Empleamos señales para transmitir o almacenar información: en otras palabras, para reproducir en el receptor una medida hecha en el emisor. (Empleamos esta definición para evitar definir información por el momento).
+	\item En electrónica, las señales son cargas, corrientes y tensiones eléctricas, ondas electromagnéticas, campos eléctricos y magnéticos.
+	\item Las señales se representan mediante funciones de una o más variables independientes (generalmente tiempo y espacio), con alguna característica que pueda modificarse, o \textbf{modularse}.
+	\item Por ejemplo en una radio AM, el sonido provoca en un micrófono una tensión eléctrica variable, que se usa para modular (modificar) otra tensión eléctrica de alta frecuencia, que aplicada a un circuito conectado a una antena de las dimensiones adecuadas, provoca la emisión de un campo electromagnético que transmite información hasta el receptor, donde se producen procesos similares para obtener un sonido similar al que excitó al micrófono en el emisor.
+	
+	% https://en.wikipedia.org/wiki/Minimum_message_length
+	
+	\item Una señal puede ser:
+	\begin{enumerate}
+		\item Determinística, si conocemos el valor de su función para todo valor de sus variables independientes. Por ejemplo $x(t) = \cos(2 \pi \cdot 50 \, t)$.
+		\item Estocástica, aleatoria o probabilística si sólo conocemos medidas estadísticas del valor de la señal, como el promedio, la desviación estándar, etc, o funciones como la distribución de la probabilidad que la variable verifique cierta condición. Por ejemplo, la temperatura media del verano.
+	\end{enumerate}
+	
+\end{enumerate}
+
+\subsection{Sistemas}
+
+\begin{enumerate}
+	
+	\item Los sistemas son conjuntos de partes que interactúan entre sí, recibiendo señales (entradas) y generando señales (salidas).
+	\item Por ejemplo, un automóvil es un sistema: tiene diferentes partes, recibe entradas por el acelerador, el freno, el embrague y el volante, y genera salidas como la velocidad de las ruedas y la dirección de movimiento.
+	\item Podemos representar a los sistemas mediante modelos. Un modelo es una descripción del conjunto de señales de entrada, el conjunto de señales de salida, y la relación entre las señales de entradas y salidas.
+	\item El conjunto de señales de entrada de un sistema se denomina interfaz de entrada.
+	\item El conjunto de señales de salida se denomina interfaz de salida.
+	\item Un sistema puede tener múltiples modelos, de distinto tipo y exactitud. Un modelo representa al sistema en forma parcial y aproximada.
+	\begin{enumerate}
+		\item La ley de Newton $F = m \, a$ es un modelo que solo describe cómo se acelera un sistema de masa $m$ con una fuerza aplicada $F$ siempre y cuando la velocidad sea baja, y la masa sea ``normal'' (dentro de los límites de la experiencia cotidiana). Si queremos saber qué pasa a velocidades cercanas a la de la luz, necesitamos emplear la teoría de la relatividad general para estudiar la dinámica del sistema.
+		\item Si vamos a construir una casa, podemos suponer que el terreno es plano. Si vamos a viajar a China, tenemos que tener en cuenta que la Tierra \textbf{no} es plana. Podemos suponer que es esférica, aunque en realidad tiene forma de pera. En cambio, si deseamos lanzar un satélite y controlar su órbita, tenemos que tener en cuenta la forma de pera.
+	\end{enumerate}
+	\item Generalmente se intenta construir el modelo más simple que explique las observaciones realizadas sobre un sistema dado. Esta regla, llamada la navaja de Ockham, se debe a William of Ockham, un fraile franciscano y sabio inglés del siglo catorce, que la enunció por primera vez.
+	\item Estamos interesados en obtener modelos para construir programas de simulación que aceptando mediciones de las entradas de un sistema natural dado, generen resultados iguales (o aproximados con un error máximo conocido) a las salidas que observamos en la realidad. Por ejemplo, un simulador SPICE nos permite simular el funcionamiento de circuitos eléctricos y electrónicos.
+	\item En esta materia, vamos a emplear como modelos las ecuaciones diferenciales lineales y las ecuaciones de diferencias lineales.
+\end{enumerate}
+
+
+\subsection{Información y ruido}
+
+La palabra información tiene diferentes usos y significados, según el área de conocimiento que se considera. En esta asignatura, consideramos la teoría de la información como el estudio científico de la comunicación y el almacenamiento de información digital.
+
+Este campo de estudio fue establecido por los trabajos de Harry Nyquist y Ralph Hartley en la década de 1920, y por los trabajos de Claude Shannon y Warren Weaver a finales de la década de los años 1940. La teoría de la información se basa en conceptos de probabilidad, estadística, ciencias de la computación e ingeniería electrónica.
+
+En forma intuitiva, la información es algo que nos permite reducir la duda o incertidumbre sobre un tema. Su medida se calcula en base a la probabilidad de recibir los mensajes transmitidos.
+
+\begin{enumerate}
+	\item El modelo propuesto por Shannon es un sistema general de la comunicación que parte de una fuente de información o emisor que genera una señal en un extremo de un canal de transmisión. Alguna característica de la señal es modificada por el emisor de acuerdo a la voluntad del usuario, con la intención de producir un evento determinado en el extremo receptor.
+	\item La señal emitida puede ser interferida o alterada en su propagación por el canal, generándose una perturbación o ruido.
+	\item En el otro extremo del canal la señal entra a un receptor que detecta la característica modificada y genera el evento correspondiente.
+	\item La teoría de la información trata de llegar a determinar la forma más económica, rápida y segura de codificar un mensaje, sin que la presencia de algún ruido complique su transmisión. Para esto, el destinatario debe comprender la señal correctamente; el problema es que aunque exista un mismo código de por medio, esto no significa que el destinatario va a captar el significado que el remitente le quiso dar al mensaje.
+	\item La codificación puede referirse tanto a la transformación de voz o imagen en señales eléctricas o electromagnéticas, como al cifrado de mensajes para asegurar su privacidad.
+	\item Un concepto fundamental en la teoría de la información es que la cantidad de información contenida en un mensaje es un valor matemático bien definido y medible. El término cantidad no se refiere a la cuantía de datos, sino a la probabilidad de que un mensaje, dentro de un conjunto de mensajes posibles, sea recibido. En lo que se refiere a la cantidad de información, el valor más alto se le asigna al mensaje que menos probabilidades tiene de ser recibido. Si se sabe con certeza que un mensaje va a ser recibido, su cantidad de información es cero.
+	\item Es posible calcular la información en base a la probabilidad de recepción de distintos mensajes en una secuencia de mensajes que pasan por un canal.
+	\item Cuando se emplea un alfabeto de dos símbolos, por ejemplo $0$ y $1$, entonces la unidad de medida de la información es el bit.
+	\item La definición matemática de información (Entropía) según Claude Shannon es:
+	\begin{equation}
+		H(X) = - \sum_{x \in X} p(x) \, \log_{b} p(x),
+	\end{equation}
+	donde $X$ es el conjunto de mensajes posibles, $x$ representa a cada uno de los mensajes de $X$, $p(x)$ es la probabilidad asociada al mensaje $x$, y $b$ es la base del logaritmo.
+	
+	\item Para el caso $X = \{0, 1\}$, tenemos $p(0) = 1 - p(1)$ (¿Qué significa esta igualdad?) y por lo tanto:
+	\begin{equation}
+		H(\{0,1\}) = - \Big( p(1) \, \log_{2} p(1) + (1 - p(1)) \, \log_{2} (1 - p(1)) \Big).
+	\end{equation}
+	
+	\item ¿Cuál es el valor de $p(1)$ que maximiza $H(\{0,1\})$ ?
+\end{enumerate}
+
+Sabemos que cualquier intento de comunicación está sujeto a distorsión por ruido e imperfecciones. Por ejemplo, pensemos en la transmisión de datos por un equipo de radio al lado de una bomba eléctrica o la recepción de imágenes transmitidas por sondas espaciales lejanas.
+
+\section{Operaciones básicas}
+
+En señales y sistemas vamos a trabajar con cuatro operaciones básicas:
+\begin{enumerate}
+	\item Modelización: la búsqueda de un cálculo que, en una secuencia limitada de pasos, nos permita generar una secuencia de números concordante con la magnitud física de una característica determinada de la realidad.
+	\item Análisis: la determinación de una cantidad asociada a una característica de la realidad.
+	\item Procesamiento: operación de transformación de variables físicas o de información asociada.
+	\item Síntesis: generación de una variación física determinada.
+\end{enumerate}
+
+
+\section{Modelo de una señal}
+
+\begin{enumerate}
+	\item El concepto de señal supone la existencia de magnitudes variables. Para representar estas variaciones empleamos funciones.
+	\item Consideremos una función $y = f(x)$, donde $y$ es la variable dependiente y $x$ es la variable independiente de la función $f$.
+\end{enumerate}
+
+\subsection{Variable independiente}
+
+\begin{enumerate}
+	\item La variable independiente $x$ puede ser
+	\begin{enumerate}
+		\item unidimensional (tiempo);
+		\item bidimensional (posición en un plano para una foto);
+		\item tridimensional (posición en un plano y tiempo desde el inicio en una película);
+		\item $N$ dimensional, en general.
+	\end{enumerate}
+	
+	\item Consideraremos en lo sucesivo que la variable independiente es el tiempo. Esto es algo que resulta cómodo pero debe recordarse que no es la única interpretación posible.
+	\item Si la variable independiente es continua diremos que la señal $x$ es de tiempo continuo y la representaremos
+	\begin{equation}
+		x(t).
+	\end{equation}
+	Veamos un gráfico de una señal de tiempo continuo en la Fig. (\ref{cos2teps}).
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[height=3in]{./py-graphics/target/cos2t.png}
+		\caption{Señal de tiempo continuo}
+		\label{cos2teps}
+	\end{figure}
+	
+	\item Si la variable independiente solo toma algunos valores aislados (por ejemplo, múltiplos enteros de un tiempo $T$) diremos que la señal $x$ es de tiempo discreto y la representaremos
+	\begin{equation}
+		x[n].
+	\end{equation}
+	Una señal de tiempo discreto $x[n]$ recibe el nombre especial de secuencia. Veamos un gráfico de una señal de tiempo discreto en la Fig. (\ref{cosdisceps}).
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[height=3in]{./py-graphics/target/cosdisc.png}
+		\caption{Señal de tiempo discreto}
+		\label{cosdisceps}
+	\end{figure}
+	
+	\item Observe el uso de paréntesis y llaves cuadradas para distinguir entre señales de tiempo continuo y tiempo discreto.
+\end{enumerate}
+
+\subsection{La variable dependiente}
+
+\begin{enumerate}
+	\item La variable dependiente $y$ también puede ser continua o discreta.
+	\item En este curso consideramos solamente variables dependientes continuas.
+	\item En la realidad, cuando trabajamos con técnicas digitales, las variables dependientes son discretas. En este caso decimos que están cuantificadas.
+\end{enumerate}
+
+\subsubsection{Tiempo continuo como variable independiente}
+En las materias previas de la carrera, hemos trabajado con funciones de tiempo continuo como variable independiente. Hemos estudiado límites, derivadas, integrales, y ecuaciones diferenciales en variables continuas. Con estas herramientas hemos logrado descripciones de nuestro mundo como la primer ley de Newton, o las leyes de Maxwell.
+
+\subsubsection{Tiempo discreto como variable independiente}
+En esta materia introduciremos los conceptos de variables discretas, límites, diferencias, sumatorias, y ecuaciones de diferencias en variables discretas. Con estas herramientas lograremos descripciones de nuestro mundo que pueden ser manipuladas por una computadora, un sistema basado en transistores, componentes que conducen o no conducen electricidad representando así ceros y unos (valores discretos).
+
+Como método de estudio, repasaremos contenidos de materias previas pero representados en una notación uniforme y adaptada a nuestras necesidades. Una vez expuestos los temas correspondientes a variables continuas, se exponen los temas en variables discretas (con la única excepción de la operación de convolución).
+
+\section{Ejemplos de señales de tiempo continuo y discreto}
+
+\begin{enumerate}
+	\item Nuestros cinco sentidos detectan o responden a señales de tiempo continuo.
+	\item Sonido y video están grabados en DVD como señales de tiempo discreto.
+	\item Un radar es un sistema de tiempo discreto, porque muestra la posición de un avión a intervalos regulares.
+	\item Las secuencias de bases (símbolos químicos) en un gen son señales de ``tiempo'' discreto. Este es un ejemplo en el que la variable independiente es unidimensional y no es el tiempo.
+\end{enumerate}
+
+\subsubsection{¿Para qué sirve estudiar señales y sistemas?}
+Nuestro trabajo como ingenieros electrónicos se basa en el empleo de magnitudes eléctricas, tensión y corriente, para
+\begin{enumerate}
+	\item Mediciones: medir otras magnitudes físicas;
+	\item Comunicaciones: transmitir información de un punto a otro;
+	\item Procesamiento: generar, modificar, agregar o quitar información de una señal;
+	\item Generación de señales: lograr que una magnitud física sea proporcional a una tensión o corriente.
+\end{enumerate}
+
+\section{Muestreo y cuantización}
+
+El muestreo es la conversión de una señal de tiempo continuo $x(t)$ en una señal de tiempo discreto $x[n]$, tomando muestras de la señal en intervalos regulares de tiempo
+\begin{equation}
+	x[n] = x(n \, T_{s}).
+\end{equation}
+El muestreo se realiza para poder procesar la señal digitalmente, ya que los sistemas digitales solo pueden trabajar con señales de tiempo discreto. El proceso de muestreo se realiza mediante un conversor analógico-digital (ADC), que toma muestras de la señal analógica a intervalos regulares $T_{s}$ (en el caso más común).
+
+Además, los sistemas digitales necesitan que las señales estén cuantizadas. La cuantización es la asignación de valores enteros a cada muestra y se realiza mediante un proceso de redondeo o truncamiento. El nivel de cuantización se define por la cantidad de bits utilizados para representar cada muestra. Por ejemplo, una cuantización de $8$ bits produce $256$ posibles valores discretos para cada muestra.
+
+\section{Propiedades de las señales}
+
+\subsection{Señales acotadas y no acotadas de tiempo continuo}
+Una señal de tiempo continuo $x(t)$ es \textbf{acotada} si existe un número real finito $M$ que es mayor que el valor absoluto de $x(t)$ para todo valor de $t$
+\begin{equation}
+	|x(t)| < M.
+\end{equation}
+
+Una señal de tiempo continuo $x(t)$ es \textbf{no acotada} si existe $t_{1}$ tal que
+\begin{equation}
+	\lim_{t \rightarrow t_{1}} |x(t)| = \infty.
+\end{equation}
+
+\subsection{Señales acotadas y no acotadas de tiempo discreto}
+Una señal de tiempo discreto $x[n]$ es \textbf{acotada} si existe un número real finito $M$ que es mayor que el valor absoluto de $x[n]$ para todo valor de $n$
+\begin{equation}
+	|x[n]| < M.
+\end{equation}
+
+Una señal de tiempo discreto $x[n]$ es \textbf{no acotada} si existe un tiempo $n_{1}$ tal que
+\begin{equation}
+	\lim_{n \rightarrow n_{1}} |x[n]| = \infty.
+\end{equation}
+
+\subsection{Componentes par e impar de una señal de tiempo continuo}
+Una señal de tiempo continuo puede descomponerse en componentes par e impar
+\begin{equation}
+	x(t) = x_{par}(t) + x_{impar}(t),
+\end{equation}
+definiendo
+\begin{eqnarray}
+	x_{par}(t) &=& \frac{1}{2}\left( x(t) + x(-t) \right) , \\
+	x_{impar}(t) &=& \frac{1}{2}\left( x(t) - x(-t) \right) .
+\end{eqnarray}
+
+\subsection{Componentes par e impar de una señal de tiempo discreto}
+Una señal de tiempo discreto puede descomponerse en componentes par e impar de manera análoga:
+\begin{eqnarray}
+	x_{par}[n] &=& \frac{1}{2}\left( x[n] + x[-n] \right) , \\
+	x_{impar}[n] &=& \frac{1}{2}\left( x[n] - x[-n] \right) .
+\end{eqnarray}
+
+\section{Señales exponenciales}
+
+\subsection{Repaso de números complejos}
+
+\subsubsection{Unidad imaginaria}
+Definimos la unidad imaginaria como $j = \sqrt{-1}$. Por lo tanto, cumple con la igualdad $j^{2} = -1$.
+
+\subsubsection{Números complejos y conjugados}
+El conjunto de los números complejos se simboliza $\mathbb{C}$ y sus elementos se representan en forma cartesiana como $z = a + j b$, donde $a, b \in \mathbb{R}$. Llamamos número complejo conjugado a:
+\begin{equation}
+	\overline{z} = a - j b.
+\end{equation}
+
+\subsubsection{Parte real, imaginaria y módulo}
+Definimos a la función parte real e imaginaria de un número complejo como:
+\begin{eqnarray}
+	\Re(a + j b) &=& a, \\
+	\Im(a + j b) &=& b.
+\end{eqnarray}
+El módulo de un número complejo es:
+\begin{equation}
+	|a + j b| = \sqrt{(a + j b)(a - j b)} = \sqrt{a^{2} + b^{2}}.
+\end{equation}
+
+\subsubsection{Relación de Euler}
+La relación de Euler es la igualdad fundamental:
+\begin{equation}
+	e^{j b} =  \cos(b) + j \sin(b). \label{expeuler}
+\end{equation}
+Por lo tanto podemos escribir
+\begin{equation}
+	\cos(b) = \frac{e^{j b} + e^{-j b}}{2}, \quad \text{y} \quad \sin(b) = \frac{e^{j b} - e^{-j b}}{2j}. \label{coseuler}
+\end{equation}
+
+\section{Energía y potencia}
+
+\subsection{Energía de una señal}
+La energía total de una señal de tiempo continuo se define como
+\begin{equation}
+	E_{\infty } = \lim_{T \rightarrow \infty} \int_{-T}^{T} |x(t)|^2 dt.
+\end{equation}
+La energía total de una señal de tiempo discreto se define como
+\begin{equation}
+	E_{\infty } = \lim_{N \rightarrow \infty} \sum_{n=-N}^{N} |x[n]|^2.
+\end{equation}
+
+\subsection{Potencia de una señal}
+La potencia total de una señal de tiempo continuo se define como
+\begin{equation}
+	P_{\infty } = \lim_{T \rightarrow \infty} \frac{1}{2T}\int_{-T}^{T} |x(t)|^2 dt.
+\end{equation}
+La potencia total de una señal de tiempo discreto se define como
+\begin{equation}
+	P_{\infty } = \lim_{N \rightarrow \infty} \frac{1}{2N+1}\sum_{n=-N}^{N} |x[n]|^2.
+\end{equation}
+
+\subsection{Señal de energía y potencia}
+La señal $x$ es de energía finita si y sólo si $0 < E < \infty$, lo que implica que $P = 0$. La señal $x$ es de potencia finita si y sólo si $0 < P < \infty$, lo que implica que $E = \infty$.
+
+\subsection{Ejemplo: Energía y potencia para señales de tiempo discreto}
+
+\begin{enumerate}
+	\item Calculemos los valores de $E_{\infty }$ y $P_{\infty }$ para el escalón $x_{1}[n]=u[n]$.
+	Planteamos la fórmula de energía:
+	\begin{equation}
+		E_{\infty }(x_{1}[n]) = \lim_{N \rightarrow \infty} \sum_{n=0}^{N} 1 = \infty.
+	\end{equation}
+	Planteamos la fórmula de potencia:
+	\begin{equation}
+		P_{\infty }(x_{1}[n]) = \lim_{N \rightarrow \infty} \frac{\sum_{n=0}^{N} 1}{2N+1} = \frac{1}{2}.
+	\end{equation}
+	
+	\item Calculemos los valores para $x_{2}[n] = 2^{-n}u[n]$.
+	Energía:
+	\begin{equation}
+		E_{\infty }(x_{2}[n]) = \lim_{N \rightarrow \infty} \sum_{n=0}^{N} \left(4^{-n}\right) = \frac{1}{1-\frac{1}{4}} = \frac{4}{3}.
+	\end{equation}
+	Potencia:
+	\begin{equation}
+		P_{\infty }(x_{2}[n]) = \lim_{N \rightarrow \infty} \frac{4/3}{2N+1} = 0.
+	\end{equation}
+\end{enumerate}
+
+\section{Respuestas a algunas preguntas}
+
+\begin{itemize}
+	\item ¿Cuál es el valor de $p(1)$ que maximiza $H(\{0,1\}) = - (p(1) \log_{2} p(1) + (1 - p(1)) \log_{2} (1 - p(1)))$?
+	Dada $q(x) = - (x \log_{2} x + (1 - x) \log_{2} (1 - x))$, tenemos que obtener la raíz de $\frac{d q(x)}{d x} = 0$ para $x \in [0, 1]$. El resultado buscado es $p(1) = x = \frac{1}{2}$.
+	
+	\item ¿Qué entiende por procesamiento, modelado y análisis de señales y sistemas?
+	\begin{itemize}
+		\item \textbf{Procesamiento}: transformación de una señal en otra.
+		\item \textbf{Modelado}: usar un algoritmo y sus parámetros para reproducir o explicar características de la señal o sistemas en estudio, con el objetivo de realizar inferencias.
+		\item \textbf{Análisis}: Obtención de medidas de la señal o del sistema.
+	\end{itemize}
+\end{itemize}

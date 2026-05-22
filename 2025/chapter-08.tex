@@ -1,0 +1,623 @@
+\chapter{Transformada de Fourier de tiempo discreto}
+
+\section{Introducci\'{o}n}
+
+\begin{enumerate}
+
+\item   Vamos a ver como podemos \textbf{modificar} el concepto de \textbf{serie de Fourier} que 
+relacionamos normalmente con las funciones peri\'{o}dicas de tiempo discreto 
+\textbf{para estudiar funciones no peri\'{o}dicas} de tiempo discreto. 
+Esto nos permite \textbf{definir} el concepto de \textbf{contenido de frecuencias de una se\~{n}al}, 
+a\'{u}n cuando sea aperi\'{o}dica.
+
+\item   Pensemos en una se\~{n}al $\hat{x}\left[ n\right]$ peri\'{o}dica de tiempo discreto con un
+        per\'{\i}odo fundamental $2 N + 1$ definida por
+        \begin{equation}
+                        \begin{array}{ccc}
+                                -N \leq n < -N_{1} &\rightarrow& \hat{x}[n] = 0, \\
+                                -N_{1} \leq n \leq N_{1} & \rightarrow& \hat{x}[n] = 1, \\
+                                N_{1} < n \leq N &\rightarrow& \hat{x}[n] = 0.
+                        \end{array}
+        \end{equation}
+        \begin{equation}
+                \hat{x} \left[ n\right] = \hat{x} \left[n + 2 \, N + 1\right].
+        \end{equation}
+
+\item   Recordemos la ecuaci\'{o}n de an\'{a}lisis de la serie de Fourier de tiempo discreto: 
+  para este caso podemos escribir as\'{\i} 
+        \begin{equation}
+                a_{k}=
+                        \frac{1}{2 \, N + 1} \, \sum_{n=-N_{1}}^{N_{1}} \hat{x}\left[ n\right] \, e^{-j \, k \, \omega_{N} \, n},
+        \end{equation}
+donde $\omega_{N} = \frac{2 \, \pi}{2 \, N + 1}$.
+        
+\item   Para el caso $k=0$ obtenemos el coeficiente $a_{0}$ (com\'{u}nmente llamado en 
+  electr\'{o}nica nivel de continua)
+  \begin{equation}
+    a_{0} = \frac{1}{2 \, N + 1} \sum_{n=-N_{1}}^{N_{1}} 1 = \frac{2 \, N_{1} + 1}{2 \, N + 1}.
+  \end{equation}
+  El valor  $\frac{2 \, N_{1} + 1}{2 \, N + 1}$ es denominado ciclo de trabajo del tren de pulsos, e indica
+el porcentaje del per\'{\i}odo en que la se\~{n}al es igual a $1$.
+        
+\item   Para el caso $k \neq 0$ obtenemos los dem\'{a}s coeficientes $a_{k}$
+  \begin{equation}
+    a_{k}=  
+    \frac{1}{2 \, N + 1} \sum_{n=-N_{1}}^{N_{1}} e^{-j \, k \, \omega_{N} \, n}.
+  \end{equation}
+  
+\item   Multiplicando ambos lados de la ecuaci\'{o}n por $2 \, N + 1$ y desdoblando la sumatoria resulta
+  \begin{equation}
+    (2 \, N + 1) \, a_{k} =
+    \sum_{n=-N_{1}}^{-1} e^{-j \, k \, \omega_{N} \, n} +
+    \sum_{n=1}^{N_{1}} e^{-j \, k \, \omega_{N} \, n} + 1,
+  \end{equation}
+  que podemos escribir como
+  \begin{equation}
+    (2 \, N + 1) \, a_{k} =
+    \sum_{n=-N_{1}}^{0} e^{-j \, k \, \omega_{N} \, n} +
+    \sum_{n=0}^{N_{1}} e^{-j \, k \, \omega_{N} \, n} - 1,
+  \end{equation}
+  teniendo en cuenta  que al poner un l\'{\i}mite igual a $0$ en ambas 
+  sumatorias  estamos sumando dos veces un t\'{e}rmino $e^{0} = 1$ y necesitamos
+  $2$ para no alterar la igualdad.
+
+\item   Invertimos los l\'{\i}mites en la primer sumatoria e invertimos el signo del exponente 
+  correspondiente para no alterar el resultado
+  \begin{equation}
+    (2 \, N + 1) \, a_{k} =
+    \sum_{n=0}^{N_{1}} e^{j \, k \, \omega_{N} \, n} +
+    \sum_{n=0}^{N_{1}} e^{-j \, k \, \omega_{N} \, n} - 1.
+  \end{equation}
+        
+\item   Tenemos entonces dos sumatorias de sucesiones geom\'{e}tricas. Por lo  tanto podemos  escribir
+  \begin{equation}
+    (2 \, N + 1) \, a_{k} =
+    \frac{1 - e^{j \, k \, \omega_{N} \, (N_{1}+1)}}{1 - e^{j \, k \, \omega_{N}}}  +
+    \frac{1 - e^{-j \, k \, \omega_{N} \, (N_{1}+1)}}{1 - e^{-j \, k \, \omega_{N}}}  -
+    1. \label{ejemploTFTDinicial}
+  \end{equation}
+  
+\item  La utilidad de la ecuaci\'{o}n (\ref{ejemploTFTDinicial}) se ve si la escribimos as\'{\i}
+  \begin{equation}
+    (2 \, N + 1) \, a_{k} = \left. X(e^{j \omega}) \right|_{\omega = k \, \omega_{N}} =
+    \left.
+      \frac{1 - e^{j \, \omega \, (N_{1}+1)}}{1 - e^{j \, \omega}}  +
+      \frac{1 - e^{-j \, \omega \, (N_{1}+1)}}{1 - e^{-j \, \omega}}  -
+      1
+    \right|_{\omega=k \, \omega_{N}},  \label{funTFTDinicial}
+  \end{equation}
+  y entonces es evidente que la podemos interpretar como una \textbf{secuencia} formada por
+  \textbf{muestras} de una  \textbf{funci\'{o}n envolvente}. La variable $\omega $ es continua y la
+  funci\'{o}n continua $X(e^{j \, \omega})$ muestreada en (\ref{funTFTDinicial}) es la envolvente de la secuencia 
+  $N a_{k}$, formada por valores igualmente espaciados en frecuencia.
+  
+\item   Observe que la separaci\'{o}n de las muestras de la envolvente de $N a_{k}$ est\'{a} dada por
+  \begin{equation}
+    \omega_{N} = \frac{2 \, \pi}{2 \, N + 1}.
+  \end{equation}
+  Entonces, cuando mayor sea $N$ menor ser\'{a} $\omega_{N}$ y la cantidad de muestras en un 
+  intervalo dado de frecuencia ser\'{a} mayor.
+  
+\item  Si fijamos el valor $N_{1}$ (recordando que debe ser $N_{1} < N,$ por hip\'{o}tesis) la 
+  envolvente de $N \, a_{k}$ es independiente de $N$.
+        
+\end{enumerate}
+
+\section{Las ecuaciones de an\'{a}lisis y s\'{\i}ntesis}
+
+\subsection{Análisis}
+
+\begin{enumerate}
+
+\item   Definamos una se\~{n}al $x\left[ n\right] $ no peri\'{o}dica  
+\begin{eqnarray}
+  \left( 0\leq n\leq N_{1}\right)                         &\rightarrow    & x\left[ n\right] \neq 0, \\
+  \left( n < 0\right) \vee \left( N_{1} < n\right)            &\rightarrow    & x\left[ n\right] =0.
+\end{eqnarray}
+
+\item   Definamos una se\~{n}al peri\'{o}dica $\tilde{x}\left[ n\right] =\tilde{x}\left[ n+N\right]$ 
+(donde $N > N_{1}$) de forma tal que 
+\begin{eqnarray}
+ \left( n \bmod N\right) > N_{1}         &\rightarrow& \tilde{x}\left[ n\right] =0, \\ 
+ \left( n \bmod N\right) \leq N_{1}      &\rightarrow& \tilde{x}\left[ n\right] = x \left[ n\bmod N\right].
+\end{eqnarray}
+
+\item   La se\~{n}al peri\'{o}dica $\tilde{x}\left[ n\right]$ se puede escribir como una serie de Fourier 
+\begin{equation}
+        \tilde{x}\left[ n\right] =\sum_{k=0}^{N-1}a_{k} \, e^{j \, k \, \left( \frac{2 \, \pi}{N}\right) \, n},
+\end{equation}
+donde 
+\begin{equation}
+  N \, a_{k} = \sum_{n=0}^{N-1}\tilde{x}\left[ n\right] \, e^{-j \, k \, \left( \frac{2 \, \pi}{N}\right) \, n}.
+\end{equation}
+
+\item Entonces como $\tilde{x}\left[ n\right] =x\left[ n\right] $ en el intervalo $[0,N-1]$ se puede 
+reemplazar $\tilde{x}\left[ n\right] $ por $x\left[ n\right]$ 
+\begin{equation}
+  N \, a_{k}=
+  \sum_{n=0}^{N-1}\tilde{x}\left[ n\right] \, e^{-j \, k \, \left( \frac{2 \, \pi }{N}\right) \, n}
+  =
+  \sum_{n=0}^{N-1}x\left[ n\right] e^{-j \, k \, \left( \frac{2 \, \pi}{N}\right) \, n}.
+\end{equation}
+
+\item Adem\'{a}s como $x\left[ n\right] =0$ fuera del intervalo $\left[ 0,N_{1}\right]$ podemos cambiar 
+los l\'{\i}mites de la sumatoria 
+\begin{equation}
+  N \, a_{k}=
+  \sum_{n=0}^{N-1}x\left[ n\right] \, e^{-j \, k \, \left( \frac{2 \, \pi}{N}\right) \, n}=
+  \sum_{n=-\infty }^{\infty }x\left[ n\right] \, e^{-j \, k \, \left( \frac{2 \, \pi }{N}\right) \, n}.
+\end{equation}
+
+\item   Definimos la ecuaci\'{o}n de an\'{a}lisis de la transformada de Fourier de tiempo discreto
+\begin{equation}
+    X\left( e^{j \, \omega }\right) = \sum_{n=-\infty }^{\infty }x\left[ n\right] \, \left(e^{j \, \omega}\right)^{-n}.
+\end{equation}
+
+\end{enumerate}
+
+\subsection{S\'{\i}ntesis}
+
+\begin{enumerate}
+\item Entonces tenemos que los coeficientes de Fourier se pueden calcular
+\begin{equation}
+  N \, a_{k}= X\left( e^{j \, k \, \omega_{N}}\right),
+\end{equation}
+donde 
+\begin{equation}
+ \omega_{N} = \frac{2 \, \pi}{N}.
+\end{equation}
+
+\item   Por lo tanto podemos reescribir la serie de Fourier como
+\begin{equation}
+  \tilde{x}\left[ n\right] =
+  \sum_{k=0}^{N-1}\frac{1}{N} \, X\left(e^{j \, k \, \omega_{N}}\right) \, e^{j \, k \, \omega_{N} \, n}.
+\end{equation}
+Dado que $\omega_{N} = \frac{2 \, \pi}{N}$ tenemos que $\frac{\omega_{N}}{2 \, \pi}=\frac{1}{N}$ y por lo tanto 
+\begin{equation}
+  \tilde{x}\left[ n\right] =
+  \frac{1}{2 \, \pi} \, \sum_{k=0}^{N-1}X\left(e^{j \, k \, \omega_{N}}\right) \, e^{j \, k \, \omega_{N} \, n} \, \omega_{N}.
+\end{equation}
+
+A medida que la cantidad de puntos $N\rightarrow \infty$, 
+la frecuencia tiende a un diferencial $\omega_{N}\rightarrow \, d\omega$, 
+la funci\'{o}n peri\'{o}dica se parece cada vez m\'{a}s a la no peri\'{o}dica
+$\tilde{x}\left[ n\right] \rightarrow x\left[ n\right],$ y 
+se obtiene la ecuaci\'{o}n de s\'{\i}ntesis 
+\begin{equation}
+  x\left[ n\right] =
+  \frac{1}{2 \, \pi } \, \int_{0}^{2 \, \pi } X\left( e^{j \, \omega }\right) \, e^{j \, \omega \, n} \, \, d\omega .
+\end{equation}
+\end{enumerate}
+
+\section{Convergencia de la Transformada de Fourier}
+
+La transformada de Fourier 
+\begin{equation}
+  X\left( e^{j \, \omega }\right) =
+  \sum_{n=-\infty }^{\infty }x\left[ n\right]e^{-j \, \omega \, n},
+\end{equation}
+de una secuencia $x\left[ n\right] $ existe si se cumple 
+\begin{equation}
+\left( \sum_{n=-\infty }^{\infty }\left| x\left[ n\right] \right| \right)
+<M_{1},
+\end{equation}
+\textbf{o} si se cumple 
+\begin{equation}
+\left( \sum_{n=-\infty }^{\infty }\left( x\left[ n\right] \right)^{2}\right) <M_{2},
+\end{equation}
+donde $M_{1}$ y $M_{2}$ son dos n\'{u}meros reales positivos finitos.
+
+Observe que la ecuaci\'{o}n de s\'{\i}ntesis no presenta problemas de
+convergencia pues sus l\'{\i}mites de integraci\'{o}n est\'{a}n restringidos
+a un per\'{\i}odo 
+\begin{equation}
+x\left[ n\right] =
+  \frac{1}{2 \, \pi }\int_{0}^{2 \, \pi }
+  X\left( e^{jk\omega}\right) e^{jk\omega \, n}\, d\omega .
+\end{equation}
+
+\section{Transformada de Fourier para se\~{n}ales peri\'{o}dicas}
+
+\begin{enumerate}
+
+\item Consideremos la se\~{n}al 
+\begin{equation}
+  x\left[ n\right] =e^{j \, \omega_{0} \, n}.
+\end{equation}
+
+\item Podemos probar que su transformada de Fourier es 
+\begin{equation}
+  X\left( e^{j \, \omega }\right) =
+  2 \, \pi \, \left( \sum_{k=-\infty }^{\infty }
+    \delta \left(\omega -\omega _{0}-2 \, \pi \, k\right) \right).
+\end{equation}
+
+\item Para hacerlo, usemos la ecuaci\'{o}n de s\'{\i}ntesis 
+\begin{equation}
+\frac{1}{2 \, \pi }\int_{-\pi}^{\pi }
+  X\left( e^{j \, \omega }\right) e^{j \, \omega \, n}\, d\omega =
+  \frac{2 \, \pi}{2 \, \pi }\int_{-\pi}^{\pi}
+    \left(
+      \sum_{k=-\infty}^{\infty } \delta \left( \omega -\omega _{0}-2 \, \pi \, k \right) 
+    \right)
+    e^{j \, \omega \, n}\, d\omega .
+\end{equation}
+
+\item Observemos que el intervalo $\left[-\pi, \pi\right] $ contiene exactamente un
+impulso en $\omega = \omega_{0} + 2 \, \pi \, k$, por lo tanto 
+\begin{equation}
+\frac{1}{2 \, \pi }\int_{-\pi}^{\pi }X\left( e^{j \, \omega }\right) e^{j \, \omega \, n}\, d\omega =
+  \int_{-\pi}^{\pi }\delta \left( \omega -\omega _{0} - 2 \, \pi \, k\right)e^{j \, \omega \, n}\, d\omega =
+  e^{j \, \left(\omega_{0} + 2 \, \pi \, k\right) \, n}.
+\end{equation}
+
+\item En general, a la se\~{n}al peri\'{o}dica 
+\begin{equation}
+x\left[ n\right] =\sum_{k=0}^{N-1}a_{k} \, e^{j \, k\left( \frac{2 \, \pi }{N}\right) \, n},
+\end{equation}
+le corresponde la transformada
+\begin{equation}
+X\left( e^{j \, \omega }\right) =
+2 \, \pi \, \left(\sum_{k=-\infty }^{\infty } a_{k} \, \delta\left( \omega -\frac{2 \, \pi \, k}{N}\right)\right). 
+\label{tfdperiodica}
+\end{equation}
+
+\item Para probarlo, usemos la ecuaci\'{o}n de s\'{\i}ntesis 
+\begin{equation}
+\frac{1}{2 \, \pi }\int_{0}^{2 \, \pi}X\left( e^{j \, \omega }\right) \, e^{j \, \omega \, n}\, d\omega =
+\frac{1}{2 \, \pi }\int_{0}^{2 \, \pi} 
+  \left( 
+    \sum_{k=-\infty }^{\infty} 2 \, \pi \, a_{k} \, \delta \left( \omega -\frac{2 \, \pi \, k}{N} \right) 
+  \right) \, e^{j \, \omega \, n}\, d\omega .
+\end{equation}
+Asi obtenemos
+\begin{equation}
+  \begin{array}{l}
+    \frac{1}{2 \, \pi }\int_{0}^{2 \, \pi}
+    \left( \sum_{k=-\infty }^{\infty }
+      2 \, \pi \, a_{k} \, \delta \left( \omega -\frac{2 \, \pi \, k}{N}\right) 
+    \right) \, e^{j \, \omega \, n}\, d\omega = \\
+\\
+    \left( \sum_{k=-\infty }^{\infty }
+      a_{k}\int_{0}^{2 \, \pi}\delta 
+      \left( \omega -\frac{2 \, \pi \, k}{N}\right) e^{j \, \omega \, n}\, d\omega 
+    \right).
+  \end{array}
+\end{equation}
+
+\item Aplicando la propiedad del muestreo 
+\begin{equation}
+  \delta \left( \omega -\frac{2 \, \pi \, k}{N}\right) e^{j \, \omega \, n} = 
+  \delta \left( \omega -\frac{2 \, \pi \, k}{N}\right) e^{j \frac{2 \, \pi \, k}{N} n},
+\end{equation}
+intercambiando la posici\'{o}n de las sumatorias y las integrales, y simplificando coeficientes
+se obtiene
+\begin{equation}
+\begin{array}{l}
+\sum_{k=-\infty }^{\infty }
+a_{k}\int_{0}^{2 \, \pi }\delta \left( \omega -\frac{2 \, \pi \, k}{N}\right) e^{j \, \omega \, n}\, d\omega  = \\
+\\
+\sum_{k=-\infty}^{\infty }
+a_{k} \, e^{j \, \frac{2 \, \pi \, k}{N} \, n}
+\left( \int_{0}^{2 \, \pi}\delta \left(\omega -\frac{2 \, \pi \, k}{N}\right) \, d\omega \right).
+\end{array}
+\end{equation}
+
+\item Evaluemos la integral de acuerdo al valor de $k$. Sabemos que se debe cumplir $\omega = \frac{2 \, \pi \, k}{N}$ en el intervalo de integración para que
+la integral no sea nula
+\begin{equation}
+\int_{0}^{2 \, \pi}\delta \left( \omega -\frac{2 \, \pi \, k}{N}\right) \, d\omega
+=
+\left\{ 
+\begin{array}{c}
+1 \\ 
+0
+\end{array}
+\begin{array}{c}
+0\leq k<N, \\ 
+\left( k<0\right) \vee \left(N \leq k\right).
+\end{array}
+\right.
+\end{equation}
+\item Evaluamos la sumatoria de integrales para obtener
+\begin{equation}
+\sum_{k=-\infty }^{\infty }
+a_{k} \, e^{j\frac{2 \, \pi \, k}{N}n}
+\left( \int_{0}^{2 \, \pi}\delta \left( \omega -\frac{2 \, \pi \, k}{N}\right) \, d\omega \right)=
+\sum_{k=0}^{N-1}a_{k} \, e^{j \, \frac{2 \, \pi \, k}{N} \, n}.
+\end{equation}
+
+\item Obtenemos finalmente la s\'{i}ntesis
+\begin{equation}
+x\left[ n\right] =\frac{1}{2 \, \pi }\int_{0}^{2 \, \pi }X\left( e^{j \, \omega
+}\right) e^{j \, \omega \, n}\, d\omega =\sum_{k=0}^{N-1}a_{k} \, e^{j\frac{2 \, \pi \, k}{N} \, n}.
+\end{equation}
+
+\end{enumerate}
+
+\section{Propiedades de la Transformada de Fourier de tiempo discreto}
+
+\subsection{Ecuaci\'{o}n de s\'{\i}ntesis}
+
+\begin{equation}
+x\left[ n\right] =
+\frac{1}{2 \, \pi }\int_{0}^{2 \, \pi }X\left( e^{jk\omega}\right) e^{jk\omega \, n}\, d\omega.
+\end{equation}
+
+\subsection{Ecuaci\'{o}n de an\'{a}lisis}
+
+\begin{equation}
+X\left( j \, \omega \right) =
+\sum_{n=-\infty }^{\infty }x\left[ n\right]e^{-j \, \omega \, n}.
+\end{equation}
+
+\subsection{Notaci\'{o}n}
+
+\begin{equation}
+x\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+X\left( e^{j \, \omega }\right) .
+\end{equation}
+
+\subsection{Periodicidad}
+
+\begin{equation}
+X\left( e^{j\left( \omega +2 \, \pi \right) }\right) =
+X\left( e^{j \, \omega}\right).
+\end{equation}
+
+\subsection{Linealidad}
+
+\begin{equation}
+x\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+X\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\begin{equation}
+y\left[ n\right] 
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+Y\left( e^{j \, \omega }\right) ,
+\end{equation}
+\begin{equation}
+a \, x\left[ n\right] +b \, y\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+a \, X\left( e^{j \, \omega }\right) +b \, Y\left( e^{j \, \omega }\right) .
+\end{equation}
+
+\subsection{Desplazamiento en el tiempo}
+
+\begin{equation}
+x\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+X\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\begin{equation}
+x\left[ n-n_{0}\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+e^{-j \, \omega \, n_{0}}X\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\subsection{Desplazamiento en frecuencia}
+
+\begin{equation}
+x\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+X\left( e^{j \, \omega }\right).
+\end{equation}
+
+\begin{equation}
+e^{-j \, \omega_{0} \, n}x\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+X\left( e^{j\left( \omega -\omega _{0}\right) }\right).
+\end{equation}
+
+\subsection{Conjugaci\'{o}n y simetr\'{\i}a del conjugado}
+
+\begin{equation}
+x\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+X\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\begin{equation}
+x^{ }\left[ n\right] =\bar{x}\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+X^{ }\left( e^{-j \, \omega }\right) =\bar{X}\left( e^{-j \, \omega }\right) ,
+\end{equation}
+
+Si $x\left[ n\right] $ es real 
+\begin{eqnarray}
+&&Even\left( x\left[ n\right] \right) 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+\Re\left[ X\left( e^{j \, \omega }\right) \right] , \\
+&&Odd\left( x\left[ n\right] \right) 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+\Im\left[ X\left( e^{j \, \omega }\right) \right] .
+\end{eqnarray}
+
+\subsection{Diferencia}
+
+\begin{equation}
+x\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+X\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\begin{equation}
+x\left[ n\right] -x\left[ n-1\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+\left( 1-e^{j \, \omega }\right) X\left( e^{j \, \omega }\right).
+\end{equation}
+
+\subsection{Suma}
+
+\begin{equation}
+x\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+X\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\begin{equation}
+\sum_{k=-\infty }^nx\left[ k\right] = 
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+\frac{X\left( e^{j \, \omega }\right) }{\left( 1-e^{j \, \omega }\right) }+\pi
+X\left( e^{j0}\right) \sum_{k=-\infty }^{\infty }\delta \left( \omega -2 \, \pi
+k\right) .
+\end{equation}
+
+\subsection{Diferenciaci\'{o}n en frecuencia}
+
+\begin{equation}
+x\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+X\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\begin{equation}
+nx\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+j\frac{dX\left( e^{j \, \omega }\right) }{\, d\omega }.
+\end{equation}
+
+\subsection{Relaci\'{o}n de Parseval}
+
+\begin{equation}
+\sum_{n=-\infty }^{\infty }\left| x\left[ n\right] \right| ^{2}=
+\frac{1}{2 \, \pi }
+\int_{0}^{2 \, \pi }\left| X\left( e^{j \, \omega }\right) \right| ^{2}\, d\omega.
+\end{equation}
+
+\subsection{Convoluci\'{o}n}
+
+\begin{equation}
+x\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+X\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\begin{equation}
+y\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+Y\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\begin{equation}
+h\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+H\left( e^{j \, \omega }\right) ,
+\end{equation}
+\begin{equation}
+y\left[ n\right] =h\left[ n\right]  x\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+Y\left( e^{j \, \omega }\right) =H\left( e^{j \, \omega }\right) X\left( e^{j \, \omega
+}\right) .
+\end{equation}
+
+\subsection{Multiplicaci\'{o}n}
+
+\begin{equation}
+x\left[ n\right] 
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+X\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\begin{equation}
+y\left[ n\right] 
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+Y\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\begin{equation}
+r\left[ n\right] 
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+R\left( e^{j \, \omega }\right) ,
+\end{equation}
+
+\begin{equation}
+r\left[ n\right] =x\left[ n\right] y\left[ n\right] 
+\begin{array}{l}
+TF \\ 
+\leftrightarrow
+\end{array}
+R\left( e^{j \, \omega }\right) =
+\frac{1}{2 \, \pi }
+\int_{-\infty }^{\infty }
+  X\left(e^{j\theta }\right) Y\left( e^{j\left( \omega -\theta \right) }\right)d\theta .
+\end{equation}

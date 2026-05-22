@@ -1,0 +1,545 @@
+\section{Filtros de tiempo discreto}
+
+Un filtro digital es un algoritmo que, ejecutado en una computadora,
+convierte una secuencia de n\'{u}meros $x[n]$ de entrada, en otra
+secuencia $y[n]$ de salida. Adem\'{a}s de filtrar
+ciertas bandas de frecuencia, puede emplearse para otras funciones
+tales como integraci\'{o}n, diferenciaci\'{o}n, y estimaci\'{o}n.
+
+La ecuaci\'{o}n de diferencias que relaciona entrada y salida puede
+ser expresado en el dominio del tiempo discreto como una suma de la
+forma
+\begin{equation}
+y[n] = \sum_{i = 0}^{k} a_{i} \, x [n - i] - \sum_{i=0}^{k} b_{i} \, y[n-i],
+\end{equation}
+o en el dominio $z$ como
+\begin{equation}
+G(z) = \frac{\sum_{i = 0}^{k} a_{i} \, z^{-i}}{1 + \sum_{i=0}^{k} b_{i} \, z^{-i}}.
+\end{equation}
+
+Por lo tanto, el dise\~{n}o de un filtro digital implica la
+determinaci\'{o}n de los coeficientes $a_{i}$ y $b_{i}$.
+
+\subsection{Filtro recursivo o de respuesta al impulso infinita \textbf{IIR}}
+
+Sea el sistema de tiempo discreto con la ec. de diferencias 
+\begin{eqnarray}
+        y\left[ n\right] -ay\left[ n-1\right]   &=&     x\left[ n\right] , \\
+        \left| a\right|                         &<&     1.
+\end{eqnarray}
+Como $y\left[ n\right] =H\left( e^{j\omega }\right) e^{j\omega n}$ se obtiene 
+\begin{equation}
+        H\left( e^{j\omega }\right) e^{j\omega n}-aH\left( e^{j\omega }\right) e^{j\omega n-1} = 
+                e^{j\omega n}.
+\end{equation}
+Agrupando y simplificando 
+\begin{equation}
+        \left( 1-ae^{-j\omega }\right) H\left( e^{j\omega }\right) =1.
+\end{equation}
+Por lo tanto 
+\begin{equation}
+        H\left( e^{j\omega }\right) =\frac{1}{1-ae^{-j\omega }}.
+\end{equation}
+La respuesta al impulso es 
+\begin{equation}
+        h[n]=a^nu\left[ n\right] .
+\end{equation}
+La respuesta al escal\'{o}n es 
+\begin{equation}
+        s\left[ n\right] =\frac{1-a^{n+1}}{1-a}u\left[ n\right] .
+\end{equation}
+
+\subsection{Filtros de respuesta al impulso finita \textbf{FIR}}
+
+La forma general de una ecuaci\'{o}n de diferencias no recursiva es 
+\begin{equation}
+        y\left[ n\right] =\sum_{k=-N}^{M}b_{k}x\left[ n-k\right].
+\end{equation}
+
+Por ejemplo, un filtro promediador 
+\begin{equation}
+        y\left[ n\right] =\frac{1}{M+N+1}\sum_{k=-N}^{M}x\left[ n-k\right] .
+\end{equation}
+
+\begin{equation}
+        h\left[ n\right] =      \left\{ 
+                                \begin{array}{ll}
+                                        \frac{1}{N+M+1} & -N\leq n\leq M, \\ 
+                                        0 & n<-N, \\ 
+                                        0 & M<n.
+                                \end{array}
+                                \right.
+\end{equation}
+Recordando que 
+\begin{equation}
+        H\left( e^{j\omega }\right) =\sum_{k=-\infty }^{\infty }h\left[ k\right]
+e^{-j\omega k},
+\end{equation}
+resulta 
+\begin{eqnarray}
+       H\left( e^{j\omega }\right) &=&\frac{1}{M+N+1}\sum_{k=-\infty }^{\infty}e^{-j\omega k}, \\
+       H\left( e^{j\omega }\right) &=&
+   \frac{1}{M+N+1}e^{j\omega \frac{\left(N-M\right) }{2}}
+   \frac{\sin \left( \frac{\omega \left( M+N+1\right) }{2}\right) }{\sin \left( \frac{\omega }{2}\right) }.
+\end{eqnarray}
+
+Otro filtro, pasaaltos 
+\begin{eqnarray}
+      y\left[ n\right]                &=&\frac{x\left[ n\right] -x\left[ n-1\right] }{2}, \\
+      H\left( e^{j\omega }\right)     &=&\frac{1}{2}\left( 1-e^{-j\omega }\right) =
+                                             je^{\frac{j\omega }{2}}\sin \left( \frac{\omega }{2}\right) .
+\end{eqnarray}
+
+En general, supongamos una funci\'{o}n de transferencia del tipo
+\begin{equation}
+        H\left( z\right) =\sum_{k=0}^{M}h\left[ k\right] z^{-k},
+\end{equation}
+correspondiente a la ecuaci\'{o}n de diferencias 
+\begin{equation}
+        y\left[ n\right] =\sum_{k=0}^{M}h\left[ k\right] x\left[ n-k\right] .
+\end{equation}
+Este tipo de filtro es conocido como $FIR$, o de \textbf{R}espuesta al\textbf{I}mpulso\textbf{F}inita.
+
+Observemos que :
+\begin{enumerate}
+      \item  Los coeficientes de $H\left( z\right) $ son los valores de la respuesta al impulso del filtro.
+      \item  La respuesta al impulso tiene una duraci\'{o}n de $M+1$ muestras.
+\end{enumerate}
+
+\subsection{Dise\~{n}o de filtros de tiempo discreto con respuesta al impulso infinita (IIR) }
+
+\begin{enumerate}
+        \item   Para dise\~{n}ar un filtro debemos definir las especificaciones
+        \begin{enumerate}
+        
+                \item   Ancho y ubicaci\'{o}n de la banda de paso;
+                
+                \item   Ancho y ubicaci\'{o}n de la banda de transici\'{o}n;
+                
+                \item   Ubicaci\'{o}n de la banda de rechazo;
+                
+                \item   Atenuaci\'{o}n en la banda de rechazo.
+
+                \item   Orden del filtro $n$.
+                
+        \end{enumerate}
+
+        \item   Es necesario adem\'{a}s, que los filtros de tiempo discreto que dise\~{n}emos
+          sean semejantes a los filtros de tiempo continuo que hemos visto en el cap\'{\i}tulo anterior.
+          Es posible lograr este objetivo mediante una transformaci\'{o}n de variables que nos permite
+          obtener versiones discretizadas de filtros an\'{a}logicos. Dichas transformaciones se obtienen
+          mediante aproximaciones de la derivada y de la integral.
+
+        \item   En Matlab disponemos de las siguientes funciones para dise\~{n}ar filtros IIR
+        \begin{enumerate}
+
+                \item   butter  - filtros Butterworth;
+
+                \item   cheby1  - filtros Chebyshev tipo I (ripple u ondulacion en la banda de  paso);
+
+                \item   cheby2  - filtros Chebyshev tipo II (ripple u ondulacion en la banda de  rechazo);
+
+                \item   ellip   - filtros el\'{\i}pticos (fase maximamente plana);
+       \end{enumerate}
+        Debemos tener cuidado pues con la misma  funci\'{o}n se dise\~{n}an filtros an\'{a}logicos y 
+        discretos.
+        
+        \item   Un par\'{a}metro necesario para todos los filtros es $n$, que determina la cantidad de
+        polos del filtro. Cuando m\'{a}s alto sea, el filtro tendr\'{a} mayor atenuaci\'{o}n en la banda
+        de rechazo, mayor pendiente en la zona de transici\'{o}n, y sera m\'{a}s complicado. Por lo tanto
+        es necesario que $N$ sea lo m\'{a}s bajo posible. 
+        Para poder calcularlo seg\'{u}n nuestras necesidades podemos usar las funciones
+        \begin{enumerate}
+        
+            \item   buttord     - estimaci\'{o}n orden Butterworth;
+        
+            \item   cheb1ord    - estimaci\'{o}n orden Chebyshev tipo I;
+        
+            \item   cheb2ord    - estimaci\'{o}n orden Chebyshev tipo II;
+        
+            \item   ellipord    - estimaci\'{o}n orden filtro el\'{\i}ptico.
+        
+        \end{enumerate}
+
+        \item   Para especificar las frecuencias de paso y de corte de los distintos filtros, debemos fijar
+        primero la frecuencia de muestreo $\omega_{m}$ que no se  mide en Hertz sino en muestras por
+        segundo. Por lo tanto, el per\'{\i}odo de muestreo es $T_{m} = \frac{1}{\omega_{m}}$.
+        
+        \item   Las frecuencias de paso y de corte de los distintos filtros se especifican como una
+        fracci\'{o}n de la mitad de la frecuencia de muestreo. Por lo tanto, debemos usar n\'{u}meros
+        $0 < \omega < 1$, donde $1$ representa una frecuencia  igual  a la mitad de la  frecuencia  de
+        muestreo.
+
+        \item Las funciones de transferencia que obtenemos usando estas funciones de Matlab tienen la forma
+        \begin{equation}
+                H(z) = \frac{b(z)}{a(z)} =
+                \frac{b_{0} z^{N} + b_{1} z^{N-1}+...+ b_{N}}{a_{0} z^{N} + a_{1} z^{N-1} +...+ a_{n}}.
+        \end{equation}
+        donde $b(z)$ y $a(z)$ son polinomios en $z$.
+        Las funciones devuelven dos vectores $b$ y $a$ de longitud $N+1$  ordenados de la siguiente forma
+        \begin{eqnarray}
+                b &=& [b_{0}, b_{1}, b_{2},...,b_{N}],  \\
+                a &=& [a_{0}, a_{1}, a_{2},...,a_{N}].
+        \end{eqnarray}
+       
+\end{enumerate}
+
+\section{Funciones Matlab usadas para el dise\~{n}o de filtros}
+
+\begin{enumerate}
+        \item   Para dise\~{n}ar  filtros Butterworth  usaremos la   funci\'{o}n \textbf{butter}.
+        La ayuda traducida y explicada que corresponde a esta funci\'{o}n es la siguiente
+        \begin{enumerate}
+                \item   butter dise\~{n}o de filtros \textbf{digitales y anal\'{o}gicos} Butterworth
+\begin{verbatim}
+butter Butterworth digital and analogic filter design.
+\end{verbatim}  
+                
+                \item   Filtros Butterworth digitales pasabajos de orden N y frecuencia de corte Wn,
+\begin{verbatim}
+[B,A] = butter(N,Wn) 
+\end{verbatim}
+                Obtenemos un filtro de orden $N$ y funci\'{o}n de transferencia $\frac{B(z)}{A(z)}$. Los
+                coeficientes est\'{a}n almacenados en los vectores $B$ (numerador) y $A$ (denominador), 
+                ordenados en potencias descendentes de z. Las frecuencias de corte $Wn$ debe  estar normalizada
+\begin{verbatim}
+0.0 < Wn < 1.0
+\end{verbatim}
+                donde $1.0$ representa la mitad de la frecuencia de muestreo
+
+                \item   Filtros Butterworth digitales pasabanda de orden N y banda de paso
+                $W1 < \omega < W2$.
+                Tenemos que escribir
+\begin{verbatim}
+[B,A] = butter(N,[W1 W2])                       
+\end{verbatim}
+              para dise\~{n}ar un filtro pasabanda, donde W1 y W2 son las frecuencias inferior y  superior
+              de la banda de paso normalizadas.
+        
+                \item   Filtros Butterworth digitales pasaalto de orden N y frecuencia de corte Wn
+\begin{verbatim}
+[B,A] = butter(N,Wn,'high')
+\end{verbatim}
+                
+                \item   Filtros Butterworth digitales suprimebanda de orden N y frecuencia de corte Wn
+                Tenemos que escribir
+\begin{verbatim}
+[B,A] = butter(N,[W1 W2],'stop')                        
+\end{verbatim}
+                para dise\~{n}ar un filtro suprimebanda, donde W1 y W2 son las frecuencias inferior y
+                superior de la banda de rechazo.
+
+                \item   Ceros y polos de los filtros Butterworth
+                Si queremos obtener los ceros y polos de los filtros Butterworth, debemos usar
+                tres variables a la izquierda del signo $=$. Por ejemplo
+\begin{verbatim}
+[Z,P,K] = butter(N,Wn,'stop')
+\end{verbatim}
+              son los ceros, polos y ganancia de un filtro suprimebanda de orden N y banda rechazada entre
+              W1 y W2.
+        
+                \item   Filtros anal\'{o}gicos
+\begin{verbatim}
+ butter(N,Wn,'s')
+ butter(N,Wn,'high','s')
+ butter(N,Wn,'stop','s')
+\end{verbatim}
+                son las \'{o}rdenes que generan filtros de tiempo continuo.
+        \end{enumerate}
+        
+        \item   Para dise\'{n}ar  filtros Chebyshev tipo I usaremos la   funci\'{o}n \textbf{cheby1}.
+        La ayuda traducida y explicada que corresponde a esta funci\'{o}n es la siguiente
+        \begin{enumerate}
+                \item cheby1 Dise\~{n}o de filtros digitales y anal\'{o}gicos de tipo I
+\begin{verbatim}
+cheby1 
+  Chebyshev type I digital and analog filter design.
+\end{verbatim}
+                
+                \item   Filtros Chebyshev Tipo I digitales pasabajo de orden N, con tolerancia R
+                        (en decibeles) en la banda de paso  y frecuencia de corte Wn. 
+                        Usar $R = 0.5$ como valor inicial.
+\begin{verbatim}
+[B,A] = cheby1(N,R,Wn)
+\end{verbatim}
+                
+                
+                \item   Filtros Chebyshev Tipo I digitales pasabanda de orden N, con tolerancia R
+                        (en decibeles) en la banda de paso  y frecuencias de corte W1 (inferior)
+                        y W2  (superior). Empezar con R = 0.5 si se duda que valor elegir.
+\begin{verbatim}
+[B,A] = cheby1(N,R,[W1 W2],'pass')
+\end{verbatim}
+                
+                \item   Filtros Chebyshev Tipo I digitales pasaalto de orden N, con tolerancia R
+                        (en decibeles) en la banda de paso y  frecuencia de corte Wn
+\begin{verbatim}
+[B,A] = cheby1(N,R,Wn,'high')
+\end{verbatim}
+                
+                \item   Filtros Chebyshev Tipo I digitales suprimebanda de orden N, con tolerancia  R
+                        (en decibeles) en la banda de paso y frecuencias de corte W1 (m\'{\i}nima)y W2
+                        (m\'{a}xima) de la banda de rechazo
+\begin{verbatim}
+[B,A] = cheby1(N,R,[W1 W2],'stop')
+\end{verbatim}
+
+                \item   Ceros y polos de los filtros Chebyshev tipo I
+\begin{verbatim}
+[Z,P,K] = Cheby1(...)
+\end{verbatim}
+              Es decir, si queremos obtener los ceros y polos de los filtros Chebyshev tipo I, debemos usar
+              tres variables a la izquierda del signo $=$. Por ejemplo
+\begin{verbatim}
+[Z,P,K] = cheby1(N,Wn,'stop')
+\end{verbatim}
+              son los ceros, polos y ganancia de un filtro suprimebanda de orden N y banda rechazada entre
+              W1 y W2.
+
+               \item   Filtros anal\'{o}gicos
+\begin{verbatim}
+cheby1(N,Wn,'s'),
+cheby1(N,Wn,'high','s')
+cheby1(N,Wn,'stop','s')
+\end{verbatim}
+        \end{enumerate}
+
+        \item   Para dise\'{n}ar  filtros Chebyshev tipo II usaremos la   funci\'{o}n \textbf{cheby2}.
+        La ayuda traducida y explicada que corresponde a esta funci\'{o}n es la siguiente
+                \begin{enumerate}
+                \item cheby2 Dise\~{n}o de filtros digitales y anal\'{o}gicos de tipo II
+\begin{verbatim}
+cheby2 
+   Chebyshev type II digital and analog filter design.
+\end{verbatim}
+                
+                \item   Filtros Chebyshev Tipo II digitales pasabajo de orden N, con atenuaci\'{o}n
+                        m\'{\i}nima R (en decibeles) en la banda de rechazo  y frecuencia de corte Wn.
+                        Empezar con R = 20 si se duda que valor elegir.
+\begin{verbatim}
+[B,A] = cheby2(N,R,Wn)
+\end{verbatim}
+                
+                \item   Filtros Chebyshev Tipo II digitales pasabanda de orden N, con atenuaci\'{o}n
+                        m\'{\i}nima R (en decibeles) en la banda de rechazo y frecuencias de corte W1
+                        (inferior) y W2  (superior).
+\begin{verbatim}
+[B,A] = cheby2(N,R,[W1 W2],'stop')
+\end{verbatim}
+                
+                \item   Filtros Chebyshev Tipo II digitales pasaalto de orden N, con atenuaci\'{o}n
+                        m\'{\i}nima R (en decibeles) en la banda de rechazo y  frecuencia de corte Wn
+\begin{verbatim}
+[B,A] = cheby2(N,R,Wn,'high')
+\end{verbatim}
+                
+                \item   Filtros Chebyshev Tipo II digitales suprimebanda de orden N, con atenuaci\'{o}n
+                        m\'{\i}nima R (en decibeles) en la banda de rechazo y frecuencias de corte W1
+                        (m\'{\i}nima)y W2 (m\'{a}xima) de la banda de rechazo
+\begin{verbatim}
+[B,A] = cheby2(N,R,[W1 W2],'stop')
+\end{verbatim}
+
+                \item   Ceros y polos de los filtros Chebyshev tipo II
+\begin{verbatim}
+[Z,P,K] = Cheby2(...)
+\end{verbatim}
+             Es decir, si queremos obtener los ceros y polos de los filtros Chebyshev tipo II, debemos usar
+             tres variables a la izquierda del signo $=$. Por ejemplo
+\begin{verbatim}
+[Z,P,K] = cheby2(N,Wn,'stop')
+\end{verbatim}
+             son los ceros, polos y ganancia de un filtro suprimebanda de orden N y banda rechazada entre
+             W1 y W2.
+
+                \item   Filtros anal\'{o}gicos
+\begin{verbatim}
+cheby2(N,Wn,'s'),
+cheby2(N,Wn,'high','s')
+cheby2(N,Wn,'stop','s')
+\end{verbatim}
+        \end{enumerate}
+
+        \item   Para dise\'{n}ar  filtros Chebyshev tipo II usaremos la   funci\'{o}n \textbf{cheby2}.
+        La ayuda traducida y explicada que corresponde a esta funci\'{o}n es la siguiente
+        \begin{enumerate}
+              \item   Dise\~{n}o de filtros el\'{\i}pticos  digitales y anal\'{o}gicos
+        
+              \item   Filtros el\'{\i}pticos  digitales pasabajo de orden N, con  tolerancia Rp en la
+                      banda de paso y atenuaci\'{o}n m\'{\i}mina Rs en la banda de rechazo,  con
+                      frecuencia de corte Wn. Comenzar con $Rp = 0.5$ y $Rs = 20$ si no se sabe que elegir.
+\begin{verbatim}
+[B,A] = ellip(N,Rp,Rs,Wn)
+\end{verbatim}
+                
+                \item   Filtros el\'{\i}pticos  digitales pasabanda de orden N, con  tolerancia Rp en la
+                        banda de paso y atenuaci\'{o}n m\'{\i}mina Rs en la banda de rechazo,  con
+                        frecuencias de corte W1 (m\'{\i}nima) y W2 (m\'{a}xima) de la banda de paso.
+                        Comenzar con $Rp = 0.5$ y $Rs = 20$ si no se sabe que elegir.
+                        Debemos usar el siguiente comando
+\begin{verbatim}
+[B,A] = ellip(N,Rp,Rs,[W1  W2])
+\end{verbatim}
+                        
+                \item   Filtros el\'{\i}pticos  digitales pasaalto de orden N, con  tolerancia Rp en la
+                        banda de paso y atenuaci\'{o}n m\'{\i}mina Rs en la banda de rechazo,  con
+                        frecuencia de corte Wn.
+\begin{verbatim}
+[B,A] = ellip(N,Rp,Rs,Wn,'high')
+\end{verbatim}
+
+                \item   Ceros y polos de los filtros el\'{\i}pticos
+\begin{verbatim}
+[Z,P,K] = ellip(...)
+\end{verbatim}
+                Es decir, si queremos obtener los ceros y polos de los filtros el\'{\i}pticos, debemos usar
+                tres variables a la izquierda del signo $=$. Por ejemplo
+\begin{verbatim}
+[Z,P,K] = ellip(N,Rp,Rs,Wn,'stop')
+\end{verbatim}
+               son los ceros, polos y ganancia de un filtro suprimebanda de orden N y banda rechazada entre
+               W1 y W2.
+
+                \item   Filtros anal\'{o}gicos
+\begin{verbatim}
+ellip(N,Rp,Rs,Wn,'s'),
+ellip(N,Rp,Rs,Wn,'high','s')
+ellip(N,Rp,Rs,Wn,'stop','s')
+\end{verbatim}
+        \end{enumerate}
+
+\end{enumerate}
+
+%\subsection{Ejemplo de dise\~{n}o de filtros de tiempo discreto}
+%
+%\subsubsection{Filtro Butterworth pasabajo}
+%
+%\begin{verbatim}
+%% filtro Butterworth pasabajo de tiempo discreto
+%
+%Wm = 8500;  % frecuencia de muestreo
+%Wmm = Wm/2; % mitad de la frecuencia de muestreo
+%W1=1500;    % frecuencia superior banda de paso                     
+%Wp=W1/Wmm;  % frecuencia superior banda de paso normalizada 
+%rp=3;       % ripple banda de paso en dB
+%W2=1.1*W1;  % frecuencia inferior banda de rechazo 
+%Ws=W2/Wmm;  % frecuencia inferior banda de rechazo normalizada
+%rs=20;      % atenuacion banda de rechazo en dB 
+%
+%% usamos buttord para dimensionar el filtro
+%[N,Wn]=buttord(Wp,Ws,rp,rs);
+%
+%% calculamos el filtro
+%[b,a]=butter(N,Wn);
+%
+%% graficamos respuesta en frecuencia
+%dbode(b,a,1/Wm);
+%\end{verbatim}
+%
+%\subsubsection{Filtro Butterworth pasabanda}
+%
+%\begin{verbatim}
+%%   FILTRO Butterworth pasabanda
+%Wm  = 11000;    % frecuencia de muestreo
+%Wmm = Wm/2;     % mitad de la frecuencia de muestreo
+%W1  = 2800;     % frecuencia minima banda de paso
+%W2  = 4000;     % frecuencia maxima banda de paso
+%W0 = 0.9*W1;    % frecuencia maxima banda de rechazo inferior
+%W3 = 1.1*W2;    % frecuencia minima banda de rechazo superior
+%rp = 3;         % ripple banda de paso
+%rs = 20;        % atenuacion banda de rechazo
+%
+%% usamos buttord para dimensionar el filtro
+%[N,Wn]=buttord([W1/Fmm W2/Fmm],[W0/Fmm W3/Fmm],rp,rs)
+%
+%% calculamos el filtro
+%[b,a]=butter(N,Wn);
+%
+%% graficamos respuesta en frecuencia
+%dbode(b,a,1/Wm);
+%\end{verbatim}
+%
+%\subsubsection{Filtro eliptico pasabanda}
+%
+%\begin{verbatim}
+%Wm = 100;               % frecuencia de muestreo
+%t  = (1:100)/Wm;        % vector tiempo    
+%s1 = sin(2*pi*t*5);     % componente de la se~nal a filtrar
+%s2 = sin(2*pi*t*15);    % componente de la se~nal a filtrar
+%s3 = sin(2*pi*t*30);    % componente de la se~nal a filtrar
+%s  = s1 + s2 + s3;      % se~nal a filtrar
+%plot(t,s);              % grafico de la se~nal a filtrar
+%
+%% Para dise~nar un filtro para mantener la sinusoide de 
+%% 15 Hz y eliminar las sinusoides de 5 y 30 Hz, vamos a 
+%% usar un filtro eliptico con una pasabanda de 10 a 20 Hz
+%[b,a]=ellip(4,0.1,40,[10 20]*2/Wm); 
+%%^ dise~no de filtro de tiempo discreto
+%[H,w]=freqz(b,a,512);               
+%%^ calculo de la respuesta en frecuencia
+%plot(w*Wm/(2*pi),abs(H));           
+%%^ grafico de la respuesta en frecuencia
+%sf = filter(b,a,s);                 
+%%^ filtrado
+%plot(t,sf);                         
+%%^ grafico de la señal filtrada
+%xlabel('Tiempo (segundos)');        
+%%^ rotulo x
+%ylabel('Señal filtrada');           
+%%^ rotulo y
+%axis([0,1,-1,1]);                   
+%%^ marco del grafico
+%
+%S=fft(s,512);                       
+%%^ transformada rapida de Fourier
+%SF=fft(sf,512);                     
+%%^ transformada rapida de Fourier
+%w=(0:255)/256*(Wm/2);               
+%%^ vector de frecuencias para graficar el espectro
+%                                    
+%% Observe que los picos de 5 y 30 Hz han sido eliminados
+%plot(w,abs[S(1:256)' SF(1:256)']));
+%xlabel('Frecuencia (Hz)');
+%ylabel('Magnitud de la transformada de Fourier'); 
+%\end{verbatim}
+%
+%\subsubsection{Filtro eliptico suprimebanda}
+%
+%\begin{verbatim}
+%Wm=11000;
+%Wmm=Wm/2;
+%W1=2800;
+%W2=4000;
+%W0=1.1*W1;
+%W3=0.9*W2;
+%rp=3;
+%rs=40;
+%
+%[N,Wn]=ellipord([W1/Wmm W2/Wmm],[W0/Wmm W3/Wmm],rp,rs)
+%
+%[b,a]=ellip(N,rp,rs,Wn,'stop');
+%
+%dbode(b,a,1/Wm);
+%
+%\end{verbatim}
+%
+%\begin{verbatim}
+%Wm = 8000;
+%t  = (1:500)/Wm;
+%s1 = sin(2*pi*t*500);
+%s2 = sin(2*pi*t*1500);
+%s3 = sin(2*pi*t*2500);
+%s = s1 + s2 + s3;
+%subplot(5,1,1); plot(t(400:500),s(400:500));
+%subplot(5,1,2); plot(t(400:500),s1(400:500));
+%subplot(5,1,3); plot(t(400:500),s2(400:500));
+%subplot(5,1,4); plot(t(400:500),s3(400:500));
+%
+%dp = 0.1;
+%rs = 40;
+%n = 4;
+%[b,a]=ellip(4,dp,rs,[1000,2000]*2/Wm);
+%sf = filter(b,a,s);
+%subplot(5,1,5); plot(t(400:500),sf(400:500));
+%\end{verbatim}
+

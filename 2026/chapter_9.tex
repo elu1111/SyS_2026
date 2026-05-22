@@ -1,0 +1,50 @@
+\chapter{Series de Fourier (Tiempo continuo)}
+
+\section{Motivación}
+
+¿Para qué estudiamos series de Fourier? Veremos que es posible representar una señal de dos formas diferentes, una en el dominio del tiempo y otra en el dominio de la frecuencia. En otras palabras, podemos visualizar la señal de dos formas: una cuyo eje horizontal corresponde al tiempo, y otra cuyo eje horizontal corresponde a la frecuencia. En las dos representaciones tenemos la misma información.
+
+La forma más sencilla de comenzar a trabajar en el dominio de la frecuencia es graficar los coeficientes de series de Fourier en función de las frecuencias de las armónicas de funciones periódicas. En las aplicaciones de procesamiento de señales y electrónica, nos interesa conocer la distribución de energía en función de la frecuencia.
+
+\section{Definiciones}
+
+Recordemos que una señal $x(t)$ es periódica si y sólo si existe el período, un número $T > 0$ que cumple con la condición:
+\begin{equation}
+	x(t) = x(t+T),
+\end{equation}
+para todo valor de $t$. Como ejemplos, veamos las siguientes funciones elementales y comprobemos su periodicidad:
+\begin{align}
+	x_1(t) &= \cos(\omega_0 \, t) = \cos\left(\omega_0 \left(t + \frac{2\pi}{\omega_0}\right)\right) = \cos(\omega_0 \, t + 2\pi), \\
+	x_2(t) &= e^{j \omega_0 t} = e^{j \omega_0 \left(t + \frac{2\pi}{\omega_0}\right)} = e^{j \omega_0 t} e^{j 2\pi} = e^{j \omega_0 t}.
+\end{align}
+
+Para una señal periódica $x(t)$ con período fundamental $T = \frac{2\pi}{\omega_0}$, la representación en serie de Fourier (Ecuación de Síntesis) está dada por la suma ponderada de exponenciales complejas armónicamente relacionadas:
+\begin{equation}
+	x(t) = \sum_{k=-\infty}^{\infty} c_k \, e^{j k \omega_0 t}
+\end{equation}
+donde los coeficientes espectrales $c_k$ se calculan mediante la Ecuación de Análisis:
+\begin{equation}
+	c_k = \frac{1}{T} \int_{T} x(t) \, e^{-j k \omega_0 t} \, dt
+\end{equation}
+
+\section{Ejercicios}
+
+% Signals and Systems with Matlab 2009, pages 65 - 67
+
+\begin{enumerate}
+	\item Obtenga coeficientes de Fourier (para una serie expresada como suma ponderada de exponenciales imaginarias) para una señal triangular obtenida integrando la señal cuadrada $x_{5}(t)$ definida previamente en la ecuación (\ref{squarewave}). Grafique el espectro correspondiente.
+	
+	\item Obtenga coeficientes de Fourier (para una serie expresada como suma ponderada de exponenciales imaginarias) para una señal triangular obtenida integrando la señal $x_{6}(t)$ definida en la ecuación (\ref{squarewaveone.1}). Grafique el espectro correspondiente.
+	
+	\item Obtenga coeficientes de Fourier (para una serie expresada como suma ponderada de exponenciales imaginarias) para el tren de pulsos rectangulares periódico de período $T$, tal que $0 < T_{1} \leq T$, definido en un período fundamental como:
+	\begin{equation}
+		x_{7}(t) = \begin{cases}
+			1, & |t| \leq \frac{T_{1}}{2}, \\
+			0, & \frac{T_{1}}{2} < |t| \leq \frac{T}{2}.
+		\end{cases}
+	\end{equation}
+	Compruebe analíticamente que los coeficientes $c_k$ se pueden definir como una envolvente tipo "Sinc":
+	\begin{equation}
+		c_{k} = \frac{1}{T} \int_{-T_1/2}^{T_1/2} 1 \cdot e^{-j k \omega_0 t} \, dt = \frac{\sin\left(k \, \omega_0 \, \frac{T_{1}}{2}\right)}{k \, \pi} = \frac{T_1}{T} \text{sinc}\left(k \, \omega_0 \, \frac{T_1}{2}\right)
+	\end{equation}
+\end{enumerate}

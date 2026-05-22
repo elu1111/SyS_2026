@@ -1,0 +1,78 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[utf8]{inputenc}
+% \usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{epstopdf} %%package to overcome problem with eps in pdf files
+\usepackage{color}
+\usepackage{listings}
+% \usepackage[dvips]{graphicx}
+
+\usepackage{listings}
+\addtolength{\textwidth}{2cm}
+\pagestyle{plain}
+
+\def\chaptername{Cap\'{\i}tulo}
+\def\figurename{Figura}
+\def\contentsname{Contenidos}
+
+\begin{document}
+
+\author{Daniel W. Berns}
+\title{Se\~{n}ales y Sistemas}
+\date{17 de marzo de 2025}
+
+\maketitle
+\tableofcontents
+
+
+\input{define.tex}
+
+\input{chapter-04.tex} % Introducci\'{o}n a Matlab
+
+\input{chapter-01.tex} % Sen\~{n}ales (y Sistemas)
+
+\input{chapter-03.tex} % Composici\'{o}n de se\~{n}ales
+
+\input{chapter-02.tex} % Sistemas (y Se\~{n}ales)
+
+\input{chapter-05.tex} % Suma de convoluci\'{o}n
+
+\input{chapter-06.tex} % Propiedades de sistemas LIT y la suma de convoluci\'{o}n
+
+\input{chapter-11.tex} % Convoluci\'{o}n continua
+
+\input{chapter-12.tex} % Propiedades de sistemas LIT y la integral de convoluci\'{o}n
+
+\input{chapter-13.tex} % Series de Fourier de tiempo continuo
+
+\input{chapter-14.tex} % Transformada de Fourier de tiempo continuo
+
+\input{chapter-15.tex} % Transformada de Laplace
+
+\input{chapter-16.tex} % Ecuaciones diferenciales y la transformada de Laplace
+
+\input{chapter-18.tex} % Respuesta en frecuencia TC
+
+\input{chapter-17.tex} % Muestreo en el tiempo
+
+\input{chapter-07.tex} % Series de Fourier de tiempo discreto
+
+\input{chapter-08.tex} % Transformada de Fourier de tiempo discreto
+
+\input{chapter-09.tex} % Transformada Zeta
+
+\input{chapter-10.tex} % Ecuaciones de diferencias finitas
+
+\input{chapter-19.tex} % Respuesta en frecuencia TD
+
+\input{chapter-20.tex} % Filtros
+
+% \input{chapter-21.tex} % igual a chapter-20.tex
+
+\input{chapter-22.tex} % Filtros de tiempo discreto
+
+\input{chapter-23.tex} % Ejemplos
+
+
+\end{document}
+ 

@@ -1,0 +1,564 @@
+\chapter{Respuesta en frecuencia de sistemas LIT TC}
+
+\section{Respuesta en frecuencia}
+
+Si la entrada a un sistema de tiempo continuo es $x\left( t\right) =e^{st},$ 
+entonces la salida es $y\left( t\right) =H\left( s\right) e^{st}$ donde
+\begin{equation}
+        H\left( s\right) =\int_{-\infty }^{\infty }h\left( \tau \right) e^{-s \, \tau} \, d\tau ,
+\end{equation}
+en la cual $h\left( t\right) $ es la respuesta al impulso del sistema LIT.
+En el caso general de $s$ complejo, $H\left( s\right) $ es la funci\'{o}n del sistema. 
+En el caso $\Re\left( s\right) =0\rightarrow s=j \, \omega $ y $x\left( t\right) =e^{s \, t}=e^{j \, \omega \, t},$ 
+la respuesta en frecuencia del sistema esta definida por 
+\begin{equation}
+        H\left( j\omega \right) =\int_{-\infty }^{\infty }h\left( t\right) e^{-j\omega t}dt.
+\end{equation}
+La salida $y\left( t\right) $ para una entrada 
+\begin{equation}
+        x\left( t\right) =\sum_{k=-\infty }^{\infty }a_{k}e^{jk\omega t},
+\end{equation}
+est\'{a} dada entonces por 
+\begin{equation}
+        y\left( t\right) =\sum_{k=-\infty }^{\infty }a_{k}H\left( j\omega k\right) e^{jk\omega t}.
+\end{equation}
+
+\subsection{Ejemplo}
+
+\begin{enumerate}
+\item Sea un sistema con respuesta al impulso dada por 
+\begin{equation}
+h\left( t\right) =e^{-t}u\left( t\right) ,
+\end{equation}
+y una entrada dada por 
+\begin{equation}
+x\left( t\right) =\sum_{k=-3}^{3}a_{k}e^{jk2\pi t},
+\end{equation}
+donde 
+\begin{equation}
+\begin{array}{ccccc}
+a_{0} &=&1,&& \\
+&&&& \\
+a_{1} &=&a_{-1}&=&\frac{1}{4}, \\
+&&&& \\
+a_{2} &=&a_{-2}&=&\frac{1}{2}, \\
+&&&& \\
+a_{3} &=&a_{-3}&=&\frac{1}{3}.
+\end{array}
+\end{equation}
+
+\item Calculamos primero la respuesta en frecuencia planteando la integral
+\begin{equation}
+H\left( j\omega \right) =
+  \int_{-\infty }^{\infty }h\left( t\right)e^{-j\omega t}dt.
+\end{equation}
+El sistema dado es causal porque la respuesta al impulso $\delta(t)$ es nula para $t < 0$. Por lo
+tanto, los l\'{i}mites de la integral camb\'{\i}an y resulta
+\begin{equation}
+H\left( j\omega \right) =
+  \int_{0}^{\infty }e^{-\tau }e^{-j\omega \tau}d\tau.
+\end{equation}
+Resolviendo la integral podemos escribir
+\begin{equation}
+H\left( j\omega \right) =
+  -\frac{1}{1+j\omega }\left[ e^{-\left( 1+j\omega\right) \tau }\right] _{0}^{\infty }.
+\end{equation}
+Aplicando la regla de Barrow, obtenemos finalmente
+\begin{equation}
+H\left( j\omega \right) =\frac{1}{1+j\omega }.
+\end{equation}
+
+\item Entonces la salida $y\left( t\right) $ es 
+\begin{equation}
+y\left( t\right) = \sum_{k=-3}^{3}b_{k}e^{jk2\pi t},
+\end{equation}
+donde, en general,
+\begin{equation}
+b_{k} = a_{k} H\left( jk2\pi \right).
+\end{equation}
+Por lo tanto, calculando cada $b_{k}$ obtenemos
+\begin{equation}
+b_{0} = 1,
+\end{equation}
+y
+\begin{equation}
+  \begin{array}{ccc}
+  b_{1} =\frac{1}{4}\left( \frac{1}{1+j2\pi }\right), &&
+  b_{-1}=\frac{1}{4}\left( \frac{1}{1-j2\pi }\right), \\
+  \\
+  b_{2} =\frac{1}{2}\left( \frac{1}{1+j4\pi }\right), &&
+  b_{-2}=\frac{1}{2}\left( \frac{1}{1-j4\pi }\right), \\
+  \\
+  b_{3} =\frac{1}{3}\left( \frac{1}{1+j6\pi }\right), &&
+  b_{-3}=\frac{1}{3}\left( \frac{1}{1-j6\pi }\right).
+  \end{array}
+\end{equation}
+
+\end{enumerate}
+
+\section{Representaci\'{o}n gr\'{a}fica de la respuesta en frecuencia de un sistema LIT}
+
+La respuesta en frecuencia es una funci\'{o}n compleja y debe ser representada gr\'{a}ficamente en
+\begin{enumerate}
+        \item   Forma polar: magnitud y fase.
+        
+        \item   Forma cartesiana: parte real y parte imaginaria.
+\end{enumerate}
+
+Ambas representaciones permiten visualizar distintas propiedades de los sistemas LIT. Por tal motivo las
+estudiaremos por separado.
+
+\subsection{Definiciones}
+
+\subsubsection{Ganancia o atenuaci\'{o}n}
+
+La ganancia y la atenuaci\'{o}n de un filtro son conceptos complementarios, y sus valores est\'{a}n 
+determinados por la magnitud de la respuesta en frecuencia. Dado que la salida de un filtro $y$ para
+una entrada peri\'{o}dica $x$ queda determinada por 
+\begin{equation}
+        y(t) = H(j \omega) x(t),
+\end{equation}
+para tiempo continuo. El m\'{o}dulo de la funci\'{o}n compleja $\| H \|$ determina la 
+variaci\'{o}n del tama\~{n}o de la salida respecto a la entrada. Hablamos de ganancia cuando deseamos 
+saber cuanto queda ampliada la salida respecto a la entrada, y hablamos de atenuaci\'{o}n cuando deseamos 
+saber cuanto queda disminuida la salida respecto a la entrada. Dado que por lo general
+los filtros amplian determinadas frecuencias y disminuyen otras, hablar de ganancia o atenuaci\'{o}n es 
+equivalente a elegir un punto de vista ($G = 1 - A$).
+
+\subsubsection{Fase}
+
+La fase de un filtro es la fase de la respuesta en frecuencia (funci\'{o}n compleja) $H(j \omega)$ en 
+tiempo continuo o $H(e^{j \omega})$ para tiempo discreto.
+
+\subsubsection{Fase lineal y no lineal}
+
+Cuando la fase del filtro es una funci\'{o}n \textbf{lineal} de $\omega$, hay una interpretaci\'{o}n 
+simple de su efecto en el dominio del tiempo. Consideremos el sistema de tiempo continuo con respuesta en 
+frecuencia
+\begin{equation}
+        H( j \omega) = e^{j \omega t_{0}},
+\end{equation}
+donde la ganancia es $1$ para toda frecuencia y fase lineal
+\begin{equation}
+        |H(j \omega)| = 1, \angle H(j w) = -\omega t_{0}.
+\end{equation}
+La salida de este sistema es igual a su entrada desplazada en el tiempo
+\begin{equation}
+        y(t) = x(t - t_{0}.
+\end{equation}
+% ver ejemplo 4.15 en el oppenheim, willsky y nawab
+
+\subsubsection{Retraso de grupo}
+\begin{equation}
+        \tau (\omega) = -\frac{d \angle H(j \omega)}{d\omega}.
+\end{equation}
+
+\section{Gr\'{a}ficos de Bode}
+
+\subsection{Sistemas de primer orden de tiempo continuo}
+
+Consideremos la siguiente ecuaci\'{o}n diferencial 
+\begin{equation}
+\tau \frac{dy\left( t\right) }{dt}+y\left( t\right) =x\left( t\right) .
+\end{equation}
+
+\begin{enumerate}
+\item  La funci\'{o}n de transferencia es 
+\begin{equation}
+        H\left( s\right) =\frac{1}{s\tau +1},
+\end{equation}
+con un polo en 
+\begin{equation}
+        s=-\frac{1}{\tau }.
+\end{equation}
+
+\item  La funci\'{o}n de respuesta en frecuencia es 
+\begin{equation}
+H\left( j\omega \right) =\frac{1}{j\omega \tau +1}.
+\end{equation}
+
+\item  La respuesta al impulso es 
+\begin{equation}
+        h_{1}\left( t\right) =\frac{1}{\tau }e^{-\frac{t}{\tau }}u\left( t\right) .
+\end{equation}
+
+\item  La respuesta al escal\'{o}n es 
+\begin{equation}
+        h_{2}\left( t\right) =h_{1}\left( t\right)  u\left( t\right) =
+                \left(1-e^{-\frac{t}{\tau }}\right) u\left( t\right) .
+\end{equation}
+
+\item  El parametro $\tau $ es la constante de tiempo del sistema y controla la derivada de la salida. 
+Comparemos la respuesta al impulso con la respuesta en frecuencia 
+\begin{eqnarray}
+        \tau h\left( t\right) &=&e^{-\frac{t}{\tau }}u\left( t\right) , \\
+        H\left( j\omega \right) &=&\frac{1}{j\omega \tau +1}.
+\end{eqnarray}
+\end{enumerate}
+
+\paragraph{La funci\'{o}n magnitud de Bode para sistemas de primer orden}
+Consideremos la funci\'{o}n magnitud de Bode 
+\begin{equation}
+        20\log _{10}\left\| H\left( j\omega \right) \right\| =
+                -10\log _{10}\left(\left( \omega \tau \right) ^{2}+1\right) .  \label{magbode}
+\end{equation}
+
+\paragraph{Simplificaci\'{o}n de la funci\'{o}n magnitud de Bode para sistemas de primer orden}
+La funci\'{o}n (\ref{magbode}) puede simplificarse seg\'{u}n el valor que toma la variable $\omega $
+\begin{enumerate}
+   \item  (forma normalizada) 
+   \begin{equation}
+      \omega \tau <1\rightarrow 20\log _{10}\left\| H\left( j\omega \right)\right\| 
+          \approx -10\log _{10}\left( 1\right) =0,
+   \end{equation}
+   o (forma no normalizada) 
+   \begin{equation}
+      \omega <\frac{1}{\tau }\rightarrow 20\log _{10}\left\| H\left( j\omega\right) \right\| \approx 0.
+   \end{equation}
+
+   \item  (forma normalizada) 
+   \begin{equation}
+      \omega \tau >1\rightarrow 20\log _{10}\left\| H\left( j\omega \right)\right\| 
+          \approx -20\log _{10}\left( \omega \tau \right) ,
+   \end{equation}
+   o (forma no normalizada) 
+   \begin{equation}
+      \omega >\frac{1}{\tau }\rightarrow 20\log _{10}\left\| H\left( j\omega\right) \right\| 
+          \approx -20\log _{10}\left( \omega \right) + 20\log_{10}\left( \frac{1}{\tau }\right) .
+   \end{equation}
+\end{enumerate}
+Esto significa que la funci\'{o}n (\ref{magbode}) tiene dos as\'{\i}ntotas. 
+Dado que el gr\'{a}fico se realiza con escalas logaritmicas en ambos ejes, estas as\'{\i}ntotas son rectas.
+
+\paragraph{As\'{\i}ntotas de la funci\'{o}n magnitud de Bode para sistemas de primer orden}
+La funci\'{o}n (\ref{magbode}) puede aproximarse por as\'{\i}ntotas seg\'{u}n el valor que toma la 
+variable $\omega.$
+\begin{enumerate}
+   \item  As\'{\i}ntota de baja frecuencia, coincidente con la l\'{\i}nea de $0db, $
+   \item  As\'{\i}ntota de alta frecuencia, con una pendiente de $20db$ por d\'{e}cada.
+   \item  Estas as\'{\i}ntotas se intersectan cuando $\omega \tau =1$ (forma normalizada) o 
+     $\omega =\frac{1}{\tau }$ (forma no normalizada).
+   \item  El punto de intersecci\'{o}n de las as\'{\i}ntotas se llama frecuencia de quiebre.
+\end{enumerate}
+
+Estas as\'{\i}ntotas nos brindan la posibilidad de aproximar r\'{a}pidamente la 
+funci\'{o}n (\ref{magbode}). En la frecuencia de quiebre, tenemos adem\'{a}s que el verdadero valor de la 
+funci\'{o}n (\ref{magbode}) es 
+\begin{equation}
+    20\log _{10}\left\| H\left( j\omega \right) \right\| =-10\log _{10}\left(2\right) \approx -3db.
+\end{equation}
+
+Consideremos ahora la funci\'{o}n fase de Bode 
+\begin{equation}
+\angle H\left( j\omega \right) =\arctan \left( \omega \tau \right) . \label{faseBode}
+\end{equation}
+Esta funci\'{o}n tambien puede aproximarse por distintas rectas para distintos rangos de frecuencia. 
+Recordemos el uso de escala logaritmica en el eje de la frecuencia.
+\begin{equation}
+\begin{array}{r}
+   \omega \tau \leq \frac{1}{10}\rightarrow \arctan \left( \omega \tau \right) =0, \\ 
+    \frac{1}{10}\leq \omega \tau \leq 10\rightarrow \arctan \left( \omega \tau \right) =
+        -\left( \frac{\pi }{4}\right) \left( \log _{10}\left( \omega \tau \right) +1\right) , \\ 
+   \arctan \left( \omega \tau \right) =-\frac{\pi }{2}.
+\end{array}
+\end{equation}
+En la frecuencia de quiebre, tenemos adem\'{a}s que el verdadero valor de la funci\'{o}n 
+(\ref{faseBode}) es 
+\begin{equation}
+\angle H\left( j\omega \right) =\arctan \left( 1\right) =\frac{\pi }{4}.
+\end{equation}
+
+\subsection{Sistemas de segundo orden de tiempo continuo}
+
+Consideremos la ecuaci\'{o}n diferencial 
+\begin{equation}
+   \frac{d^{2}y\left( t\right) }{dt^{2}}+
+   2\zeta \omega_{n}\frac{dy\left(t\right) }{dt}+
+   \omega_{n}^{2}y\left( t\right) =\omega _{n}^{2}x\left(t\right) .
+\end{equation}
+
+\begin{enumerate}
+\item  La funci\'{o}n de transferencia correspondiente es 
+\begin{equation}
+  H\left( s\right) =\frac{\omega _{n}^{2}}{s^{2}+2\zeta \omega _{n}s+\omega_{n}^{2}}.
+\end{equation}
+
+\item  La respuesta en frecuencia es 
+\begin{equation}
+   H\left( j\omega \right) =
+   \frac{\omega _{n}^{2}}{\left( \omega_{n}^{2}-\omega^{2}\right) +j2\zeta \omega_{n}\omega },
+\end{equation}
+que se puede factorear como 
+\begin{equation}
+  H\left( j\omega \right) =
+  \frac{\omega _{n}^{2}}{\left( j\omega-c_{1}\right) \left( j\omega -c_{2}\right) },
+\end{equation}
+donde 
+\begin{equation}
+c_{1}=\omega _{n}\left( -\xi +\sqrt{\xi ^{2}-1}\right) ,
+\end{equation}
+y 
+\begin{equation}
+c_{1}=\omega _{n}\left( -\xi -\sqrt{\xi ^{2}-1}\right) .
+\end{equation}
+
+\item La respuesta al impulso la calculamos aplicando expansi\'{o}n en fracciones parciales y la 
+antitransformada de Laplace.
+\begin{enumerate}
+\item  Observemos que 
+\begin{equation}
+\xi \neq 1\rightarrow c_{1}\neq c_{2},
+\end{equation}
+y podemos hacer una expansi\'{o}n en fracciones parciales de la forma 
+\begin{equation}
+H\left( j\omega \right) =\frac{M}{j\omega -c_{1}}-\frac{M}{j\omega -c_{2}},
+\end{equation}
+donde 
+\begin{equation}
+M=\frac{\omega _{n}}{2\sqrt{\xi ^{2}-1}}.
+\end{equation}
+Por lo tanto, la respuesta al impulso para este caso es 
+\begin{equation}
+h_{1}\left( t\right) =M\left( e^{c_{1}t}-e^{c_{2}t}\right) u\left( t\right) .
+\end{equation}
+
+\item  En cambio, si
+\begin{equation}
+\xi =1\rightarrow c_{1}=c_{2}=-\omega _{n},
+\end{equation}
+y 
+\begin{equation}
+H\left( j\omega \right) =
+  \frac{\omega _{n}^{2}}{\left( j\omega -\omega_{n}\right) ^{2}},
+\end{equation}
+y la respuesta al impulso correspondiente es 
+\begin{equation}
+h_{1}\left( t\right) =\omega _{n}^{2}te^{-\omega _{n}t}u\left( t\right) .
+\end{equation}
+\end{enumerate}
+
+\item  La respuesta al escal\'{o}n $h_{2}\left( t\right) $ puede calcularse mediante la convoluci\'{o}n 
+\begin{equation}
+h_{2}\left( t\right) = h_{1}\left( t\right) * u\left( t\right) .
+\end{equation}
+
+\begin{enumerate}
+\item  En el caso 
+\begin{equation}
+\xi \neq 1\rightarrow c_{1}\neq c_{2},
+\end{equation}
+tenemos que la respuesta al impulso es 
+\begin{equation}
+h_{1}\left( t\right) =M\left( e^{c_{1}t}-e^{c_{2}t}\right) u\left( t\right) ,
+\end{equation}
+y por lo tanto la respuesta al escal\'{o}n es 
+\begin{equation}
+h_{2}\left( t\right) =\left( 1+M\left( \frac{e^{c_{1}t}}{c_{1}}-\frac{%
+e^{c_{2}t}}{c_{2}}\right) \right) u\left( t\right) .
+\end{equation}
+
+\item  En el caso 
+\begin{equation}
+\xi =1\rightarrow c_{1}=c_{2}=-\omega _{n},
+\end{equation}
+tenemos que la respuesta al impulso correspondiente es 
+\begin{equation}
+h_{1}\left( t\right) =\omega _{n}^{2}te^{-\omega _{n}t}u\left( t\right) ,
+\end{equation}
+y por lo tanto la respuesta al escal\'{o}n es 
+\begin{equation}
+h_{2}\left( t\right) =\left( 1-e^{-\omega _{n}t}-\omega _{n}te^{-\omega
+_{n}t}\right) u\left( t\right) .
+\end{equation}
+\end{enumerate}
+
+\item  Es posible obtener una expresi\'{o}n normalizada para la respuesta en frecuencia.
+
+\begin{enumerate}
+\item  Observe que podemos escribir, dividiendo el numerador y el
+denominador por $\omega _{n}^{2},$
+\begin{equation}
+H\left( j\omega \right) =\frac{1}{\left( \frac{j\omega }{\omega _{n}}%
+\right) ^{2}+2\xi \left( \frac{j\omega }{\omega _{n}}\right) +1},
+\end{equation}
+obteniendo la forma normalizada de un sistema de segundo orden.
+
+\item  En este caso, la respuesta en frecuencia es funci\'{o}n de $\frac{\omega }{\omega _{n}}$. 
+El cambio de $\omega _{n}$ equivale a cambiar una escala en tiempo y frecuencia.
+\end{enumerate}
+
+\item  El par\'{a}metro $\xi $ es el coeficiente de amortiguamiento, y $\omega _{n}$ es la 
+frecuencia natural de oscilaci\'{o}n. La raz\'{o}n de estos nombres se puede entender observando las 
+respuestas al impulso y al escal\'{o}n. 
+
+\begin{enumerate}
+\item  En el caso $0<\xi <1,$ los coeficientes $c_{1}$ y $c_{2}$ son
+complejos, y la respuesta al impulso puede escribirse en la forma
+\begin{equation}
+h_{1}\left( t\right) =\frac{\omega _{n}e^{-\xi \omega _{n}t}}{2j\sqrt{1-\xi
+^{2}}}\left( e^{j\omega _{n}\sqrt{1-\xi ^{2}}t}-e^{j\omega _{n}\sqrt{1-\xi
+^{2}}t}\right) u\left( t\right) .
+\end{equation}
+Reacomodando la expresi\'{o}n, obtenemos
+\begin{equation}
+h_{1}\left( t\right) =\frac{\omega _{n}e^{-\xi \omega _{n}t}}{\sqrt{1-\xi
+^{2}}}\frac{\left( e^{j\omega _{n}\sqrt{1-\xi ^{2}}t}-e^{j\omega _{n}\sqrt{%
+1-\xi ^{2}}t}\right) }{2j}u\left( t\right) ,
+\end{equation}
+equivalente a
+\begin{equation}
+h_{1}\left( t\right) =\frac{\omega _{n}}{\sqrt{1-\xi ^{2}}}e^{-\xi \omega
+_{n}t}\sin \left( \omega _{n}\sqrt{1-\xi ^{2}}t\right) u\left( t\right) .
+\end{equation}
+Esto significa que el movimiento es oscilatorio amortiguado, y se dice en
+este caso que el sistema es subamortiguado.
+
+\item  En el caso $\xi >1,$ los coeficientes $c_{1}$ y $c_{2}$ son negativos
+y la respuesta al impulso es la diferencia entre dos exponenciales
+decrecientes 
+\begin{equation}
+h_{1}\left( t\right) =M\left( e^{-\left| c_{1}\right| t}-e^{-\left|
+c_{1}\right| t}\right) u\left( t\right) .
+\end{equation}
+En este caso el sistema es sobreamortiguado.
+
+\item  En el caso $\xi =1,$ cuando $c_{1}=c_{2}=-\omega _{n},$ decimos que
+el sistema es criticamente amortiguado 
+\begin{equation}
+h_{1}\left( t\right) =\omega _{n}^{2}te^{-\omega _{n}t}u\left( t\right) .
+\end{equation}
+\end{enumerate}
+
+\item  La funci\'{o}n magnitud de Bode para un sistema con respuesta en
+frecuencia normalizada  
+\begin{equation}
+H\left( j\omega \right) =\frac{1}{\left( 1-\left( \frac{\omega }{\omega
+_{n}}\right) ^{2}\right) +j2\zeta \left( \frac{\omega }{\omega _{n}}\right) 
+},
+\end{equation}
+est\'{a} dada por
+\begin{equation}
+20\log _{10}\left\| H\left( j\omega \right) \right\| =-20\log _{10}\left[ 
+\sqrt{\left( 1-\left( \frac{\omega }{\omega _{n}}\right) ^{2}\right)
+^{2}+4\zeta ^{2}\left( \frac{\omega }{\omega _{n}}\right) ^{2}}\right] ,
+\end{equation}
+que se simplifica
+\begin{equation}
+20\log _{10}\left\| H\left( j\omega \right) \right\| =-10\log _{10}\left[
+\left( 1-\left( \frac{\omega }{\omega _{n}}\right) ^{2}\right) ^{2}+4\zeta
+^{2}\left( \frac{\omega }{\omega _{n}}\right) ^{2}\right] .
+\end{equation}
+Note que las as\'{\i}ntotas para esta funci\'{o}n son
+\begin{equation}
+\omega \ll \omega _{n}\rightarrow 20\log _{10}\left\| H\left( j\omega
+\right) \right\| \approx 0,
+\end{equation}
+y
+\begin{equation}
+\omega \gg \omega _{n}\rightarrow 20\log _{10}\left\| H\left( j\omega
+\right) \right\| \approx -40\log _{10}\omega +40\log _{10}\omega _{n}.
+\end{equation}
+\end{enumerate}
+
+\section{Diagramas de Bode para respuestas en frecuencias racionales}
+
+Supongamos que deseamos realizar el diagrama de Bode para un sistema cuya
+funci\'{o}n de transferencia es 
+\begin{equation}
+H\left( s\right) =\frac{P\left( s\right) }{Q\left( s\right) }=\frac{%
+\sum_{i=0}^{N}a_{i}s^{i}}{\sum_{j=0}^{M}b_{j}s^{j}},
+\end{equation}
+donde $M>N.$ Para poder hacer el gr\'{a}fico de la magnitud y de la fase de la
+respuesta en frecuencia nos conviene llevar a cabo los siguientes pasos:
+
+\begin{enumerate}
+\item  Encontrar los ceros de los polin\'{o}mios $P\left( s\right) $ y $Q\left(
+s\right) $. Recordemos que un polin\'{o}mio con coeficientes reales tiene ceros
+reales o complejos conjugados. Lo que nos interesa es escribir los
+polin\'{o}mios como producto de factores con las formas:
+
+\begin{enumerate}
+\item  $m,$ donde $m$ es un n\'{u}mero real.
+
+\item  $s,$ cuando la ra\'{\i}z del polin\'{o}mio es nula.
+
+\item  $\left( s+c\right) $ donde $c$ es un n\'{u}mero real no nulo.
+
+\item  $\left( s+d\right) ^{2}+e^{2}$ donde $-d+je$ y $-d-je$
+son ra\'{\i}ces complejas conjugadas.
+\end{enumerate}
+
+\item  Supongamos que tenemos los polin\'{o}mios $P\left( s\right) $ y $Q\left(
+s\right) $ tienen la forma general $G\left( s\right) $ 
+\begin{equation}
+        G\left( s\right) =
+                m\left( \prod_{i=1}^{R}s+c_{i}\right) 
+                \left(
+                        \prod_{k=1}^{S}s^{2}+2d_{k}s+\left( d_{k}^{2}+e_{k}^{2}\right) 
+                \right) s^{T},
+\end{equation}
+
+\item  Podemos escribir por lo tanto la funci\'{o}n de transferencia como
+una productoria de funciones parciales normalizadas 
+\begin{equation}
+H\left( s\right) =\prod_{k=1}^{U}H_{k}\left( s\right) ,
+\end{equation}
+donde las funciones $H_{k}\left( s\right) $ tiene la forma
+
+\begin{enumerate}
+\item  $B_{1}\left( s\right) =K,$ donde $K$ es un n\'{u}mero real,
+
+\item  $B_{2}\left( s\right) =\frac{1}{\frac{s}{c_{i}}+1 },$
+
+\item  $B_{3}\left( s\right) =\frac{1}{ \frac{s^{2}}{\left(
+d_{k}^{2}+e_{k}^{2}\right) }+\frac{2d_{k}}{\left(
+d_{k}^{2}+e_{k}^{2}\right) }s+1 },$
+
+\item  $B_{4}\left( s\right) =\frac{1}{s^{T}},$ donde $T$ es un n\'{u}mero
+entero,
+
+\item  $B_{5}\left( s\right) = \frac{s}{c_{i}}+1 ,$
+
+\item  $B_{6}\left( s\right) = \frac{s^{2}}{\left(
+d_{k}^{2}+e_{k}^{2}\right) }+\frac{2d_{k}}{\left(
+d_{k}^{2}+e_{k}^{2}\right) }s+1 ,$
+
+\item  $B_{7}\left( s\right) =s^{T},$ donde $T$ es un n\'{u}mero entero.
+\end{enumerate}
+
+\item  Grafiquemos por separado las magnitudes y fases de cada una de las
+funciones $H_{k}\left( j\omega \right) .$ Observe que aunque no hemos
+estudiado en particular los casos $B_{5},$ $B_{6}$ y $B_{7},$ estamos en
+condiciones de obtener las funciones magnitud y fase de Bode correspodientes
+dado que se verifican las siguientes igualdades 
+\begin{equation}
+\left\| B_{2}\left( j\omega \right) \right\| =\frac{1}{\left\| B_{1}\left(
+j\omega \right) \right\| },
+\end{equation}
+y 
+\begin{equation}
+\angle B_{2}\left( j\omega \right) =-\angle B_{1}\left( j\omega \right) .
+\end{equation}
+
+\item  Dada la especial definici\'{o}n de la funci\'{o}n magnitud de Bode y las
+propiedades de los n\'{u}meros complejos, podemos obtener las funciones magnitud
+y fase del sistema completo sumando las funciones correspondientes de los
+factores $H_{k}\left( j\omega \right) .$
+\end{enumerate}
+
+\subsection{Ejemplos}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=3in]{./graphics/bodeone.eps}
+  \caption{Diagrama de bode para un sistema con un polo}
+  \label{bodeoneeps}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=3in]{./graphics/bodetwo.eps}
+  \caption{Diagrama de bode para un sistema con dos polos}
+  \label{bodetwoeps}
+\end{figure}
+

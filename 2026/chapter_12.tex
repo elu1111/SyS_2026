@@ -1,0 +1,939 @@
+\chapter{Transformada de Laplace y ecuaciones diferenciales}
+
+En los sistemas lineales, invariantes en el tiempo, de tiempo continuo
+la entrada y la salida est\'{a}n relacionadas por 
+
+\begin{enumerate}
+	\item   una ecuaci\'{o}n diferencial ordinaria 
+	\begin{equation}
+		\frac{d^{P}y\left( t\right) }{dt^{P}} +
+		\left(\sum_{p=1}^{P-1}a_{p} \, \frac{d^{p}y\left( t\right) }{dt^{p}}\right) + 
+		a_{0} \, y(t) =
+		\left(\sum_{q=1}^{Q}b_{q} \, \frac{d^{q}x\left( t\right) }{dt^{q}}\right) + 
+		b_{0} \, x(t).
+	\end{equation}
+	donde $P > Q$.
+	
+	\item   la integral de convoluci\'{o}n
+	\begin{equation}
+		y\left( t\right) = \int_{-\infty }^{\infty} x\left( \tau \right) h\left( t-\tau \right) d\tau.
+	\end{equation}
+\end{enumerate}
+
+Ambas formas están relacionadas por la transformada de Laplace. Empezaremos estudiando la equivalencia entre ambas formas de cálculo para entradas de la forma $x(t) = e^{s \,  t}$, y despu\'{e}s generalizaremos para otro tipo de entradas.
+
+\section{Respuesta de sistemas lineales para entradas exponenciales complejas}
+
+\subsection{C\'{a}lculo mediante convoluci\'{o}n}
+
+\begin{enumerate}
+	\item Sea el sistema definido por la integral de convoluci\'{o}n, 
+	\begin{equation}
+		y\left( t\right) =
+		\int_{-\infty }^{\infty }h\left( \tau \right) \, x\left(t-\tau
+		\right) \, d\tau ,
+	\end{equation}
+	donde $h\left( t\right) $ es la respuesta al impulso, $x\left( t\right) $ es la entrada e $y\left( t\right) $ es la salida correspondiente.
+	
+	\item Supongamos una entrada exponencial compleja eterna
+	\begin{equation}
+		x\left( t\right) =X(s) \, e^{s \, t}.
+	\end{equation}
+	
+	\item Por lo tanto, la integral de convoluci\'{o}n correspondiente es 
+	\begin{equation}
+		y\left( t\right) =\int_{-\infty }^{\infty }h\left( \tau \right) \,
+		X(s) \, e^{s \, \left(t-\tau \right) } \, d\tau ,
+	\end{equation}
+	que puede expresarse como 
+	\begin{equation}
+		y\left( t\right) =
+		\left( \int_{-\infty }^{\infty }h\left( \tau\right) \, e^{-s\tau }
+		\, d\tau \right) \,  X(s) \, e^{s \, t} =
+		H\left( s\right) \, X(s) \, e^{s \, t}.
+	\end{equation}
+	donde 
+	\begin{equation}
+		H\left( s\right) =\int_{-\infty }^{\infty }h\left( \tau \right) e^{-s\tau}d\tau,
+		\label{laplacebilateral}
+	\end{equation}
+	es la transformada de Laplace bilateral de la respuesta al impulso del sistema.
+	
+	\item Supongamos ahora una entrada exponencial compleja para $t \geq 0$
+	\begin{equation}
+		x\left( t\right) = X(s) \, e^{s \, t} \, u(t).
+	\end{equation}
+	
+	\item Por lo tanto, la integral de convoluci\'{o}n correspondiente es 
+	\begin{equation}
+		y\left( t\right) =
+		\int_{-\infty}^{\infty }h\left( t - \tau \right) \, X(s) \, e^{s \, \tau} \, u(\tau) \, d\tau ,
+	\end{equation}
+	que puede expresarse como 
+	\begin{equation}
+		y\left( t\right) =
+		\left( \int_{0}^{\infty }h\left(t - \tau\right) \, X(s) \,  e^{s \, \tau} \, d\tau \right) \, u(t).
+	\end{equation}
+	Por lo tanto, $y(t) = 0$ para $t < 0$. Además, si el sistema es causal, $h(t) = 0$ para $t < 0$.
+	
+	\item Finalmente
+	\begin{equation}
+		y(t) =
+		\left(\int_{0}^{\infty }h\left(\tau\right) e^{- s \, \tau} d\tau\right) \, u(t) \, X(s) \, e^{s \, t}= 
+		H^{+}(s) \, X(s) \, e^{s \, t} \, u(t).
+		\label{laplaceunilateral}
+	\end{equation}
+	
+	\item La función $H(s)$ es la función de transferencia del sistema, que determina la relación entre la salida $y(t)$ y la entrada $x(t)$.
+	
+	\item Si el sistema es no causal o la entrada es distinta de cero para $t < 0$ debemos emplear la transformada bilateral. Si el sistema es causal y la entrada es nula para $t < 0$ entonces usamos la transformada unilateral.
+\end{enumerate}
+
+\subsection{Calculo de $y(t)$ con la ecuación diferencial}
+
+\begin{enumerate}
+	\item Supongamos que tenemos una ecuación diferencial de la forma
+	\begin{equation}
+		\frac{d^{P}y\left( t\right) }{dt^{P}} +
+		\left(\sum_{p=1}^{P-1}a_{p} \, \frac{d^{p}y\left( t\right) }{dt^{p}}\right) + 
+		a_{0} \, y(t) =
+		\left(\sum_{q=1}^{Q}b_{q} \, \frac{d^{q}x\left( t\right) }{dt^{q}}\right) + 
+		b_{0} \, x(t).
+		\label{conv.difeq.1}
+	\end{equation}
+	donde $P > Q$.
+	
+	\item Vamos a suponer que $x(t) = X(s) \, e^{s \, t}$ y que $y(t) = Y(s) \, e^{s \, t}$.
+	
+	\item Por lo tanto
+	\begin{equation}
+		\frac{d^{p}y\left( t\right) }{dt^{p}} = Y(s) \, s^{p} \, e^{s \, t},
+	\end{equation}
+	y
+	\begin{equation}
+		\frac{d^{q}x\left( t\right) }{dt^{q}} = X(s) \, s^{q} \, e^{s \, t}.
+	\end{equation}
+	
+	\item Reemplazando en la ecuación diferencial (\ref{conv.difeq.1}), tenemos
+	\begin{equation}
+		Y(s) \, s^{P} \, e^{s \, t} +
+		\left(\sum_{p=1}^{P-1}a_{p} \, Y(s) \, s^{p} \, e^{s \, t}\right) + 
+		a_{0} \, Y(s) \, e^{s \, t} =
+		\left(\sum_{q=1}^{Q}b_{q} \, X(s) \, s^{q} \, e^{s \, t}\right) + 
+		b_{0} \, X(s) \, e^{s \, t}.
+		\label{conv.difeq.2}
+	\end{equation}
+	
+	\item Podemos agrupar
+	\begin{equation}
+		Y(s) \, \left(s^{P}  +
+		\left(\sum_{p=1}^{P-1}a_{p} \, s^{p}\right) + 
+		a_{0} \right) \, e^{s \, t} =
+		X(s) \, \left(\left(\sum_{q=1}^{Q}b_{q} \, s^{q}\right) + 
+		b_{0} \right) \, e^{s \, t}.
+		\label{conv.difeq.3}
+	\end{equation}
+	
+	\item Dado que $e^{s \, t} \neq 0$ para todo valor de $s$ y $t$, entonces podemos simplificar
+	\begin{equation}
+		Y(s) \, \left(s^{P}  +
+		\left(\sum_{p=1}^{P-1}a_{p} \, s^{p}\right) + 
+		a_{0} \right) =
+		X(s) \, \left(\left(\sum_{q=1}^{Q}b_{q} \, s^{q}\right) + 
+		b_{0} \right).
+		\label{conv.difeq.4}
+	\end{equation}
+	
+	\item Finalmente podemos despejar
+	\begin{equation}
+		\frac{Y(s)}{X(s)} = \frac{\left(\sum_{q=1}^{Q}b_{q} \, s^{q}\right) + 
+			b_{0}}{s^{P}  +
+			\left(\sum_{p=1}^{P-1}a_{p} \, s^{p}\right) + 
+			a_{0}} = H(s).
+		\label{conv.difeq.5}
+	\end{equation}
+	Esta es la función de transferencia $H(s)$ y es la transformada de Laplace de la respuesta al impulso $h(t)$. Los ceros del denominador de $H(s)$ son los polos del sistema lineal, y determinan su dinámica para cualquier entrada y condición inicial.
+\end{enumerate}
+
+\section{Causalidad}
+
+En el caso de un sistema lineal invariante en el tiempo, un sistema causal tiene una respuesta al impulso $h(t) = 0$ para $t < 0$. La región de convergencia para la transformada de Laplace de esta respuesta al impulso es el semiplano derecho: en otras palabras, todos los polos de la función de transferencia $H(s)$ tienen parte real negativa, y por lo tanto $H(s)$ existe a la derecha del polo que está más a la derecha.
+
+En este caso, como la región de convergencia incluye a todas las $s$ con parte real positiva, se dice que causalidad equivale a que la región de convergencia incluye al semiplano positivo (o semiplano derecho).
+
+\section{Estabilidad}
+
+Las funciones de transferencia cuyos polos no pertenecen al semiplano derecho (o sea, los polos con parte real negativa) son transformadas de Laplace de funciones del tiempo que tienden a $0$ a medida que $t$ tiende a $\infty$.
+
+Por ejemplo, consideremos
+\begin{equation}
+	H(s) = \frac{1}{s + a}.
+\end{equation}
+El polo respectivo es $s=-a$. Si $a$ es una constante positiva, el polo tiene parte real negativa. La funci\'{o}n del tiempo asociada es $h(t) = e^{-a \, t} \, u(t)$.
+
+\section{Ecuaci\'{o}n diferencial lineal homog\'{e}nea}
+
+Para encontrar la soluci\'{o}n de la ecuaci\'{o}n homog\'{e}nea 
+\begin{equation}
+	\frac{d^{P}y_{h}\left( t\right) }{dt^{P}} +
+	\left(\sum_{p=1}^{P-1}a_{p} \, \frac{d^{p}y_{h}\left( t\right) }{dt^{p}}\right) + a_{0} \, y(t)=0,
+\end{equation}
+supongamos que tiene la forma 
+\begin{equation}
+	y_{h}\left( t\right) = Y \, e^{\lambda t} \, u(t).
+\end{equation}
+Sustituyendo en la ecuaci\'{o}n diferencial homog\'{e}nea obtenemos 
+\begin{equation}
+	\left(\lambda^{P} + \left(
+	\sum_{p=1}^{P-1}a_{p} \, \lambda^{p}\right) + a_{0} \, \right) Y \, e^{\lambda t} \, u(t) = 0.
+\end{equation}
+No estamos interesados en la soluci\'{o}n trivial $Y=0$. Por lo tanto tiene que ser 
+\begin{equation}
+	\lambda^{P} + \left(\sum_{p=1}^{P-1}a_{p} \, \lambda^{p}\right) + a_{0} = 0. \label{carpol}
+\end{equation}
+
+\subsubsection{Polinomio característico}
+
+El polinomio (\ref{carpol}) recibe el nombre de polinomio caracter\'{\i}stico y sus ra\'{\i}ces son llamadas frecuencias, modos naturales, y polos del sistema lineal.
+
+\subsubsection{Ejemplo con un polo}
+
+\begin{enumerate}
+	\item Consideremos la ecuaci\'{o}n diferencial 
+	\begin{equation}
+		\frac{dy}{dt}+a_{0} \, y = 0,
+	\end{equation}
+	
+	\item Podemos calcular el polinomio caracter\'{\i}stico suponiendo que la soluci\'{o}n es de la forma
+	\begin{equation}
+		y\left( t\right) = Y \, e^{\lambda \, t}, \qquad
+		\frac{dy}{dt}=\lambda \, Y \, e^{\lambda \, t},
+	\end{equation}
+	para obtener 
+	\begin{equation}
+		\lambda \, Y \, e^{\lambda \, t}+a_{0} \, Y \, e^{\lambda \, t}= 0.
+	\end{equation}
+	
+	\item Finalmente, despejamos
+	\begin{equation}
+		\left(\lambda +a_{0} \right) \, Y \, e^{\lambda \, t}= 0.
+	\end{equation}
+	donde la soluci\'{o}n $\lambda = - a_{0}$ es un polo del sistema.
+\end{enumerate}
+
+\subsubsection{Ejemplo con dos polos}
+
+\begin{enumerate}
+	\item La ecuaci\'{o}n diferencial de una red el\'{e}ctrica RLC relacionando $v\left(t\right) $ e $i\left( t\right) $ es 
+	\begin{equation}
+		C\left( \frac{d^{2} v\left( t\right) }{dt^{2}}+
+		\frac{1}{RC}\frac{dv\left( t\right) }{dt}+
+		\frac{v\left( t\right) }{L \, C} \right) =
+		\frac{di\left( t\right) }{dt}.
+	\end{equation}
+	
+	\item La soluci\'{o}n homog\'{e}nea se obtiene suponiendo $v(t) = V \, e^{\lambda \, t}$ y $\frac{di\left( t\right) }{dt} = 0$
+	\begin{equation}
+		C\left( \lambda^{2} + \frac{\lambda}{RC} + \frac{1}{L \, C} \right) V e^{\lambda t} = 0,
+	\end{equation}
+	
+	\item El polinomio caracter\'{\i}stico es 
+	\begin{equation}
+		\lambda ^{2}+\frac{1}{R \, C} \, \lambda +\frac{1}{L \, C} = 0.
+	\end{equation}
+	
+	\item Sus ra\'{\i}ces son 
+	\begin{equation}
+		\lambda_{1}=-\frac{1}{2 \, R \, C}+\sqrt{\left( \frac{1}{2 \, R \, C}\right) ^{2}-\frac{1}{L \, C}},
+	\end{equation}
+	y 
+	\begin{equation}
+		\lambda_{2}=-\frac{1}{2 \, R \, C}-\sqrt{\left( \frac{1}{2 \, R \, C}\right) ^{2}-\frac{1}{L \, C}}.
+	\end{equation}
+	
+	\item Si $\lambda_{1} \neq \lambda_{2}$ entonces la soluci\'{o}n natural tiene la forma
+	\begin{equation}
+		y_{f}\left( t\right) = c_{1} \, e^{\lambda_{1} \, t} + c_{2} \, e^{\lambda_{2} \, t}.
+	\end{equation}
+	
+	\item Si $\lambda = \lambda_{1} = \lambda_{2}$ entonces la soluci\'{o}n natural tiene la forma
+	\begin{equation}
+		y_{f}\left( t\right) = (c_{1} + c_{2} \, t) \, e^{\lambda \, t}.
+	\end{equation}
+	
+	\item Las constantes $c_{1}$ y $c_{2}$ se determinan mediante las condiciones iniciales o de borde.
+\end{enumerate}
+
+\subsubsection{Polos simples} 
+
+Si las frecuencias, modos naturales o polos son distintos 
+\begin{equation}
+	i\neq j\longleftrightarrow \lambda _i\neq \lambda _{j},
+\end{equation} 
+entonces la soluci\'{o}n m\'{a}s general tiene la forma 
+\begin{equation}
+	y_{h}\left( t\right) =\sum_{k=1}^{P}c_{k} \, e^{\lambda_{k} t},
+\end{equation}
+donde los valores $c_{k}$ se determinan con las condiciones iniciales.
+
+\subsubsection{Polos repetidos}
+
+\begin{enumerate}
+	\item Si hay $2$ polos repetidos $\lambda = \lambda_{1} = \lambda_{2}$, una solución tiene la forma
+	\begin{equation}
+		y(t) = (c_{1} + c_{2} \, t) \, e^{\lambda \, t}.
+	\end{equation}
+	
+	\item Si hay $3$ polos repetidos $\lambda = \lambda_{1} = \lambda_{2} = \lambda_{3}$, una solución tiene la forma
+	\begin{equation}
+		y(t) = (c_{1} + c_{2} \, t + c_{3} \, t^{2}) \, e^{\lambda \, t}.
+	\end{equation}
+	
+	\item En general, si hay $R$ polos repetidos $\lambda$, una soluci\'{o}n homog\'{e}nea tiene la forma 
+	\begin{equation}
+		y_{h}\left( t\right) =
+		\left(\sum_{k=0}^{R-1} c_{k} \, t^{k}\right) \, e^{\lambda \, t}.
+	\end{equation}
+\end{enumerate}
+
+\subsubsection{Polos complejos conjugados}
+
+Si un polinomio característico tiene polos complejos conjugados
+\begin{equation}
+	(s + a)^{2} + b^{2} = s^{2} + 2 \, a \, s + a^{2} + b^{2} = (s + p) \, (s + \overline{p}) = 0,
+\end{equation}
+estos polos son diferentes entre si, por lo tanto una solución particular es
+\begin{equation}
+	y(t) = c_{1} \, e^{-p \, t} + c_{2} \, e^{-\overline{p} \, t}.
+\end{equation}
+
+Podemos reescribirla de la siguiente manera:
+\begin{enumerate}
+	\item considerando que los polos están en $p = a + b \, j$ y $\overline{p} = a - b \, j$:
+	\begin{equation}
+		y(t) = c_{1} \, e^{-(a + b \, j) \, t} + c_{2} \, e^{-(a - b \, j) \, t}.
+	\end{equation}
+	\item Factorizando la función exponencial:
+	\begin{equation}
+		y(t) = c_{1} \, e^{-a \, t} \, e^{-b \, j \, t} + c_{2} \, e^{-a \, t} \, e^{b \, j \, t}.
+	\end{equation}
+	\item Aplicando la relación de Euler $e^{\pm j \, b \, t} = \cos(b \, t) \pm j \, \sin(b \, t)$:
+	\begin{equation}
+		y(t) = c_{1} \, e^{-a \, t} \, (\cos(b \, t) - j \, \sin(b \, t)) + 
+		c_{2} \, e^{-a \, t} \, (\cos(b \, t) + j \, \sin(b \, t)).
+	\end{equation}
+	\item Reagrupando factores y términos:
+	\begin{equation}
+		y(t) = (c_{1} + c_{2}) \, e^{-a \, t} \, \cos(b \, t) + j \, (c_{2} - c_{1}) \, e^{-a \, t} \, \sin(b \, t).
+	\end{equation}
+\end{enumerate}
+
+\subsection{Ecuación homogénea de orden $2$ o superior}
+
+Si tenemos una ecuación diferencial de orden $2$ o superior, entonces tendremos también un polinomio característico con $2$ o más polos (polos múltiples). Esto significa que tenemos $P$ posibles raíces del polinomio característico, tal vez algunas repetidas. Por lo tanto la solución completa de la ecuación diferencial homogénea será una suma de las soluciones para cada una de las ``diferentes'' raíces.
+
+\section{Ecuaci\'{o}n diferencial lineal forzada con condiciones iniciales nulas}
+
+\begin{enumerate}
+	\item Estudiaremos la soluci\'{o}n de una ecuaci\'{o}n diferencial lineal con coeficientes constantes reales
+	\begin{equation}
+		\frac{d^{P}y\left( t\right) }{dt^{P}} +
+		\left(\sum_{p=1}^{P-1}a_{p} \, \frac{d^{p}y\left( t\right) }{dt^{p}}\right) + a_{0} \, y(t)= 
+		\left(\sum_{q=1}^{Q}b_{q} \, \frac{d^{q}x\left( t\right) }{dt^{q}}\right)  + b_{0} \, x(t),
+	\end{equation}
+	donde $P > Q$, con condiciones iniciales nulas.
+	
+	\item Aplicando la transformada unilateral de Laplace, podemos resolver esta ecuaci\'{o}n diferencial. Recordemos que para la derivada de una se\~{n}al $x(t)$, la transformada de Laplace unilateral es
+	\begin{equation}
+		\frac{dx}{dt} \xrightarrow{\mathcal{L}_{UL}} s \, X^{+}(s) - x_{0},
+	\end{equation}
+	y, en general,
+	\begin{equation}
+		\frac{d^{n}x(t)}{dt^{n}} \xrightarrow{\mathcal{L}_{UL}}
+		s^{n} \, X^{+}(s) - \sum_{k=1}^{n} s^{n-k} x_{k-1},
+	\end{equation}
+	donde $x_{k}$ son los valores en $t = 0$ de $x(t)$ y sus derivadas.
+	
+	\item Si las condiciones iniciales son nulas, entonces
+	\begin{equation}
+		\frac{dx}{dt} \xrightarrow{\mathcal{L}_{UL}} s \, X^{+}(s),
+	\end{equation}
+	y, en general,
+	\begin{equation}
+		\frac{d^{n}x}{dt^{n}} \xrightarrow{\mathcal{L}_{UL}}
+		s^{n} \, X^{+}(s).
+	\end{equation}
+	
+	\item Por lo tanto, para condiciones iniciales nulas podemos escribir
+	\begin{equation}
+		\left(s^{P} + 
+		\left(\sum_{p=0}^{P-1} a_{p} \, s^{p}\right) + a_{0} \right) \, Y(s) = 
+		\left(\sum_{q=0}^{P} b_{q} \, s^{q} \right) \, X(s).
+	\end{equation}
+	
+	\item Finalmente, podemos obtener la función de transferencia
+	\begin{equation}
+		H(s) = \frac{Y(s)}{X(s)} = 
+		\frac{\sum_{q=0}^{Q} b_{q} \, s^{q}}{s^{P} + \sum_{p=0}^{P-1} a_{p} \, s^{p}}.
+	\end{equation}
+	
+	\item Si conocemos cual es la entrada $x(t)$, conocemos su transformada $X(s)$, y por lo tanto podemos calcular la transformada de la salida $Y(s) = H(s) \, X(s)$, y aplicar la antitransformada de Laplace.
+\end{enumerate}
+
+\section{Ecuaci\'{o}n diferencial lineal forzada con condiciones iniciales no nulas}
+
+\begin{enumerate}
+	\item Estudiaremos la soluci\'{o}n de una ecuaci\'{o}n diferencial lineal con coeficientes constantes reales
+	\begin{equation}
+		\frac{d^{P}y\left( t\right) }{dt^{P}} +
+		\left(\sum_{p=1}^{P-1}a_{p} \, \frac{d^{p}y\left( t\right) }{dt^{p}}\right) + a_{0} \, y(t)= 
+		\left(\sum_{q=1}^{Q}b_{q} \, \frac{d^{q}x\left( t\right) }{dt^{q}}\right)  + b_{0} \, x(t),
+	\end{equation}
+	donde $P > Q$, con condiciones iniciales no nulas
+	\begin{eqnarray}
+		y(t_{0}) &=& y_{0}, \\
+		\left. \frac{d^{i}y}{dt^{i}} \right|_{t=t_{0}} &=& y_{i},\\
+		i &\in& [1,P-1].
+	\end{eqnarray}
+	
+	\item Aplicando la transformada unilateral de Laplace, podemos resolver esta ecuaci\'{o}n diferencial teniendo en cuenta las condiciones iniciales. Recordemos que para la derivada de una se\~{n}al $f(t)$, la transformada de Laplace unilateral es
+	\begin{equation}
+		\frac{df}{dt} \xrightarrow{\mathcal{L}_{UL}} s \, F^{+}(s) - f_{0},
+	\end{equation}
+	y, en general,
+	\begin{equation}
+		\frac{d^{n}f(t)}{dt^{n}} \xrightarrow{\mathcal{L}_{UL}}
+		s^{n} \, F^{+}(s) - \sum_{k=1}^{n} s^{n-k} \, f_{k-1},
+	\end{equation}
+	donde $f_{k}$ son los valores en $t = 0$ de $f(t)$ y sus derivadas.
+	
+	\item Por lo tanto, podemos escribir
+	\begin{equation}
+		\begin{aligned}
+			s^P \, Y(s) &- \sum_{k=1}^{P} s^{P-k} \, y_{k-1} + \sum_{p=0}^{P-1}a_{p} \, \left(s^{p} \, Y(s) - \sum_{k=1}^{p} s^{p-k} \, y_{k-1}\right) \\ 
+			&= \sum_{q=0}^{Q}b_{q} \, \left(s^{q} \, X(s) - \sum_{k=1}^{q} s^{q-k} \, x_{k-1}\right).
+		\end{aligned}
+	\end{equation}
+	
+	\item Entonces, reemplazando la transformada de Laplace $X(s)$ y las respectivas condiciones iniciales, nos queda una ecuación algebraica con una incógnita $Y(s)$ que puede ser despejada. Aplicando la antitransformada de Laplace, obtenemos $y(t)$ la respuesta temporal buscada.
+\end{enumerate}
+
+\subsection{Ejemplo}
+
+\begin{enumerate}
+	\item Consideremos los componentes de circuitos RLC descriptos mediante las siguientes relaciones tensi\'{o}n corriente:
+	\begin{equation}
+		v(t) = R \, i(t),
+	\end{equation}
+	\begin{equation}
+		C \, \frac{dv(t)}{dt} = i(t),
+	\end{equation}
+	y
+	\begin{equation}
+		v(t) = L \, \frac{d i(t)}{dt}.
+	\end{equation}
+	Mediante la aplicaci\'{o}n de la Transformada de Laplace unilateral, podemos escribir:
+	\begin{equation}
+		V(s) = R \, I(s), \label{RS}
+	\end{equation}
+	\begin{equation}
+		C \, \left( s \, V(s) - v(0) \right) = I(s), \label{CS}
+	\end{equation}
+	y
+	\begin{equation}
+		V(s) = L \, \left(s \, I(s) - i(0)\right).
+		\label{LS}
+	\end{equation}
+	
+	\item Supongamos un circuito RLC serie descripto por la siguiente ecuaci\'{o}n de malla:
+	\begin{equation}
+		v(t) = R \, i(t) + L \, \frac{di(t)}{dt} + \frac{1}{C} \int_{0}^{t} i(\tau) \, d\tau.
+		\label{ES}
+	\end{equation}
+	Aplicando las igualdades (\ref{RS}), (\ref{CS}) y (\ref{LS}), podemos escribir la transformada de la ecuaci\'{o}n diferencial (\ref{ES}) y obtener:
+	\begin{equation}
+		V(s) = R \, I(s) + L \, \left(s \, I(s) - i(0)\right) + \frac{1}{s} \, \left(\frac{I(s)}{C} + v_{c}(0)\right).
+	\end{equation}
+\end{enumerate}
+
+\section{La funci\'{o}n de transferencia}
+
+La funci\'{o}n de transferencia del sistema lineal se define como
+\begin{equation}
+	H\left( s\right) =
+	\frac{\left( \sum_{q=0}^{Q}b_{q}s^{q}\right) }{\left(\sum_{p=0}^{P}a_{p}s^{p}\right) },
+\end{equation}
+donde $Q < P$. Debemos recordar que:
+\begin{enumerate}
+	\item $H(s)$ es una funci\'{o}n racional en $s$ para ecuaciones diferenciales con coeficientes constantes y sin retardos.
+	\item $H(s)$ caracteriza al sistema lineal.
+	\item $H(s)$ define la relaci\'{o}n entre entrada y salida.
+	\item $H(s)$ se calcula de dos formas:
+	\begin{enumerate}
+		\item considerando una entrada exponencial compleja $x(t) = e^{s t}$ o,
+		\item aplicando la transformada de Laplace unilateral con condiciones iniciales nulas a la ecuaci\'{o}n diferencial.
+	\end{enumerate}
+\end{enumerate}
+
+\section{Polos y ceros de una funci\'{o}n de transferencia}
+
+La funci\'{o}n de transferencia puede expresarse como 
+\begin{equation}
+	H\left( s\right) =
+	\frac{\left( \sum_{q=0}^{Q}b_{q}s^{q}\right) }{\left(\sum_{p=0}^{P}a_{p}s^{p}\right) }=
+	K\frac{\Pi _{q=1}^{Q}\left(s-c_{q}\right) }{\Pi _{p=1}^{P}\left( s-d_{p}\right) },
+\end{equation}
+donde $K=\frac{b_{Q}}{a_{P}},$ y nos referiremos a $c_{q}$ como los ceros del sistema y a $d_{p}$ como los polos del sistema.
+
+\begin{enumerate}
+	\item La posici\'{o}n de los ceros y polos en el plano complejo determinan, excepto el factor de ganancia $K,$ la din\'{a}mica del sistema.
+	\item La funci\'{o}n de transferencia $H\left( s\right) $ est\'{a} relacionada con la ecuaci\'{o}n diferencial y contiene la misma informaci\'{o}n que esta. Ambas est\'{a}n definidas por $P+Q+1$ n\'{u}meros: $P$ polos, $Q$ ceros y una constante o ganancia.
+\end{enumerate}
+
+\subsection{Ejemplo uno}
+
+\begin{enumerate}
+	\item Supongamos que tenemos la ecuaci\'{o}n diferencial
+	\begin{equation}
+		\frac{d^{3}y\left( t\right) }{dt^{3}}+
+		a_{2} \frac{d^{2}y\left( t\right) }{dt^{2}}+
+		a_{1} \frac{dy\left( t\right) }{dt}+
+		a_{0} y\left( t\right) =
+		b_{1} \frac{dx\left( t\right) }{dt} +
+		b_{0} x\left( t\right).
+		\label{odefunctrans}
+	\end{equation}
+	
+	\item Suponiendo una entrada exponencial compleja $x(t) = X e^{s t}$, la soluci\'{o}n forzada $y(t)$ toma la forma $y(t) = Y(s) e^{s t}$. Podemos entonces calcular:
+	\begin{eqnarray}
+		\frac{dx\left( t\right) }{dt}           &=& s X(s) e^{s t},                \\
+		\frac{dy\left( t\right) }{dt}           &=& s Y(s) e^{s t},                \\
+		\frac{d^{2}y\left( t\right) }{dt^{2}}   &=& s^{2} Y(s) e^{s t},            \\
+		\frac{d^{3}y\left( t\right) }{dt^{3}}   &=& s^{3} Y(s) e^{s t},
+	\end{eqnarray}
+	y, reemplazando en la ecuaci\'{o}n diferencial (\ref{odefunctrans}), obtener:
+	\begin{equation}
+		s^{3} Y(s) e^{s t} + a_{2} s^{2} Y(s) e^{s t} + a_{1} s Y(s) e^{s t} + a_{0} Y(s) e^{s t} = 
+		b_{1} s X(s) e^{s t} + b_{0} X(s) e^{s t},
+	\end{equation}
+	Sacando factor com\'{u}n $Y(s) e^{s t}$ y $X(s) e^{s t}$ tenemos:
+	\begin{equation}
+		\left( s^{3} + a_{2} s^{2} + a_{1} s  + a_{0} \right) Y(s)
+		e^{s t} = \left( b_{1} s + b_{0} \right) X(s) e^{s t},
+	\end{equation}
+	Finalmente, podemos despejar la funci\'{o}n de transferencia:
+	\begin{equation}
+		\frac{Y(s)}{X(s)} = H(s) =  
+		\frac{\left( b_{1} s + b_{0} \right)}{\left( s^{3} + a_{2} s^{2}  + a_{1} s  + a_{0} \right)}.
+	\end{equation}
+\end{enumerate}
+
+\subsection{Ejemplo dos}
+
+\begin{enumerate}
+	\item Veremos la reconstrucci\'{o}n de una ecuaci\'{o}n diferencial a partir de una funci\'{o}n de transferencia. Consideremos: 
+	\begin{equation}
+		H\left( s\right) = \frac{Y(s)}{X(s)}=\frac{s}{s^{2}+2s+1}.
+	\end{equation}
+	\textquestiondown Cu\'{a}l es la ecuaci\'{o}n diferencial correspondiente?
+	
+	\item Hagamos: 
+	\begin{equation}
+		Y(s) \, \left( s^{2}+2s+1\right) = X(s) \, s,
+	\end{equation}
+	y multipliquemos ambos lados por $e^{s \, t} \, u(t)$:
+	\begin{equation}
+		Y(s) \, \left( s^{2}+2s+1\right) \, e^{s\, t} \, u(t) = X(s) \, s \, e^{s \, t} \, u(t).
+	\end{equation}
+	
+	\item \textbf{Suponiendo condiciones iniciales nulas} tenemos que:
+	\begin{equation}
+		\frac{df}{dt} \xrightarrow{\mathcal{L}_{UL}} s \, F(s),
+	\end{equation}
+	\begin{equation}
+		\frac{d^{2}f(t)}{dt^{2}} \xrightarrow{\mathcal{L}_{UL}} s^{2} \, F(s),
+	\end{equation}
+	y obtenemos la ecuaci\'{o}n diferencial: 
+	\begin{equation}
+		\frac{d^{2}y\left( t\right) }{dt^{2}} + 2\frac{dy\left( t\right) }{dt} + y\left( t\right) = \frac{dx\left( t\right) }{dt}.
+	\end{equation}
+	
+	\item Al suponer condiciones iniciales nulas y aplicar la transformada de Laplace unilateral estamos asumiendo que el sistema lineal es estable y causal.
+\end{enumerate}
+
+\section{Soluci\'{o}n completa de la ecuaci\'{o}n diferencial con entrada exponencial compleja}
+
+\begin{enumerate}
+	\item Supongamos una entrada $x(t) = X \, e^{s \, t} \, u(t)$.
+	\item La soluci\'{o}n general, cuando los polos son diferentes, es: 
+	\begin{eqnarray}
+		y\left( t\right) &=& \left(\left( \sum_{n=1}^{P}A_{n} \, e^{\lambda_{n} \, t}\right) + H\left( s\right) X \, e^{s \, t}\right) \, u(t), \quad t\geq 0, \\
+		y\left( t\right) &=& 0, \quad t<0.
+	\end{eqnarray}
+	
+	\item Para determinar completamente la soluci\'{o}n hay que especificar los $P$ coeficientes $A_{n}$ mediante $P$ condiciones iniciales.
+\end{enumerate}
+
+\subsection{Ejemplo}
+
+\begin{enumerate}
+	\item Supongamos que tenemos una ecuaci\'{o}n diferencial de la forma:
+	\begin{equation}
+		\frac{d^{2}y}{dt^{2}} + (v_{1} + v_{2}) \, \frac{dy}{dt} + (v_{1} \, v_{2}) \, y(t) = x(t), 
+	\end{equation}
+	donde $v_{1} \neq v_{2}$, y $x(t) = X \, e^{s \, t} \, u(t)$.
+	
+	\item Entonces: 
+	\begin{eqnarray}
+		y(t) &=& Y(s) \, e^{s t} \, u(t),               \\
+		\frac{dy}{dt} &=& Y(s) \, s \, e^{s t}  \, u(t), \\  
+		\frac{d^{2}y}{dt^{2}} &=& Y(s) \, s^{2} \, e^{s t} \, u(t).
+	\end{eqnarray}
+	
+	\item El polinomio caracter\'{\i}stico se calcula escribiendo:
+	\begin{equation}
+		Y(s) \, s^{2} \, e^{s \, t} + (v_{1} + v_{2}) \, Y(s) \, s \, e^{s \, t} + (v_{1} \, v_{2}) \, Y(s) \, e^{s \, t} = 0.
+	\end{equation}
+	
+	\item Sacando factor com\'{u}n $Y(s) \, e^{s \, t}$:
+	\begin{equation}
+		(s^{2}  + (v_{1} + v_{2}) s + (v_{1} \, v_{2})) \, Y(s) \, e^{s \, t} = (s + v_{1})\,(s + v_{2}) \, Y(s) \, e^{s \, t} = 0.
+	\end{equation}
+	
+	\item Es sencillo ver que los modos del sistemas son $-v_{1}$ y $-v_{2}$.
+	\item En este caso la funci\'{o}n de transferencia es:
+	\begin{equation}
+		H(s) = \frac{1}{(s + v_{1})\,(s + v_{2})}.
+	\end{equation}
+	
+	\item La soluci\'{o}n general es:
+	\begin{equation}
+		y(t) = A_{1} \, e^{-v_{1} t} + A_{2} \, e^{-v_{2} t} + H(s) \, X \, e^{s \, t} \, u(t),
+	\end{equation}
+	donde $v_{1} \neq v_{2}$.
+	
+	\item Las condiciones iniciales: 
+	\begin{eqnarray}
+		y(0) &=& r_{0}, \\
+		\left. \frac{dy}{dt} \right|_{t = 0} &=& r_{1},      
+	\end{eqnarray}
+	sirven para definir un sistema de ecuaciones lineales cuyas inc\'{o}gnitas son $A_{1}$ y $A_{2}$:
+	\begin{eqnarray}
+		A_{1} + A_{2} + \frac{X}{(s + v_{1})(s + v_{2})}  &=& r_{0},   \\
+		-v_{1} A_{1} - v_{2} A_{2} + \frac{s X}{(s + v_{1})(s + v_{2})} &=& r_{1}.
+	\end{eqnarray}
+	Resolviendo este sistema hallamos los valores de $A_{1}$ y $A_{2}$ y definimos totalmente la soluci\'{o}n.
+\end{enumerate}
+
+\section{Polos m\'{u}ltiples}
+
+\begin{enumerate}
+	\item Supongamos que tenemos la ecuaci\'{o}n diferencial:
+	\begin{equation}
+		\frac{d^{2}y}{dt^{2}} + b_{1} \frac{dy}{dt} + b_{0} y = 0. 
+	\end{equation}
+	
+	\item Sabemos que su soluci\'{o}n es de la forma $y = Y e^{s t}$, donde $s$ se determina calculando las ra\'{\i}ces del polinomio caracter\'{\i}stico:
+	\begin{equation}
+		(s^{2} + b_{1} s + b_{0}) = 0,
+	\end{equation}
+	cuando las ra\'{\i}ces son \textbf{distintas}.
+	
+	\item Supongamos ahora la soluci\'{o}n es de la forma $y = Y t e^{s t}$. Entonces tenemos:
+	\begin{eqnarray}
+		y &=& Y t e^{s t},                                      \\
+		\frac{dy}{dt} &=& Y (1 + t s) e^{s t},                   \\  
+		\frac{d^{2}y}{dt^{2}} &=& Y (2 s + t s^{2}) e^{s t}.
+	\end{eqnarray}
+	
+	\item Reemplazando en la ecuaci\'{o}n diferencial obtenemos el polinomio caracter\'{\i}stico:
+	\begin{equation}
+		((b_{1} + 2 s) + (b_{0} + b_{1} s + s^{2}) t) e^{s t} = 0.
+	\end{equation}
+	
+	\item Para que este polinomio se anule, deben cumplirse simult\'{a}neamente:
+	\begin{eqnarray}
+		(b_{0} + b_{1} s + s^{2}) &=& 0, \\
+		(b_{1} + 2 s) &=& 0.
+	\end{eqnarray}
+	
+	\item Entonces debe ser:
+	\begin{eqnarray}
+		b_{0} &=& s^{2}, \\
+		b_{1} &=& -2 s.
+	\end{eqnarray}
+	
+	\item Si tenemos un polinomio $p(s) = 0$ con raíces dobles, su derivada $\frac{dp(s)}{ds} = 0$ tiene la misma raíz.
+	\begin{equation}
+		p(s) = (s - r)^{2} \, q(s) = 0,
+	\end{equation}
+	Su derivada es:
+	\begin{equation}
+		\frac{dp(s)}{ds} = 2 \, (s -r) \, q(s) + (s - r)^{2} \, \frac{dq(s)}{ds}.
+	\end{equation}
+	
+	\item La solución de la ecuación diferencial es:
+	\begin{equation}
+		y(t) = Y_{1} \, e^{r \, t} + Y_{2} \, t \, e^{r \, t}.
+	\end{equation}
+\end{enumerate}
+
+\section{Respuesta para entradas no peri\'{o}dicas}
+
+\begin{enumerate}
+	\item Los casos analizados hasta ahora nos dan una idea de la utilidad de la transformada de Laplace para resolver ecuaciones diferenciales. A continuaci\'{o}n vemos como resolver el caso de una ecuaci\'{o}n diferencial con entrada no peri\'{o}dica usando la transformada de Laplace.
+	
+	\item Consideramos la ecuaci\'{o}n diferencial lineal con coeficientes constantes:
+	\begin{equation}
+		\sum_{p=0}^{P}a_{p}\frac{d^{p}y\left( t\right) }{dt^{p}}=
+		\sum_{q=0}^{Q}b_{q}\frac{d^{q}x\left( t\right) }{dt^{q}},
+	\end{equation}
+	donde $P > Q$.
+	
+	\item Supongamos que tenemos una entrada y una respuesta al impulso nulas para $t < 0$. Por lo tanto podemos aplicar la transformada de Laplace unilateral a ambos lados de la ecuaci\'{o}n diferencial. Obtenemos as\'{\i} una ecuaci\'{o}n de la forma:
+	\begin{equation}
+		Y^{+}(s) = G^{+}(s) + H^{+}(s) X^{+}(s), \label{odelaplace}
+	\end{equation}
+	donde $G^{+}(s)$ es una transformada de Laplace cuyos coeficientes dependen de las condiciones iniciales, y $H^{+}(s)$ es la transformada de Laplace de la respuesta al impulso $h(t)$. Si las condiciones iniciales son nulas entonces deber\'{a} ser $G^{+}(s) = 0$. En cualquier caso:
+	\begin{equation}
+		H^{+}(s) = \frac{\left( \sum_{q=0}^{Q}b_{q}s^{q}\right) }{\left(\sum_{p=0}^{P}a_{p}s^{p}\right) }.
+	\end{equation}
+	
+	\item Calculando la transformada inversa de Laplace unilateral de la ec. (\ref{odelaplace}), obtenemos la se\~{n}al $y(t)$.
+\end{enumerate}
+
+\subsection{Ejemplo}
+
+Hallar la soluci\'{o}n para la ecuaci\'{o}n diferencial:
+\begin{equation}
+	\frac{d^{2}y(t)}{dt^{2}} + 5 \, \frac{dy(t)}{dt} + 6 \, y(t) = 
+	\frac{dx(t)}{dt} + x(t),
+\end{equation}
+donde $x(t) = e^{-4 \, t} \, u(t)$, con las condiciones iniciales $y(0) = 2$ e $\left. \frac{dy(t)}{dt} \right|_{t=0} = 1$.
+
+\begin{enumerate}
+	\item Sea \begin{equation}y(t) \leftrightarrow Y(s),\end{equation}
+	\begin{equation}\frac{dy(t)}{dt} \leftrightarrow s \, Y(s) - y(0) = s \, Y(s) - 2,\end{equation}
+	y \begin{equation}
+		\frac{d^{2}y(t)}{dt^{2}} \leftrightarrow s^{2} \, Y(s) - s \, y(0) - \left. \frac{dy(t)}{dt}\right|_{t=0} = s^{2} \, Y(s) - 2s - 1.
+	\end{equation}
+	
+	\item Además, si \begin{equation}x(t) = e^{-4 \, t} \, u(t),\end{equation} entonces \begin{equation}X(s) = \frac{1}{s + 4},\end{equation}
+	y \begin{equation}\frac{dx(t)}{dt} \leftrightarrow s \, X(s) - x(0^{-}) = \frac{s}{s+4}.\end{equation} 
+	
+	\item La ecuación diferencial transformada resulta:
+	\begin{equation}
+		(s^{2} \, Y(s) - 2s - 1) + 5 \, (s \, Y(s) - 2) + 6 \, Y(s) = \frac{s}{s+4} + \frac{1}{s+4}.
+	\end{equation}
+	
+	\item Despejando $Y(s)$, podemos obtener:
+	\begin{equation}
+		Y(s) = \frac{2 \, s^{2} + 20 \, s + 45}{(s^{2} + 5 \, s + 6) \, (s + 4)} = \frac{2 \, s^{2} + 20 \, s + 45}{(s + 2) \, (s + 3) \, (s + 4)}.
+	\end{equation}
+	
+	\item Para encontrar la respuesta temporal $y(t)$, podemos expandir $Y(s)$ en fracciones parciales de la siguiente forma:
+	\begin{equation}
+		Y(s) = \frac{A}{s+2} + \frac{B}{s+3} + \frac{C}{s+4},
+	\end{equation}
+	donde:
+	\begin{equation}
+		A = \lim_{s \to -2} (s + 2) \, Y(s) = \lim_{s \to -2} \frac{2 \, s^{2} + 20 \, s + 45}{(s + 3) \, (s + 4)} = \frac{13}{2}, 
+	\end{equation}
+	\begin{equation}
+		B = \lim_{s \to -3} (s + 3) \, Y(s) = \lim_{s \to -3} \frac{2 \, s^{2} + 20 \, s + 45}{(s + 2) \, (s + 4)} = -3, 
+	\end{equation}
+	\begin{equation}
+		C = \lim_{s \to -4} (s + 4) \, Y(s) = \lim_{s \to -4} \frac{2 \, s^{2} + 20 \, s + 45}{(s + 2) \, (s + 3)} = -\frac{3}{2}.
+	\end{equation}
+	
+	\item Según la tabla de pares función transformada:
+	\begin{equation}
+		f(t) = e^{-r \, t} \, u(t) \leftrightarrow F(s) = \frac{1}{s+r},
+	\end{equation}
+	y por lo tanto la salida es:
+	\begin{equation}
+		y(t) = \left(\frac{13}{2} \, e^{-2 \, t} - 3 \, e^{-3 \, t} - \frac{3}{2} \, e^{-4 \, t}\right) \, u(t).
+	\end{equation}
+\end{enumerate}
+
+\section{Estabilidad de sistemas LIT}
+
+\subsection{Sistemas con un polo}
+
+\begin{enumerate}
+	\item La funci\'{o}n de transferencia correspondiente a la ecuaci\'{o}n diferencial:
+	\begin{equation}
+		\dot{y}\left( t\right) +ay\left( t\right) =bx\left( t\right) ,
+	\end{equation}
+	puede calcularse suponiendo que:
+	\begin{eqnarray}
+		x\left( t\right) &=& X e^{st}, \\
+		y\left( t\right) &=& Y e^{st} \longleftrightarrow \dot{y}\left( t\right) = s Y e^{st}.
+	\end{eqnarray}
+	
+	\item Reemplazando en la ecuaci\'{o}n diferencial obtenemos:
+	\begin{equation}
+		s Y e^{st} + a Y e^{st} = b X e^{st}.
+	\end{equation}
+	
+	\item Simplificando y agrupando:
+	\begin{equation}
+		\left( s+a\right) Y = b X.
+	\end{equation}
+	
+	\item Despejando $\frac{Y}{X}$, resulta:
+	\begin{equation}
+		H\left( s\right) = \frac{Y}{X} = \frac{b}{s+a}.
+	\end{equation}
+	
+	\item Recuerde que la soluci\'{o}n de la ecuaci\'{o}n homog\'{e}nea es: 
+	\begin{equation}
+		y\left( t\right) = A e^{-at}.
+	\end{equation}
+	
+	\item Si $a>0$ entonces:
+	\begin{equation}
+		\lim_{t \to \infty} y\left( t\right) = 0,
+	\end{equation}
+	y por lo tanto el sistema es estable. Si $a<0,$ entonces:
+	\begin{equation}
+		\lim_{t \to \infty} y\left( t\right) = \infty,
+	\end{equation}
+	y el sistema es inestable.
+	
+	\item Observe que el mismo resultado puede obtenerse aplicando la transformada de Laplace unilateral a la ecuaci\'{o}n diferencial con condiciones iniciales nulas.
+\end{enumerate}
+
+\subsection{Sistemas con dos polos distintos}
+
+La funci\'{o}n de transferencia correspondiente a la ecuaci\'{o}n diferencial:
+\begin{equation}
+	\ddot{y}\left( t\right) +a\dot{y}\left( t\right) +by\left( t\right) = cx\left( t\right) ,
+\end{equation}
+puede calcularse suponiendo que:
+\begin{eqnarray}
+	x\left( t\right)        &=& X e^{st}, \\
+	y\left( t\right)        &=& Y e^{st} \longleftrightarrow \dot{y}\left( t\right) = s Y e^{st}, \\
+	\dot{y}\left( t\right)  &=& s Y e^{st} \longleftrightarrow \ddot{y}\left(t\right) = s^{2} Y e^{st},
+\end{eqnarray}
+y reemplazando en la ecuaci\'{o}n diferencial:
+\begin{equation}
+	s^{2} Y e^{st} + a s Y e^{st} + b Y e^{st} = c X e^{st}.
+\end{equation}
+Simplificando y agrupando:
+\begin{equation}
+	\left( s^{2}+as+b\right) Y = c X.
+\end{equation}
+Despejando $\frac{Y}{X}$ resulta: 
+\begin{equation}
+	\frac{Y}{X} = H\left( s\right) = \frac{c}{\left( s^{2}+as+b\right) }.
+\end{equation}
+Observe que si $d_{1}\neq d_{2}$ (los polos de $H(s)$ son distintos entre s\'{\i}) entonces: 
+\begin{equation}
+	H\left( s\right) = \frac{r_{1}}{s+d_{1}} + \frac{r_{2}}{s+d_{2}}.
+\end{equation}
+Las constantes $r_{1}$ y $r_{2}$ pueden calcularse de la siguiente forma:
+\begin{eqnarray}
+	r_{1} &=& \left. H(s) (s+d_{1}) \right|_{s=-d_{1}}, \\
+	r_{2} &=& \left. H(s) (s+d_{2}) \right|_{s=-d_{2}}.
+\end{eqnarray}
+En este caso, la respuesta natural es: 
+\begin{equation}
+	y\left( t\right) = \left( k_{1} r_{1} e^{-d_{1}t} + k_{2} r_{2} e^{-d_{2}t}\right) ,
+\end{equation}
+donde $k_{1}$ y $k_{2}$ son constantes que quedan determinadas por las condiciones iniciales. Podemos ver que este sistema es estable si y solo si $d_{1} > 0$ y $d_{2} > 0$.
+
+\subsection{Sistemas con dos polos iguales}
+
+Si $d_{1}=d_{2}=d$ (los polos de $H(s)$ son iguales entre s\'{\i}) entonces: 
+\begin{equation}
+	H\left( s\right) = \frac{c}{\left( s+d\right) ^{2}},
+\end{equation}
+y en tal caso puede probarse que:
+\begin{equation}
+	y\left( t\right) = p \, e^{-d \, t} + q \, t \, e^{-d \, t},
+\end{equation}
+es la respuesta natural que tiende a $0$ cuando $t \rightarrow \infty$ si $d > 0$. Las constantes $p$ y $q$ quedan determinadas por las condiciones iniciales:
+\begin{equation}
+	y(0) = y_{0}, \quad \text{y} \quad \left. \frac{dy}{dt} \right|_{t=0} = y_{1}.
+\end{equation} 
+Recordando que:
+\begin{equation}
+	y(t) = p \, e^{-d \, t} + q \, t \, e^{-d \, t},
+\end{equation}
+y
+\begin{equation}
+	\frac{dy(t)}{dt} = - d \, p \, e^{-d \, t} + q \, e^{-d \, t} - d \, q \, t \, e^{-d \, t},
+\end{equation}
+podemos plantear un sistema de dos ecuaciones con incógnitas $p$ y $q$:
+\begin{equation}
+	y(0) = p = y_{0},
+\end{equation}
+y
+\begin{equation}
+	\left. \frac{dy(t)}{dt} \right|_{t=0} = -d \, p + q = y_{1}.
+\end{equation}
+
+Por lo tanto podemos deducir que:
+\begin{equation}
+	p = y_{0}, \quad \text{y} \quad q = y_{1} + d \, y_{0}.
+\end{equation}
+
+\section{Aplicaciones f\'{\i}sicas}
+
+\subsection{Circuito el\'{e}ctrico RLC}
+
+Considere un circuito RLC serie cerrado. Seg\'{u}n las leyes de Kirchoff para corrientes y tensiones:
+\begin{equation}
+	i(t) = i_{C}(t) = i_{R}(t) = i_{L}(t).
+\end{equation}
+
+Seg\'{u}n lo que sabemos de cada uno de los componentes: 
+\begin{equation}
+	i_{C}(t) = C\frac{dv_{C}(t)}{dt}, \quad i_{R}(t) = \frac{v_{R}(t)}{R}, \quad v_{L}(t) = L\frac{di_{L}(t)}{dt}.
+\end{equation}
+
+Combinando las caídas de tensión en un lazo cerrado con una fuente $v(t)$:
+\begin{equation}
+	v(t) = L\frac{di(t)}{dt} + R \, i(t) + \frac{1}{C}\int_{-\infty }^{t} i(\tau) \, d\tau.
+	\label{sisUno}
+\end{equation}
+
+Esta ecuación integro-diferencial puede transformarse al dominio de Laplace para encontrar la función de transferencia del circuito, evaluando cómo responde la corriente a variaciones de tensión según los polos y ceros generados por R, L y C.
+
+\subsection{Sistema mec\'{a}nico}
+
+El modelo m\'{a}s simple de m\'{u}sculo consiste en un sistema mec\'{a}nico que relaciona la velocidad de cambio de longitud del m\'{u}sculo $v(t)$ con la fuerza $f_{e}(t)$ que se aplica sobre el, donde $f_{c}(t)$ es la fuerza interna generada por el m\'{u}sculo, $K$ su dureza elástica y $B$ su coeficiente de amortiguamiento viscoso. La velocidad del m\'{u}sculo puede ser expresada como la superposición de efectos:
+\begin{equation}
+	v(t) = v_{c}(t) + v_{s}(t).
+\end{equation}
+Entonces tenemos la ecuaci\'{o}n diferencial:
+\begin{equation}
+	v(t) = \frac{f_{e}(t) - f_{c}(t)}{B} + \frac{1}{K}\frac{df_{e}(t)}{dt}.
+	\label{sisDos}
+\end{equation}
+
+Aplicando la transformada de Laplace, podemos analizar la respuesta dinámica del músculo ante diferentes fuerzas externas, hallando una función de transferencia que determine su régimen transitorio y estable.
+
+\subsection{Cin\'{e}tica qu\'{\i}mica de primer orden}
+
+Una reacci\'{o}n qu\'{\i}mica reversible de primer orden puede ser representada como:
+\begin{equation}
+	R \rightleftharpoons_{\beta}^{\alpha} P,
+\end{equation}
+donde $R$ es el reactivo y $P$ es el producto. Las cantidades de reactivo y producto son $c_{R}(t)$ y $c_{P}(t)$ respectivamente. En esta reacci\'{o}n, la ecuaci\'{o}n diferencial de velocidades est\'{a} dada por:
+\begin{equation}
+	-\frac{dc_{R}(t)}{dt} = \alpha \, c_{R}(t) - \beta \, c_{P}(t).
+\end{equation}
+
+Suponiendo que la cantidades de reactivo y producto se conservan (el sistema cerrado no pierde masa):
+\begin{equation}
+	c_{R}(t) + c_{P}(t) = C,
+\end{equation}
+
+se puede obtener la ecuaci\'{o}n diferencial para el reactivo aislando variables:
+\begin{equation}
+	\frac{dc_{R}(t)}{dt} + (\alpha + \beta) c_{R}(t) = \beta C.  \label{sisTres}
+\end{equation}
+
+La resolución de esta ecuación, facilitada por la transformada de Laplace, permite conocer la concentración del reactivo en función del tiempo a medida que el sistema alcanza su estado de equilibrio termodinámico dictado por el polo en $s = -(\alpha + \beta)$.

@@ -1,0 +1,298 @@
+\chapter{Respuesta en frecuencia de sistemas LIT TC}
+
+\section{Respuesta en frecuencia}
+
+Si la entrada a un sistema de tiempo continuo es $x(t) = e^{st}$, entonces la salida es $y(t) = H(s) e^{st}$ donde
+\begin{equation}
+	H(s) = \int_{-\infty}^{\infty} h(\tau) e^{-s\tau} d\tau,
+\end{equation}
+en la cual $h(t)$ es la respuesta al impulso del sistema LIT. En el caso general de $s$ complejo, $H(s)$ es la funci\'{o}n del sistema. 
+
+En el caso puramente imaginario donde $\Re(s) = 0 \implies s = j\omega$ y la entrada es $x(t) = e^{st} = e^{j\omega t}$, la respuesta en frecuencia del sistema esta definida por:
+\begin{equation}
+	H(j\omega) = \int_{-\infty}^{\infty} h(t) e^{-j\omega t} dt.
+\end{equation}
+La salida $y(t)$ para una entrada peri\'{o}dica arbitraria:
+\begin{equation}
+	x(t) = \sum_{k=-\infty}^{\infty} a_{k} e^{jk\omega t},
+\end{equation}
+est\'{a} dada entonces por el principio de superposici\'{o}n:
+\begin{equation}
+	y(t) = \sum_{k=-\infty}^{\infty} a_{k} H(jk\omega) e^{jk\omega t}.
+\end{equation}
+
+\subsection{Ejemplo}
+
+\begin{enumerate}
+	\item Sea un sistema con respuesta al impulso dada por:
+	\begin{equation}
+		h(t) = e^{-t} u(t),
+	\end{equation}
+	y una entrada dada por:
+	\begin{equation}
+		x(t) = \sum_{k=-3}^{3} a_{k} e^{jk2\pi t},
+	\end{equation}
+	donde:
+	\begin{equation}
+		\begin{aligned}
+			a_{0} &= 1, \\
+			a_{1} &= a_{-1} = \frac{1}{4}, \\
+			a_{2} &= a_{-2} = \frac{1}{2}, \\
+			a_{3} &= a_{-3} = \frac{1}{3}.
+		\end{aligned}
+	\end{equation}
+	
+	\item Calculamos primero la respuesta en frecuencia planteando la integral:
+	\begin{equation}
+		H(j\omega) = \int_{-\infty}^{\infty} h(t) e^{-j\omega t} dt.
+	\end{equation}
+	El sistema dado es causal porque la respuesta al impulso $h(t)$ es nula para $t < 0$. Por lo tanto, los l\'{i}mites de la integral cambian y resulta:
+	\begin{equation}
+		H(j\omega) = \int_{0}^{\infty} e^{-\tau} e^{-j\omega \tau} d\tau.
+	\end{equation}
+	Resolviendo la integral podemos escribir:
+	\begin{equation}
+		H(j\omega) = -\frac{1}{1+j\omega} \left[ e^{-(1+j\omega)\tau} \right]_{0}^{\infty}.
+	\end{equation}
+	Aplicando la regla de Barrow, obtenemos finalmente:
+	\begin{equation}
+		H(j\omega) = \frac{1}{1+j\omega}.
+	\end{equation}
+	
+	\item Entonces la salida $y(t)$ es:
+	\begin{equation}
+		y(t) = \sum_{k=-3}^{3} b_{k} e^{jk2\pi t},
+	\end{equation}
+	donde, en general:
+	\begin{equation}
+		b_{k} = a_{k} H(jk2\pi).
+	\end{equation}
+	Por lo tanto, calculando cada $b_{k}$ obtenemos:
+	\begin{equation}
+		b_{0} = 1,
+	\end{equation}
+	y
+	\begin{equation}
+		\begin{aligned}
+			b_{1} &= \frac{1}{4}\left( \frac{1}{1+j2\pi} \right), \quad &
+			b_{-1} &= \frac{1}{4}\left( \frac{1}{1-j2\pi} \right), \\
+			b_{2} &= \frac{1}{2}\left( \frac{1}{1+j4\pi} \right), \quad &
+			b_{-2} &= \frac{1}{2}\left( \frac{1}{1-j4\pi} \right), \\
+			b_{3} &= \frac{1}{3}\left( \frac{1}{1+j6\pi} \right), \quad &
+			b_{-3} &= \frac{1}{3}\left( \frac{1}{1-j6\pi} \right).
+		\end{aligned}
+	\end{equation}
+\end{enumerate}
+
+\section{Representaci\'{o}n gr\'{a}fica de la respuesta en frecuencia de un sistema LIT}
+
+La respuesta en frecuencia es una funci\'{o}n compleja y debe ser representada gr\'{a}ficamente en:
+\begin{enumerate}
+	\item Forma polar: magnitud $|H(j\omega)|$ y fase $\angle H(j\omega)$.
+	\item Forma cartesiana: parte real $\Re\{H(j\omega)\}$ y parte imaginaria $\Im\{H(j\omega)\}$.
+\end{enumerate}
+
+Ambas representaciones permiten visualizar distintas propiedades de los sistemas LIT. Por tal motivo las estudiaremos por separado.
+
+\subsection{Definiciones}
+
+\subsubsection{Ganancia o atenuaci\'{o}n}
+La ganancia y la atenuaci\'{o}n de un filtro son conceptos complementarios, y sus valores est\'{a}n determinados por la magnitud de la respuesta en frecuencia. Dado que la salida de un filtro $y(t)$ para una entrada peri\'{o}dica $x(t)$ de una sola frecuencia queda determinada por la amplitud multiplicada por $|H(j\omega)|$.
+
+El m\'{o}dulo de la funci\'{o}n compleja $|H(j\omega)|$ determina la variaci\'{o}n del tama\~{n}o de la salida respecto a la entrada. Hablamos de ganancia cuando deseamos saber cu\'{a}nto queda ampliada la salida respecto a la entrada, y hablamos de atenuaci\'{o}n cuando deseamos saber cu\'{a}nto queda disminuida. Dado que por lo general los filtros ampl\'{i}an determinadas frecuencias y disminuyen otras, hablar de ganancia o atenuaci\'{o}n es equivalente a elegir un punto de vista.
+
+\subsubsection{Fase}
+La fase de un filtro es la fase de la respuesta en frecuencia (funci\'{o}n compleja) $\angle H(j\omega)$ en tiempo continuo o $\angle H(e^{j\omega})$ para tiempo discreto.
+
+\subsubsection{Fase lineal y no lineal}
+Cuando la fase del filtro es una funci\'{o}n \textbf{lineal} de $\omega$, hay una interpretaci\'{o}n simple de su efecto en el dominio del tiempo. Consideremos el sistema de tiempo continuo con respuesta en frecuencia:
+\begin{equation}
+	H(j\omega) = e^{-j\omega t_{0}},
+\end{equation}
+donde la ganancia es $1$ para toda frecuencia y fase lineal:
+\begin{equation}
+	|H(j\omega)| = 1, \quad \angle H(j\omega) = -\omega t_{0}.
+\end{equation}
+La salida de este sistema es exactamente igual a su entrada pero desplazada en el tiempo sin distorsi\'{o}n:
+\begin{equation}
+	y(t) = x(t - t_{0}).
+\end{equation}
+
+\subsubsection{Retraso de grupo}
+El retraso de grupo define cu\'{a}nto se retrasa la envolvente de una se\~{n}al centrada en $\omega$:
+\begin{equation}
+	\tau(\omega) = -\frac{d \angle H(j\omega)}{d\omega}.
+\end{equation}
+
+\section{Gr\'{a}ficos de Bode}
+
+\subsection{Sistemas de primer orden de tiempo continuo}
+
+Consideremos la siguiente ecuaci\'{o}n diferencial:
+\begin{equation}
+	\tau \frac{dy(t)}{dt} + y(t) = x(t).
+\end{equation}
+
+\begin{enumerate}
+	\item La funci\'{o}n de transferencia es:
+	\begin{equation}
+		H(s) = \frac{1}{s\tau + 1},
+	\end{equation}
+	con un polo en $s = -\frac{1}{\tau}$.
+	
+	\item La funci\'{o}n de respuesta en frecuencia es:
+	\begin{equation}
+		H(j\omega) = \frac{1}{j\omega \tau + 1}.
+	\end{equation}
+	
+	\item La respuesta al impulso es:
+	\begin{equation}
+		h_{1}(t) = \frac{1}{\tau} e^{-\frac{t}{\tau}} u(t).
+	\end{equation}
+	
+	\item La respuesta al escal\'{o}n es:
+	\begin{equation}
+		h_{2}(t) = h_{1}(t) * u(t) = \left(1 - e^{-\frac{t}{\tau}}\right) u(t).
+	\end{equation}
+	
+	\item El par\'{a}metro $\tau$ es la constante de tiempo del sistema y controla la rapidez de la respuesta.
+\end{enumerate}
+
+\paragraph{La funci\'{o}n magnitud de Bode para sistemas de primer orden}
+Consideremos la funci\'{o}n magnitud de Bode expresada en decibelios (dB):
+\begin{equation}
+	20\log_{10} |H(j\omega)| = -10\log_{10}\left((\omega\tau)^{2} + 1\right). \label{magbode}
+\end{equation}
+
+\paragraph{Simplificaci\'{o}n de la funci\'{o}n magnitud de Bode para sistemas de primer orden}
+La funci\'{o}n (\ref{magbode}) puede simplificarse seg\'{u}n el valor asint\'{o}tico de $\omega$:
+\begin{enumerate}
+	\item (Forma normalizada en baja frecuencia):
+	\begin{equation}
+		\omega\tau \ll 1 \implies 20\log_{10} |H(j\omega)| \approx -10\log_{10}(1) = 0 \text{ dB}.
+	\end{equation}
+	
+	\item (Forma normalizada en alta frecuencia):
+	\begin{equation}
+		\omega\tau \gg 1 \implies 20\log_{10} |H(j\omega)| \approx -20\log_{10}(\omega\tau).
+	\end{equation}
+\end{enumerate}
+Esto significa que la funci\'{o}n (\ref{magbode}) tiene dos as\'{i}ntotas. Dado que el gr\'{a}fico se realiza con escala logar\'{i}tmica en el eje de abscisas, estas as\'{i}ntotas son líneas rectas.
+
+\paragraph{As\'{i}ntotas de la funci\'{o}n magnitud de Bode}
+\begin{enumerate}
+	\item As\'{i}ntota de baja frecuencia, coincidente con la l\'{i}nea de $0 \text{ dB}$.
+	\item As\'{i}ntota de alta frecuencia, con una pendiente constante de $-20 \text{ dB/d\'{e}cada}$.
+	\item Estas as\'{i}ntotas se intersectan cuando $\omega\tau = 1$ o $\omega = \frac{1}{\tau}$.
+	\item El punto de intersecci\'{o}n de las as\'{i}ntotas se llama \textbf{frecuencia de corte} o frecuencia de quiebre.
+\end{enumerate}
+
+En la frecuencia de quiebre, tenemos que el verdadero valor de la magnitud es:
+\begin{equation}
+	20\log_{10} |H(j\omega)| = -10\log_{10}(2) \approx -3 \text{ dB}.
+\end{equation}
+
+Consideremos ahora la funci\'{o}n fase de Bode:
+\begin{equation}
+	\angle H(j\omega) = -\arctan(\omega\tau). \label{faseBode}
+\end{equation}
+Esta funci\'{o}n tambi\'{e}n puede aproximarse por rectas. En la frecuencia de quiebre $\omega\tau = 1$, la fase vale exactamente $-\frac{\pi}{4}$ rad (o $-45^\circ$).
+
+\subsection{Sistemas de segundo orden de tiempo continuo}
+
+Consideremos la ecuaci\'{o}n diferencial:
+\begin{equation}
+	\frac{d^{2}y(t)}{dt^{2}} + 2\zeta \omega_{n} \frac{dy(t)}{dt} + \omega_{n}^{2} y(t) = \omega_{n}^{2} x(t).
+\end{equation}
+
+\begin{enumerate}
+	\item La funci\'{o}n de transferencia correspondiente es:
+	\begin{equation}
+		H(s) = \frac{\omega_{n}^{2}}{s^{2} + 2\zeta \omega_{n} s + \omega_{n}^{2}}.
+	\end{equation}
+	
+	\item La respuesta en frecuencia evaluando en $s = j\omega$ es:
+	\begin{equation}
+		H(j\omega) = \frac{\omega_{n}^{2}}{(\omega_{n}^{2} - \omega^{2}) + j 2\zeta \omega_{n} \omega},
+	\end{equation}
+	que tiene ra\'{i}ces en el denominador dadas por:
+	\begin{equation}
+		c_{1,2} = \omega_{n} \left( -\zeta \pm \sqrt{\zeta^{2}-1} \right).
+	\end{equation}
+	
+	\item La respuesta al impulso se calcula aplicando expansi\'{o}n en fracciones parciales. El comportamiento depende fundamentalmente del par\'{a}metro $\zeta$ (coeficiente de amortiguamiento):
+	
+	\begin{enumerate}
+		\item En el caso $0 < \zeta < 1$ (Sistema Subamortiguado): Las ra\'{i}ces son complejas conjugadas. La respuesta al impulso adquiere una forma oscilatoria amortiguada:
+		\begin{equation}
+			h_{1}(t) = \frac{\omega_{n}}{\sqrt{1-\zeta^{2}}} e^{-\zeta \omega_{n} t} \sin\left(\omega_{n}\sqrt{1-\zeta^{2}}t\right) u(t).
+		\end{equation}
+		Es en este escenario donde, si $\zeta < 0.707$, aparece un \textbf{pico de resonancia} visible en el diagrama de magnitud de Bode antes de que la atenuaci\'{o}n caiga.
+		
+		\item En el caso $\zeta > 1$ (Sistema Sobreamortiguado): Las ra\'{i}ces $c_{1}$ y $c_{2}$ son reales y negativas. La respuesta es la suma de dos exponenciales puramente decrecientes sin oscilaci\'{o}n.
+		
+		\item En el caso $\zeta = 1$ (Sistema Cr\'{i}ticamente Amortiguado): $c_{1} = c_{2} = -\omega_{n}$. La respuesta al impulso es:
+		\begin{equation}
+			h_{1}(t) = \omega_{n}^{2} t e^{-\omega_{n} t} u(t).
+		\end{equation}
+	\end{enumerate}
+	
+	\item La funci\'{o}n magnitud de Bode para un sistema normalizado de segundo orden est\'{a} dada por:
+	\begin{equation}
+		20\log_{10} |H(j\omega)| = -10\log_{10} \left[ \left(1 - \left(\frac{\omega}{\omega_{n}}\right)^{2}\right)^{2} + 4\zeta^{2} \left(\frac{\omega}{\omega_{n}}\right)^{2} \right].
+	\end{equation}
+	Las as\'{i}ntotas principales son:
+	\begin{align}
+		\omega \ll \omega_{n} &\implies 20\log_{10} |H(j\omega)| \approx 0 \text{ dB}, \\
+		\omega \gg \omega_{n} &\implies 20\log_{10} |H(j\omega)| \approx -40\log_{10}(\omega) + 40\log_{10}(\omega_{n}).
+	\end{align}
+	Es decir, la pendiente en alta frecuencia decae a un ritmo de $-40 \text{ dB/d\'{e}cada}$.
+\end{enumerate}
+
+\section{Diagramas de Bode para respuestas en frecuencias racionales}
+
+Supongamos que deseamos realizar el diagrama de Bode para un sistema cuya funci\'{o}n de transferencia general es una relaci\'{o}n de polinomios:
+\begin{equation}
+	H(s) = \frac{P(s)}{Q(s)}.
+\end{equation}
+Podemos escribir la funci\'{o}n de transferencia como una productoria de componentes b\'{a}sicos normalizados $H_{k}(s)$:
+\begin{equation}
+	H(s) = \prod_{k} H_{k}(s).
+\end{equation}
+
+Los t\'{e}rminos fundamentales de Bode son:
+\begin{enumerate}
+	\item Constantes puras: $B_{1}(s) = K$.
+	\item Polos simples: $B_{2}(s) = \frac{1}{\frac{s}{c_i} + 1}$.
+	\item Polos cuadr\'{a}ticos (complejos): $B_{3}(s) = \frac{1}{\frac{s^2}{\omega_n^2} + \frac{2\zeta}{\omega_n} s + 1}$.
+	\item Polos en el origen: $B_{4}(s) = \frac{1}{s^{T}}$.
+	\item Ceros simples: $B_{5}(s) = \frac{s}{c_i} + 1$.
+	\item Ceros cuadr\'{a}ticos: $B_{6}(s) = \frac{s^2}{\omega_n^2} + \frac{2\zeta}{\omega_n} s + 1$.
+	\item Ceros en el origen: $B_{7}(s) = s^{T}$.
+\end{enumerate}
+
+Graficar la respuesta completa en dB permite simplificar dr\'{a}sticamente el trabajo, dado que al aplicar logaritmos, la multiplicaci\'{o}n de las funciones de transferencia se convierte en una simple suma algebraica. Adem\'{a}s, note la simetr\'{i}a directa entre los polos y los ceros:
+\begin{equation}
+	|B_{5}(j\omega)| = \frac{1}{|B_{2}(j\omega)|} \implies 20\log_{10} |B_{5}| = -20\log_{10} |B_{2}|,
+\end{equation}
+y para la fase:
+\begin{equation}
+	\angle B_{5}(j\omega) = -\angle B_{2}(j\omega).
+\end{equation}
+Lo mismo ocurre para los sistemas de segundo orden ($B_6$ respecto a $B_3$). Esto permite trazar las as\'{i}ntotas de los polos y simplemente invertir el signo de la pendiente y de la fase para trazar los ceros.
+
+\subsection{Ejemplos de Diagramas}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3in]{./graphics/bodeone.eps}
+	\caption{Diagrama de Bode para un sistema con un polo simple.}
+	\label{bodeoneeps}
+\end{figure}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3in]{./graphics/bodetwo.eps}
+	\caption{Diagrama de Bode para un sistema de segundo orden (dos polos).}
+	\label{bodetwoeps}
+\end{figure}

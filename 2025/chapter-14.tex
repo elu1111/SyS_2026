@@ -1,0 +1,1068 @@
+\chapter{Transformada de Fourier de tiempo continuo}
+
+\section{Introducci\'{o}n}
+
+\begin{enumerate}
+
+\item   Vamos a ver como podemos \textbf{modificar} el concepto de \textbf{serie de Fourier} \textbf{para estudiar funciones no peri\'{o}dicas} de tiempo continuo.  
+Esto nos permite \textbf{definir} el concepto de \textbf{contenido de frecuencias de una se\~{n}al}, a\'{u}n cuando sea no peri\'{o}dica.
+
+\item   Pensemos en el ejemplo (\ref{funcion.par}), donde
+\begin{equation}
+	a_{0} = \frac{T_{1}}{T_{2}},
+\end{equation}
+y
+\begin{equation}
+	a_{k} =  \frac{T_{1}}{T} \, \frac{sin(\frac{k \, \pi \, T_{1}}{T})}{\frac{k \, \pi \, T_{1}}{T}}
+	. \label{tf.1}
+\end{equation}
+\item  Podemos escribir (\ref{tf.1}) de la siguiente forma
+        \begin{equation}
+           T a_{k}=
+	T \, a_{k} =  \left. T_{1} \, \frac{sin(\omega)}{\omega} \right|_{\omega = \frac{k \, \pi \, T_{1}}{T}}
+        \end{equation}
+        y entonces es evidente que la podemos interpretar como una \textbf{secuencia} formada por \textbf{muestras} de una \textbf{funci\'{o}n envolvente} $T_{1} \, \frac{\sin(\omega)}{\omega}$) donde la variable $\omega $ es continua, y 
+        la secuencia $T a_{k}$ está formada por valores igualmente espaciados en 
+        frecuencia, con intervalo $\frac{\pi \, T_{1}}{T}$.
+        
+        \item   Observe que la separaci\'{o}n de las muestras de la envolvente de $T a_{k}$ est\'{a} dada 
+        por 
+        \begin{equation}
+                \omega_{T} = \frac{\pi \, T_{1}}{T}.
+        \end{equation}
+        Entonces, cuando mayor sea $T$ menor ser\'{a} $\omega_{T}$ y la cantidad de muestras en un intervalo dado de frecuencia ser\'{a} mayor.
+
+        \item  Si fijamos el valor $T_{1}$ (recordando que debe ser $T_{1}<T,$ por hip\'{o}tesis) la envolvente de $T a_{k}$ es independiente de $T$.
+\end{enumerate}
+
+\section{Síntesis y análisis}
+
+\subsection{Teor\'{\i}a}
+
+\begin{enumerate}
+
+        \item  Vamos a construir una se\~{n}al $x\left( t\right) $ no peri\'{o}dica como el l\'{\i}mite de 
+        una se\~{n}al $\hat{x}\left( t\right) $ peri\'{o}dica cuando el per\'{\i}odo $T$ tiende a 
+        $\infty .$ Veamos que pasa con los coeficientes de la serie de Fourier. 
+        Recordemos que una se\~{n}al peri\'{o}dica $\hat{x}\left( t\right) =\hat{x}\left( t+T\right) $ 
+        se puede escribir como una serie de Fourier mediante la ecuaci\'{o}n de s\'{\i}ntesis 
+        \begin{equation}
+                \hat{x}\left( t\right) =\sum_{k=-\infty }^{\infty }a_{k} \, e^{j \, k \, \omega_{0} \, t},
+        \end{equation}
+        donde los coeficientes $a_{k}$ se calculan mediante la ecuaci\'{o}n de an\'{a}lisis 
+        \begin{equation}
+            a_{k}=\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\hat{x}\left( t\right) e^{-j \, k \, \omega_{0} \, t}dt.
+        \end{equation}
+
+        \item  Definamos la se\~{n}al no peri\'{o}dica $x(t)$ especificando 
+        \begin{equation}
+                x\left( t\right) =
+                        \left\{ \begin{array}{ll}
+                                \hat{x}\left( t\right) & \left| t\right| \leq \frac{T}{2}, \\
+                                & \\
+                                0 & \left| t\right| >\frac{T}{2},
+                                \end{array} 
+                        \right. \qquad
+                        \hat{x}\left( t\right) =\hat{x}\left( t+T\right) .
+        \end{equation}
+        Entonces los coeficientes de la serie de Fourier son 
+        \begin{equation}
+           a_{k}=
+                  \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\hat{x}\left( t\right)e^{-j \, k \, \omega_{0} \, t}dt=
+                  \frac{1}{T}\int_{-\infty }^{\infty }x\left( t\right)e^{-j \, k \, \omega_{0} \, t}dt.
+        \end{equation}
+        \textbf{Las dos integrales son iguales en valor porque un per\'{\i}odo de }
+        $\hat{x}\left( t\right) $  \textbf{\ coincide con }$x\left( t\right) ,$ 
+        \textbf{\ justamente donde se eval\'{u}a la primer integral, y } $x\left(t\right) $
+        \textbf{\ es nula para }$\left| t\right| >\frac{T}{2}.$
+
+        \item  Definamos la ecuaci\'{o}n de an\'{a}lisis de la transformada de Fourier como 
+        \begin{equation}
+                X\left( j \, \omega \right) =\int_{-\infty }^{\infty }x\left( t\right)e^{-j \, \omega \, t} \, dt.
+        \end{equation}
+        Tenemos que los coeficientes de la serie de Fourier forman la secuencia de valores 
+        \begin{equation}
+                Ta_{k}=X\left( j \, k \, \omega_{0}\right) .
+        \end{equation}
+
+        \item  Usando la ecuaci\'{o}n de s\'{\i}ntesis de la serie de Fourier podemos escribir 
+        \begin{equation}
+            \hat{x}\left( t\right) =
+               \frac{1}{T}\sum_{k=-\infty }^{\infty }X\left(j \, k \, \omega_{0}\right) e^{j \, k \, \omega_{0} \, t}.
+        \end{equation}
+        Dado que $\omega _{0}=\frac{2 \, \pi }{T}\longleftrightarrow T=\frac{2 \, \pi }{\omega _{0}}$ 
+        vemos que la serie de Fourier puede escribirse como
+        \begin{equation}
+           \hat{x}\left( t\right) =
+           \frac{1}{2 \, \pi }
+              \sum_{k=-\infty }^{\infty }X\left(j \, k \, \omega_{0}\right) e^{j \, k \, \omega_{0} \, t} \, \omega _{0}.
+        \end{equation}
+        A medida que $T\rightarrow \infty ,$ $\omega _{0}\rightarrow 0$ (o sea un diferencial de 
+        frecuencia $d\omega $), $\hat{x}\left( t\right) \rightarrow x\left( t\right) $ y obtenemos la 
+        ecuaci\'{o}n de s\'{\i}ntesis 
+        \begin{equation}
+           x\left( t\right) =
+              \frac{1}{2 \, \pi }\int_{-\infty }^{\infty }X\left( j \, \omega \right) e^{j \, \omega \, t}d\omega .
+        \end{equation}
+        \textbf{A medida que }$T\rightarrow \infty ,$\textbf{\ se agranda el rango de valores de } $t$ 
+        \textbf{\ en la que las dos funciones }$\hat{x}\left(t\right) $\textbf{\ e }$x\left( t\right) $
+        \textbf{\ son iguales.}
+\end{enumerate}
+
+\subsection{Prestar atenci\'{o}n}
+
+Como hemos visto antes, vamos a usar la ecuaci\'{o}n de an\'{a}lisis 
+\begin{equation}
+        X\left( j \, \omega \right) =
+                \int_{-\infty }^{\infty }x\left( t\right) e^{-j \, \omega \, t} \, dt,  \label{analisis}
+\end{equation}
+y la ecuaci\'{o}n de s\'{\i}ntesis 
+\begin{equation}
+    x\left( t\right) =
+   \frac{1}{2 \, \pi }\int_{-\infty }^{\infty }X\left( j \, \omega \right) e^{j \, \omega \, t}d\omega .  \label{sintesis}
+\end{equation}
+Esto significa que estamos usando la variable $\omega $ (radianes por segundo), y no la variable $f$ 
+(ciclos por segundo). Recordemos que ambas est\'{a}n relacionadas por 
+\begin{equation}
+        \omega =2 \, \pi f.
+\end{equation}
+Este cambio de variables afecta a las ecuaciones que ser\'{\i}an de la forma 
+\begin{equation}
+        X\left( f\right) =\int_{-\infty }^{\infty }x\left( t\right) e^{-j2 \, \pi ft}dt,
+\end{equation}
+y 
+\begin{equation}
+        x\left( t\right) =\int_{-\infty }^{\infty }X\left( f\right) e^{j2 \, \pi ft}df.
+\end{equation}
+Usamos las f\'{o}rmulas dadas por las ecs. (\ref{analisis}) y (\ref{sintesis}) porque son las que aparecen 
+en los libros disponibles en biblioteca. La diferencia de notaci\'{o}n no afecta la teor\'{\i}a.
+
+\subsection{Concepto de la Transformada de Fourier}
+
+\begin{enumerate}
+
+        \item   La Transformada de Fourier es una generalizaci\'{o}n de la serie de Fourier, y permite estudiar funciones no peri\'{o}dicas en el dominio de la 
+        frecuencia.
+        
+        \item   La Transformada de Fourier permite descomponer una se\~{n}al en componentes arm\'{o}nicas cuyas frecuencias varían en diferenciales, a diferencia de la serie de Fourier donde las frecuencias de las arm\'{o}nicas varían en incrementos de $\omega_{T} = \frac{2 \, \pi}{T}$ la frecuencia fundamental correspondiente al período $T$.
+
+\end{enumerate}
+
+\section{Convergencia de la Transformada de Fourier}
+
+Sea una se\~{n}al $x\left( t\right) ,$ y consideremos las funciones $X\left(j \, \omega \right) $ y 
+$x_{F}\left( t\right) $ definidas como 
+\begin{equation}
+X\left( j \, \omega \right) =
+        \int_{-\infty }^{\infty }x\left( t\right) e^{-j \, \omega \, t} \, dt,  \label{convergenciaUno}
+\end{equation}
+y 
+\begin{equation}
+x_{F}\left( t\right) =
+        \frac{1}{2 \, \pi }\int_{-\infty }^{\infty }X\left(j \, \omega \right) e^{j \, \omega \, t}d\omega .
+\end{equation}
+La pregunta es: \textquestiondown cu\'{a}ndo $x_{F}\left( t\right) $ es una representaci\'{o}n 
+v\'{a}lida de $x\left( t\right) ?$
+
+\subsection{Energ\'{\i}a finita}
+
+Si $x\left( t\right) $ tiene energ\'{\i}a finita 
+\begin{equation}
+        \int_{-\infty }^{\infty }\left[ x\left( t\right) \right] ^{2}dt<\infty ,
+\end{equation}
+entonces $X\left( j \, \omega \right) $ es finita, o sea que la integral (\ref{convergenciaUno}) converge, y 
+adem\'{a}s 
+\begin{equation}
+        \int_{-\infty }^{\infty }\left[ x\left( t\right) -x_{F}\left( t\right) \right] ^{2}dt=0.
+\end{equation}
+Esto implica que $x_{F}\left( t\right) $ y $x\left( t\right)$ son similares excepto en, a lo sumo, una cantidad limitada de valores de $t$ donde las funciones tengan discontinuidades.
+
+\subsection{Condiciones de Dirichlet}
+
+Son \textbf{condiciones alternativas a la anterior}, y son \textbf{suficientes} para asegurar que 
+$x_{F}\left( t\right) $ es igual a $x\left(t\right) $ excepto en puntos de discontinuidad.
+
+\begin{enumerate}
+        \item  $x\left( t\right) $ debe ser absolutamente integrable 
+        \begin{equation}
+                \int_{-\infty }^{\infty }\left| x\left( t\right) \right| dt<\infty .
+        \end{equation}
+
+        \item  $x\left( t\right) $ tiene un n\'{u}mero finito de m\'{a}ximos y m\'{\i}nimos dentro de 
+        cualquier intervalo finito.
+
+        \item  $x\left( t\right) $ tiene un n\'{u}mero finito de discontinuidades dentro de cualquier 
+        intervalo finito, y dichas discontinuidades son finitas. En este caso, en los puntos de 
+        discontinuidad de $x\left( t\right)$, $x_{F}\left( t\right)$ es 
+        igual al promedio de valores de $x\left( t\right)$ a ambos lados de la discontinuidad.
+\end{enumerate}
+Si se cumplen estas condiciones entonces $x\left( t\right) $ tiene transformada de Fourier.
+
+\subsection{Pregunta}
+
+Las se\~{n}ales que llegan a las antenas de un televisor o un equipo de radio, por mencionar dos ejemplos, 
+\textquestiondown tienen transformada de Fourier? Justifique.
+
+\section{Ejemplos}
+
+
+
+\subsection{Impulso temporal}
+
+Calculemos la transformada de Fourier de un impulso $\delta \left( t\right) $
+\begin{equation}
+        X\left( j \, \omega \right) =  \int_{-\infty }^{\infty }\delta \left( t\right)e^{-j \, \omega \, t} \, dt.
+\end{equation}
+Por la propiedad del muestreo 
+\begin{equation}
+\delta \left( t\right) e^{-j \, \omega \, t}=
+        \delta \left( t\right) e^{-j \, \omega0}=\delta \left( t\right) ,
+\end{equation}
+y por lo tanto 
+\begin{equation}
+X\left( j \, \omega \right) =
+        \int_{-\infty }^{\infty }\delta \left( t\right)e^{-j \, \omega \, t} \, dt=
+           \int_{-\infty }^{\infty }\delta \left( t\right) dt=1.
+\end{equation}
+Note que es un valor constante para todo valor de $\omega .$
+
+\subsection{Impulso temporal desplazado}
+
+Calculemos la transformada de Fourier de un impulso desplazado en el 
+tiempo $\delta \left( t - t_{0}\right) $
+\begin{equation}
+        X\left( j \, \omega \right) =
+                \int_{-\infty }^{\infty }\delta \left( t - t_{0} \right)e^{-j \, \omega \, t} \, dt.
+\end{equation}
+Recordemos que, por la propiedad del muestreo,
+\begin{equation}
+\delta \left( t - t_{0} \right) e^{-j \, \omega \, t}=
+        \delta \left( t - t_{0} \right) e^{-j \, \omega \, t_{0}} =
+                \delta \left( t - t_{0} \right) e^{-j \omega \, t_{0}}
+\end{equation}
+y por lo tanto  podemos escribir
+\begin{equation}
+X\left( j \, \omega \right) =
+        \int_{-\infty }^{\infty }\delta \left( t - t_{0} \right)e^{-j \, \omega \, t} \, dt=
+        \left(\int_{-\infty }^{\infty }\delta \left( t\right) dt\right) \, e^{-j \, \omega \, t_{0}} = e^{-j \, \omega \, t_{0}},
+\end{equation}
+teniendo en cuenta que el factor $e^{-j \, \omega \, t_{0}}$ no depende de la variable de integración $t$ y puede ser extraído de la integral como una constante.
+
+
+\subsection{Impulso en frecuencia}
+
+Sea la transformada de Fourier 
+\begin{equation}
+        X\left( j \, \omega \right) =2 \, \pi \, \delta \left( \omega -\omega _{0}\right) .
+\end{equation}
+Apliquemos la ecuaci\'{o}n de s\'{\i}ntesis para obtener 
+\begin{equation}
+        x\left( t\right) =
+          \frac{1}{2 \, \pi }
+           \int_{-\infty }^{\infty }
+               2 \, \pi \, \delta \left(\omega -\omega _{0}\right) \, e^{j \, \omega \, t} \, d\omega = e^{j \, \omega _{0} \, t}.
+\end{equation}
+Esto significa que las funciones periódicas $e^{j \, \omega _{0} \, t}$ también tienen transformada de Fourier, y son impulsos en frecuencia $2 \, \pi \, \delta \left( \omega -\omega _{0}\right)$.
+
+\subsection{Tren de impulsos en frecuencia}
+
+En general, si tenemos un tren de impulsos en frecuencia
+\begin{equation}
+        X\left( j \, \omega \right) =
+                \sum_{k=-\infty }^{\infty }2 \, \pi \, a_{k} \, \delta \left(\omega -k \, \omega_{0}\right) ,
+\end{equation}
+y la serie de Fourier
+\begin{equation}
+        x\left( t\right) =\sum_{k=-\infty }^{\infty }a_{k} \, e^{j \, k \, \omega_{0} \, t},
+\end{equation}
+podemos escribir 
+\begin{equation}
+        \sum_{k=-\infty }^{\infty }a_{k} \, e^{j \, k \, \omega_{0} \, t} 
+        \begin{array}{c}
+                TF \\ 
+                \Leftrightarrow
+        \end{array}
+        \sum_{k=-\infty }^{\infty }2 \, \pi \, a_{k} \, \delta \left( \omega -k \omega_{0} \right). \label{tf.tif}
+\end{equation}
+
+\subsection{Tren de impulsos temporal}
+
+Consideremos el tren de impulsos temporal
+\begin{equation}
+        x\left( t\right) =\sum_{k=-\infty }^{\infty }\delta \left( t-kT\right) .
+\end{equation}
+Calculemos los coeficientes de la serie de Fourier, y observemos que dentro de los l\'{\i}mites de 
+integraci\'{o}n $x\left( t\right) = \delta \left(t\right) $ lo que permite escribir 
+\begin{equation}
+        a_{k}=
+        \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\delta \left( t\right)e^{-j \, k \, \omega \, t} \, dt=\frac{1}{T}.
+\end{equation}
+y por lo tanto tenemos que la transformada de Fourier es (vea \ref{tf.tif})
+\begin{equation}
+        X\left( j \, \omega \right) =
+                \sum_{k=-\infty }^{\infty }\frac{2 \, \pi}{T} \, \delta\left( \omega -\frac{2 \, \pi \, k}{T}\right).
+\end{equation}
+
+\subsection{Pulso rectangular en tiempo}
+
+Calculemos la transformada de la se\~{n}al pulso rectangular 
+\begin{equation}
+x\left( t\right) =
+        \left\{ \begin{array}{l}
+                1, \left| t\right| \leq T_{1}, \\ 
+                0, \left| t\right| > T_{1}.
+        \end{array} \right.
+\end{equation}
+Seg\'{u}n la ecuaci\'{o}n de an\'{a}lisis 
+\begin{equation}
+        X\left( j \, \omega \right) =
+                \int_{-T_{1}}^{T_{1}}e^{-j \, \omega \, t} \, dt=
+                \frac{\left[e^{-j \, \omega \, t}\right]_{-T_{1}^{T_{1}}}}{-j \, \omega}.
+\end{equation}
+Evaluando la integral
+\begin{equation}
+	X\left( j \, \omega \right) =
+	\frac{\left[e^{-j \, \omega \, t}\right]_{-T_{1}}^{T_{1}}}{-j \, \omega} =
+	\frac{e^{-j \, \omega \, T_{1}}-e^{j \, \omega \, T_{1}}}{-j \, \omega}.
+\end{equation}
+Finalmente, multiplicando y diviendo por $2 \, T_{1}$ y simplificando signos llegamos a la expresión
+\begin{equation}
+	X\left( j \, \omega \right) =
+	\frac{e^{-j \, \omega \, T_{1}}-e^{j \, \omega \, T_{1}}}{-j \, \omega} =	
+    2 \, T_{1}	\, \frac{e^{j \, \omega \, T_{1}}-e^{-j \, \omega \, T_{1}}}{2 \, j \, \omega \, T_{1}} =	
+	2 \, T_{1} \, \frac{\sin\left( \omega \, T_{1}\right) }{\omega \, T_{1}}.
+\end{equation}
+Por lo tanto, resulta
+\begin{equation}
+	X\left( j \, \omega \right) =
+	2 \, T_{1} \, \frac{\sin\left( \omega \, T_{1}\right) }{\omega \, T_{1}}.
+\end{equation}
+
+\subsection{Pulso rectangular en frecuencia}
+
+Veamos cu\'{a}l es la se\~{n}al $x\left( t\right) $ cuya transformada de Fourier es 
+\begin{equation}
+        X\left( j \, \omega \right) =
+                \left\{ \begin{array}{l}
+                        1, \left| \omega \right| \leq W_{1}, \\ 
+                        0, \left| \omega \right| >W_{1}.
+                \end{array} \right.
+\end{equation}
+Seg\'{u}n la ecuaci\'{o}n de s\'{\i}ntesis 
+\begin{equation}
+        x\left( t\right) =
+                \frac{1}{2 \, \pi}\int_{-W_{1}}^{W_{1}} e^{j \, \omega \, t}d\omega =
+                        \frac{\sin \left( W_{1}t\right) }{\pi t},
+\end{equation}
+Evaluando la integral
+\begin{equation}
+	x\left( t \right) =
+	\frac{1}{2 \, \pi} \, \frac{\left[e^{-j \, \omega \, t}\right]_{-W_{1}}^{W_{1}}}{-j \, t} =
+	\frac{1}{2 \, \pi} \, \frac{e^{-j \,  W_{1} \, t}-e^{j \, W_{1} \, t}}{-j \, t}.
+\end{equation}
+Finalmente, multiplicando y diviendo por $2 \, W_{1}$ y simplificando signos llegamos a la expresión
+\begin{equation}
+	x\left( t \right) =
+	\frac{1}{2 \, \pi} \, \frac{e^{-j \,  W_{1} \, t}-e^{j \, W_{1} \, t}}{-j \, t} =
+\frac{1}{2 \, \pi} \, 2 \, W_{1} \, \frac{e^{j \,  W_{1} \, t}-e^{-j \, W_{1} \, t}}{2 \, j \, W_{1} \, t} =	
+	\frac{W_{1}}{\pi} \frac{\sin\left( W_{1} \, t\right) }{W_{1} \, t}.
+\end{equation}
+Por lo tanto, resulta 
+\begin{equation}
+        x\left( t\right) =	\frac{W_{1}}{\pi} \frac{\sin\left( W_{1} \, t\right) }{W_{1} \, t}.
+\end{equation}
+
+\subsection{Exponencial decreciente derecha}
+
+Consideremos la se\~{n}al 
+\begin{equation}
+	x\left( t\right) = e^{-a \, t}\, u\left( t\right) , a>0.
+\end{equation}
+Seg\'{u}n la ecuaci\'{o}n de an\'{a}lisis 
+\begin{equation}
+	X\left( j \, \omega \right) =
+	\int_{0}^{\infty }e^{-a \, t} \, e^{-j \, \omega \, t} \, dt=
+	\left[ -\frac{e^{-\left( a+j \, \omega \right) t}}{a+j \, \omega }\right] _{0}^{\infty },
+\end{equation}
+o sea que 
+\begin{equation}
+	X\left(j \, \omega \right) =\frac{1}{a+j \, \omega }, a>0.
+\end{equation}
+Observe adem\'{a}s que la siguiente integral est\'{a} acotada
+\begin{equation}
+	\int_{0}^{\infty }\left| e^{-a \, t}\, u\left( t\right) \right| dt=\frac{1}a.
+\end{equation}
+y adem\'{a}s la funci\'{o}n $x(t)$ tiene una \'{u}nica discontinuidad acotada en $t = 0$. 
+Por lo tanto esta funci\'{o}n verifica las condiciones de Dirichlet.
+
+
+\section{Propiedades de la Transformada de Fourier de tiempo continuo}
+
+\subsection{Linealidad}
+
+Sea una funci\'{o}n
+\begin{equation}
+        r\left( t\right) = a \, x\left( t\right) +b \, y\left( t\right).
+\end{equation}
+Podemos probar que su transformada es
+\begin{equation}
+        R\left( j \, \omega \right) =
+        \int_{-\infty }^{\infty }\left( ax\left( t\right)+by\left( t\right) \right) e^{-j \, \omega \, t} \, dt.
+\end{equation}
+En otras palabras, la transformada de Fourier es una operaci\'{o}n lineal.
+
+Escribiendo la ecuaci\'{o}n de an\'{a}lisis para $r\left( t\right)$
+tenemos
+\begin{equation}
+        R\left( j \, \omega \right) =
+        \left( \int_{-\infty }^{\infty } a \, x\left( t\right)e^{-j \, \omega \, t} + b \, y\left( t\right)e^{-j \, \omega \, t} \, dt\right),
+\end{equation}
+que puede rescribirse, por la linealidad del operador integral, como
+\begin{equation}
+        R\left( j \, \omega \right) =
+        a \, \left( \int_{-\infty }^{\infty }x\left( t\right)e^{-j \, \omega \, t} \, dt\right) +
+        b \, \left( \int_{-\infty }^{\infty }y\left( t\right)e^{-j \, \omega \, t} \, dt\right) .
+\end{equation}
+Por lo tanto resulta
+\begin{equation}
+        R\left( j \, \omega \right) =
+                a \, X\left( j \, \omega \right) +
+                b \, Y\left( j \, \omega \right).
+\end{equation}
+As\'{\i} deducimos la propiedad
+\begin{equation}
+        ax\left( t\right) +by\left( t\right) 
+        \begin{array}{l}
+                TF \\ 
+                \leftrightarrow
+        \end{array}
+        a \, X\left( j \, \omega \right) +b \, Y\left( j \, \omega \right) .
+\end{equation}
+
+\subsection{Desplazamiento en el tiempo}
+
+Dada la funci\'{o}n 
+\begin{equation}
+   r\left( t\right) = x\left( t-t_{0}\right) ,
+\end{equation}
+su transformada es
+\begin{equation}
+   R\left( j \, \omega \right) =  \int_{-\infty }^{\infty }x\left( t-t_{0}\right)e^{-j \, \omega \, t} \, dt.
+\end{equation}
+
+Escribiendo la ecuaci\'{o}n de an\'{a}lisis de $r\left( t\right)$ 
+y aplicando un cambio de variable $\tau =t-t_{0},$ obtenemos
+\begin{equation}
+  R\left( j \, \omega \right) =
+  \int_{-\infty }^{\infty }x\left( \tau \right) \, e^{-j \, \omega \left( \tau +t_{0}\right) }dt.
+\end{equation}
+Por las propiedades de la funci\'{o}n exponencial 
+\begin{equation}
+e^{-j \, \omega \, \left( \tau +t_{0}\right)} = e^{-j \, \omega \, \tau} \, e^{-j \, \omega \, t_{0}},
+\end{equation}
+reescribimos la ecuaci\'{o}n anterior como
+\begin{equation}
+   R\left( j \, \omega \right) = e^{-j \, \omega \, t_{0}} \int_{-\infty }^{\infty }x\left(\tau \right) e^{-j \, \omega \tau }d \tau.
+\end{equation}
+Observe que $e^{-j \, \omega \, t_{0}}$ sale de la integral pues no depende de la variable de integraci\'{o}n $\tau$.
+As\'{'i}, llegamos a la conclusi\'{o}n 
+\begin{equation}
+        x\left( t-t_{0}\right) 
+        \begin{array}{l}
+                TF \\ 
+                \leftrightarrow
+        \end{array}
+        e^{-j \, \omega \, t_{0}}X\left( j \, \omega \right) .
+\end{equation}
+
+\subsection{Conjugaci\'{o}n y simetr\'{\i}a del conjugado}
+
+\begin{enumerate}
+\item  El conjugado de la transformada de Fourier es 
+\begin{equation}
+      \overline{X\left( j \, \omega \right)} =
+               \overline{\int_{-\infty }^{\infty }x\left(t\right) \, e^{-j \, \omega \, t} \, dt}=
+               \int_{-\infty }^{\infty } \overline{x\left( t\right)} \, e^{j \, \omega \, t} \, dt.
+\end{equation}
+Cambiando el signo de $\omega$ en ambos lados de la ecuaci\'{o}n mantenemos la igualdad
+\begin{equation}
+        \overline{X\left( -j \, \omega \right)} =
+                \int_{-\infty }^{\infty }\overline{x\left(t\right)} \, e^{-j \, \omega \, t} \, dt.
+\end{equation}
+Como conclusi\'{o}n, podemos escribir
+\begin{equation}
+        \overline{x\left( t\right)} 
+        \begin{array}{l}
+                TF \\ 
+                \leftrightarrow
+        \end{array}
+        \overline{X\left( -j \, \omega \right)} .
+\end{equation}
+
+\item  Si $x\left( t\right) $ es real entonces 
+\begin{equation}
+        x\left( t\right) = \overline{x\left( t\right)}. \label{TFTCsimconj}
+\end{equation}
+Planteando la igualdad
+\begin{equation}
+        \overline{X\left( -j \, \omega \right)} =
+                \overline{\int_{-\infty }^{\infty }x\left(t\right) \, e^{j \, \omega \, t} \, dt}=
+                        \int_{-\infty }^{\infty }\overline{x\left( t\right)} \, e^{-j \, \omega \, t} \, dt,
+\end{equation}
+y considerando la Ec. (\ref{TFTCsimconj}) obtenemos
+\begin{equation}
+        \overline{X\left( -j \, \omega \right)} =
+                \int_{-\infty }^{\infty }\overline{x\left(t\right)} e^{-j \, \omega \, t} \, dt=
+                \int_{-\infty }^{\infty }x\left( t\right)e^{-j \, \omega \, t} \, dt=X\left( j \, \omega \right) ,
+\end{equation}
+lo que demuestra 
+\begin{equation}
+        X\left( -j \, \omega \right) = \overline{X\left( j \, \omega \right)} .  \label{conjuuno}
+\end{equation}
+
+\item  Si $x\left( t\right) $ es real por la ec. (\ref{conjuuno})
+tenemos que 
+\begin{equation}
+\Re\left( X\left( j \, \omega \right) \right) =
+\Re\left(X\left(-j \, \omega \right) \right),
+\end{equation}
+y 
+\begin{equation}
+ \Im\left( X\left( j \, \omega \right) \right) =
+-\Im\left( X\left(-j \, \omega \right) \right).
+\end{equation}
+
+\item  Si $x\left( t\right) $ es real, entonces 
+\begin{eqnarray}
+\left\| X\left( j \, \omega \right) \right\| &=&
+        X\left( j \, \omega \right) \, \overline{X\left( j \, \omega \right)} =
+        X\left( j \, \omega \right) \, X\left( -j \, \omega \right) ,
+\\
+\left\| X\left( -j \, \omega \right) \right\| &=&
+X\left( -j \, \omega \right) \, \overline{X\left( -j \, \omega \right)} =
+X\left( -j \, \omega \right) \, X\left( j \, \omega \right) ,
+\end{eqnarray}
+debido a la ec. (\ref{conjuuno}), y por lo tanto $\left\| X\left( j \, \omega
+\right) \right\| $ es una funci\'{o}n par, y de forma similar puede
+demostrarse que $\angle X\left( j \, \omega \right) =\arctan \frac{%
+\Im\left( X\left( j \, \omega \right) \right) }{\Re\left( X\left(
+j \, \omega \right) \right) }$ es una funci\'{o}n impar.
+
+\item  Si $x\left( t\right) $ es real y par entonces 
+$X\left( j \, \omega\right) $ es real y par pues 
+\begin{equation}
+X\left( -j \, \omega \right) =\int_{-\infty }^{\infty }x\left( t\right)
+e^{j \, \omega \, t} \, dt=
+\int_{-\infty }^{\infty }x\left( -t \right) e^{-j \, \omega \, t }dt .
+\end{equation}
+Como $x\left( t\right) = x\left( -t\right) $ (funci\'{o}n par) tenemos
+que 
+\begin{equation}
+X\left( -j \, \omega \right) =\int_{-\infty }^{\infty }x\left( \tau \right)
+e^{-j \, \omega \tau }d\tau =X\left( j \, \omega \right) ,
+\end{equation}
+y por lo tanto es una funci\'{o}n par.
+
+\item  Si $x\left( t\right) $ es real e impar, $\left( x\left( t\right)
+=-x\left( -t\right) \right) ,$ entonces $X\left( j \, \omega \right) $ es impar
+pues 
+\begin{equation}
+-X\left( -j \, \omega \right) =-\int_{-\infty }^{\infty }x\left( t\right)
+e^{j \, \omega \, t} \, dt=\int_{-\infty }^{\infty }-x\left( -\tau \right) e^{-j \, \omega
+\tau }d\tau ,
+\end{equation}
+\begin{equation}
+-X\left( -j \, \omega \right) =\int_{-\infty }^{\infty }-x\left( -\tau \right)
+e^{-j \, \omega \tau }d\tau =\int_{-\infty }^{\infty }x\left( \tau \right)
+e^{-j \, \omega \tau }d\tau =X\left( j \, \omega \right) .
+\end{equation}
+y considerando la ec. (\ref{conjuuno}), adem\'{a}s $X\left( j \, \omega \right) $
+es imaginaria pura 
+\begin{equation}
+X\left( j \, \omega \right) =-X\left( -j \, \omega \right).
+\end{equation}
+\end{enumerate}
+
+\subsection{Diferenciaci\'{o}n en tiempo}
+
+\begin{enumerate}
+\item Escribamos la ecuaci\'{o}n de s\'{\i}ntesis
+\begin{equation}
+x\left( t\right) =\frac{1}{2 \, \pi }\int_{-\infty }^{\infty }X\left( j \, \omega
+\right) e^{j \, \omega \, t}d\omega .
+\end{equation}
+
+\item Derivemos ambos t\'{e}rminos respecto al tiempo
+\begin{equation}
+\frac{dx\left( t\right) }{dt}=\frac{1}{2 \, \pi }\int_{-\infty }^{\infty
+}X\left( j \, \omega \right) \frac{d\left( e^{j \, \omega \, t}\right) }{dt}d\omega.
+\end{equation}
+
+\item Obtenemos finalmente
+\begin{equation}
+\frac{dx\left( t\right) }{dt}= \frac{1}{2 \, \pi }\int_{-\infty
+}^{\infty }j \, \omega \, X\left( j \, \omega \right) e^{j \, \omega \, t}d\omega.
+\end{equation}
+
+\item La conclusi\'{o}n es 
+\begin{equation}
+\frac{dx\left( t\right) }{dt} 
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+j \, \omega \, X\left( j \, \omega \right) .
+\end{equation}
+
+\end{enumerate}
+
+\subsection{Diferenciaci\'{o}n en frecuencia}
+
+\begin{enumerate}
+\item Escribamos la ecuaci\'{o}n de an\'{a}lisis
+\begin{equation}
+X\left( j \, \omega \right) =\int_{-\infty }^{\infty }x\left( t\right)
+e^{-j \, \omega \, t} \, dt.
+\end{equation}
+
+\item Derivemos ambos t\'{e}rminos respecto a la frecuencia
+\begin{equation}
+\frac{dX\left( j \, \omega \right) }{d\omega }=\int_{-\infty }^{\infty }x\left(
+t\right) \, \frac{d\left( e^{-j \, \omega \, t}\right) }{d\omega } \, dt.
+\end{equation}
+
+\item Obtenemos
+\begin{equation}
+\frac{dX\left( j \, \omega \right) }{d\omega }=
+\int_{-\infty }^{\infty}-j \, t \, x\left( t\right) \, e^{-j \, \omega \, t} {d\omega } \, dt.
+\end{equation}
+
+\item Finalmente 
+\begin{equation}
+j \, \frac{dX\left( j \, \omega \right) }{d\omega }=\int_{-\infty }^{\infty
+}t \, x\left( t\right) \, e^{-j \, \omega \, t} {d\omega } \, dt.
+\end{equation}
+
+\end{enumerate}
+
+Conclusi\'{o}n 
+\begin{equation}
+t \, x\left( t\right) 
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+j \, \frac{dX\left( j \, \omega \right) }{d\omega }.
+\end{equation}
+
+
+
+
+\subsection{Escalado en tiempo y frecuencia}
+
+\begin{enumerate}
+	
+\item Vamos a calcular la transformada de $x(a \, t)$ en función de la transformada de $x(t)$.
+ 
+\item Escribamos la ecuaci\'{o}n de an\'{a}lisis
+\begin{equation}
+F\left( x\left( at\right) \right) =\int_{-\infty }^{\infty }x\left(
+a \, t\right) e^{-j \, \omega \, t} \, dt,
+\end{equation}
+donde $a\neq 0.$ 
+
+\item Hagamos la sustituci\'{o}n $\tau =a \, t$ para obtener
+\begin{equation}
+F\left( x\left( at\right) \right) =\left\{ 
+\begin{array}{c}
+\frac{1}a\int_{-\infty }^{\infty }x\left( \tau \right) e^{-\frac{j \, \omega 
+}a\tau }d\tau , a>0, \\ 
+\\ 
+-\frac{1}a\int_{-\infty }^{\infty }x\left( \tau \right) e^{-\frac{j \, \omega 
+}a\tau }d\tau , a<0.
+\end{array}
+\right.
+\end{equation}
+
+\item El signo de $a$ afecta al orden de integraci\'{o}n. Si se conservan los
+l\'{\i}mites de integraci\'{o}n, debe observarse el signo correspondiente. La
+conclusi\'{o}n es 
+\begin{equation}
+x\left( at\right) 
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+\frac{1}{\left| a\right| }X\left( \frac{j \, \omega }a\right) ,
+\end{equation}
+donde $a\neq 0.$
+
+\end{enumerate}
+
+\subsection{Convoluci\'{o}n en el dominio del tiempo}
+
+\begin{enumerate}
+\item Empezamos con la integral de convoluci\'{o}n 
+\begin{equation}
+        y\left( t\right) =
+                \int_{-\infty }^{\infty }       x\left( \tau \right) \, h\left(t-\tau \right)      \, d\tau .
+\end{equation}
+\item Deseamos obtener la transformada de Fourier 
+\begin{equation}
+        Y\left( j \, \omega \right) =
+                F\left( y\left( t\right) \right) =
+                \int_{-\infty}^{\infty }
+                  \left[ \int_{-\infty }^{\infty }x\left( \tau \right) \, h\left(t-\tau \right) d\tau \right] \,
+                   e^{-j \, \omega \, t} \, dt.
+\end{equation}
+\item Cambiando el orden de integraci\'{o}n, y observando que $x\left( \tau\right) $ no depende de $t,$ obtenemos 
+\begin{equation}
+        \int_{-\infty }^{\infty }
+                \left[ \int_{-\infty }^{\infty }
+                        x\left( \tau\right) \, h\left( t-\tau \right) 
+                d\tau \right] \, e^{-j \, \omega \, t}
+        dt =
+        \int_{-\infty}^{\infty }
+                x\left( \tau \right) 
+                \left( \int_{-\infty }^{\infty } \, h\left(t-\tau \right) \, e^{-j \, \omega \, t}    \, dt\right) 
+        d\tau .
+\end{equation}
+\item Por la propiedad de desplazamiento en el tiempo, aplicada a $h(t - \tau)$, tenemos que 
+\begin{equation}
+        \int_{-\infty }^{\infty }h\left( t-\tau \right) \, e^{-j \, \omega \, t} \, dt=
+                e^{-j \, \omega \tau } \, h\left( j \, \omega \right) ,
+\end{equation}
+que podemos reemplazar para obtener 
+\begin{equation}
+        Y\left( j \, \omega \right) =
+        \int_{-\infty }^{\infty }
+                x\left( \tau \right)
+                \left( \int_{-\infty }^{\infty }h\left( t-\tau \right) \, e^{-j \, \omega \, t} \, dt\right) 
+                d\tau =
+       \int_{-\infty }^{\infty }x\left( \tau \right) \, e^{-j \, \omega\tau } \, H\left( j \, \omega \right) d\tau .
+\end{equation}
+\item La integral entre par\'{e}ntesis 
+\begin{equation}
+        Y\left( j \, \omega \right) =
+        \int_{-\infty }^{\infty }
+        \left( x\left( \tau\right) e^{-j \, \omega \tau } \, d\tau \right) \, H\left( j \, \omega \right),
+\end{equation}
+es igual a la transformada de Fourier $X\left( j \, \omega \right) $ y por lo
+tanto 
+\begin{equation}
+        Y\left( j \, \omega \right) = X\left( j \, \omega \right) \, H\left( j \, \omega \right) .
+\end{equation}
+
+\item Conclusi\'{o}n 
+\begin{equation}
+y\left( t\right) =x\left( t\right) * h\left( t\right) 
+        \begin{array}{l}
+                F \\ 
+                \leftrightarrow
+        \end{array}
+        Y\left( j \, \omega \right) = X\left( j \, \omega \right) R\left( j \, \omega \right) .
+\end{equation}
+
+\end{enumerate}
+
+\textbf{Convoluci\'{o}n de se\~{n}ales en el dominio del tiempo implica multiplicaci\'{o}n de 
+transformadas de Fourier en el dominio de la frecuencia}
+
+\subsection{Convolución en el dominio de la frecuencia}
+
+\begin{enumerate}
+\item Empezamos con la expresi\'{o}n 
+\begin{equation}
+        R\left( j \, \omega \right) =
+        \frac{1}{2 \, \pi }
+        \int_{-\infty }^{\infty }
+             X\left(j \, \omega \right) Y\left( j\left( \omega -\theta \right) \right) d\theta .
+\end{equation}
+
+\item Aplicamos la ecuaci\'{o}n de s\'{\i}ntesis 
+\begin{equation}
+        r\left( t\right) =
+                \frac{1}{2 \, \pi }
+                \int_{-\infty }^{\infty }
+                \left[ \frac{1}{2 \, \pi }
+                          \int_{-\infty }^{\infty }
+                              X\left( j \, \omega \right) \, Y\left( j\left(\omega -\theta \right) \right) \, 
+                          d\theta 
+                \right] \, e^{j \, \omega \, t} \,
+                d\omega .
+\end{equation}
+
+\item Intercambiamos el orden de integraci\'{o}n 
+\begin{equation}
+        r\left( t\right) =
+        \frac{1}{2 \, \pi }
+        \left[ \int_{-\infty }^{\infty }
+                X\left(j \, \omega \right) \left( \frac{1}{2 \, \pi }
+                \int_{-\infty }^{\infty }
+                    Y\left(j\left( \omega -\theta \right) \right) e^{j \, \omega \, t}d\omega \right) d\theta 
+        \right].
+\end{equation}
+
+\item Aplicamos la ecuaci\'{o}n de s\'{\i}ntesis 
+\begin{equation}
+        r\left( t\right) =
+                \frac{1}{2 \, \pi }
+                \left[ 
+                     \int_{-\infty }^{\infty }X\left(j \, \omega \right) \, y\left( t\right) \, e^{j\theta t} \, d\theta 
+                \right].
+\end{equation}
+y dado que $y\left( t \right) $ no depende de la variable de integraci\'{o}n lo podemos extraer de la 
+integral 
+\begin{equation}
+   r\left( t\right) =
+       y\left( t\right) 
+      \frac{1}{2 \, \pi } \left[ \int_{-\infty}^{\infty }X\left( j \, \omega \right) \,  e^{j \, \theta \, t} \, d\theta \right] .
+\end{equation}
+
+\item Finalmente, aplicando nuevamente la ecuaci\'{o}n de s\'{\i}ntesis, obtenemos
+\begin{equation}
+        r\left( t\right) = y\left( t\right) x\left( t\right) .
+\end{equation}
+
+\end{enumerate}
+
+Conclusi\'{o}n
+\begin{equation}
+        r\left( t\right) =x\left( t\right) \, y\left( t\right) 
+        \begin{array}{l}
+                F \\ 
+                \leftrightarrow
+        \end{array}     
+        R\left( j \, \omega \right) =
+                \frac{1}{2 \, \pi }
+                        \int_{-\infty }^{\infty }
+                                X\left(j \, \omega \right) \, Y\left( j\left( \omega -\theta \right) \right) \,
+                        d\theta.
+\end{equation}
+\textbf{Convoluci\'{o}n de transformadas implica multiplicaci\'{o}n de se\~{n}ales en el dominio del 
+tiempo}
+
+\subsection{Traslaci\'{o}n en frecuencia}
+
+Empezamos con la integral de s\'{\i}ntesis
+
+\begin{equation}
+\begin{array}{l}
+     \frac{1}{2 \, \pi }\int_{-\infty }^{\infty }
+         X\left( j\left( \omega -\omega_{0}\right) \right) e^{j \, \omega \, t}d\omega = \\ 
+        \\ 
+        \frac{e^{j \, \omega _{0}t}}{2 \, \pi } \int_{-\infty }^{\infty }
+                X\left( j\left(\omega -\omega _{0}\right) \right) e^{j\left( \omega -\omega _{0}\right)t}
+                d\left( \omega -\omega _{0}\right) ,
+\end{array}
+\end{equation}
+
+\begin{equation}
+        \frac{e^{j \, \omega_{0}t}}{2 \, \pi }
+        \int_{-\infty }^{\infty }X\left( j \, \omega_{1}\right) e^{j \, \omega _{1}t}d\omega _{1}=
+        e^{j \, \omega _{0}t}x\left( t\right) .
+\end{equation}
+
+Conclusi\'{o}n 
+\begin{equation}
+e^{j \, \omega _{0}t}x\left( t\right)  
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+ X\left( j\left( \omega -\omega _{0}\right) \right) .
+\end{equation}
+Recordemos la propiedad de desplazamiento temporal para comparar 
+\begin{equation}
+x\left( t-t_{0}\right)  
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+ e^{-j \, \omega \, t_{0}}X\left( j \, \omega \right) .
+\end{equation}
+
+\subsection{Relaci\'{o}n de Parseval}
+
+Empezamos con la igualdad
+\begin{equation}
+\int_{-\infty }^{\infty }
+  \left| x\left( t\right) \right|^{2} \, dt=
+  \int_{-\infty }^{\infty }x\left( t\right) \, \overline{x^{ }\left(
+      t\right)} \, dt.
+\end{equation}
+Recordamos la ecuaci\'{o}n de s\'{\i}ntesis 
+\begin{equation}
+\int_{-\infty }^{\infty }x\left( t\right) \, \overline{x\left( t\right)}
+\, dt=
+  \int_{-\infty }^{\infty }
+    x\left( t\right) 
+    \left[\frac{1}{2 \, \pi }\int_{-\infty }^{\infty }\overline{X\left(
+          j \, \omega \right)} e^{-j \, \omega \, t} \, d\omega \right]
+  dt,
+\end{equation}
+y cambiamos el orden de integraci\'{o}n 
+\begin{equation}
+\int_{-\infty }^{\infty }x\left( t\right) \, \overline{x\left(
+    t\right)} \, dt=
+\frac{1}{2 \, \pi }\int_{-\infty }^{\infty }\overline{X\left( j \, \omega
+  \right)} \, \left(
+\int_{-\infty }^{\infty }x\left( t\right) e^{-j \, \omega \, t} \, dt\right) d\omega .
+\end{equation}
+Recordemos la ecuaci\'{o}n de an\'{a}lisis y escribimos 
+\begin{equation}
+\int_{-\infty }^{\infty }x\left( t\right) \, \overline{x\left(
+    t\right)} \, dt=
+\frac{1}{2 \, \pi }\int_{-\infty }^{\infty }\overline{X\left( j \, \omega
+  \right)} \, X\left(j \, \omega \right) \, d\omega .
+\end{equation}
+Conclusi\'{o}n: si es limitada, la energ\'{\i}a de una se\~{n}al puede calcularse en el dominio del tiempo
+y en el dominio de la frecuencia
+\begin{equation}
+        \int_{-\infty }^{\infty }\left| x\left( t\right) \right| ^{2}dt=
+        \frac{1}{2 \, \pi }\int_{-\infty }^{\infty }\left| X\left( j \, \omega \right) \right|^{2}d\omega .
+\end{equation}
+
+\subsection{Dualidad}
+
+La demostraci\'{o}n de la propiedad de dualidad es m\'{a}s sencilla si consideramos las ecuaciones de 
+an\'{a}lisis y s\'{\i}ntesis en la variable $f$
+\begin{equation}
+  X_{1}\left( f\right) =\int_{-\infty }^{\infty }x_{1}\left( t\right) e^{-j2 \, \pi ft}dt,    \label{anaFouDua}
+\end{equation}
+y 
+\begin{equation}
+  x_{1}\left( t\right) =\int_{-\infty }^{\infty }X_{1}\left( f\right) e^{j2 \, \pi ft}df.     \label{sinFouDua}
+\end{equation}
+
+Observemos que las dos ecuaciones son muy similares. Reemplazemos ahora $t = -\tau$ para obtener
+\begin{equation}
+      X_{2}\left( f\right) = \int_{-\infty }^{\infty }x_{2}\left( -\tau\right) e^{j2 \, \pi f\tau}d(-\tau),
+       \label{duaAnaFou}
+\end{equation}
+y 
+\begin{equation}
+      x_{2}\left(-\tau\right) =\int_{-\infty }^{\infty }X_{2}\left( f\right) e^{-j2 \, \pi f \tau}df.
+       \label{duaSinFou}
+\end{equation}
+
+Comparemos los pares de ecuaciones (\ref{anaFouDua}) y (\ref{duaSinFou}), (\ref{sinFouDua}) y 
+(\ref{duaAnaFou}). Podemos ver que tienen la misma forma, m\'{a}s alla de que la variable de 
+integraci\'{o}n es distinta. De esta similitud entre las ecuaciones es posible deducir la relaci\'{o}n de 
+dualidad
+\begin{equation}
+        \begin{array}{cc}
+                x(t)    \begin{array}{l}
+                                F \\ 
+                                \leftrightarrow
+                        \end{array}
+                X(f)    \\
+                X(-t)   \begin{array}{l}
+                                F \\ 
+                                \leftrightarrow
+                        \end{array}
+                x(f)
+        \end{array}
+\end{equation}
+
+\subsection{Integraci\'{o}n}
+
+Dada una se\~{n}al $x(t)$, la integral de $x(t)$ es la funci\'{o}n $\int_{-\infty}^{t} x(v) dv$.
+Supongamos que $x(t)$ tiene una transformada de Fourier $X(\omega)$. No podemos asegurar que la
+integral de $x(t)$ tenga una transformada de Fourier en el sentido ordinario, pero tiene una
+transformada generalizada. Se puede demostrar que 
+\begin{equation}
+\int_{-\infty }^{t}x\left( t\right) dt 
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+\frac{1}{j \, \omega }X\left( j \, \omega \right) +\pi X\left( 0\right) \delta\left( \omega \right),
+\end{equation}
+donde $\delta(\omega)$ es un impulso en el dominio de la frecuencia. El t\'{e}rmino 
+$\pi X\left( 0\right) \delta\left( \omega \right)$ aparece para tomar en cuenta el valor 
+promedio de la integral.
+
+Para probar esta propiedad, debemos encontrar primero la transformada del impulso $\delta(t)$
+y del escal\'{o}n $u(t)$.
+
+\subsubsection{Impulso $\delta(t)$}
+
+\begin{enumerate}
+
+\item Por la propiedad del muestreo
+\begin{equation}
+  \delta(t) e^{j \omega \, t} = \delta(t).
+\end{equation}
+
+\item Por lo tanto, 
+\begin{equation}
+  \delta(t) 
+  \begin{array}{l}
+    F \\ 
+  \leftrightarrow
+  \end{array}
+  \int_{-\infty}^{\infty} \delta(t) dt = 1.
+\end{equation}
+
+\end{enumerate}
+
+\subsubsection{Escal\'{o}n $u(t)$}
+
+\begin{enumerate}
+
+\item Primero encontremos la transformada de 
+\begin{equation}
+x(t) = -\frac{1}{2} + u(t).
+\end{equation}
+
+\item Dado que la se\~{n}al $x(t)$ es constante excepto por un salto de valor $1$ 
+desde $t=0^{-}$ a $t=0^{+}$, la derivada (generalizada) de $x(t)$ es igual al 
+impulso unitario $\delta(t)$. Entonces por la propiedad de la derivada, la transformada
+de Fourier de $x(t)$ debe ser
+\begin{equation}
+  x(t) = \frac{1}{2} + u(t)
+  \begin{array}{l}
+    F \\ 
+  \leftrightarrow
+  \end{array}
+  \frac{1}{j \omega}. \label{fourierintegraluno}
+\end{equation}
+
+\item Recordemos que la transformada de Fourier de la se\~{n}al constante $\frac{1}{2}$ es
+$\pi \delta(\omega)$. Empleando la ec. (\ref{fourierintegraluno}) y la propiedad de linealidad,
+obtenemos finalmente
+\begin{equation}
+  u(t) 
+  \begin{array}{l}
+    F \\ 
+  \leftrightarrow
+  \end{array}
+  \pi \delta(\omega) + \frac{1}{j \omega}.
+\end{equation}
+
+\end{enumerate}
+
+\subsubsection{Integral}
+
+\begin{enumerate}
+
+\item La integral de $x(t)$ puede ser expresada como
+\begin{equation}
+  \int_{-\infty}^{t} x(v) dv = u(t) * x(t).
+\end{equation}
+Entonces por la propiedad de la convoluci\'{o}n, la transformada de Fourier de la integral 
+$x(t)$ es igual a $U(\omega) X(\omega)$.
+
+\item Por lo tanto
+\begin{equation}
+\int_{-\infty }^{t}x\left( t\right) dt 
+\begin{array}{l}
+F \\ 
+\leftrightarrow
+\end{array}
+(\frac{1}{j \, \omega } +\pi \delta(\omega) ) X\left( \omega \right) = 
+\frac{X(\omega)}{j \omega} + \pi X(0) \delta(\omega).
+\end{equation}
+
+\end{enumerate}

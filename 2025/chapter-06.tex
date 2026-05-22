@@ -1,0 +1,336 @@
+\chapter{Sistemas LIT y la convolución}
+
+\section{Introducci\'{o}n}
+
+Hemos visto que la suma de convoluci\'{o}n 
+\begin{equation}
+    y\left[ n\right] =
+     \sum_{k=-\infty }^{\infty }x\left[ k\right] \, h\left[ n-k\right] = x\left[ n\right] * h\left[ n\right] ,
+\end{equation}
+define la respuesta $y$ de un sistema $LIT$ para una entrada $x$ si conocemos la respuesta al 
+impulso $h$. Por lo tanto, en este cap\'{\i}tulo usaremos la convoluci\'{o}n como herramienta para 
+estudiar distintas propiedades de los sistemas LIT.
+
+\section{Propiedades de los sistemas LIT}
+
+\subsection{La propiedad conmutativa}
+
+El resultado de la convoluci\'{o}n es independiente del ordenamiento de las se\~{n}ales, o en otras 
+palabras, un sistema LIT de respuesta al impulso $h$ excitado con una entrada $x$ genera una salida 
+similar al de un sistema LIT de respuesta al impulso $x$ excitado con una entrada $h$.
+
+Consideremos la operaci\'{o}n de convoluci\'{o}n
+\begin{equation}
+y\left[ n\right] =
+        \sum_{k=-\infty }^{\infty }x\left[ k\right] \, h\left[ n-k\right] =
+        \sum_{k=-\infty }^{\infty }h\left[ k\right] \, x\left[ n-k\right].
+\end{equation}
+
+Realizamos un cambio de variable $m=n-k$ y por consecuencia definimos $k=m-n$ para obtener
+\begin{equation}
+        y\left[ n\right] =
+                \sum_{k=-\infty }^{\infty }x\left[ k\right] \, h\left[ n-k\right] =
+                \sum_{m=-\infty }^{\infty }x\left[ n-m\right] \, h\left[ m\right].
+\end{equation}
+
+\subsection{La propiedad distributiva}
+
+La salida de un sistema LIT cuya respuesta al impulso es $h_{a} + h_{b}$ para una entrada $x$ es 
+similar a la suma de las salidas de dos sistemas de respuestas al impulso $h_{a}$ y $h_{b}$ frente a una 
+entrada $x$.
+
+Probaremos la distributividad de la convoluci\'{o}n discreta
+\begin{eqnarray}
+       y\left[ n\right] &=&x\left[ n\right]  * \left( h_{a}\left[ n\right] + h_{b}\left[ n\right] \right) , \\
+       y\left[ n\right] &=&x\left[ n\right]  * h_{a}\left[ n\right] + x\left[ n\right]  * h_{b}\left[ n\right],
+\end{eqnarray}
+planteando
+\begin{equation}
+ y\left[ n\right] =
+\sum_{k=-\infty }^{\infty }x\left[ k\right] \, \left( h_{a}\left[ n-k\right] +h_{b}\left[ n-k\right] \right).
+\end{equation}
+Dado que la multiplicaci\'{o}n es distributiva respecto a la suma, obtenemos
+\begin{equation}
+        y\left[ n\right] =
+        \sum_{k=-\infty }^{\infty }
+        \left( x\left[ k\right] \, h_{a}\left[ n-k\right] +x\left[ k\right] \,h_{b}\left[ n-k\right] \right).
+\end{equation}
+Reagrupando t\'{e}rminos
+\begin{equation}
+        y\left[ n\right] =
+                \sum_{k=-\infty }^{\infty }
+                        \left(  \left( 
+                                        x\left[ k\right] \, h_a\left[ n-k\right] 
+                                \right) +
+                                \left( 
+                                        x\left[ k\right] \, h_{b}\left[ n-k\right] 
+                                \right) 
+                        \right) ,
+\end{equation}
+y separando sumatorias
+\begin{equation}
+        y\left[ n\right] =
+                \sum_{k=-\infty }^{\infty }\left( x\left[ k\right] \, h_{a}\left[ n-k\right] \right) +
+                \sum_{k=-\infty }^{\infty }\left( x\left[ k\right] \, h_{b}\left[ n-k\right] \right) ,
+\end{equation}
+obtenemos
+\begin{equation}
+y\left[ n\right] =x\left[ n\right]  * h_a\left[ n\right] +x\left[ n \right] * h_{b}\left[ n\right] .
+\end{equation}
+
+\subsection{La propiedad asociativa}
+
+La operaci\'{o}n de convoluci\'{o}n es asociativa
+\begin{eqnarray}
+y\left[ n\right] &=&x\left[ n\right] * \left( h_a\left[ n\right] * h_{b} \left[ n\right] \right) , \\
+y\left[ n\right] &=&\left( x\left[ n\right] *h_a\left[ n\right] \right) * h_{b}\left[ n\right] , \\
+y\left[ n\right] &=&x\left[ n\right] *h_a\left[ n\right] *h_{b}\left[ n\right].
+\end{eqnarray}
+
+Para probar la propiedad asociativa, planteamos las dos formas de hacer el cálculo.
+Primero consideremos
+\begin{equation}
+ y_{1}[n] = \sum_{p=-\infty}^{\infty} x[p] \, h_{a}[n-p],
+\end{equation}
+\begin{equation}
+ y[n] = \sum_{q=-\infty}^{\infty} y_{1}[q] \, h_{b}[n-q].
+\end{equation}
+\begin{equation}
+ y[n] = \sum_{q=-\infty}^{\infty} \left( \sum_{p=-\infty}^{\infty} x[p] \, h_{a}[q-p] \right) \, h_{b}[n-q].
+\end{equation}
+y
+\begin{equation}
+ y[n] = \sum_{q=-\infty}^{\infty} \sum_{p=-\infty}^{\infty} x[p] \, h_{a}[q-p]  \, h_{b}[n-q].
+\end{equation}
+Despues consideramos el cálculo alternativo
+\begin{equation}
+       h[n] = \sum_{r=-\infty}^{\infty} h_{a}[r] \, h_{b}[n-r],
+\end{equation}
+\begin{equation}
+      y[n] = \sum_{s=-\infty}^{\infty} x[s] \, h[n-s],
+\end{equation}
+\begin{equation}
+      y[n] = \sum_{s=-\infty}^{\infty} x[s] \, \left( \sum_{r=-\infty}^{\infty} h_{a}[r] \, h_{b}[n - r - s] \right),
+\end{equation}
+y
+\begin{equation}
+      y[n] = \sum_{s=-\infty}^{\infty} \sum_{r=-\infty}^{\infty} x[s] \, h_{a}[r] \, h_{b}[n -r -s].
+\end{equation}
+Por lo tanto, comparemos
+\begin{equation}
+ y[n] = \sum_{q=-\infty}^{\infty} \sum_{p=-\infty}^{\infty} x[p] \, h_{a}[q-p]  \, h_{b}[n-q],
+\end{equation}
+\begin{equation}
+ y[n] = \sum_{s=-\infty}^{\infty} \sum_{r=-\infty}^{\infty} x[s] \, h_{a}[r] \, h_{b}[n -r -s].
+\end{equation}
+Considerando las igualdades
+\begin{equation}
+ p = s, \qquad q - p = r,
+\end{equation}
+obtenemos
+\begin{equation}
+ n - q = n - q + p - p = n - r - s, 
+\end{equation}
+y por lo tanto
+\begin{equation}
+\begin{array}{c}
+ \sum_{s=-\infty}^{\infty} \sum_{r=-\infty}^{\infty} x[s] \, h_{a}[r] \, h_{b}[n -r -s] = \\
+ \\ 
+ \sum_{q=-\infty}^{\infty} \sum_{p=-\infty}^{\infty} x[p] \, h_{a}[q - p] \, h_{b}[n -q].
+\end{array}
+\end{equation}
+
+
+\subsection{Preguntas}
+
+\begin{enumerate}
+\item ¿Qu\'{e} significado tiene la propiedad conmutativa de los sistemas lineales?
+\item ¿Qu\'{e} significado tiene la propiedad distributiva de los sistemas lineales?
+\item ¿Qu\'{e} significado tiene la propiedad asociativa de los sistemas lineales?
+\item D\'{e} alg\'{u}n ejemplo concreto de estas tres propiedades.
+\end{enumerate}
+
+\subsection{Sistemas LIT con y sin memoria}
+
+Un sistema no tiene memoria si su salida en cualquier momento depende solamente de la entrada de ese momento.
+
+Si un sistema no tiene memoria entonces debe ser $h\left[ n\right]=0$, 
+para todo $n\neq 0$, y por lo tanto 
+\begin{equation}
+h\left[ n\right] = K \, \delta \left[ n\right] .
+\end{equation}
+Si un sistema tiene una respuesta al impulso $h\left[ n\right] $ que es distinta de $0$ para $n\neq 0,$ entonces el sistema tiene memoria.
+
+\subsection{Preguntas}
+
+\begin{enumerate}
+\item ¿Conoce alg\'{u}n sistema f\'{\i}sico que no tenga memoria?
+\item ¿Conoce alg\'{u}n sistema f\'{\i}sico que tenga memoria?
+\end{enumerate}
+
+\subsection{Sistemas LIT causales}
+
+Si $y\left[n_{0}\right] $ no depende de $x\left[ n\right] $ para $n>n_{0},$ entonces un sistema LIT es causal. 
+Entonces todos los valores $h\left[n\right]$  para $n<0$ deben ser $0$ y por lo tanto en
+la suma de convoluci\'{o}n podemos cambiar el límite superior 
+\begin{equation}
+y\left[n\right] =\sum_{k=-\infty}^{n}x\left[k\right] \, h\left[ n-k\right],
+\end{equation}
+porque debe ser $n - k \geq 0$, o $n \geq k$.
+
+Además, si la entrada $x[n]$ comienza en $n = 0$, podemos cambiar el límite inferior de la sumatoria
+\begin{equation}
+	y\left[n\right] =\sum_{k=0}^{n}x\left[k\right] \, h\left[ n-k\right].
+\end{equation}
+Esta fórmula significa que podemos calcular la salida de un sistema LIT de tiempo discreto con una cantidad limitada de multiplicaciones y sumas.
+
+
+\subsection{Preguntas}
+
+Indicar si las siguientes afirmaciones son verdaderas o falsas, en el caso de un sistema lineal invariante en el tiempo:
+
+\begin{enumerate}
+\item  Si la entrada es nula para todo tiempo, entonces la salida es nula para todo tiempo.
+
+\item  Si la relaci\'{o}n entre entrada y salida es 
+$y[n] =x[n] \, \cos \left(n\right) ,$ entonces el sistema  es LIT.
+
+\item  Si la relaci\'{o}n entre entrada y salida es 
+$y[n] =\sum_{k=0}^{n} x[k] ,$ entonces el sistema es LIT. 
+\end{enumerate}
+
+\subsection{Sistemas LIT estables e inestables}
+
+\subsubsection{Estabilidad BIBO}
+
+El criterio de estabilidad \textbf{B}ounded \textbf{I}nput \textbf{B}ounded \textbf{O}utput 
+(entrada acotada, salida acotada) se puede expresar matem\'{a}ticamente como 
+\begin{equation}
+        \left| x\left[ n\right] \right| < M_{x} \rightarrow \left| y\left[ n\right]\right| < M_{y},
+\end{equation}
+para tiempo discreto, o 
+\begin{equation}
+        \left| x\left( t\right) \right| < M_{x} \rightarrow \left| y\left( t\right)\right| < M_{y},
+\end{equation}
+para tiempo continuo.
+
+El sistema es estable si para entradas acotadas 
+\begin{equation}
+        \left| x\left[ k\right] \right| <M_{x},
+\end{equation}
+tenemos salidas acotadas 
+\begin{equation}
+        \left| y\left[ k\right] \right| <M_{y}.
+\end{equation}
+La suma de convoluci\'{o}n es 
+\begin{equation}
+        y\left[ n\right] =\sum_{k=0}^nx\left[ k\right] \, h\left[ n-k\right] .
+\end{equation}
+Entonces podemos escribir 
+\begin{equation}
+        \left| y\left[ n\right] \right| =
+                \left| 
+                        \sum_{k=0}^nx\left[ k\right] \, h\left[ n-k\right] 
+                \right| \leq 
+                \sum_{k=0}^n\left| x\left[ k\right] \right| \, \left| h\left[ n-k\right] \right| ,
+\end{equation}
+y aplicando la desigualdad triangular obtenemos la cota para $|y[n]|$
+\begin{equation}
+        \left| y\left[ n\right] \right| 
+        \leq 
+        \sum_{k=0}^n
+                \left| x\left[ k\right]\right| \,
+                \left| h\left[ n-k\right] \right| 
+        \leq 
+        \left( 
+                \sum_{k=0}^n\left| x\left[ k\right] \right| 
+        \right) \,
+        \left( \sum_{k=0}^n\left| h\left[ n-k\right] \right| \right) .
+\end{equation}
+Dado que resulta
+\begin{equation}
+        \left| y\left[ n\right] \right| \leq 
+        M_{x} \, \left( \sum_{k=0}^n\left| h\left[n-k\right] \right| \right) \leq M_{y}.
+\end{equation}
+Dado que $M_{y}$ es finito entonces el valor absoluto de la respuesta al impulso es acotada.
+
+
+\subsection{Respuesta de un sistema LIT en tiempo discreto a una entrada exponencial imaginaria}
+
+\begin{enumerate}
+	\item Vamos a calcular la convolución de una entrada $x[n] = e^{j \, \omega \, n}$ con una respuesta al impulso $h[n]$. 
+	
+	\item Comenzamos escribiendo la fórmula de la suma de convolución
+	\begin{equation}
+		y\left[ n\right] =
+		\sum_{k=-\infty }^{\infty }x\left[ k\right] \, h\left[ n-k\right] =
+		\sum_{k=-\infty }^{\infty }h\left[ k\right] \, x\left[ n-k\right].
+	\end{equation}
+
+    \item Vamos a usar la fórmula alternativa
+	\begin{equation}
+	y\left[ n\right] =
+	\sum_{k=-\infty }^{\infty }h\left[ k\right] \, x\left[ n-k\right].
+    \end{equation}
+
+    \item Sustituyendo $x[n - k] =  e^{j \, \omega \, (n-k)}$ obtengo
+     \begin{equation}
+	    y\left[ n\right] =
+	    \sum_{k=-\infty }^{\infty }h\left[ k\right] \, e^{j \, \omega \, (n-k)} =
+	    \sum_{k=-\infty }^{\infty }h\left[ k\right] \, e^{-j \, \omega \, k} \, e^{j \, \omega \, n}. \label{dt.eigenfunc.1}
+     \end{equation}
+   
+     \item Viendo la ecuación (\ref{dt.eigenfunc.1}) podemos extraer el factor común $e^{j \, \omega \, n}$ de la sumatoria y escribir
+     \begin{equation}
+	y\left[ n\right] =
+	\left(\sum_{k=-\infty }^{\infty }h\left[ k\right] \, e^{-j \, \omega \, k}\right) \, e^{j \, \omega \, n}. \label{dt.eigenfunc.2}
+    \end{equation}
+
+    \item Viendo la ecuación (\ref{dt.eigenfunc.2}), podemos definir $H(e^{j \, \omega})$, la transformada de Fourier de $h[n]$
+    \begin{equation}
+	H(e^{j \, \omega}) =
+	\sum_{k=-\infty }^{\infty }h\left[ k\right] \, e^{-j \, \omega \, k}. \label{dt.eigenfunc.3}
+    \end{equation}	 
+
+    \item Entonces resulta
+    \begin{equation}
+    	y[n] = H(e^{j \, \omega}) \, e^{j \, \omega \, n}.
+    \end{equation}
+    Se dice que las funciones de la forma $e^{j \, \omega \, n}$ son autofunciones de los sistemas lineales invariantes en el tiempo.
+\end{enumerate}  
+
+\subsection{Respuestas}
+
+Estas son las respuestas a las preguntas planteadas arriba
+
+\begin{enumerate}
+	\item ¿Qu\'{e} significado tiene la propiedad conmutativa de los sistemas lineales?
+	Un sistema LIT con respuesta al impulso $h[n]$ responde a una entrada $x[n]$ igual que un sistema LIT con respuesta al impulso $x[n]$ responde a una entrada $h[n]$. Además, cuando conectamos en serie dos sistemas LIT, no importa el orden en que se conecten: el conjunto de los dos sistemas va a responder igual ante cualquier entrada.
+	
+	\item ¿Qu\'{e} significado tiene la propiedad distributiva de los sistemas lineales?
+	Podemos implementar un sistema LIT con respuesta al impulso $h_{1}[n] + h_{2}[n]$ conectando en paralelo dos sistemas LIT cuyas respectivas respuestas al impulso sean $h_{1}[n]$ y $h_{2}[n]$.
+	
+	\item ¿Qu\'{e} significado tiene la propiedad asociativa de los sistemas lineales?
+	Cuando conectamos en serie sistemas LIT, podemos formar nuevos sistemas LIT.
+	
+	\item ¿Conoce alg\'{u}n sistema f\'{\i}sico que no tenga memoria? Un cable.
+	\item ¿Conoce alg\'{u}n sistema f\'{\i}sico que tenga memoria? Un tanque de agua (acumula o "recuerda" el agua que entra).
+
+    \item  ¿La siguiente afirmación es verdadera o falsa? 
+    "Si la entrada es nula para todo tiempo, entonces la salida es nula para todo tiempo."
+    \textbf{Verdadero, pues si la entrada es nula, la suma de convoluci\'{o}n es nula.}
+
+   \item  ¿La siguiente afirmación es verdadera o falsa? "Si la relaci\'{o}n entre entrada y salida es 
+   $y[n] =x[n] \, \cos \left(n\right) ,$ entonces el sistema  es LIT." 
+    \textbf{Falso, porque la respuesta al impulso depende del tiempo en que el impulso ocurre.}
+    \begin{equation}
+                y[n] = \delta[n - n_{0}] \, \cos \left( n_{0} \right).
+    \end{equation}
+
+\item  ¿La siguiente afirmación es verdadera o falsa? Si la relaci\'{o}n entre entrada y salida es 
+$y[n] =\sum_{k=0}^{n} x[k] ,$ entonces el sistema es LIT. 
+    \textbf{Verdadero, pues dicha relaci\'{o}n puede escribirse como una convoluci\'{o}n} 
+        \begin{equation}
+                y[n] = \sum_{k=-\infty}{\infty} x[k] \, u[k] \, u[n-k].
+        \end{equation}
+\end{enumerate}

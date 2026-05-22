@@ -1,0 +1,71 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{tikz}
+
+% Ya no necesitamos 'backgrounds' ni 'fit'
+\usetikzlibrary{shapes,arrows,positioning} 
+
+\tikzset{
+	block/.style = {
+		draw, 
+		fill=blue!10, 
+		rectangle, 
+		minimum height=3em, 
+		minimum width=5em, 
+		line width=1pt, 
+		align=center, 
+		rounded corners=2pt 
+	},
+	signal/.style = {
+		->, 
+		>=stealth', 
+		thick, 
+		shorten >=1pt, 
+		shorten <=1pt
+	},
+	label/.style = {
+		font=\small, 
+		midway, 
+		above,
+		align=center
+	}
+}
+
+\begin{document}
+	
+	\begin{figure}[htbp]
+		\centering
+		\begin{tikzpicture}[node distance=2.5cm, auto]
+			
+			\node (input) {};
+			
+			\node [block, right=of input] (sys1) {Sistema 1 \\ $S_1$};
+			
+			\node [block, right=of sys1] (sys2) {Sistema 2 \\ $S_2$};
+			
+			\node [right=of sys2] (output) {};
+			
+			% --- Conexiones ---
+			\draw [signal] (input) -- node[label] {Entrada, $x(t)$} (sys1);
+			\draw [signal] (sys1) -- node[label] {Señal \\ Intermedia, $w(t)$} (sys2);
+			\draw [signal] (sys2) -- node[label] {Salida, $y(t)$} (output);
+			
+			% --- CAJA PUNTEADA CORREGIDA ---
+			% Dibujamos el rectángulo tomando como referencia la esquina superior izquierda de S1
+			% y la esquina inferior derecha de S2, dándoles un margen (xshift/yshift).
+			\draw[dashed, gray, thick, rounded corners=5pt]
+			([xshift=-0.7cm, yshift=0.8cm]sys1.north west) rectangle 
+			([xshift=0.7cm, yshift=-1.5cm]sys2.south east);
+			
+			% Colocamos el texto exactamente en el medio de ambos bloques, desplazado hacia abajo
+			\path (sys1.south east) -- (sys2.south west) 
+			node[midway, below=0.6cm, font=\small] {Sistema Total Comprendido};
+			
+		\end{tikzpicture}
+		\caption{Ejemplo de interconexión de sistemas en cascada o serie. La salida del Sistema 1 es la entrada directa del Sistema 2.}
+		\label{fig:interconexion_serie}
+	\end{figure}
+	
+\end{document}

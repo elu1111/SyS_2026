@@ -1,0 +1,668 @@
+\chapter{Composición de señales}
+
+\section{Composición de señales}
+
+Mediante la aplicación de diferentes operaciones matemáticas a
+dos o más señales se pueden generar o componer nuevas señales.
+
+\subsection{Ventanas rectangulares}
+
+\begin{enumerate}
+	\item Consideremos las siguientes señales generadas mediante
+	diferencias de escalones unitarios:
+	\begin{align}
+		x_{c}(t) &= u(t) - u(t-2), \label{pulsocont} \\
+		x_{d}[n] &= u[n] - u[n-2]. \label{pulsodisc}
+	\end{align}
+	Vea las figuras (\ref{fig:compesccont}) y (\ref{fig:compescdisc}).
+	Este tipo de señales, al multiplicar a otra señal, nos permite
+	extraer determinados intervalos en el dominio del tiempo. Esta
+	operación se denomina ``windowing'' o aventanamiento.
+	
+	\item Las señales definidas en (\ref{pulsocont}) y
+	(\ref{pulsodisc}) actúan como selectoras o ventanas:
+	\begin{align}
+		x_{1}(t) &= t \, x_{c}(t), \\
+		x_{2}(t) &= (t - 2) \, x_{c}(t - 2), \\
+		x_{3}(t) &= t \, x_{c}(t) - (t - 2) \, x_{c}(t - 2), \\
+		x_{4}[n] &= n^{2} \, x_{d}[n], \\
+		x_{5}[n] &= n \, x_{d}[n-4], \\ 
+		x_{6}[n] &= n^{2} \, x_{d}[n] - n \, x_{d}[n-4].
+	\end{align}
+	Vea las figuras (\ref{fig:compcontuno}) y (\ref{fig:compcontdos}). 
+\end{enumerate}
+
+\subsection{Sumatoria de señales desplazadas en el tiempo}
+
+Desplazando en el tiempo ventanas rectangulares y
+multiplicándolas por coeficientes adecuados, 
+se pueden obtener por sumatoria señales periódicas como la $x_{3}(t)$:
+\begin{equation}
+	x_{3}(t) = \sum_{k=-\infty}^{\infty} (-1)^k x_{c}(t- T k),
+\end{equation}
+(Vea la figura (\ref{fig:comppreguno})) y la $x_{4}(t)$:
+\begin{equation}
+	x_{4}(t) = \sum_{k=-\infty}^{\infty} (-1)^k x_{d}[n- N k], 
+\end{equation}
+(Vea la figura (\ref{fig:comppregdos})).
+
+\subsection{Sumatoria de impulsos desplazados en el tiempo}
+
+Desplazando en el tiempo impulsos y
+multiplicándolos por coeficientes adecuados, 
+se pueden obtener por sumatoria señales periódicas como la $x_{5}(t)$:
+\begin{equation}
+	x_{5}(t) = \sum_{k=-\infty}^{\infty} (-1)^k \delta(t- T k),
+\end{equation}
+y la $x_{6}(t)$:
+\begin{equation}
+	x_{6}(t) = \sum_{k=-\infty}^{\infty} (-1)^k \delta[n- N k].
+\end{equation}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=3in]{./graphics/compesccont.png}
+	\caption{Composición de dos escalones para formar una señal tipo pulso (tiempo continuo)}
+	\label{fig:compesccont}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=3in]{./graphics/compcontuno.png}
+	\caption{Composición de señales (tiempo continuo)}
+	\label{fig:compcontuno}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=3in]{./graphics/compescdisc.png}
+	\caption{Composición de dos escalones para formar un par de impulsos (tiempo discreto)}
+	\label{fig:compescdisc}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=3in]{./graphics/compcontdos.png}
+	\caption{Composición de señales (tiempo discreto)}
+	\label{fig:compcontdos}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=3in]{./graphics/comppreguno.png}
+	\caption{Pregunta sobre composición de señales (tiempo continuo)}
+	\label{fig:comppreguno}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=3in]{./graphics/comppregdos.png}
+	\caption{Pregunta sobre composición de señales (tiempo discreto)}
+	\label{fig:comppregdos}
+\end{figure}
+
+\section{Señales de tiempo discreto}
+
+\subsection{El impulso unitario}
+
+Hemos visto que el impulso unitario de tiempo discreto se define como:
+\begin{equation}
+	\delta[n] =
+	\begin{cases}
+		0, & n \neq 0, \\ 
+		1, & n = 0.
+	\end{cases}
+\end{equation}
+
+Vea la Fig. (\ref{fig:impunidisc}).
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=2in]{./graphics/impunidisc.png}
+	\caption{Impulso unitario de tiempo discreto.}
+	\label{fig:impunidisc}
+\end{figure}
+
+\subsection{El impulso unitario desplazado}
+
+Desplazar un impulso unitario en el tiempo es sencillo. Veamos la
+definición de $\delta[n-m]$ (La diferencia con la definición de
+$\delta[n]$ aparece resaltada):
+\begin{equation}
+	\delta[n \mathbf{-m}] = 
+	\begin{cases}
+		1, & n \mathbf{-m} = 0, \\
+		0, & n \mathbf{-m} \neq 0.
+	\end{cases}
+	\quad \longrightarrow \quad
+	\delta[n \mathbf{-m}] = 
+	\begin{cases}
+		1, & n = \mathbf{m}, \\
+		0, & n \neq \mathbf{m}.
+	\end{cases}
+\end{equation}
+
+\subsection{El impulso multiplicado por un coeficiente}
+
+La multiplicación de un impulso unitario $\delta[n]$ por un
+coeficiente $a$ se define como:
+\begin{equation}
+	a \, \delta[n] = 
+	\begin{cases}
+		a, & n = 0, \\
+		0, & n \neq 0.
+	\end{cases}
+\end{equation}
+
+\subsection{La suma de dos impulsos desplazados en el tiempo y multiplicados por coeficientes}
+
+La suma de dos impulsos desplazados en el tiempo y multiplicados por
+coeficientes es una combinación lineal de impulsos. La podemos
+definir de la siguiente forma:
+\begin{equation}
+	a_{1} \, \delta[n - m_{1}] + a_{2} \, \delta[n - m_{2}] = 
+	\begin{cases}
+		a_{1}, & n = m_{1}, \\
+		a_{2}, & n = m_{2}, \\
+		0, & (n \neq m_{1}) \wedge (n \neq m_{2}).
+	\end{cases}
+\end{equation}
+
+\subsection{La suma de $N$ impulsos desplazados en el tiempo y multiplicados por coeficientes}
+
+Podemos definir la suma de $N$ impulsos desplazados en el tiempo y multiplicados por
+coeficientes $a_{k}$:
+\begin{equation}
+	x[n] = \sum_{k = 1}^{N} a_{k} \, \delta[n - k],
+\end{equation}
+donde para $m \in \mathbb{N}$:
+\begin{equation}
+	x[m] = \sum_{k = 1}^{N} a_{k} \, \delta[m - k] = a_{m},
+\end{equation}
+porque solo donde $m = k$ se cumple $\delta[m - k] = \delta[0] = 1$ y por lo tanto hay un solo impulso igual a $1$ que multiplica al coeficiente $a_{m}$. Todos los otros coeficientes están multiplicados por $0$.
+
+\subsection{La señal como combinación lineal de impulsos}
+
+\begin{enumerate}
+	\item Consideremos una sucesión de impulsos $\delta[n - n_{0}]$ (ver Fig. \ref{fig:convone} y la Ec. \ref{claveuno}), multiplicados por los
+	respectivos coeficientes $x[n_{0}]$:
+	\begin{align}
+		x[-2]\delta[n+2] &= 
+		\begin{cases}
+			x[-2], & n = -2, \\ 
+			0, & n \neq -2.
+		\end{cases} \\
+		x[-1]\delta[n+1] &= 
+		\begin{cases}
+			x[-1], & n = -1, \\ 
+			0, & n \neq -1.
+		\end{cases} \\
+		x[0]\delta[n] &= 
+		\begin{cases}
+			x[0], & n = 0, \\ 
+			0, & n \neq 0.
+		\end{cases} \\
+		x[1]\delta[n-1] &= 
+		\begin{cases}
+			x[1], & n = 1, \\ 
+			0, & n \neq 1.
+		\end{cases} \\
+		x[2]\delta[n-2] &= 
+		\begin{cases}
+			x[2], & n = 2, \\ 
+			0, & n \neq 2.
+		\end{cases}
+	\end{align}
+	y en general:
+	\begin{equation}
+		x[k]\delta[n-k] = 
+		\begin{cases}
+			x[k], & n = k, \\ 
+			0, & n \neq k.
+		\end{cases}
+	\end{equation}
+	
+	\item Como podemos ver en la Fig. (\ref{fig:convone}), la suma de
+	impulsos desplazados en el tiempo multiplicados por coeficientes
+	adecuados equivalen a cualquier señal arbitraria $x[n]$.
+	
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=3in]{./graphics/convone.png}
+		\caption{Una señal como suma de impulsos desplazados en el
+			tiempo multiplicados por coeficientes adecuados. Los impulsos
+			desplazados $\delta[n-k]$ se representan $d[n-k]$. Sólo se
+			muestran tres impulsos por razones de espacio.}
+		\label{fig:convone}
+	\end{figure}
+	
+	\item En efecto, agregando más impulsos desplazados y
+	multiplicados adecuadamente podemos obtener una expresión que se
+	puede escribir en forma general:
+	\begin{equation}
+		x[n] = \sum_{k=-\infty}^{\infty} x[k] \, \delta[n-k] .
+		\label{cduna}
+	\end{equation}
+	
+	\item La Ec. (\ref{cduna}) corresponde a la representación de una
+	secuencia arbitraria $x[n]$ como:
+	\begin{itemize}
+		\item una combinación lineal de impulsos desplazados $\delta[n-k]$,
+		\item donde los coeficientes de la combinación lineal son los valores $x[k]$.
+	\end{itemize}
+	
+	\item Cada impulso desplazado $\delta[n-k]$ actúa
+	como selector: suponga que elegimos un valor $n=n_{0}$ y entonces
+	tenemos que:
+	\begin{equation}
+		x[n_{0}] = \sum_{k=-\infty}^{\infty} x[k] \, \delta[n_{0}-k] .
+		\label{cddos}
+	\end{equation}
+	
+	\item Recordemos la definición de impulso:
+	\begin{equation}
+		\delta[n] = 
+		\begin{cases}
+			1, & n = 0, \\ 
+			0, & n \neq 0.
+		\end{cases}
+	\end{equation}
+	El impulso ``vale'' $1$ cuando el índice $n$ (lo que aparece
+	entre corchetes) vale $0$. Note que en la ec. (\ref{cddos}) sólo
+	uno de los infinitos impulsos tiene un índice nulo,
+	específicamente:
+	\begin{equation}
+		n_{0}-k=0.
+	\end{equation}
+	Entonces, de todos los infinitos términos sólo uno es no
+	nulo ($k=n_{0})$. Así obtenemos la igualdad:
+	\begin{equation}
+		x[n_{0}] = x[n_{0}] .
+	\end{equation}
+	
+	\item La utilidad de la ecuación (\ref{cduna}) es que expresa una secuencia
+	\begin{equation}
+		...x[-3], x[-2], x[-1], x[0], x[1], x[2], x[3]...
+	\end{equation}
+	como una sumatoria.
+\end{enumerate}
+
+\subsection{La señal multiplicada con un impulso}
+
+\begin{enumerate}
+	\item Consideremos una señal $x[n]$ a la que
+	multiplicamos por un impulso $\delta[n - n_{0}]$. Hemos probado que:
+	\begin{equation}
+		x[n] \, \delta[n - n_{0}] = x[n_{0}] \, \delta[n - n_{0}].
+	\end{equation}
+	
+	\item Recordemos que el impulso desplazado $\delta[n - n_{0}]$
+	actúa como ``selector'' al multiplicar a una señal $x[n]$:
+	la única muestra de $x[n]$ multiplicada por $1$ es $x[n_{0}]$,
+	todas las demás se multiplican por $0$.
+\end{enumerate}
+
+\subsection{Escalado temporal}
+
+\begin{enumerate}
+	\item Supongamos que tenemos una señal $x[n]$ y la usamos para
+	generar otra señal:
+	\begin{equation}
+		y[n] = x[3n].
+		\label{escaladotemporaluno}
+	\end{equation}
+	¿Qué significa la Ec. (\ref{escaladotemporaluno})?
+	Analicemos la siguiente tabla:
+	
+	\begin{center}
+		\begin{tabular}{ccc}
+			$n$ & $x[n]$ & $y[n] = x[3n]$ \\
+			0   &  $x[0]$ & $x[0]$ \\
+			1   &  $x[1]$ & $x[3]$ \\
+			2   &  $x[2]$ & $x[6]$ \\
+			3   &  $x[3]$ & $x[9]$ \\
+			4   &  $x[4]$ & $x[12]$ \\
+			5   &  $x[5]$ & $x[15]$ \\
+			6   &  $x[6]$ & $x[18]$ \\
+			... &  ... & ...
+		\end{tabular}
+	\end{center}
+	
+	\item Supongamos que tenemos una señal $x[n]$ y la usamos para
+	generar otra señal:
+	\begin{equation}
+		y[n] = x\left[\frac{n}{3}\right].
+		\label{escaladotemporaldos}
+	\end{equation}
+	¿Qué significa la Ec. (\ref{escaladotemporaldos})?
+	Analicemos la siguiente tabla:
+	
+	\begin{center}
+		\begin{tabular}{ccc}
+			$n$ & $x[n]$  & $x[\frac{n}{3}]$ \\
+			0   &  $x[0]$ & $x[0]$ \\
+			1   &  $x[1]$ & $x[\frac{1}{3}]$ ?\\
+			2   &  $x[2]$ & $x[\frac{2}{3}]$ ?\\
+			3   &  $x[3]$ & $x[1]$ \\
+			4   &  $x[4]$ & $x[\frac{4}{3}]$ ?\\
+			5   &  $x[5]$ & $x[\frac{5}{3}]$ ?\\
+			6   &  $x[6]$ & $x[2]$ \\
+			7   &  $x[7]$ & $x[\frac{7}{3}]$ ?\\
+			... &  ... & ...
+		\end{tabular}
+	\end{center}
+	
+	Como podemos ver, el problema es que el índice de una señal
+	de tiempo discreto debe ser un número entero. Por lo tanto,
+	deberíamos emplear la siguiente definición:
+	\begin{equation}
+		y[n] = 
+		\begin{cases}
+			x\left[\frac{n}{3}\right], & n = 3m, \\
+			0, & n = 3m + 1, \\
+			0, & n = 3m + 2.
+		\end{cases}
+	\end{equation}
+	$\forall m \in \mathbb{N}$.
+	
+\end{enumerate}
+
+\subsection{Tiempo inverso}
+
+El caso de escalado temporal más sencillo es el del ``viaje al
+pasado''. En este caso $y[n] = x[-n]$. Es algo como reproducir un audio "al revés".
+Esta es una operación usada en dos casos. Existe un dispositivo denominado scrambler que se puede aplicar a un teléfono: divide el audio en segmentos y después los invierte en tiempo, segmento por segmento, antes de enviarlos por el canal de comunicación. En el otro lado del canal, un dispositivo similar recupera la señal original con el mismo proceso. La idea es que "nadie" pueda espiar la conversación, o mejor dicho que nadie la espíe fácilmente.
+
+También hubo rumores que si se reproducen en tiempo inverso las canciones de rock se pueden oir mensajes ocultos. Un ejemplo con MATLAB:
+\begin{verbatim}
+	n = 1:5;
+	x = randn(1, 5);
+	subplot(2,1,1); stem(n, x); 
+	subplot(2,1,2); stem(-n, x);
+\end{verbatim}
+
+\subsection{Desplazamiento en el tiempo}
+
+\begin{enumerate}
+	\item Supongamos una señal $x[n]$. Podemos desplazarla en el tiempo
+	haciendo $y[n] = x[n - n_{0}]$.
+	\item Por ejemplo, si $x_{1}[n] = \cos(2\pi \frac{2}{5} n)$,
+	podemos obtener su versión desplazada cuatro muestras como
+	$y_{1}[n] = x_{1}[n - 4] = \cos(2\pi \frac{2}{5} (n - 4))$.
+\end{enumerate}
+
+\subsection{Tren de impulsos}
+
+\begin{enumerate}
+	\item El impulso unitario está definido como:
+	\begin{equation}
+		\delta[n] = 
+		\begin{cases}
+			1, & n = 0, \\
+			0, & n \neq 0.
+		\end{cases}
+	\end{equation}
+	
+	\item Podemos desplazar el impulso unitario definiendo:
+	\begin{equation}
+		\delta[n - n_{0}] = 
+		\begin{cases}
+			1, & n = n_{0}, \\
+			0, & n \neq n_{0}.
+		\end{cases}
+	\end{equation}
+	
+	\item Por lo tanto, la siguiente definición:
+	\begin{equation}
+		\delta[n - k \, n_{0}] = 
+		\begin{cases}
+			1, & n = k \, n_{0}, \\
+			0, & n \neq k \, n_{0}.
+		\end{cases}
+	\end{equation}
+	donde $k$ es un número entero, nos da impulsos ubicados en múltiplos enteros de $n_{0}$.
+	
+	\item Si sumamos todos los impulsos obtenidos en el punto anterior,
+	obtenemos el tren de impulsos:
+	\begin{equation}
+		x[n] = \sum_{k=-\infty}^{\infty} \delta[n - k \, n_{0}].
+	\end{equation}
+	
+\end{enumerate}
+
+
+\section{Señales de tiempo continuo}
+
+\subsection{El pulso}
+
+Un pulso unitario de tiempo continuo $p(t)$ de duración $\tau$ se define
+como una diferencia de escalones unitarios con un factor $\frac{1}{\tau}$:
+\begin{equation}
+	p(t) = \frac{1}{\tau} \left(u(t) - u(t - \tau) \right),
+\end{equation}
+donde $\tau > 0$.
+
+\subsection{El pulso desplazado}
+
+Un pulso unitario de tiempo continuo $p(t)$ de duración $\tau$
+desplazado en el tiempo $t_{0}$ se define como una diferencia de escalones
+unitarios desplazados en el tiempo $t_{0}$:
+\begin{equation}
+	p(t-t_{0}) = \frac{1}{\tau} \left(u(t-t_{0}) - u(t - t_{0} - \tau) \right).
+\end{equation}
+
+\subsection{El impulso como límite del pulso}
+
+Cuando $\tau$ tiende a $0$, el ancho del impulso tiende a $0$, su
+altura tiende a $\infty$, y su área se mantiene igual a $1$.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=3in]{./graphics/sucimpcont.png}
+	\caption{Impulso como límite de una sucesión de impulsos}
+	\label{fig:sucimpcont}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=3in]{./graphics/lecture02_tex_gr7.png}
+	\caption{Otra función de área unitaria (y van dos)}
+	\label{fig:lecture02texgr7}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=3in]{./graphics/lecture02_tex_gr8.png}
+	\caption{Otra función de área unitaria (y van tres)}
+	\label{fig:lecture02texgr8}
+\end{figure}
+
+\subsection{La señal aproximada por una combinación lineal de pulsos}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=3in]{./graphics/contconv222.png}
+	\caption{Señal aproximada por combinación lineal de pulsos}
+	\label{fig:contconv222}
+\end{figure}
+
+La señal $x(t)$ puede aproximarse como una combinación lineal
+de pulsos desplazados en el tiempo como puede verse en la figura
+(\ref{fig:contconv222}), o analíticamente mediante los
+siguientes pasos:
+\begin{enumerate}
+	\item Desplace los pulsos en el tiempo:
+	\begin{align}
+		\delta_{\Delta}(t+\Delta) &=
+		\begin{cases}
+			\frac{1}{\Delta}, & -\Delta \leq t < 0, \\ 
+			0, & (t < -\Delta) \lor (0 \leq t).
+		\end{cases} \\
+		\delta_{\Delta}(t) &=
+		\begin{cases}
+			\frac{1}{\Delta}, & 0 \leq t < \Delta, \\ 
+			0, & (t < 0) \lor (\Delta \leq t).
+		\end{cases} \\
+		\delta_{\Delta}(t-\Delta) &=
+		\begin{cases}
+			\frac{1}{\Delta}, & \Delta \leq t < 2\Delta, \\ 
+			0, & (t < \Delta) \lor (2\Delta \leq t).
+		\end{cases} \\
+		&\vdots \nonumber \\
+		\delta_{\Delta}(t-k\Delta) &=
+		\begin{cases}
+			\frac{1}{\Delta}, & k\Delta \leq t < (k+1)\Delta, \\ 
+			0, & (t < k\Delta) \lor ((k+1)\Delta \leq t).
+		\end{cases}
+	\end{align}
+	
+	\item Multiplicando por $x(k\Delta)\Delta$ al $k$-ésimo pulso se obtiene:
+	\begin{align}
+		x(-\Delta)\delta_{\Delta}(t+\Delta)\Delta &=
+		\begin{cases}
+			\frac{x(-\Delta)}{\Delta}\Delta, & -\Delta \leq t < 0, \\ 
+			0, & (t < -\Delta) \lor (0 \leq t).
+		\end{cases} \\
+		x(0)\delta_{\Delta}(t)\Delta &=
+		\begin{cases}
+			\frac{x(0)}{\Delta}\Delta, & 0 \leq t < \Delta, \\ 
+			0, & (t < 0) \lor (\Delta \leq t).
+		\end{cases} \\
+		x(\Delta)\delta_{\Delta}(t-\Delta)\Delta &=
+		\begin{cases}
+			\frac{x(\Delta)}{\Delta}\Delta, & \Delta \leq t < 2\Delta, \\ 
+			0, & (t < \Delta) \lor (2\Delta \leq t).
+		\end{cases} \\
+		&\vdots \nonumber \\
+		x(k\Delta)\delta_{\Delta}(t-k\Delta)\Delta &=
+		\begin{cases}
+			\frac{x(k\Delta)}{\Delta}\Delta, & k\Delta \leq t < (k+1)\Delta, \\ 
+			0, & (t < k\Delta) \lor ((k+1)\Delta \leq t).
+		\end{cases}
+	\end{align}
+	
+	\item Observe que un valor dado de $t$ (por ejemplo $t_{0}$) sólo puede pertenecer a \textbf{un} intervalo 
+	$k\Delta \leq t < (k+1)\Delta$; por lo tanto, para $t_{0}$ solo uno de los productos puede ser distinto de $0$.
+	Sumando los infinitos productos obtenemos:
+	\begin{equation}
+		x_{\Delta}(t) = \sum_{k=-\infty}^{\infty} x(k\Delta) \, \delta_{\Delta}(t-k\Delta) \, \Delta .
+		\label{funcaspulsessum}
+	\end{equation}
+\end{enumerate}
+
+\subsection{La señal como combinación lineal de impulsos}
+
+Observe que en la ecuación (\ref{funcaspulsessum}) cuando 
+$\Delta$ tiende a cero, $x_{\Delta}(t)$ tiende a $x(t)$.
+
+\begin{equation}
+	x(t) = \lim_{\Delta \to 0} x_{\Delta}(t) = \lim_{\Delta \to 0} \sum_{k=-\infty}^{\infty} x(k\Delta) \, \delta_{\Delta}(t-k\Delta) \, \Delta .
+\end{equation}
+Además, cuando $\Delta$ tiende a cero, la sumatoria se convierte en una integral:
+\begin{equation}
+	x(t) = \int_{-\infty}^{\infty} x(\tau) \, \delta(t-\tau) \, d\tau .
+\end{equation}
+Notemos que por la propiedad del muestreo, debe cumplirse:
+\begin{equation}
+	x(\tau) \, \delta(t-\tau) = x(t) \, \delta(t-\tau) ,
+\end{equation}
+y en ese caso:
+\begin{equation}
+	x(t) = x(t) \left( \int_{-\infty}^{\infty} \delta(t-\tau) \, d\tau \right),
+\end{equation}
+con lo que hemos probado que una función $x(t)$ puede escribirse
+como una combinación lineal de impulsos.
+
+\subsection{Desplazamiento en el tiempo}
+
+\begin{enumerate}
+	\item Supongamos una señal $x(t)$. Podemos desplazarla en el tiempo
+	haciendo $y(t) = x(t - t_{0})$.
+	\item Por ejemplo, si $x_{1}(t) = \cos(2\pi \frac{2}{10} t)$,
+	podemos obtener su versión desplazada cuatro unidades de tiempo como
+	$y_{1}(t) = x_{1}(t - 4) =  \cos(2\pi \frac{2}{10} (t - 4))$.
+\end{enumerate}
+
+
+\subsection{Escalado temporal}
+
+\begin{enumerate}
+	\item El escalado temporal es reemplazar la variable independiente $t$
+	por otra variable a la que llamaremos $v$. La relación de estas
+	variables está dada por una escala que simbolizaremos con la letra
+	$a$. Por ejemplo, $t = a \, v$.
+	
+	\item Consideremos la señal $x(t) = \sin(2\pi t)$. Podemos
+	realizar el escalado temporal $t = 2v$, para obtener $y(v) =
+	\sin(4\pi v)$.
+\end{enumerate}
+
+\subsection{Tiempo inverso}
+
+Un caso especial de escalado temporal es cuando la escala es
+negativa. Por ejemplo, con $t = -v$, obtenemos el denominado tiempo inverso.
+
+\subsection{Tren de impulsos}
+
+\begin{enumerate}
+	\item Supongamos una serie de impulsos desplazados en el tiempo $\delta(t)$,
+	$\delta(t - T)$, $\delta(t - 2T)$, $\delta(t - 3T)$ y en
+	general $\delta(t - kT)$, para $k$ entero.
+	
+	\item El par de impulsos sucesivos $\delta(t - kT)$ y $\delta(t - (k+1)T)$ está separado por un intervalo de tiempo $T$.
+	
+	\item El tren de impulsos es igual a la sumatoria de todos los
+	impulsos $\delta(t - kT)$, para $k$ entero:
+	\begin{equation}
+		\Pi_{T}(t) = \sum_{k=-\infty}^{\infty} \delta(t - k \, T),
+	\end{equation}
+	donde los impulsos son no nulos en $t = kT$.
+\end{enumerate}
+
+\subsection{Muestreo}
+
+El muestreo digital de una señal analógica (de tiempo continuo) nos permite obtener una señal de tiempo discreto. Si cumplimos ciertas condiciones, que vamos a estudiar durante este curso, 
+es posible realizar un proceso inverso que nos permite recuperar la señal de tiempo continuo original.
+
+El muestreo ideal es una función que toma los valores de $x(t)$ en los instantes $t = kT$, y $0$ para todo $t \neq kT$, 
+donde $T$ es el período de muestreo y $k$ es una variable entera.
+
+Matemáticamente, podemos representar la operación de muestreo como 
+la multiplicación de una señal $x(t)$ con un tren de impulsos de período $T$:
+\begin{equation}
+	y(t) = x(t) \cdot \Pi_{T}(t) = x(t) \left( \sum_{k=-\infty}^{\infty} \delta(t - kT) \right).
+\end{equation}
+Entonces:
+\begin{equation}
+	y(t) = \sum_{k=-\infty}^{\infty} x(t) \, \delta(t - kT) = \sum_{k=-\infty}^{\infty} x(kT) \, \delta(t - kT).
+\end{equation}
+
+
+\section{Operaciones útiles, para tiempo discreto}
+
+% Lathi, página 287
+
+\subsection{Decimación}
+
+Supongamos una señal $x[n]$. La decimación de una señal $x[n]$ es la generación de una nueva señal $y[n]$ mediante la eliminación de ciertas muestras de $x[n]$. Para eso multiplicamos $x[n]$ por:
+\begin{equation}
+	y[n] = x[n] \left( \sum_{k=-\infty}^{\infty} \delta[n - k \, N] \right).
+\end{equation}
+Si escribimos:
+\begin{equation}
+	y[n] = \sum_{k=-\infty}^{\infty} x[n] \, \delta[n - k \, N] =
+	\sum_{k=-\infty}^{\infty} x[k \, N] \, \delta[n - k \, N],
+\end{equation}
+es evidente que para $n = qN + r$, con $q \in \mathbb{N}$ y $0 < r < N$, debe ser $y[n] = 0$.
+
+\subsection{Interpolación}
+
+Supongamos una señal $x[n]$. La interpolación de una señal $x[n]$ es la generación de una nueva señal $y[n]$ mediante la introducción de nuevas muestras 
+calculadas, por ejemplo, como promedios de dos muestras consecutivas de $x[n]$. Por ejemplo:
+\begin{align}
+	y[0] &= x[0], \\
+	y[1] &= (x[0] + x[1]) / 2, \\
+	y[2] &= x[1], \\
+	y[3] &= (x[1] + x[2]) / 2,
+\end{align}
+y así sucesivamente. Esta no es la única forma de interpolar. Es sólo un ejemplo de un tema que vamos a ver con más detenimiento cuando veamos transformada de Fourier.

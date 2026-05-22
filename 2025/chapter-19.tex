@@ -1,0 +1,285 @@
+\chapter{Respuesta en frecuencia de sistemas LIT TD}
+
+\section{Respuesta en frecuencia (tiempo discreto)}
+
+\subsection{Respuesta de un sistema LIT a una entrada peri\'{o}dica}
+
+\begin{enumerate}
+
+\item Si la entrada a un sistema de tiempo discreto es $x\left[ n\right] = z^n,$
+entonces la salida es $y\left[ n\right] =H\left( z\right) z^n$ donde
+\begin{equation}
+  H\left( z\right) =\sum_{k=-\infty }^{\infty }h\left[ k\right] \, z^{-k},
+\end{equation}
+en la cual $h\left[ n\right] $ es la respuesta al impulso del sistema LIT.
+
+\item En el caso general de $z$ complejo, $H\left( z\right) $ es la funci\'{o}n
+de transferencia del sistema. 
+
+\item En el caso $\left| z\right| =1\rightarrow z=e^{j \, \omega}$ y 
+$x\left[ n\right] =z^n=e^{j \, \omega \, n},$ la respuesta en frecuencia del
+sistema esta definida por 
+\begin{equation}
+H\left( e^{j \, \omega }\right) =\sum_{n=-\infty }^{\infty }h\left[ n\right]e^{-j \, \omega \, n}.
+\end{equation}
+
+\item La salida $y\left[ n\right] $ para una entrada 
+\begin{equation}
+x\left[ n\right] =\sum_{k=0}^{N-1}a_{k}e^{jk\left( \frac{2\pi }{N}\right) n},
+\end{equation}
+est\'{a} dada entonces por 
+\begin{equation}
+  y\left[ n\right] =
+  \sum_{k=0}^{N-1}a_{k}H\left( e^{\frac{j2\pi k}{N}}\right)e^{jk\left( \frac{2\pi }{N}\right) n}.
+\end{equation}
+
+\end{enumerate}
+
+\subsubsection{Ejemplo}
+
+\begin{enumerate}
+
+\item Sea un sistema con respuesta al impulso 
+\begin{equation}
+h\left[ n\right] =\alpha ^nu\left[ n\right] ,-1<\alpha <1,
+\end{equation}
+y una entrada 
+\begin{equation}
+x\left[ n\right] =
+  cos\left( \frac{2 \, \pi \, n}{N}\right) =
+  \frac{1}{2}\left( e^{j\frac{2 \, \pi \, n}{N}}+e^{-j\frac{2 \, \pi \, n}{N}}\right) .
+\end{equation}
+
+\item Calculamos la respuesta en frecuencia planteando la suma
+\begin{equation}
+  H\left( e^{j \, \omega }\right) =\sum_{n=-\infty }^{\infty }h\left[ n\right]e^{-j \, \omega \, n}.
+\end{equation}
+El sistema dado es causal porque la respuesta al impulso $\delta[n]$ es nula para $n < 0$. Por lo
+tanto los l\'{\i}mites de la sumatoria cambian y resulta
+\begin{equation}
+H\left( e^{j \, \omega }\right) =
+  \sum_{n=-\infty }^{\infty }\alpha ^nu\left[ n\right] e^{-j \, \omega \, n}=
+  \sum_{n=0}^{\infty }\alpha ^ne^{-j \, \omega \, n}.
+\end{equation}
+Resolviendo la suma podemos escribir
+\begin{equation}
+H\left( e^{j \, \omega }\right) =
+  \sum_{n=0}^{\infty }\alpha ^ne^{-j \, \omega}=
+  \sum_{n=0}^{\infty }\left( \alpha e^{-j \, \omega }\right) ^n=
+    \frac{1}{1-\alpha e^{-j \, \omega }}.
+\end{equation}
+
+\item La salida $y\left[ n\right] $ resulta ser 
+\begin{equation}
+y\left[ n\right] =
+  \frac{1}{2} \left( 
+     H\left( e^{j\frac{2 \, \pi \, n}{N}}\right) \, e^{j\frac{2 \, \pi \, n}{N}}+
+     H\left( e^{-j\frac{2 \, \pi \, n}{N}}\right) \, e^{-j\frac{2 \, \pi \, n}{N}}\right) ,
+\end{equation}
+o sea 
+\begin{equation}
+y\left[ n\right] =
+  \frac{1}{2}\left( 
+     \frac{1}{1-\alpha \, e^{-j\frac{2 \, \pi \, n}{N}}} \, e^{j\frac{2 \, \pi \, n}{N}}+
+     \frac{1}{1-\alpha \, e^{j\frac{2 \, \pi \, n}{N}}} \, e^{-j\frac{2 \, \pi \, n}{N}}
+  \right) .
+\end{equation}
+
+\end{enumerate}
+
+\subsection{Respuesta de un sistema LIT estable a entradas con transformada $Z$}
+
+\begin{enumerate}
+
+\item Supongamos un sistema LIT estable. Recordemos que en este caso, existe la transformada $Z$ de la
+respuesta al impulso
+\begin{equation}
+  h[n] \begin{array}{c} Z \\ \leftrightarrow \end{array} H(z)
+\end{equation}
+y su regi\'{o}n de convergencia incluye el c\'{\i}rculo unitario. Esto garantiza adem\'{a}s la existencia
+de la transformada de Fourier $H(e^{j \omega})$.
+
+\item Sabemos que las transformadas $Z$ de la entrada
+\begin{equation}
+  x[n] \begin{array}{c} Z \\ \leftrightarrow \end{array} X(z)
+\end{equation}
+la salida
+\begin{equation}
+  y[n] \begin{array}{c} Z \\ \leftrightarrow \end{array} Y(z)
+\end{equation}
+y la respuesta al impulso 
+de un sistema LIT est\'{a}n relacionadas por la expresi\'{o}n
+\begin{equation}
+   Y(z) = H(z) \, X(z).
+\end{equation}
+Calculando la antitransformada $y[n]$ obtenemos la solución de la ecuación de diferencias.
+
+\end{enumerate}
+\section{Representaci\'{o}n gr\'{a}fica de la respuesta en frecuencia de un sistema LIT}
+
+La respuesta en frecuencia es una funci\'{o}n compleja y debe ser representada gr\'{a}ficamente en
+\begin{enumerate}
+        \item   Forma polar: magnitud y fase.
+        
+        \item   Forma cartesiana: parte real y parte imaginaria.
+\end{enumerate}
+
+Ambas representaciones permiten visualizar distintas propiedades de los sistemas LIT. Por tal motivo las
+estudiaremos por separado.
+
+\subsection{Definiciones}
+
+\subsubsection{Ganancia o atenuaci\'{o}n}
+
+La ganancia y la atenuaci\'{o}n de un filtro son conceptos complementarios, y sus valores est\'{a}n 
+determinados por la magnitud de la respuesta en frecuencia. Dado que la salida de un filtro $y$ para
+una entrada peri\'{o}dica $x$ queda determinada por 
+\begin{equation}
+        y[n] = H(e^{j \omega}) x[n],
+\end{equation}
+para tiempo discreto, el m\'{o}dulo de la funci\'{o}n compleja $\parallel H \parallel$ determina la 
+variaci\'{o}n del tama\~{n}o de la salida respecto a la entrada. Hablamos de ganancia cuando deseamos 
+saber cuanto queda ampliada la salida respecto a la entrada, y hablamos de atenuaci\'{o}n cuando deseamos 
+saber cuanto queda disminuida la salida respecto a la entrada. Dado que por lo general
+los filtros amplian determinadas frecuencias y disminuyen otras, hablar de ganancia o atenuaci\'{o}n es 
+equivalente a elegir un punto de vista ($G = 1 - A$).
+
+\subsubsection{Fase}
+
+La fase de un filtro es la fase de la respuesta en frecuencia (funci\'{o}n compleja) $H(j \omega)$ en 
+tiempo continuo o $H(e^{j \omega})$ para tiempo discreto.
+
+\subsubsection{Fase lineal y no lineal}
+
+Cuando la fase del filtro es una funci\'{o}n \textbf{lineal} de $\omega$, hay una interpretaci\'{o}n 
+simple de su efecto en el dominio del tiempo. 
+En el caso de tiempo discreto, tenemos sistemas con fase lineal cuando la pendiente de la fase con la 
+frecuencia es un n\'{u}mero 
+\textbf{entero}.
+El sistema de tiempo discreto con respuesta en frecuencia
+\begin{equation}
+        H( e^{j \omega}) = e^{j \omega \, n_{0}},
+\end{equation}
+tiene una fase lineal 
+\begin{equation}
+        \angle H( e^{j \omega}) = -\omega \, n_{0},
+\end{equation}
+La salida de este sistema es igual a su entrada desplazada en el tiempo una cantidad \textbf{entera} de 
+muestras $n_{0}$
+\begin{equation}
+        y[n] = x[n - n_{0}].
+\end{equation}
+Cuando $n_{0}$ no es un entero el comportamiento es m\'{a}s complejo y se explica m\'{a}s adelante.
+
+Cuando la fase del filtro es una funci\'{o}n \textbf{no lineal} de $\omega$, cada componente exponencial 
+compleja de la entrada (con diferentes frecuencias) son afectadas de forma tal que las fases relativas 
+cambian y as\'{\i} obtenemos una salida que puede diferir en forma significativa respecto a la entrada.
+
+\subsubsection{Retraso de grupo}
+
+\section{Gr\'{a}ficos de Bode}
+
+\subsection{Sistema de tiempo discreto con un polo}
+
+Consideremos el sistema de tiempo discreto lineal, invariante en el tiempo y
+causal cuya ecuaci\'{o}n de diferencias es
+\begin{equation}
+y\left[ n\right] -ay\left[ n-1\right] =x\left[ n\right] ,
+\end{equation}
+donde $\left| a\right| <1$.
+
+\begin{enumerate}
+\item  La funci\'{o}n de transferencia de este sistema es
+\begin{equation}
+H\left( z\right) =\frac{1}{1-az^{-1}}.
+\end{equation}
+
+\item  La respuesta en frecuencia de este sistema es
+\begin{equation}
+H\left( e^{j \, \omega }\right) =\frac{1}{1-ae^{-j \, \omega }}.
+\end{equation}
+
+\item  La respuesta al impulso es
+\begin{equation}
+h_{1}\left[ n\right] =a^{n}u\left[ n\right] .
+\end{equation}
+
+\item  La respuesta al escal\'{o}n es
+\begin{equation}
+h_{2}\left[ n\right] =h_{1}\left[ n\right]  u\left[ n\right] =\frac{%
+1-a^{n+1}}{1-a}u\left[ n\right] .
+\end{equation}
+
+\item  La magnitud de $\left| a\right| <1$ determina la velocidad a la que
+responde el sistema. 
+
+\begin{enumerate}
+\item  El sistema decae m\'{a}s r\'{a}pido para valores de $\left| a\right| $ cercanos a $0.$
+
+\item  El sistema decae m\'{a}s lentamente para valores de $\left| a\right| $ cercanos a $1.$
+\end{enumerate}
+
+\item  Para valores de $-1<a<0,$ 
+
+\begin{enumerate}
+\item  la respuesta al impulso toma valores positivos y negativos alternados y decrecientes 
+(oscilaciones amortiguadas). 
+
+\item  la respuesta al escal\'{o}n tiene sobrepaso de su valor final y oscilaciones amortiguadas. 
+\end{enumerate}
+
+\item  El cuadrado de la magnitud de la respuesta en frecuencia es
+\begin{equation}
+H\left( e^{-j \, \omega }\right) H\left( e^{j \, \omega }\right) =
+\frac{1}{1-ae^{j \, \omega }}\frac{1}{1-ae^{-j \, \omega }},
+\end{equation}
+que puede escribirse, usando la identidad de Euler, como
+\begin{equation}
+H\left( e^{-j \, \omega }\right) H\left( e^{j \, \omega }\right) =
+\frac{1}{1-a\left( \cos \left( \omega \right) +j\sin \left( \omega \right) \right) }
+\frac{1}{1-a\left( \cos \left( \omega \right) -j\sin \left( \omega \right) \right) }.
+\end{equation}
+Esta expresion puede simplificarse escribiendo
+\begin{equation}
+H\left( e^{-j \, \omega }\right) H\left( e^{j \, \omega }\right) =
+\frac{1}{\left(1-a\cos \left( \omega \right) \right) ^{2}+
+\left( a\sin \left( \omega\right) \right) ^{2}},
+\end{equation}
+y finalmente
+\begin{equation}
+H\left( e^{-j \, \omega }\right) H\left( e^{j \, \omega }\right) =
+\frac{1}{1+a^{2}-2a\cos \left( \omega \right) }.
+\end{equation}
+
+\item  La fase de la respuesta en frecuencia es
+\begin{equation}
+\angle (H(e^{j \omega})) = -\arctan \left( \frac{a\sin \omega }{1-a\cos \left( \omega \right) }\right) .
+\end{equation}
+\end{enumerate}
+
+\subsection{Sistema de tiempo discreto con dos polos}
+
+Consideremos el sistema de tiempo discreto lineal, invariante en el tiempo y
+causal cuya ecuaci\'{o}n de diferencias es
+\begin{equation}
+y\left[ n\right] -2r\cos \left( \theta \right) y\left[ n-1\right] +r^{2}y%
+\left[ n-2\right] =x\left[ n\right] ,
+\end{equation}
+donde $0<r<1,$ y $0\leq \theta \leq \pi .$
+
+\begin{enumerate}
+\item  La funci\'{o}n de transferencia es
+\begin{equation}
+H\left( z\right) =\frac{1}{1-2r\cos \left( \theta \right) z^{-1}+r^{2}z^{-2}%
+}=\frac{1}{\left( 1-re^{j\theta }z^{-1}\right) \left( 1-re^{-j\theta
+}z^{-1}\right) }.
+\end{equation}
+
+\item  La respuesta en frecuencia es
+\begin{equation}
+H\left( e^{j \, \omega }\right) =\frac{1}{1-2r\cos \left( \theta \right)
+e^{-j \, \omega }+r^{2}e^{-2j \, \omega }}=\frac{1}{\left( 1-re^{j\theta
+}e^{-j \, \omega }\right) \left( 1-re^{-j\theta }e^{-j \, \omega }\right) }.
+\end{equation}
+\end{enumerate}
+

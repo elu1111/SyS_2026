@@ -1,0 +1,607 @@
+\chapter{Transformada de Fourier de tiempo continuo}
+
+\section{Introducción}
+
+\begin{enumerate}
+	
+	\item Vamos a ver como podemos \textbf{modificar} el concepto de \textbf{serie de Fourier} \textbf{para estudiar funciones no periódicas} de tiempo continuo. Esto nos permite \textbf{definir} el concepto de \textbf{contenido de frecuencias de una señal}, aún cuando sea no periódica.
+	
+	\item Pensemos en el ejemplo de un tren de pulsos simétrico, donde
+	\begin{equation}
+		a_{0} = \frac{T_{1}}{T_{2}},
+	\end{equation}
+	y
+	\begin{equation}
+		a_{k} = \frac{T_{1}}{T} \, \frac{\sin\left(\frac{k \, \pi \, T_{1}}{T}\right)}{\frac{k \, \pi \, T_{1}}{T}}. \label{tf.1}
+	\end{equation}
+	
+	\item Podemos escribir (\ref{tf.1}) de la siguiente forma
+	\begin{equation}
+		T a_{k} = \left. T_{1} \, \frac{\sin(\omega)}{\omega} \right|_{\omega = \frac{k \, \pi \, T_{1}}{T}}
+	\end{equation}
+	y entonces es evidente que la podemos interpretar como una \textbf{secuencia} formada por \textbf{muestras} de una \textbf{función envolvente} $T_{1} \, \frac{\sin(\omega)}{\omega}$ donde la variable $\omega$ es continua, y la secuencia $T a_{k}$ está formada por valores igualmente espaciados en frecuencia, con intervalo $\frac{2 \, \pi}{T}$ (suponiendo $2T_1$ como el ancho del pulso).
+	
+	\item Observe que la separación de las muestras de la envolvente de $T a_{k}$ está dada por 
+	\begin{equation}
+		\omega_{T} = \frac{2 \, \pi}{T}.
+	\end{equation}
+	Entonces, cuanto mayor sea $T$ menor será $\omega_{T}$ y la cantidad de muestras en un intervalo dado de frecuencia será mayor.
+	
+	\item Si fijamos el valor del ancho del pulso (recordando que debe ser menor a $T$, por hipótesis) la envolvente de $T a_{k}$ es independiente de $T$.
+	
+\end{enumerate}
+
+\section{Síntesis y análisis}
+
+\subsection{Teoría}
+
+\begin{enumerate}
+	
+	\item Vamos a construir una señal $x(t)$ no periódica como el límite de una señal $\hat{x}(t)$ periódica cuando el período $T$ tiende a $\infty$. Veamos qué pasa con los coeficientes de la serie de Fourier. Recordemos que una señal periódica $\hat{x}(t) = \hat{x}(t+T)$ se puede escribir como una serie de Fourier mediante la ecuación de síntesis 
+	\begin{equation}
+		\hat{x}(t) = \sum_{k=-\infty}^{\infty} a_{k} \, e^{j \, k \, \omega_{0} \, t},
+	\end{equation}
+	donde los coeficientes $a_{k}$ se calculan mediante la ecuación de análisis 
+	\begin{equation}
+		a_{k} = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} \hat{x}(t) e^{-j \, k \, \omega_{0} \, t} \, dt.
+	\end{equation}
+	
+	\item Definamos la señal no periódica $x(t)$ especificando 
+	\begin{equation}
+		x(t) = \begin{cases}
+			\hat{x}(t), & |t| \leq \frac{T}{2}, \\
+			0, & |t| > \frac{T}{2},
+		\end{cases}
+		\qquad
+		\hat{x}(t) = \hat{x}(t+T) .
+	\end{equation}
+	Entonces los coeficientes de la serie de Fourier son 
+	\begin{equation}
+		a_{k} = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} \hat{x}(t) e^{-j \, k \, \omega_{0} \, t} \, dt = \frac{1}{T} \int_{-\infty}^{\infty} x(t) e^{-j \, k \, \omega_{0} \, t} \, dt.
+	\end{equation}
+	\textbf{Las dos integrales son iguales en valor porque un período de $\hat{x}(t)$ coincide con $x(t),$ justamente donde se evalúa la primer integral, y $x(t)$ es nula para $|t| > \frac{T}{2}.$}
+	
+	\item Definamos la ecuación de análisis de la transformada de Fourier como 
+	\begin{equation}
+		X(j \, \omega) = \int_{-\infty}^{\infty} x(t) e^{-j \, \omega \, t} \, dt.
+	\end{equation}
+	Tenemos que los coeficientes de la serie de Fourier forman la secuencia de valores 
+	\begin{equation}
+		T a_{k} = X(j \, k \, \omega_{0}) .
+	\end{equation}
+	
+	\item Usando la ecuación de síntesis de la serie de Fourier podemos escribir 
+	\begin{equation}
+		\hat{x}(t) = \frac{1}{T} \sum_{k=-\infty}^{\infty} X(j \, k \, \omega_{0}) e^{j \, k \, \omega_{0} \, t}.
+	\end{equation}
+	Dado que $\omega_{0} = \frac{2 \, \pi}{T} \longleftrightarrow T = \frac{2 \, \pi}{\omega_{0}}$ vemos que la serie de Fourier puede escribirse como
+	\begin{equation}
+		\hat{x}(t) = \frac{1}{2 \, \pi} \sum_{k=-\infty}^{\infty} X(j \, k \, \omega_{0}) e^{j \, k \, \omega_{0} \, t} \, \omega_{0}.
+	\end{equation}
+	A medida que $T \rightarrow \infty$, $\omega_{0} \rightarrow 0$ (o sea un diferencial de frecuencia $d\omega$), $\hat{x}(t) \rightarrow x(t)$ y la sumatoria de Riemann se convierte en integral, obteniendo la ecuación de síntesis:
+	\begin{equation}
+		x(t) = \frac{1}{2 \, \pi} \int_{-\infty}^{\infty} X(j \, \omega) e^{j \, \omega \, t} \, d\omega .
+	\end{equation}
+	\textbf{A medida que $T \rightarrow \infty$, se agranda el rango de valores de $t$ en el que las dos funciones $\hat{x}(t)$ y $x(t)$ son iguales.}
+\end{enumerate}
+
+\subsection{Prestar atención}
+
+Como hemos visto antes, vamos a usar la ecuación de análisis 
+\begin{equation}
+	X(j \, \omega) = \int_{-\infty}^{\infty} x(t) e^{-j \, \omega \, t} \, dt,  \label{analisis}
+\end{equation}
+y la ecuación de síntesis 
+\begin{equation}
+	x(t) = \frac{1}{2 \, \pi} \int_{-\infty}^{\infty} X(j \, \omega) e^{j \, \omega \, t} \, d\omega . \label{sintesis}
+\end{equation}
+Esto significa que estamos usando la variable $\omega$ (radianes por segundo), y no la variable $f$ (ciclos por segundo o Hertz). Recordemos que ambas están relacionadas por 
+\begin{equation}
+	\omega = 2 \, \pi f.
+\end{equation}
+Este cambio de variables afecta a las ecuaciones que serían de la forma 
+\begin{equation}
+	X(f) = \int_{-\infty}^{\infty} x(t) e^{-j 2 \, \pi f t} \, dt,
+\end{equation}
+y 
+\begin{equation}
+	x(t) = \int_{-\infty}^{\infty} X(f) e^{j 2 \, \pi f t} \, df.
+\end{equation}
+Usamos las fórmulas dadas por las ecs. (\ref{analisis}) y (\ref{sintesis}) porque son las que aparecen en la convención de los libros estándar de la asignatura (como Oppenheim). La diferencia de notación no afecta la teoría.
+
+\subsection{Concepto de la Transformada de Fourier}
+
+\begin{enumerate}
+	
+	\item La Transformada de Fourier es una generalización de la serie de Fourier, y permite estudiar funciones no periódicas en el dominio de la frecuencia.
+	\item La Transformada de Fourier permite descomponer una señal en componentes armónicas cuyas frecuencias varían en diferenciales, a diferencia de la serie de Fourier donde las frecuencias de las armónicas varían en incrementos discretos de $\omega_{0} = \frac{2 \, \pi}{T}$, la frecuencia fundamental.
+\end{enumerate}
+
+\section{Convergencia de la Transformada de Fourier}
+
+Sea una señal $x(t),$ y consideremos las funciones $X(j \, \omega)$ y $\hat{x}(t)$ (o $x_F(t)$) definidas como 
+\begin{equation}
+	X(j \, \omega) = \int_{-\infty}^{\infty} x(t) e^{-j \, \omega \, t} \, dt,  \label{convergenciaUno}
+\end{equation}
+y 
+\begin{equation}
+	x_{F}(t) = \frac{1}{2 \, \pi} \int_{-\infty}^{\infty} X(j \, \omega) e^{j \, \omega \, t} \, d\omega .
+\end{equation}
+La pregunta es: ¿cuándo $x_{F}(t)$ es una representación válida de $x(t)$?
+
+\subsection{Energía finita}
+
+Si $x(t)$ tiene energía finita 
+\begin{equation}
+	\int_{-\infty}^{\infty} |x(t)|^{2} \, dt < \infty ,
+\end{equation}
+entonces $X(j \, \omega)$ es finita, o sea que la integral (\ref{convergenciaUno}) converge, y además 
+\begin{equation}
+	\int_{-\infty}^{\infty} |x(t) - x_{F}(t)|^{2} \, dt = 0.
+\end{equation}
+Esto implica que $x_{F}(t)$ y $x(t)$ son similares excepto en, a lo sumo, una cantidad limitada de valores de $t$ donde las funciones tengan discontinuidades.
+
+\subsection{Condiciones de Dirichlet}
+
+Son \textbf{condiciones alternativas} a la de energía, y son \textbf{suficientes} para asegurar que $x_{F}(t)$ es igual a $x(t)$ excepto en puntos de discontinuidad.
+\begin{enumerate}
+	\item $x(t)$ debe ser absolutamente integrable:
+	\begin{equation}
+		\int_{-\infty}^{\infty} |x(t)| \, dt < \infty .
+	\end{equation}
+	
+	\item $x(t)$ tiene un número finito de máximos y mínimos dentro de cualquier intervalo finito.
+	\item $x(t)$ tiene un número finito de discontinuidades dentro de cualquier intervalo finito, y dichas discontinuidades son finitas. En este caso, en los puntos de discontinuidad de $x(t)$, la transformada inversa $x_{F}(t)$ es igual al promedio de los valores de $x(t)$ a ambos lados de la discontinuidad.
+\end{enumerate}
+Si se cumplen estas condiciones, entonces $x(t)$ tiene transformada de Fourier.
+
+\subsection{Pregunta}
+
+Las señales que llegan a las antenas de un televisor o un equipo de radio, por mencionar dos ejemplos, ¿tienen transformada de Fourier? Justifique.
+
+\section{Ejemplos}
+
+\subsection{Impulso temporal}
+
+Calculemos la transformada de Fourier de un impulso $\delta(t)$
+\begin{equation}
+	X(j \, \omega) = \int_{-\infty}^{\infty} \delta(t) e^{-j \, \omega \, t} \, dt.
+\end{equation}
+Por la propiedad del muestreo 
+\begin{equation}
+	\delta(t) e^{-j \, \omega \, t} = \delta(t) e^{0} = \delta(t) ,
+\end{equation}
+y por lo tanto 
+\begin{equation}
+	X(j \, \omega) = \int_{-\infty}^{\infty} \delta(t) e^{-j \, \omega \, t} \, dt = \int_{-\infty}^{\infty} \delta(t) \, dt = 1.
+\end{equation}
+Note que es un valor constante para todo valor de $\omega.$
+
+\subsection{Impulso temporal desplazado}
+
+Calculemos la transformada de Fourier de un impulso desplazado en el tiempo $\delta(t - t_{0})$
+\begin{equation}
+	X(j \, \omega) = \int_{-\infty}^{\infty} \delta(t - t_{0}) e^{-j \, \omega \, t} \, dt.
+\end{equation}
+Recordemos que, por la propiedad del muestreo,
+\begin{equation}
+	\delta(t - t_{0}) e^{-j \, \omega \, t} = \delta(t - t_{0}) e^{-j \, \omega \, t_{0}}
+\end{equation}
+y por lo tanto podemos escribir
+\begin{equation}
+	X(j \, \omega) = \int_{-\infty}^{\infty} \delta(t - t_{0}) e^{-j \, \omega \, t_{0}} \, dt = e^{-j \, \omega \, t_{0}} \int_{-\infty}^{\infty} \delta(t - t_0) \, dt = e^{-j \, \omega \, t_{0}},
+\end{equation}
+teniendo en cuenta que el factor $e^{-j \, \omega \, t_{0}}$ no depende de la variable de integración $t$ y puede ser extraído de la integral como una constante.
+
+\subsection{Impulso en frecuencia}
+
+Sea la transformada de Fourier 
+\begin{equation}
+	X(j \, \omega) = 2 \, \pi \, \delta(\omega - \omega_{0}) .
+\end{equation}
+Apliquemos la ecuación de síntesis para obtener 
+\begin{equation}
+	x(t) = \frac{1}{2 \, \pi} \int_{-\infty}^{\infty} 2 \, \pi \, \delta(\omega - \omega_{0}) \, e^{j \, \omega \, t} \, d\omega = e^{j \, \omega_{0} \, t}.
+\end{equation}
+Esto significa que las funciones periódicas exponenciales complejas $e^{j \, \omega_{0} \, t}$ también tienen transformada de Fourier, y son impulsos en frecuencia $2 \, \pi \, \delta(\omega - \omega_{0})$.
+
+\subsection{Tren de impulsos en frecuencia}
+
+En general, si tenemos un tren de impulsos en frecuencia
+\begin{equation}
+	X(j \, \omega) = \sum_{k=-\infty}^{\infty} 2 \, \pi \, a_{k} \, \delta(\omega - k \, \omega_{0}) ,
+\end{equation}
+al aplicar la inversa obtenemos la serie de Fourier:
+\begin{equation}
+	x(t) = \sum_{k=-\infty}^{\infty} a_{k} \, e^{j \, k \, \omega_{0} \, t},
+\end{equation}
+por lo que podemos escribir la dualidad:
+\begin{equation}
+	\sum_{k=-\infty}^{\infty} a_{k} \, e^{j \, k \, \omega_{0} \, t} 
+	\stackrel{\mathcal{F}}{\longleftrightarrow}
+	\sum_{k=-\infty}^{\infty} 2 \, \pi \, a_{k} \, \delta(\omega - k \omega_{0}). \label{tf.tif}
+\end{equation}
+
+\subsection{Tren de impulsos temporal}
+
+Consideremos el tren de impulsos temporal
+\begin{equation}
+	x(t) = \sum_{k=-\infty}^{\infty} \delta(t - kT) .
+\end{equation}
+Calculemos los coeficientes de la serie de Fourier, y observemos que dentro del intervalo fundamental de integración (de $-T/2$ a $T/2$) tenemos $x(t) = \delta(t)$, lo que permite escribir:
+\begin{equation}
+	a_{k} = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} \delta(t) e^{-j \, k \, \omega_{0} \, t} \, dt = \frac{1}{T}.
+\end{equation}
+Y por lo tanto, aplicando la propiedad (\ref{tf.tif}), tenemos que la transformada de Fourier de un tren de impulsos en el tiempo es otro tren de impulsos en frecuencia:
+\begin{equation}
+	X(j \, \omega) = \sum_{k=-\infty}^{\infty} \frac{2 \, \pi}{T} \, \delta\left(\omega - \frac{2 \, \pi \, k}{T}\right).
+\end{equation}
+
+\subsection{Pulso rectangular en tiempo}
+
+Calculemos la transformada de la señal pulso rectangular 
+\begin{equation}
+	x(t) = \begin{cases}
+		1, & |t| \leq T_{1}, \\ 
+		0, & |t| > T_{1}.
+	\end{cases}
+\end{equation}
+Según la ecuación de análisis 
+\begin{equation}
+	X(j \, \omega) = \int_{-T_{1}}^{T_{1}} e^{-j \, \omega \, t} \, dt = \frac{\left[e^{-j \, \omega \, t}\right]_{-T_{1}}^{T_{1}}}{-j \, \omega}.
+\end{equation}
+Evaluando la integral
+\begin{equation}
+	X(j \, \omega) = \frac{e^{-j \, \omega \, T_{1}} - e^{j \, \omega \, T_{1}}}{-j \, \omega}.
+\end{equation}
+Finalmente, multiplicando y diviendo por $2$ (o $2T_1$) y usando la identidad de Euler para el seno llegamos a la expresión:
+\begin{equation}
+	X(j \, \omega) = 2 \, \frac{e^{j \, \omega \, T_{1}} - e^{-j \, \omega \, T_{1}}}{2j \, \omega} = 2 \, \frac{\sin(\omega \, T_{1})}{\omega}.
+\end{equation}
+Que puede escribirse elegantemente como:
+\begin{equation}
+	X(j \, \omega) = 2 \, T_{1} \, \frac{\sin(\omega \, T_{1})}{\omega \, T_{1}}.
+\end{equation}
+
+\subsection{Pulso rectangular en frecuencia}
+
+Veamos cuál es la señal $x(t)$ cuya transformada de Fourier es un filtro pasabajos ideal:
+\begin{equation}
+	X(j \, \omega) = \begin{cases}
+		1, & |\omega| \leq W_{1}, \\ 
+		0, & |\omega| > W_{1}.
+	\end{cases}
+\end{equation}
+Según la ecuación de síntesis 
+\begin{equation}
+	x(t) = \frac{1}{2 \, \pi} \int_{-W_{1}}^{W_{1}} e^{j \, \omega \, t} \, d\omega = \frac{1}{2 \, \pi} \, \frac{\left[e^{j \, \omega \, t}\right]_{-W_{1}}^{W_{1}}}{j \, t}.
+\end{equation}
+Evaluando la integral
+\begin{equation}
+	x(t) = \frac{1}{2 \, \pi} \, \frac{e^{j \, W_{1} \, t} - e^{-j \, W_{1} \, t}}{j \, t}.
+\end{equation}
+Reordenando los términos para que coincidan con la definición del seno:
+\begin{equation}
+	x(t) = \frac{1}{\pi t} \left( \frac{e^{j \, W_{1} \, t} - e^{-j \, W_{1} \, t}}{2j} \right) = \frac{\sin(W_{1} \, t)}{\pi \, t}.
+\end{equation}
+Por lo tanto, resulta la clásica función Sinc:
+\begin{equation}
+	x(t) = \frac{W_{1}}{\pi} \frac{\sin(W_{1} \, t)}{W_{1} \, t}.
+\end{equation}
+
+\subsection{Exponencial decreciente derecha}
+
+Consideremos la señal causal
+\begin{equation}
+	x(t) = e^{-a \, t} \, u(t), \quad a > 0.
+\end{equation}
+Según la ecuación de análisis 
+\begin{equation}
+	X(j \, \omega) = \int_{0}^{\infty} e^{-a \, t} \, e^{-j \, \omega \, t} \, dt = \left[ \frac{e^{-(a + j \, \omega) t}}{-(a + j \, \omega)} \right]_{0}^{\infty}.
+\end{equation}
+Dado que $a>0$, el límite en infinito converge a cero, por lo que:
+\begin{equation}
+	X(j \, \omega) = \frac{1}{a + j \, \omega}, \quad a > 0.
+\end{equation}
+Observe además que la señal es absolutamente integrable:
+\begin{equation}
+	\int_{0}^{\infty} | e^{-a \, t} \, u(t) | \, dt = \frac{1}{a}.
+\end{equation}
+y la función $x(t)$ tiene una única discontinuidad acotada en $t = 0$. Por lo tanto, esta función verifica plenamente las condiciones de Dirichlet.
+
+\section{Propiedades de la Transformada de Fourier de tiempo continuo}
+
+\subsection{Linealidad}
+
+Sea una función combinada:
+\begin{equation}
+	r(t) = a \, x(t) + b \, y(t).
+\end{equation}
+Podemos probar que su transformada es:
+\begin{equation}
+	R(j \, \omega) = \int_{-\infty}^{\infty} (a \, x(t) + b \, y(t)) e^{-j \, \omega \, t} \, dt.
+\end{equation}
+Por la linealidad del operador integral, esto se puede separar como:
+\begin{equation}
+	R(j \, \omega) = a \left( \int_{-\infty}^{\infty} x(t) e^{-j \, \omega \, t} \, dt \right) + b \left( \int_{-\infty}^{\infty} y(t) e^{-j \, \omega \, t} \, dt \right).
+\end{equation}
+Por lo tanto resulta:
+\begin{equation}
+	R(j \, \omega) = a \, X(j \, \omega) + b \, Y(j \, \omega).
+\end{equation}
+Así deducimos la propiedad:
+\begin{equation}
+	a \, x(t) + b \, y(t) \stackrel{\mathcal{F}}{\longleftrightarrow} a \, X(j \, \omega) + b \, Y(j \, \omega) .
+\end{equation}
+
+\subsection{Desplazamiento en el tiempo}
+
+Dada la función retardada
+\begin{equation}
+	r(t) = x(t - t_{0}) ,
+\end{equation}
+su transformada es
+\begin{equation}
+	R(j \, \omega) = \int_{-\infty}^{\infty} x(t - t_{0}) e^{-j \, \omega \, t} \, dt.
+\end{equation}
+
+Aplicando un cambio de variable $\tau = t - t_{0}$ (donde $dt = d\tau$), obtenemos:
+\begin{equation}
+	R(j \, \omega) = \int_{-\infty}^{\infty} x(\tau) \, e^{-j \, \omega (\tau + t_{0})} \, d\tau.
+\end{equation}
+Separando el término exponencial:
+\begin{equation}
+	R(j \, \omega) = e^{-j \, \omega \, t_{0}} \int_{-\infty}^{\infty} x(\tau) e^{-j \, \omega \tau} \, d\tau.
+\end{equation}
+Así, llegamos a la conclusión:
+\begin{equation}
+	x(t - t_{0}) \stackrel{\mathcal{F}}{\longleftrightarrow} e^{-j \, \omega \, t_{0}} X(j \, \omega) .
+\end{equation}
+
+\subsection{Conjugación y simetría del conjugado}
+
+\begin{enumerate}
+	\item El conjugado de la transformada de Fourier es 
+	\begin{equation}
+		\overline{X(j \, \omega)} = \overline{\int_{-\infty}^{\infty} x(t) \, e^{-j \, \omega \, t} \, dt} = \int_{-\infty}^{\infty} \overline{x(t)} \, e^{j \, \omega \, t} \, dt.
+	\end{equation}
+	Cambiando el signo de $\omega$ obtenemos:
+	\begin{equation}
+		\overline{X(-j \, \omega)} = \int_{-\infty}^{\infty} \overline{x(t)} \, e^{-j \, \omega \, t} \, dt.
+	\end{equation}
+	Como conclusión:
+	\begin{equation}
+		\overline{x(t)} \stackrel{\mathcal{F}}{\longleftrightarrow} \overline{X(-j \, \omega)} .
+	\end{equation}
+	
+	\item Si $x(t)$ es puramente real, entonces $x(t) = \overline{x(t)}$. Sustituyendo esto, tenemos:
+	\begin{equation}
+		\overline{X(-j \, \omega)} = \int_{-\infty}^{\infty} x(t) e^{-j \, \omega \, t} \, dt = X(j \, \omega),
+	\end{equation}
+	lo que demuestra la propiedad de simetría conjugada para señales reales:
+	\begin{equation}
+		X(-j \, \omega) = \overline{X(j \, \omega)} . \label{conjuuno}
+	\end{equation}
+	
+	\item De la Ec. (\ref{conjuuno}), si $x(t)$ es real se desprende que la parte real del espectro es una función par, y la parte imaginaria es impar:
+	\begin{align}
+		\Re(X(j \, \omega)) &= \Re(X(-j \, \omega)), \\
+		\Im(X(j \, \omega)) &= -\Im(X(-j \, \omega)).
+	\end{align}
+	
+	\item En términos polares, si $x(t)$ es real, el módulo al cuadrado es:
+	\begin{equation}
+		|X(j \, \omega)|^{2} = X(j \, \omega) \, \overline{X(j \, \omega)} = X(j \, \omega) \, X(-j \, \omega) = |X(-j \, \omega)|^{2}.
+	\end{equation}
+	Por lo tanto el módulo $|X(j \, \omega)|$ es una función par, y la fase $\angle X(j \, \omega)$ es una función impar.
+	
+	\item Si $x(t)$ es real y par ($x(t) = x(-t)$), entonces $X(j \, \omega)$ es puramente real y par.
+	\item Si $x(t)$ es real e impar ($x(t) = -x(-t)$), entonces $X(j \, \omega)$ es puramente imaginaria e impar.
+\end{enumerate}
+
+\subsection{Diferenciación en el tiempo}
+
+\begin{enumerate}
+	\item Escribamos la ecuación de síntesis:
+	\begin{equation}
+		x(t) = \frac{1}{2 \, \pi} \int_{-\infty}^{\infty} X(j \, \omega) e^{j \, \omega \, t} \, d\omega .
+	\end{equation}
+	
+	\item Derivemos ambos términos respecto al tiempo:
+	\begin{equation}
+		\frac{dx(t)}{dt} = \frac{1}{2 \, \pi} \int_{-\infty}^{\infty} X(j \, \omega) \frac{d(e^{j \, \omega \, t})}{dt} \, d\omega.
+	\end{equation}
+	
+	\item Obtenemos finalmente:
+	\begin{equation}
+		\frac{dx(t)}{dt} = \frac{1}{2 \, \pi} \int_{-\infty}^{\infty} j \, \omega \, X(j \, \omega) e^{j \, \omega \, t} \, d\omega.
+	\end{equation}
+	
+	\item La conclusión es que derivar en el tiempo equivale a multiplicar por $j\omega$ en frecuencia:
+	\begin{equation}
+		\frac{dx(t)}{dt} \stackrel{\mathcal{F}}{\longleftrightarrow} j \, \omega \, X(j \, \omega) .
+	\end{equation}
+	
+\end{enumerate}
+
+\subsection{Diferenciación en frecuencia}
+
+\begin{enumerate}
+	\item Escribamos la ecuación de análisis:
+	\begin{equation}
+		X(j \, \omega) = \int_{-\infty}^{\infty} x(t) e^{-j \, \omega \, t} \, dt.
+	\end{equation}
+	
+	\item Derivemos ambos términos respecto a la frecuencia:
+	\begin{equation}
+		\frac{dX(j \, \omega)}{d\omega} = \int_{-\infty}^{\infty} x(t) \, \frac{d(e^{-j \, \omega \, t})}{d\omega} \, dt.
+	\end{equation}
+	
+	\item Obtenemos:
+	\begin{equation}
+		\frac{dX(j \, \omega)}{d\omega} = \int_{-\infty}^{\infty} -j \, t \, x(t) \, e^{-j \, \omega \, t} \, dt.
+	\end{equation}
+	
+	\item Multiplicando por $j$ en ambos lados:
+	\begin{equation}
+		j \, \frac{dX(j \, \omega)}{d\omega} = \int_{-\infty}^{\infty} t \, x(t) \, e^{-j \, \omega \, t} \, dt.
+	\end{equation}
+	
+\end{enumerate}
+
+Conclusión:
+\begin{equation}
+	t \, x(t) \stackrel{\mathcal{F}}{\longleftrightarrow} j \, \frac{dX(j \, \omega)}{d\omega} .
+\end{equation}
+
+
+\subsection{Escalado en tiempo y frecuencia}
+
+\begin{enumerate}
+	
+	\item Vamos a calcular la transformada de $x(a \, t)$ en función de la transformada de $x(t)$.
+	\item Escribamos la ecuación de análisis:
+	\begin{equation}
+		\mathcal{F}\{x(at)\} = \int_{-\infty}^{\infty} x(a \, t) e^{-j \, \omega \, t} \, dt,
+	\end{equation}
+	donde $a \neq 0$. 
+	
+	\item Hagamos la sustitución $\tau = a \, t$ (con $dt = d\tau / a$). Debemos cuidar los límites de integración según el signo de $a$:
+	\begin{equation}
+		\mathcal{F}\{x(at)\} = \begin{cases}
+			\frac{1}{a} \int_{-\infty}^{\infty} x(\tau) e^{-j \frac{\omega}{a} \tau} \, d\tau , & a > 0, \\ 
+			-\frac{1}{a} \int_{-\infty}^{\infty} x(\tau) e^{-j \frac{\omega}{a} \tau} \, d\tau , & a < 0.
+		\end{cases}
+	\end{equation}
+	
+	\item El signo de $a$ afecta al orden de integración. Si se conservan los límites originales, debe absorberse el signo mediante el valor absoluto. La conclusión es:
+	\begin{equation}
+		x(at) \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{|a|} X\left( \frac{j \, \omega}{a} \right) ,
+	\end{equation}
+	donde $a \neq 0$.
+	
+\end{enumerate}
+
+\subsection{Convolución en el dominio del tiempo}
+
+\begin{enumerate}
+	\item Empezamos con la integral de convolución:
+	\begin{equation}
+		y(t) = \int_{-\infty}^{\infty} x(\tau) \, h(t-\tau) \, d\tau .
+	\end{equation}
+	\item Deseamos obtener la transformada de Fourier:
+	\begin{equation}
+		Y(j \, \omega) = \int_{-\infty}^{\infty} \left[ \int_{-\infty}^{\infty} x(\tau) \, h(t-\tau) \, d\tau \right] e^{-j \, \omega \, t} \, dt.
+	\end{equation}
+	\item Cambiando el orden de integración, y observando que $x(\tau)$ no depende de $t$, obtenemos:
+	\begin{equation}
+		Y(j \, \omega) = \int_{-\infty}^{\infty} x(\tau) \left( \int_{-\infty}^{\infty} h(t-\tau) \, e^{-j \, \omega \, t} \, dt \right) d\tau .
+	\end{equation}
+	\item Por la propiedad de desplazamiento en el tiempo, la integral interior es la transformada de una señal retardada $\tau$:
+	\begin{equation}
+		\int_{-\infty}^{\infty} h(t-\tau) \, e^{-j \, \omega \, t} \, dt = e^{-j \, \omega \tau} \, H(j \, \omega).
+	\end{equation}
+	Reemplazando esto en la ecuación principal obtenemos:
+	\begin{equation}
+		Y(j \, \omega) = \int_{-\infty}^{\infty} x(\tau) \, e^{-j \, \omega\tau} \, H(j \, \omega) \, d\tau .
+	\end{equation}
+	\item Extrayendo $H(j \, \omega)$ (que no depende de $\tau$) de la integral, nos queda:
+	\begin{equation}
+		Y(j \, \omega) = \left( \int_{-\infty}^{\infty} x(\tau) e^{-j \, \omega \tau} \, d\tau \right) H(j \, \omega) = X(j \, \omega) \, H(j \, \omega) .
+	\end{equation}
+\end{enumerate}
+
+\textbf{Conclusión fundamental: la convolución de señales en el dominio del tiempo implica la multiplicación de sus espectros en el dominio de la frecuencia.}
+\begin{equation}
+	x(t) * h(t) \stackrel{\mathcal{F}}{\longleftrightarrow} X(j \, \omega) \cdot H(j \, \omega) .
+\end{equation}
+
+\subsection{Convolución en el dominio de la frecuencia (Modulación)}
+
+\begin{enumerate}
+	\item Empezamos definiendo un espectro $R(j\omega)$ como la convolución de dos espectros:
+	\begin{equation}
+		R(j \, \omega) = \frac{1}{2 \, \pi} \int_{-\infty}^{\infty} X(j \, \theta) Y(j(\omega - \theta)) \, d\theta .
+	\end{equation}
+	\item Aplicando la ecuación de síntesis y manipulando el orden de integración (proceso dual al anterior), llegamos a que la señal temporal correspondiente es:
+	\begin{equation}
+		r(t) = y(t) \cdot x(t) .
+	\end{equation}
+\end{enumerate}
+
+\textbf{Conclusión: la convolución de transformadas en frecuencia implica la multiplicación de señales en el dominio del tiempo.}
+\begin{equation}
+	x(t) \cdot y(t) \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{2 \, \pi} X(j \, \omega) * Y(j \, \omega).
+\end{equation}
+
+\subsection{Traslación en frecuencia}
+
+Partiendo de la integral de síntesis, si multiplicamos una señal por una exponencial compleja $e^{j \, \omega_{0} t}$ (lo que altera su fase de forma lineal), equivale a un desplazamiento de su espectro en la frecuencia por $\omega_0$.
+\begin{equation}
+	e^{j \, \omega_{0} t} x(t) \stackrel{\mathcal{F}}{\longleftrightarrow} X(j(\omega - \omega_{0})) .
+\end{equation}
+Observemos la dualidad con la propiedad de desplazamiento temporal:
+\begin{equation}
+	x(t - t_{0}) \stackrel{\mathcal{F}}{\longleftrightarrow} e^{-j \, \omega \, t_{0}} X(j \, \omega) .
+\end{equation}
+
+\subsection{Relación de Parseval}
+
+La energía total de una señal puede calcularse tanto en el dominio del tiempo como integrando el cuadrado de su espectro en el dominio de la frecuencia:
+\begin{equation}
+	\int_{-\infty}^{\infty} |x(t)|^{2} \, dt = \frac{1}{2 \, \pi} \int_{-\infty}^{\infty} |X(j \, \omega)|^{2} \, d\omega .
+\end{equation}
+
+\subsection{Dualidad}
+
+La similitud estructural entre las ecuaciones de análisis y síntesis da lugar a la propiedad de dualidad. Si una señal $x(t)$ tiene un espectro $X(j\omega)$ (o $X(f)$), entonces si generamos una señal temporal con la "forma" de $X(t)$, su espectro tendrá la forma de $x(-\omega)$. En términos de la frecuencia $f$ en Hertz:
+\begin{align}
+	x(t) &\stackrel{\mathcal{F}}{\longleftrightarrow} X(f), \\
+	X(t) &\stackrel{\mathcal{F}}{\longleftrightarrow} x(-f).
+\end{align}
+
+\subsection{Integración}
+
+Dada una señal $x(t)$, su integral es la función $\int_{-\infty}^{t} x(v) \, dv$. Se puede demostrar que integrar en el tiempo equivale a dividir por $j\omega$ en frecuencia, añadiendo un término de impulso en $\omega=0$ que representa el valor medio o el área acumulada de la señal:
+\begin{equation}
+	\int_{-\infty}^{t} x(\tau) \, d\tau \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{j \, \omega} X(j \, \omega) + \pi X(0) \delta(\omega).
+\end{equation}
+
+Para probar esta propiedad, debemos encontrar primero la transformada del escalón $u(t)$.
+
+\subsubsection{Escalón $u(t)$}
+
+\begin{enumerate}
+	
+	\item Primero encontremos la transformada de una señal simétrica 
+	\begin{equation}
+		x(t) = -\frac{1}{2} + u(t).
+	\end{equation}
+	
+	\item Dado que la señal $x(t)$ es constante en $-\frac{1}{2}$ y $\frac{1}{2}$ excepto por un salto de amplitud $1$ en $t=0$, la derivada de $x(t)$ es igual al impulso unitario $\delta(t)$.
+	Entonces, por la propiedad de la derivada, $j\omega X(j\omega) = 1$, por lo que la transformada de $x(t)$ debe ser:
+	\begin{equation}
+		-\frac{1}{2} + u(t) \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{j \omega}. \label{fourierintegraluno}
+	\end{equation}
+	
+	\item Recordemos que la transformada de Fourier de una constante $K$ es $2\pi K \delta(\omega)$, por ende la de la señal constante $\frac{1}{2}$ es $\pi \delta(\omega)$. Despejando $u(t)$ de la Ec. (\ref{fourierintegraluno}) y empleando la propiedad de linealidad, obtenemos finalmente:
+	\begin{equation}
+		u(t) \stackrel{\mathcal{F}}{\longleftrightarrow} \pi \delta(\omega) + \frac{1}{j \omega}.
+	\end{equation}
+	
+\end{enumerate}
+
+\subsubsection{Integral}
+
+\begin{enumerate}
+	
+	\item La integral de $x(t)$ puede ser expresada como la convolución con un escalón:
+	\begin{equation}
+		\int_{-\infty}^{t} x(v) \, dv = x(t) * u(t).
+	\end{equation}
+	Entonces, por la propiedad de la convolución, la transformada de Fourier de la integral es la multiplicación de los espectros: $X(j\omega) \cdot U(j\omega)$.
+	\item Por lo tanto:
+	\begin{equation}
+		\int_{-\infty}^{t} x(\tau) \, d\tau \stackrel{\mathcal{F}}{\longleftrightarrow} X(j \, \omega) \left( \frac{1}{j \, \omega} + \pi \delta(\omega) \right) = \frac{X(j\omega)}{j \omega} + \pi X(0) \delta(\omega).
+	\end{equation}
+\end{enumerate}

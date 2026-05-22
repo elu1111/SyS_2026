@@ -1,0 +1,928 @@
+\chapter{Sistemas (y se\~{n}ales)}
+
+\section{Introducci\'{o}n}
+
+\subsection{Definiciones}
+
+\begin{enumerate}
+\item Las se\~{n}ales son magnitudes naturales variables portadoras
+  de informaci\'{o}n entre sistemas, representadas por funciones de
+  variables independientes.
+
+\item Los sistemas son conjuntos de partes que interact\'{u}an entre
+  si, con un prop\'{o}sito com\'{u}n.
+
+\item Los sistemas reciben se\~{n}ales de entrada para entregar
+  se\~{n}ales de salida.
+
+\item Sistema de tiempo continuo es aquel que recibe, procesa y
+  entrega solamente se\~{n}ales de tiempo continuo.
+
+\item Sistema de tiempo discreto es aquel que recibe, procesa y entrega
+  solamente se\~{n}ales de tiempo discreto.
+
+\item Sistema h\'{\i}brido es aquel que recibe, procesa y entrega se\~{n}ales
+  de tiempo continuo y discreto.
+
+\item Los sistemas pueden representarse mediante relaciones entre las
+  se\~{n}ales de entrada y salida.
+
+\item En el caso de sistemas de tiempo continuo, simbolizados
+    \begin{equation}
+      x(t) 
+      \begin{array}{l}
+        S               \\ 
+        \rightarrow
+      \end{array}
+      y(t),
+    \end{equation}
+    podemos emplear los siguientes operadores matem\'{a}ticos para describirlos
+    \begin{enumerate}
+    \item Ecuaciones algebraicas
+      \begin{equation}
+        F(t, x(t), y(t)) = 0,
+      \end{equation}
+      donde $x(t)$ es la entrada e $y(t)$ es la salida del sistema. Por ejemplo,
+      \begin{equation}
+         y(t) - x(t) \, cos(2 \, t) = 0.
+      \end{equation}
+                                
+    \item Ecuaciones diferenciales donde $x(t)$ es la entrada e $y(t)$ es la salida del sistema. Por ejemplo,
+      \begin{equation}
+        \frac{d y(t)}{dt} + 2 \, y(t) - x(t) = 0.
+      \end{equation}
+    \end{enumerate}
+        
+  \item En el caso de sistemas de tiempo discreto, simbolizados
+    \begin{equation}
+      x\left[ n\right] 
+      \begin{array}{l}
+        S               \\ 
+        \rightarrow
+      \end{array}
+      y\left[ n\right] ,
+    \end{equation}
+    podemos emplear los siguientes operadores matem\'{a}ticos para describirlos
+    \begin{enumerate}
+    \item Ecuaciones algebraicas
+      donde $x[n]$ es la entrada e $y[n]$ es la salida del sistema. Por ejemplo,
+      \begin{equation}
+         y[n] - x[n] \, 2^{-n} = 0.
+      \end{equation}
+                                
+    \item Ecuaciones de diferencias finitas donde $x[n]$ es la entrada e $y[n]$ es la salida del sistema. Por ejemplo
+      \begin{equation}
+          y[n] - x[n] + x[n-1] - \frac{x[n-1]}{2} - y[n-1] - 2 \, y[n-2] + 4 \, y[n-3] = 0.
+      \end{equation}
+    \end{enumerate}
+
+\item Las descripciones de sistemas, ya sean ecuaciones algebraicas,
+  ecuaciones diferenciales, o de diferencias son modelos
+  matem\'{a}ticos del sistema, y los podemos usar para an\'{a}lisis y
+  dise\~{n}o.
+
+\end{enumerate}
+
+\subsection{Ejemplos}
+
+\subsubsection{Divisor resistivo de tensi\'{o}n}
+Supongamos que tenemos un divisor resistivo de tensi\'{o}n donde la
+relaci\'{o}n entre la tensi\'{o}n de entrada $v_{e} \left( t \right)$
+y salida $v_{s} \left( t \right)$ es la ecuaci\'{o}n
+\begin{equation}
+  V_{s}\left( t \right) = \frac{R_{2}}{R_{1} + R_{2}} \, V_{e}\left( t \right).      \label{divires}
+\end{equation}
+Esta es una ecuaci\'{o}n algebraica de tiempo continuo.  Ver Figura
+(\ref{circuitoeps})
+
+\subsubsection{Circuito RC Serie}
+Supongamos que tenemos un circuito RC serie descripto por la
+ecuaci\'{o}n diferencial
+\begin{equation}
+  \frac{dv_{c}\left( t\right) }{dt}+\frac{1}{R \, C} \, v_{c}\left( t\right) =
+  \frac{1}{R \, C} \, v_{s}\left( t\right) . \label{rcserie}
+\end{equation}
+donde
+\begin{enumerate}
+\item $v_{c}(t)$ tensi\'{o}n en el capacitor,
+\item $v_{s}\left( t\right) $ tensi\'{o}n en la fuente,
+\item $R$ valor de la resistencia,
+\item $C$ valor del capacitor.
+\end{enumerate}
+Ver Figura (\ref{circuitoeps}).
+
+\subsubsection{Un negocio}
+Supongamos que el due\~{n}o de un negocio repone todos los d\'{\i}as
+la mercader\'{\i}a.  La ecuaci\'{o}n que describe la relaci\'{o}n
+entre la cantidad de mercader\'{\i}a que entra en el dep\'{o}sito y el
+dinero necesario para comprarla es
+\begin{equation}
+  t[n] = p \, (m - x[n]).
+\end{equation}
+donde
+\begin{enumerate}
+\item $x[n]$ es la cantidad de mercader\'{\i}a en el dep\'{o}sito,
+\item $m$ la cantidad m\'{a}xima de mercader\'{\i}a que puede tener
+  guardada,
+\item $p$ el precio unitario,
+\item $t[n]$ el pago por la compra del d\'{\i}a $n$.
+\end{enumerate}
+Esta es una ecuaci\'{o}n algebraica de tiempo discreto.
+
+\subsubsection{Cuenta bancaria}
+Supongamos que tenemos una cuenta bancaria en la que obtenemos cierto
+inter\'{e}s mensual por mantener cierto dep\'{o}sito de dinero.  La
+ecuaci\'{o}n de diferencias que nos dice cuanto dinero tendremos el
+pr\'{o}ximo mes es
+\begin{equation}
+  y\left[n+1\right] = (1+c/100) \, y[n]+x[n],
+\end{equation}
+donde
+\begin{enumerate}
+\item $y[n+1]$ dinero en la cuenta el pr\'{o}ximo mes,
+\item $y[n]$ dinero en la cuenta este mes,
+\item $x[n]$ dinero depositado o extra\'{\i}do este mes,
+\item $c$ inter\'{e}s.
+\end{enumerate}
+Esta es una ecuaci\'{o}n de diferencias y por lo tanto, de tiempo
+discreto.
+
+\subsubsection{C\'{a}lculo de ra\'{\i}ces de polin\'{o}mios}
+Supongamos que tenemos que calcular \textbf{una} ra\'{\i}z del
+polin\'{o}mio
+\begin{equation}
+  Q(x) = 0.
+\end{equation}
+Para obtener \textbf{una} soluci\'{o}n podemos escribir la ecuaci\'{o}n de
+diferencias
+\begin{equation}
+  x_{k+1} = x_{k} - \left(\frac{Q(x)}{\frac{d Q(x)}{dx}}\right)_{x=x_{k}}.
+\end{equation}
+Si damos a $x_{0}$ un valor suficientemente cercano a \textbf{la}
+ra\'{\i}z buscada del polin\'{o}mio $Q(x)$, obtendremos una secuencia
+que converge r\'{a}pidamente. Por ejemplo, si consideramos el polinomio
+\begin{equation}
+Q(x) = x^{2} - 2 = 0, 
+\end{equation}
+calcularemos la raíz cuadrada de $2$. Por lo tanto, iteremos la ecuaci\'{o}n de diferencias
+\begin{equation}
+  x_{k+1} = \frac{2 + x^{2}_{k}}{2 x_{k}}, \qquad x_{0}   = 2,
+\end{equation}
+para obtener los primeros cinco valores de la secuencia
+\begin{equation}
+  \begin{array}{llllll}
+    2 & 1.5 & 1.41667 & 1.41422 & 1.41421 & ...
+  \end{array}
+\end{equation}
+que como vemos se acerca r\'{a}pidamente al resultado correcto.
+
+\section{Modelos}
+
+Necesitamos describir los sistemas con los que trabajamos para poder
+analizarlos, verificar sus propiedades, o para dise\~{n}ar nuevos
+sistemas. Como ya vimos, podemos usar ecuaciones diferenciales y
+ecuaciones de diferencias.
+
+\subsection{Ecuaciones diferenciales}
+
+Consideremos una ecuaci\'{o}n diferencial
+\begin{equation}
+  \frac{d^{N} y(t)}{dt^{N}} + 
+  \sum_{i=0}^{N-1} a_{i} \, \frac{d^{i} y(t)}{dt^{i}} = 
+  \sum_{j=0}^{M} b_{i} \, \frac{d^{j} x(t)}{dt^{j}},
+\end{equation}
+donde $x(t)$ es la entrada, $y(t)$ es la salida, y los coeficientes
+$a_{i}$ y $b_{j}$ son constantes reales, $N \geq 1$, $M \geq
+0$, $N > M$. Por ejemplo,
+\begin{equation}
+\frac{dy^{3}(t)}{dt} + 3 \, \frac{dy^{2}(t)}{dt^{2}} 
++ 2 \, \frac{dy(t)}{dt}
++ y(t) 
+= x(t).
+\end{equation}
+Las ecuaciones diferenciales pueden escribirse como un sistema de ecuaciones
+diferenciales de primer orden denominadas ecuaciones de estado empleando 
+variables de estado. 
+Una posible definici\'{o}n de las variables de estado es la siguiente
+\begin{eqnarray}
+  v_{1}   &=& y(t),                                               \\
+  v_{k+1} &=& \frac{dv_{k}}{dt} = \frac{d^{k}y}{dt^{k}},  \, 0 < k < N .
+\end{eqnarray}
+Con esta definici\'{o}n podemos escribir las ecuaciones de estado
+\begin{eqnarray}
+  \frac{dv_{k}}{dt} &=& v_{k+1},  \, 1 \leq k < N,  \\
+  \frac{dv_{N}}{dt} &=& G(t, x(t), v_{1}, v_{2},...,v_{N}).
+\end{eqnarray}
+Por ejemplo, para
+\begin{equation}
+\frac{dy^{3}(t)}{dt} + 3 \, \frac{dy^{2}(t)}{dt^{2}} 
++ 2 \, \frac{dy(t)}{dt}
++ y(t) 
+= x(t),
+\end{equation}
+definimos
+\begin{equation}
+v_{1} = y(t),
+\end{equation}
+\begin{equation}
+\frac{dv_{1}}{dt} = v_{2} = \frac{dy(t)}{dt},
+\end{equation}
+\begin{equation}
+\frac{dv_{2}}{dt} = v_{3} = \frac{dy^{2}(t)}{dt^{2}},
+\end{equation}
+\begin{equation}
+\frac{dv_{3}}{dt} = \frac{dy^{3}(t)}{dt^{3}} = -v_{1} - 2 \, v_{2} - 3 \, v_{3} + x(t).
+\end{equation}
+En forma matricial
+\begin{equation}
+\left[ \begin{array}{c}
+\frac{dv_{1}}{dt} \\
+\frac{dv_{2}}{dt} \\
+\frac{dv_{3}}{dt}
+\end{array} \right] 
+= \left[ \begin{array}{ccc}
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+-1 & -2 & -3
+\end{array} \right] \cdot
+\left[ \begin{array}{c}
+v_{1}\\
+v_{2}\\
+v_{3}
+\end{array} \right]
++
+\left[ \begin{array}{c}
+0 \\
+0 \\
+1
+\end{array} \right] \, x(t).
+\end{equation}
+Las principales razones para emplear ecuaciones de estado son las
+siguientes:
+\begin{enumerate}
+        
+\item La teor\'{\i}a de ecuaciones diferenciales en esta notaci\'{o}n
+  permite trabajar con sistemas de varias entradas y varias salidas.
+        
+\item Es muy sencillo programar computadoras para trabajar con esta
+  notaci\'{o}n.
+        
+\item Esta notaci\'{o}n permite realizar simulaciones por computadora
+  de grandes sistemas con muchas entradas y muchas salidas.
+\end{enumerate}
+
+\subsection{Ecuaciones de diferencias}
+
+Consideremos una ecuaci\'{o}n de diferencias
+\begin{equation}
+  F(n, x[n], y[n-1],..., y[n-M+1]) = y[n]. 
+\end{equation}
+donde $x[n]$ es la entrada, $y[n]$ es la salida, y $M > 1$.
+Por ejemplo
+\begin{equation}
+y[n+1] + \frac{1}{2} \, y[n] + \frac{1}{4} \, y[n-1] + \frac{1}{8} \, y[n-2] - x[n] = 0.
+\end{equation}
+Las ecuaciones de diferencias pueden
+escribirse como un sistema de ecuaciones de diferencias de primer orden
+denominadas ecuaciones de estado. Una posible definici\'{o}n de las
+variables de estado es
+\begin{eqnarray}
+  v_{1}[n]   &=& y[n],                                               \\
+  v_{k+1}[n] &=& v_{k}[n-1] = y[n-k],  0 < k < M .
+\end{eqnarray}
+Con esta definici\'{o}n podemos escribir las ecuaciones de estado
+\begin{eqnarray}
+  v_{k}[n+1] &=& v_{k+1}[n],  1 \leq k < M,  \\
+  v_{M}[n+1] &=& G(n, x[n], v_{1}[n], v_{2}[n],...,v_{M}[n]).
+\end{eqnarray}
+Por ejemplo, considerando la ecuación de diferencias
+\begin{equation}
+y[n+1] + \frac{1}{2} \, y[n] + \frac{1}{4} \, y[n-1] + \frac{1}{8} \, y[n-2] - x[n] = 0,
+\end{equation}
+podemos definir las variables de estado
+\begin{equation}
+v_{1}[n] = y[n-2],
+\end{equation}
+\begin{equation}
+v_{2}[n] = y[n-1] = v_{1}[n+1]
+\end{equation}
+\begin{equation}
+v_{3}[n] = y[n] = v_{2}[n+1],
+\end{equation}
+\begin{equation}
+v_{3}[n+1] = y[n+1] = - \frac{1}{2} \, v_{3}[n] - \frac{1}{4} \, v_{2}[n] - \frac{1}{8} \, v_{1}[n] + x[n].
+\end{equation}
+En forma matricial
+\begin{equation}
+\left[ \begin{array}{c}
+v_{1}[n+1] \\
+v_{2}[n+1] \\
+v_{3}[n+1]
+\end{array} \right] 
+= \left[ \begin{array}{ccc}
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+-\frac{1}{8} & -\frac{1}{4} & -\frac{1}{2}
+\end{array} \right] \cdot
+\left[ \begin{array}{c}
+v_{1}[n]\\
+v_{2}[n]\\
+v_{3}[n]
+\end{array} \right]
++
+\left[ \begin{array}{c}
+0 \\
+0 \\
+1
+\end{array} \right] \, x[n].
+\end{equation}
+
+\subsection{De ecuación diferencial a ecuación de diferencias}
+
+\subsubsection{Aproximando la derivada, hacia adelante}
+
+Sabemos que por definición de derivada
+\begin{equation}
+ \frac{dy}{dt} = \begin{array}{c}
+                  Lim \\
+                  \Delta \rightarrow 0
+                 \end{array}
+                 \frac{y(t+\Delta) - y(t)}{\Delta}.
+\end{equation}
+Entonces, si cambiamos el límite por un $\Delta$ pequeño, podemos escribir
+\begin{equation}
+ \frac{dy}{dt} \approx \frac{y[n+1] - y[n]}{\Delta}.
+\end{equation}
+Entonces, si tenemos la ecuación diferencial
+\begin{equation}
+ \frac{dy(t)}{dt} + 2 \, y(t) = x(t),
+\end{equation}
+resulta la ecuación de diferencias
+\begin{equation}
+ \frac{y[n+1] - y[n]}{\Delta} + 2 \, y[n] = x[n],
+\end{equation}
+o
+\begin{equation}
+(y[n+1] - y[n]) + 2 \,  \Delta \, y[n] = \Delta \, x[n],
+\end{equation}
+y finalmente
+\begin{equation}
+y[n+1] + (2 \, \times \Delta - 1) \, y[n] = \Delta \, x[n].
+\end{equation}
+
+\subsubsection{Aproximando la derivada, hacia atrás}
+
+Podemos cambiar levemente la definición de derivada
+\begin{equation}
+ \frac{dy}{dt} = \begin{array}{c}
+                  Lim \\
+                  \Delta \rightarrow 0
+                 \end{array}
+                 \frac{y(t) - y(t-\Delta)}{\Delta}.
+\end{equation}
+Entonces, si cambiamos el límite por un $\Delta$ pequeño, podemos escribir
+\begin{equation}
+ \frac{dy}{dt} \approx \frac{y[n] - y[n-1]}{\Delta}.
+\end{equation}
+Entonces, si tenemos la ecuación diferencial
+\begin{equation}
+ \frac{dy(t)}{dt} + 2 \, y(t) = x(t),
+\end{equation}
+resulta la ecuación de diferencias
+\begin{equation}
+ \frac{y[n] - y[n-1]}{\Delta} + 2 \, y[n] = x[n],
+\end{equation}
+o
+\begin{equation}
+(y[n] - y[n-1]) + 2 \,  \Delta \, y[n] = \Delta \, x[n],
+\end{equation}
+y finalmente
+\begin{equation}
+(1 + 2 \, \times \Delta) \, y[n] - y[n-1] = \Delta \, x[n].
+\end{equation}
+
+\subsubsection{Otra aproximación de derivada}
+Otra forma de definir derivada es
+\begin{equation}
+ \frac{dy}{dt} = \begin{array}{c}
+                  Lim \\
+                  \Delta \rightarrow 0
+                 \end{array}
+                 \frac{y(t+\Delta) - y(t-\Delta)}{2 \, \Delta}.
+\end{equation}
+Entonces podemos aproximar, para un $\Delta$ pequeño
+\begin{equation}
+ \frac{dy}{dt} \approx
+                 \frac{y(t+\Delta) - y(t-\Delta)}{2 \, \Delta}.
+\end{equation}
+Entonces, si tenemos la ecuación diferencial
+\begin{equation}
+ \frac{dy(t)}{dt} + 2 \, y(t) = x(t),
+\end{equation}
+resulta la ecuación de diferencias
+\begin{equation}
+ \frac{y[n+1] - y[n-1]}{2 \, \Delta} + 2 \, y[n] = x[n],
+\end{equation}
+o
+\begin{equation}
+(y[n+1] - y[n-1]) + 4 \, \Delta \, y[n] = 2 \, \Delta \, x[n],
+\end{equation}
+y finalmente
+\begin{equation}
+y[n+1] + 4 \, \Delta \, y[n] - y[n-1] = 2 \, \Delta \, x[n].
+\end{equation}
+
+
+\section{Propiedades de sistemas}
+
+Vamos a establecer un vocabulario b\'{a}sico para estudiar distintas
+caracter\'{\i}sticas de sistemas.
+
+\subsection{Sistemas sin memoria o est\'{a}ticos}
+
+Los sistemas sin memoria o est\'{a}ticos son aquellos en los que la
+salida actual depende \'{u}nicamente de la entrada actual.
+
+\begin{equation}
+  y\left( t\right) = 2 \, x\left(t\right) ,
+\end{equation}
+\begin{equation}
+  y[n]=(x[n])^{3} + 4 \, x[n].
+\end{equation}
+
+\subsection{Sistemas con memoria o din\'{a}micos}
+
+Los sistemas con memoria o din\'{a}micos son aquellos en los que la
+salida actual depende de entradas de un momento distinto al actual.
+Por ejemplo,
+\begin{equation}
+ \frac{dy(t)}{dt} + a \, y(t) = x(t),
+\end{equation}
+\begin{equation}
+ \int_{t=0}^{T} x(t) \, dt = y(t),
+\end{equation}
+\begin{equation}
+  y(t)=x(t)-x(t-\tau ),
+\end{equation}
+\begin{equation}
+  y\left[ n\right] =\sum_{k=0}^{2}x[n-k]=x[n]+x[n-1]+x[n-2].
+\end{equation}
+
+\subsection{Sistemas inversos}
+
+Un sistema $S$ tiene un sistema inverso $S^{-1}$ si su composici\'{o}n
+es tal que
+\begin{equation}
+  x\left( t\right) =S^{-1}\left( S\left( x\left( t\right) \right) \right) ,
+\end{equation}
+\begin{equation}
+  x\left[ n\right] =S^{-1}\left( S\left( x\left[ n\right] \right) \right) ,
+\end{equation}
+
+Tengamos en cuenta que un sistema puede no tener sistema inverso. Por
+ejemplo
+\begin{equation}
+  y(t)=\left( x(t)\right) ^{2}.
+\end{equation}
+
+\subsection{Sistemas causales}
+
+Un sistema es causal o no anticipativo si su salida no depende de
+entradas futuras. Por ejemplo
+\begin{equation}
+  y\left( t\right) =ax\left( t\right),
+\end{equation}
+\begin{equation}
+  y\left[ n\right] =x\left[ n-1\right] +x\left[ n-2\right] .
+\end{equation}
+Todos los sistemas sin memoria son causales.
+
+\subsection{Sistemas no causales}
+
+Un sistema es no causal o anticipativo si su salida depende de
+entradas futuras. Por ejemplo, consideremos la ecuaci\'{o}n
+\begin{equation}
+  y\left[ n\right] =\frac{1}{5} \, \sum_{k=-2}^{2}x\left[ n-k\right] .
+\end{equation}
+Calculemos la salidad para $y[2]$. Expandiendo la sumatoria obtenemos
+\begin{equation}
+  y[2] = \frac{1}{5} \, \left( x[2-(-2)] + x[2-(-1)] + x[2-(0)] + x[2-(1)] + x[2-(2)] \right).
+\end{equation}
+Simplificando, resulta
+\begin{equation}
+  y[2] = \frac{1}{5} \left( x[4] + x[3] + x[2] + x[1] + x[0] \right).
+\end{equation}
+Como podemos ver, para calcular $y[2]$ necesitamos conocer las
+entradas futuras $x[4]$ y $x[3]$. Por lo tanto, el sistema es no causal.
+
+\subsection{Sistemas din\'{a}micos aut\'{o}nomos}
+
+Un sistema din\'{a}mico es aut\'{o}nomo si
+\begin{itemize}
+\item Su ecuaci\'{o}n diferencial es del tipo
+  \begin{equation}
+    F(y(t), \frac{dy}{dt},..., \frac{d^{M}y}{dt^{M}}) = 0,                  
+  \end{equation}
+  donde $y(t)$ es la salida del sistema.
+
+\item Su ecuaci\'{o}n de diferencias es del tipo
+  \begin{equation}
+    F(y[n], ..., y[n-M]) = 0, 
+  \end{equation}
+  donde $y[n]$ es la salida del sistema.
+\end{itemize}
+
+\subsection{Sistemas din\'{a}micos no aut\'{o}nomos}
+
+Un sistema din\'{a}mico es no aut\'{o}nomo si
+\begin{itemize}
+\item Su ecuaci\'{o}n diferencial es del tipo
+  \begin{equation}
+    F(t, x(t), \frac{dx}{dt},..., \frac{d^{N}x}{dt^{N}}, y(t), \frac{dy}{dt},..., \frac{d^{M}y}{dt^{M}}) = 0,
+  \end{equation}
+  donde $x(t)$ es la entrada e $y(t)$ es la salida del sistema.
+
+\item Su ecuaci\'{o}n de diferencias es del tipo
+  \begin{equation}
+    F(n, x[n], ..., x[n-N], y[n], ..., y[n-M]) = 0, 
+  \end{equation}
+  donde $x[n]$ es la entrada e $y[n]$ es la salida del sistema.
+\end{itemize}
+
+\subsection{Linealidad homogénea}
+
+Una funci\'{o}n es lineal homogénea s\'{\i} y solo s\'{\i}
+\begin{equation}
+  f\left(a \, x_{1} + b \, x_{2}\right) = a \, f\left(x_{1}\right) + b \, f\left(x_{2}\right) .
+\end{equation}
+Por ejemplo,
+\begin{equation}
+  y = f(x) = m \, x,
+\end{equation}
+es una funci\'{o}n lineal, porque se cumple
+\begin{equation}
+  \begin{array}{ll}
+    y_{1} & = m \, x_{1}, \\ 
+    y_{2} & = m \, x_{2}, \\ 
+    a \, y_{1}+ b \, y_{2} & = a \, m \, x_{1} + b \, m \, x_{2} = 
+       m \, \left( a \, x_{1}+ b \, x_{2}\right) .
+  \end{array}
+\end{equation}
+En cambio,
+\begin{equation}
+  y = f(x) = m \, x + 1,
+\end{equation}
+no es una funci\'{o}n lineal como podemos verificar
+\begin{equation}
+  \begin{array}{ll}
+    y_{1} & = m \, x_{1}+1, \\ 
+    y_{2} & = m \, x_{2}+1, \\ 
+    a \, y_{1}+ b \, y_{2} & =
+      m \, \left( a\, x_{1}+ b \, x_{2}\right) +\left( a+b\right) \neq
+    m \, \left( a \, x_{1}+b \, x_{2}\right) +1.
+  \end{array}
+\end{equation}
+
+\subsection{Sistemas lineales}
+
+Se dice que un sistema $S$ es lineal si su respuesta para una entrada
+compuesta $a \, x_{1}+b \, x_{2}$ cumple con la siguiente propiedad,
+\begin{equation}
+  S\left( a \, x_{1}+ b\, x_{2}\right) =a \, S\left( x_{1}\right) +b \, S\left( x_{2}\right),
+\end{equation}
+conocida como principio de superposici\'{o}n.
+
+\subsection{Sistemas no lineales}
+
+Se dice que un sistema $f$ es no lineal si su respuesta para una
+entrada compuesta $a \, x_{1}+b \, x_{2}$ cumple con la siguiente propiedad,
+\begin{equation}
+  f\left( a \, x_{1}+b \, x_{2}\right) \neq a \, f\left( x_{1}\right) +b \, f\left( x_{2}\right) ,
+\end{equation}
+y por lo tanto, \textbf{NO} cumple con el principio de superposici\'{o}n.
+Por ejemplo, esta ecuación diferencial no es lineal
+\begin{equation}
+ \frac{dy}{dt} = y(t) \, (M - y(t)) + x(t).
+\end{equation}
+
+\subsection{Puntos de equilibrio}
+
+\begin{enumerate}
+
+\item Un sistema din\'{a}mico de tiempo continuo con ecuación de estado
+  \begin{equation}
+    \mathbf{\dot x} = f(\mathbf{x}), 
+  \end{equation}
+tiene un punto de equilibrio $\mathbf{x_{e}}$ si se satisface la siguiente
+  ecuaci\'{o}n
+  \begin{equation}
+    \mathbf{0} = f(\mathbf{x_{e}}).
+  \end{equation}
+        
+\item Un sistema din\'{a}mico de tiempo discreto con ecuaci\'{o}n de estados
+  \begin{equation}
+    \mathbf{x_{k+1}} = f(\mathbf{x_{k}}), 
+  \end{equation}
+  tiene un punto de
+  equilibrio $\mathbf{x_{e}}$ si se satisface la siguiente
+  ecuaci\'{o}n
+  \begin{equation}
+    \mathbf{x_{e}} = f(\mathbf{x_{e}}).
+  \end{equation}
+
+\end{enumerate}
+                
+\subsection{Sistemas din\'{a}micos estables}
+
+\begin{enumerate}
+\item \textbf{Sistemas no aut\'{o}nomos} (\textbf{B}ounded
+  \textbf{I}nput \textbf{B}ounded \textbf{O}utput) La salida permanece
+  acotada para entradas acotadas.
+
+\item \textbf{Sistemas aut\'{o}nomos} El sistema estable evoluciona
+  por si s\'{o}lo a un estado de equilibrio.
+\end{enumerate}
+
+\subsection{Sistemas din\'{a}micos inestables}
+
+Aquellos que no son estables. Apartados del equilibrio, se apartan
+a\'{u}n m\'{a}s de \'{e}l.
+
+\subsection{Sistemas invariantes en el tiempo}
+
+Un sistema invariante en el tiempo es aqu\'{e}l cuyas caracter\'{\i}sticas 
+y comportamiento est\'{a}n fijas en el tiempo. 
+
+Este tipo de sistemas para una entrada determinada generan la misma
+salida independientemente del momento.
+\begin{enumerate}
+\item La salida $y(t)$ para la entrada $x(t+t_{0})$ es independiente
+  del valor $t_{0}$.
+        
+\item la salida $y[n]$ para la entrada $x[n + n_{0}]$ es independiente
+  del valor $n_{0}$.
+\end{enumerate}
+
+\subsection{Sistemas variantes en el tiempo}
+
+
+Si un sistema no es invariante en el tiempo, entonces se dice que es
+variante.  En realidad, todos los sistemas f\'{\i}sicos \textbf{son}
+variantes, debido al deterioro natural impuesto por la
+termodin\'{a}mica. Lo que sucede es que con una escala de tiempo
+adecuada, el deterioro puede ignorarse.
+
+\subsection{Ejemplos}
+
+\subsubsection{Clasificaci\'{o}n}
+
+Supongamos un sistema definido por
+\begin{equation}
+  y(t)=g(t) \, x\left( t\right) .
+\end{equation}
+
+\textquestiondown Es lineal?  Si, como podemos ver en las siguientes
+ecuaciones
+\begin{eqnarray}
+  y(t) &=& g(t) \, \left( a \, x_{1}(t)+b \, x_{2}(t)\right) =a \, g(t) \, x_{1}(t)+b \, g(t) \, x_{2}(t),    \\
+  y(t) &=& a \, g(t) \, x_{1}(t)+b \, g(t) \, x_{2}(t)=a \, y_{1}(t)+b \, y_{2}(t).
+\end{eqnarray}
+
+\textquestiondown Es invariante en el tiempo?  No, como podemos ver en
+las siguientes ecuaciones
+\begin{eqnarray}
+  y_{1}\left( t\right) &=&g\left( t\right) \, x_{1}\left( t\right) 
+  \longleftrightarrow 
+  y_{1}\left( t-\tau \right) =g\left( t-\tau \right) \, x_{1}\left( t-\tau \right) , \\
+  y_{2}\left( t\right) &=&g\left( t\right) x_{1}\left( t-\tau \right) .
+\end{eqnarray}
+
+\textquestiondown Tiene memoria?  No, porque no necesitamos conocer
+otro valor que el de la entrada actual para calcular la salida, ni
+tampoco sus derivadas.
+
+\subsubsection{Un circuito el\'{e}ctrico}
+
+Supongamos un circuito el\'{e}ctrico con las siguientes magnitudes:
+corriente $i(t),$ tensi\'{o}n $v(t),$ resistencia $R,$ capacidad $C$,
+inductancia $L$.
+\begin{equation}
+  i\left( t\right) =
+  C\frac{dv\left( t\right) }{dt}+
+  \frac{v\left( t\right) }{R}+
+  \frac{1}{L}\int_{0}^{t}v\left( \tau \right) d\tau .             \label{rlc}
+\end{equation}
+Ver Figura (\ref{circuitoeps}).
+
+\textquestiondown Es lineal?  Si, porque las operaciones derivada e
+integral son lineales
+\begin{eqnarray}
+  \frac{d(a x(t) + b y(t)}{dt} &=& a \frac{dx}{dt} + b \frac{dy}{dt},     \\
+  \int a x(t) + b y(t) dt &=& a \int x(t) dt + b \int y(t) dt.
+\end{eqnarray}
+
+\textquestiondown Es invariante en el tiempo?  El sistema es
+invariante en el tiempo. \textquestiondown Porqu\'{e}?
+
+\textquestiondown Tiene memoria?  Si, por las operaciones derivada e
+integral.
+
+\subsubsection{Un sistema abstracto, tiempo continuo}
+
+El sistema
+\begin{equation}
+  y(t)=S\left( x\left( t\right) \right) =2x\left( t\right) ,
+\end{equation}
+es un sistema sin memoria o est\'{a}tico de tiempo continuo que tiene
+un sistema inverso
+\begin{equation}
+  S^{-1}\left( x\left( t\right) \right) =\frac{1}{2}x(t),
+\end{equation}
+
+\subsubsection{Otro sistema abstracto, tiempo discreto}
+
+El sistema
+\begin{equation}
+  y\left[ n\right] =\sum_{k=0}^{\infty }x[n-k],
+\end{equation}
+es un sistema con memoria o din\'{a}mico de tiempo discreto que tiene
+un sistema inverso
+\begin{equation}
+  x\left[ n\right] =y\left[ n\right] -y\left[ n-1\right] =
+  \left(\sum_{k=0}^{\infty }x[n-k]\right) -\left( \sum_{k=0}^{\infty}x[n-1-k]\right) .
+\end{equation}
+\begin{equation}
+  x\left[ n\right] =
+  x[n]+\left( \sum_{k=1}^{\infty }x[n-k]\right) -\left(\sum_{k=0}^{\infty }x[n-1-k]\right) .
+\end{equation}
+\begin{equation}
+  x\left[ n\right] =
+  x[n]+\left( \sum_{p=0}^{\infty }x[n-1-p]\right) -\left(\sum_{k=0}^{\infty }x[n-1-k]\right) .
+\end{equation}
+\begin{equation}
+  x\left[ n\right] =x[n].
+\end{equation}
+
+\begin{figure}
+  \centering
+  \includegraphics[totalheight=3.7in,trim=0 350 0
+  0,clip]{./graphics/circuitos.eps}
+  \caption{Distintos circuitos usados para plantear las ecua-ciones
+    (\ref{divires}), (\ref{rcserie}) y (\ref{rlc})}
+  \label{circuitoeps}
+\end{figure}
+
+\subsubsection{Sistema mec\'{a}nico}
+
+Supongamos un sistema mec\'{a}nico con las siguientes magnitudes: masa
+$M,$ constante de fricci\'{o}n $B,$ constante del resorte $K,$ fuerza
+externa $f(t),$ velocidad de la masa $v(t)$.
+\begin{equation}
+  f(t)=M\frac{dv\left( t\right) }{dt}+Bv\left( t\right) +K\int_{-\infty}^{t}v\left( \tau \right) d\tau .
+\end{equation}
+\begin{enumerate}
+
+\item \textquestiondown Es lineal?
+
+\item \textquestiondown Es invariante en el tiempo?
+
+\item \textquestiondown Tiene memoria?
+
+\end{enumerate}
+
+\subsubsection{Analog\'{\i}a entre diferentes sistemas}
+
+Compare las ecuaciones diferenciales de los sistemas:
+\begin{equation}
+  i\left( t\right) =
+  C\frac{dv\left( t\right) }{dt}+\frac{v\left( t\right) }{R}+
+  \frac{1}{L}\int_{-\infty }^{t}v\left( \tau \right) d\tau ,
+\end{equation}
+\begin{equation}
+  f(t)=
+  M\frac{dv\left( t\right) }{dt}+Bv\left( t\right) +K\int_{-\infty}^{t}v\left( \tau \right) d\tau .
+\end{equation}
+Estas ecuaciones diferenciales corresponden a distintos sistemas (uno
+el\'{e}ctrico, otro mec\'{a}nico), pero las dos tienen la misma forma.
+
+\section{Diagrama de bloques}
+
+\begin{enumerate}
+\item Es posible hacer descripciones de sistemas usando
+  \begin{enumerate}
+  \item bloques que representan los distintos componentes del sistema.
+  \item flechas que representan los flujos de se\~{n}al entre los
+    componentes (que salida se conecta a cada entrada).
+  \end{enumerate}
+                  
+\item Se pueden hacer diagramas de bloques del mismo sistema con
+  \'{e}nfasis en distintos aspectos:
+  \begin{enumerate}
+  \item Caja negra, con \'{e}nfasis en los conjuntos de entradas y
+    salidas (o interfases de entrada y salida). Vea la Fig.
+    (\ref{cajanegra}).
+        
+  \item Caja blanca, con \'{e}nfasis en las relaciones entre los
+    distintos componentes del sistema (o subsistemas). Vea la Fig.
+    (\ref{cajablanca}).
+        
+  \end{enumerate}
+  \begin{figure}
+    \centering
+    \includegraphics[height=4in,angle=-90]{./graphics/cajanegra.eps}
+    \caption{Sistema visto como caja negra, con \'{e}nfasis en las
+      interfaces de entrada y salida}
+    \label{cajanegra}
+  \end{figure}
+  \begin{figure}
+    \centering
+    \includegraphics[height=4in,angle=-90]{./graphics/cajablanca.eps}
+    \caption{Sistema visto como caja blanca, con \'{e}nfasis en los
+      subsistemas}
+    \label{cajablanca}
+  \end{figure}
+
+\item Existen varias formas de interconectar sistemas (Vea la Fig.
+  \ref{conectioeps})
+  \begin{enumerate}
+  \item Conexión serie
+        
+  \item Conexión paralelo
+                        
+  \item Retroalimentación
+        
+  \end{enumerate}
+  \begin{figure}
+    \centering
+    \includegraphics[width=4.5in]{./graphics/conectio.eps}
+    \caption{Interconecci\'{o}n de sistemas. El bloque circular con
+      dos signos $+$ en su interior es un sumador.}
+    \label{conectioeps}
+  \end{figure}
+
+\end{enumerate}
+
+\section{Ejemplos}
+
+\subsection{Planteo}
+
+Indique si los sistemas definidos por las siguientes relaciones entrada salida son lineales o no lineales
+\begin{enumerate}
+\item $y\left[ n+1\right] =\frac{1}{2}y\left[ n\right] +x\left[
+    n\right]$,
+
+\item $y\left[ n+1\right] =-\frac{1}{4}y\left[ n\right] +x\left[
+    n\right]$,
+
+\item $y\left[ n+1\right] =\left\{
+    \begin{array}{c}
+      \frac{1}{2}y\left[ n\right] +x\left[ n\right] , \\ 
+      -\frac{1}{4}y\left[ n\right] +x\left[ n\right] ,
+    \end{array}
+    \begin{array}{c}
+      y\left[ n\right] >\frac{1}{2}, \\ 
+      y\left[ n\right] \leq \frac{1}{2}.
+    \end{array}
+  \right. $
+\end{enumerate}
+
+\subsection{Solución}
+
+\begin{enumerate}
+	\item $y\left[ n+1\right] =\frac{1}{2}y\left[ n\right] +x\left[
+	n\right]$, Sistema lineal, ecuación de diferencias donde aparecen las señales multiplicadas por coeficientes constantes y sumadas.
+	
+	\item $y\left[ n+1\right] =-\frac{1}{4}y\left[ n\right] +x\left[
+	n\right]$, Sistema lineal, ecuación de diferencias donde aparecen las señales multiplicadas por coeficientes constantes y sumadas.
+	
+	\item $y\left[ n+1\right] =\left\{
+	\begin{array}{c}
+		\frac{1}{2}y\left[ n\right] +x\left[ n\right] , \\ 
+		-\frac{1}{4}y\left[ n\right] +x\left[ n\right] ,
+	\end{array}
+	\begin{array}{c}
+		y\left[ n\right] >\frac{1}{2}, \\ 
+		y\left[ n\right] \leq \frac{1}{2}.
+	\end{array}
+	\right. $ Sistema no lineal, o lineal a tramos. No cumple con el principio de superposición.
+\end{enumerate}
+
+\section{Para practicar}
+
+Escriba un programa que calcule la ra\'{\i}z c\'{u}bica de $10$ mediante una ecuaci\'{o}n de diferencias. Haga la verificaci\'{o}n correspondiente.
+
+Si planteamos
+\begin{equation}
+	p(x) = x^{3} - 10,
+\end{equation}
+podemos calcular la derivada
+\begin{equation}
+	\frac{dp(x)}{dx} = 3 \, x^{2}
+\end{equation}
+Entonces podemos escribir la ecuación de diferencias
+\begin{equation}
+	x[n+1] = x[n] - \frac{x[n]^{3} - 10}{3 \, x[n]^{2}},
+\end{equation}
+Supongamos $x[0] = 1$.
+
+

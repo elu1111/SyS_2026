@@ -1,0 +1,232 @@
+\chapter{Sistemas LIT y la convolución}
+
+\section{Introducción}
+
+Hemos visto que la suma de convolución 
+\begin{equation}
+	y[n] = \sum_{k=-\infty}^{\infty} x[k] \, h[n-k] = x[n] * h[n] ,
+\end{equation}
+define la respuesta $y$ de un sistema LIT para una entrada $x$ si conocemos la respuesta al impulso $h$. Por lo tanto, en este capítulo usaremos la convolución como herramienta para estudiar distintas propiedades de los sistemas LIT.
+
+\section{Propiedades de los sistemas LIT}
+
+\subsection{La propiedad conmutativa}
+
+El resultado de la convolución es independiente del ordenamiento de las señales, o en otras palabras, un sistema LIT de respuesta al impulso $h$ excitado con una entrada $x$ genera una salida similar al de un sistema LIT de respuesta al impulso $x$ excitado con una entrada $h$.
+
+Consideremos la operación de convolución:
+\begin{equation}
+	y[n] = \sum_{k=-\infty}^{\infty} x[k] \, h[n-k] = \sum_{k=-\infty}^{\infty} h[k] \, x[n-k].
+\end{equation}
+
+Realizamos un cambio de variable $m = n - k$ y por consecuencia definimos $k = n - m$ para obtener:
+\begin{equation}
+	y[n] = \sum_{k=-\infty}^{\infty} x[k] \, h[n-k] = \sum_{m=-\infty}^{\infty} x[n-m] \, h[m].
+\end{equation}
+
+\subsection{La propiedad distributiva}
+
+La salida de un sistema LIT cuya respuesta al impulso es $h_{a} + h_{b}$ para una entrada $x$ es similar a la suma de las salidas de dos sistemas de respuestas al impulso $h_{a}$ y $h_{b}$ frente a una entrada $x$.
+
+Probaremos la distributividad de la convolución discreta:
+\begin{align}
+	y[n] &= x[n] * \left( h_{a}[n] + h_{b}[n] \right) , \\
+	y[n] &= x[n] * h_{a}[n] + x[n] * h_{b}[n],
+\end{align}
+planteando:
+\begin{equation}
+	y[n] = \sum_{k=-\infty}^{\infty} x[k] \, \left( h_{a}[n-k] + h_{b}[n-k] \right).
+\end{equation}
+Dado que la multiplicación es distributiva respecto a la suma, obtenemos:
+\begin{equation}
+	y[n] = \sum_{k=-\infty}^{\infty} \left( x[k] \, h_{a}[n-k] + x[k] \, h_{b}[n-k] \right).
+\end{equation}
+Separando sumatorias:
+\begin{equation}
+	y[n] = \sum_{k=-\infty}^{\infty} \left( x[k] \, h_{a}[n-k] \right) + \sum_{k=-\infty}^{\infty} \left( x[k] \, h_{b}[n-k] \right) ,
+\end{equation}
+obtenemos:
+\begin{equation}
+	y[n] = x[n] * h_a[n] + x[n] * h_{b}[n] .
+\end{equation}
+
+\subsection{La propiedad asociativa}
+
+La operación de convolución es asociativa:
+\begin{align}
+	y[n] &= x[n] * \left( h_a[n] * h_{b}[n] \right) , \\
+	y[n] &= \left( x[n] * h_a[n] \right) * h_{b}[n] , \\
+	y[n] &= x[n] * h_a[n] * h_{b}[n].
+\end{align}
+
+Para probar la propiedad asociativa, planteamos las dos formas de hacer el cálculo. Primero consideremos:
+\begin{align}
+	y_{1}[n] &= \sum_{p=-\infty}^{\infty} x[p] \, h_{a}[n-p], \\
+	y[n] &= \sum_{q=-\infty}^{\infty} y_{1}[q] \, h_{b}[n-q].
+\end{align}
+Sustituyendo $y_1[q]$:
+\begin{equation}
+	y[n] = \sum_{q=-\infty}^{\infty} \left( \sum_{p=-\infty}^{\infty} x[p] \, h_{a}[q-p] \right) \, h_{b}[n-q],
+\end{equation}
+y reordenando:
+\begin{equation}
+	y[n] = \sum_{q=-\infty}^{\infty} \sum_{p=-\infty}^{\infty} x[p] \, h_{a}[q-p] \, h_{b}[n-q]. \label{eq:asoc1}
+\end{equation}
+
+Después consideramos el cálculo alternativo:
+\begin{align}
+	h[n] &= \sum_{r=-\infty}^{\infty} h_{a}[r] \, h_{b}[n-r], \\
+	y[n] &= \sum_{s=-\infty}^{\infty} x[s] \, h[n-s].
+\end{align}
+Sustituyendo $h[n-s]$:
+\begin{equation}
+	y[n] = \sum_{s=-\infty}^{\infty} x[s] \, \left( \sum_{r=-\infty}^{\infty} h_{a}[r] \, h_{b}[n - s - r] \right),
+\end{equation}
+y reordenando:
+\begin{equation}
+	y[n] = \sum_{s=-\infty}^{\infty} \sum_{r=-\infty}^{\infty} x[s] \, h_{a}[r] \, h_{b}[n - s - r]. \label{eq:asoc2}
+\end{equation}
+
+Comparando (\ref{eq:asoc1}) y (\ref{eq:asoc2}), y considerando los cambios de variable $p = s$ y $q - p = r$ (lo que implica $q = r + s$), vemos que:
+\begin{equation}
+	n - q = n - (r + s) = n - s - r, 
+\end{equation}
+por lo tanto, ambas expresiones son idénticas, demostrando la propiedad.
+
+\subsection{Preguntas}
+
+\begin{enumerate}
+	\item ¿Qué significado tiene la propiedad conmutativa de los sistemas lineales?
+	\item ¿Qué significado tiene la propiedad distributiva de los sistemas lineales?
+	\item ¿Qué significado tiene la propiedad asociativa de los sistemas lineales?
+	\item Dé algún ejemplo concreto de estas tres propiedades.
+\end{enumerate}
+
+\subsection{Sistemas LIT con y sin memoria}
+
+Un sistema no tiene memoria si su salida en cualquier momento depende solamente de la entrada de ese momento. Si un sistema no tiene memoria entonces debe ser $h[n]=0$ para todo $n \neq 0$, y por lo tanto:
+\begin{equation}
+	h[n] = K \, \delta[n] .
+\end{equation}
+Si un sistema tiene una respuesta al impulso $h[n]$ que es distinta de $0$ para $n \neq 0$, entonces el sistema tiene memoria.
+
+\subsection{Preguntas}
+
+\begin{enumerate}
+	\item ¿Conoce algún sistema físico que no tenga memoria?
+	\item ¿Conoce algún sistema físico que tenga memoria?
+\end{enumerate}
+
+\subsection{Sistemas LIT causales}
+
+Si $y[n_{0}]$ no depende de $x[n]$ para $n > n_{0}$, entonces un sistema LIT es causal. Entonces todos los valores $h[n]$ para $n < 0$ deben ser $0$ y por lo tanto en la suma de convolución podemos cambiar el límite superior:
+\begin{equation}
+	y[n] = \sum_{k=-\infty}^{n} x[k] \, h[n-k],
+\end{equation}
+porque $h[n-k] = 0$ cuando $n - k < 0$, es decir, cuando $k > n$.
+
+Además, si la entrada $x[n]$ comienza en $n = 0$ (es decir, $x[n]=0$ para $n<0$), podemos cambiar el límite inferior de la sumatoria:
+\begin{equation}
+	y[n] = \sum_{k=0}^{n} x[k] \, h[n-k].
+\end{equation}
+Esta fórmula significa que podemos calcular la salida de un sistema LIT causal con entrada causal de tiempo discreto con una cantidad finita de multiplicaciones y sumas.
+
+\subsection{Preguntas}
+
+Indicar si las siguientes afirmaciones son verdaderas o falsas, en el caso de un sistema lineal invariante en el tiempo:
+
+\begin{enumerate}
+	\item Si la entrada es nula para todo tiempo, entonces la salida es nula para todo tiempo.
+	\item Si la relación entre entrada y salida es $y[n] = x[n] \, \cos(n)$, entonces el sistema es LIT.
+	\item Si la relación entre entrada y salida es $y[n] = \sum_{k=0}^{n} x[k]$, entonces el sistema es LIT.
+\end{enumerate}
+
+\subsection{Sistemas LIT estables e inestables}
+
+\subsubsection{Estabilidad BIBO}
+
+El criterio de estabilidad \textbf{BIBO} (Bounded Input Bounded Output o entrada acotada, salida acotada) se puede expresar matemáticamente estableciendo que si la entrada está acotada por una constante $M_x < \infty$:
+\begin{equation}
+	|x[n]| \leq M_{x},
+\end{equation}
+entonces la salida debe estar acotada por una constante finita $M_y < \infty$:
+\begin{equation}
+	|y[n]| \leq M_{y}.
+\end{equation}
+
+Sustituyendo la suma de convolución y aplicando la desigualdad triangular (el valor absoluto de una suma es menor o igual a la suma de los valores absolutos), obtenemos:
+\begin{equation}
+	|y[n]| = \left| \sum_{k=-\infty}^{\infty} x[k] \, h[n-k] \right| \leq \sum_{k=-\infty}^{\infty} |x[k]| \, |h[n-k]|.
+\end{equation}
+Dado que $|x[k]| \leq M_x$ para todo $k$, podemos extraer la cota de la sumatoria:
+\begin{equation}
+	|y[n]| \leq M_{x} \sum_{k=-\infty}^{\infty} |h[n-k]|.
+\end{equation}
+Realizando el cambio de variable $m = n-k$, la sumatoria de $|h[n-k]|$ es idéntica a la sumatoria de $|h[m]|$. Para que la salida esté siempre acotada ($|y[n]| \leq M_{y} < \infty$), se debe cumplir que la suma de los valores absolutos de la respuesta al impulso sea finita:
+\begin{equation}
+	\sum_{m=-\infty}^{\infty} |h[m]| < \infty.
+\end{equation}
+A esto se lo conoce como una respuesta al impulso "absolutamente sumable".
+
+\subsection{Respuesta de un sistema LIT en tiempo discreto a una entrada exponencial compleja}
+
+\begin{enumerate}
+	\item Vamos a calcular la convolución de una entrada $x[n] = e^{j \, \omega \, n}$ con una respuesta al impulso $h[n]$.
+	\item Comenzamos escribiendo la fórmula alternativa de la suma de convolución:
+	\begin{equation}
+		y[n] = \sum_{k=-\infty}^{\infty} h[k] \, x[n-k].
+	\end{equation}
+	\item Sustituyendo $x[n - k] =  e^{j \, \omega \, (n-k)}$ obtenemos:
+	\begin{equation}
+		y[n] = \sum_{k=-\infty}^{\infty} h[k] \, e^{j \, \omega \, (n-k)} = \sum_{k=-\infty}^{\infty} h[k] \, e^{-j \, \omega \, k} \, e^{j \, \omega \, n}. \label{dt.eigenfunc.1}
+	\end{equation}
+	\item Viendo la ecuación (\ref{dt.eigenfunc.1}) podemos extraer el factor común $e^{j \, \omega \, n}$ de la sumatoria (ya que no depende de $k$) y escribir:
+	\begin{equation}
+		y[n] = \left(\sum_{k=-\infty}^{\infty} h[k] \, e^{-j \, \omega \, k}\right) \, e^{j \, \omega \, n}. \label{dt.eigenfunc.2}
+	\end{equation}
+	\item Viendo la ecuación (\ref{dt.eigenfunc.2}), podemos definir $H(e^{j \, \omega})$, la transformada de Fourier en tiempo discreto de $h[n]$:
+	\begin{equation}
+		H(e^{j \, \omega}) = \sum_{k=-\infty}^{\infty} h[k] \, e^{-j \, \omega \, k}. \label{dt.eigenfunc.3}
+	\end{equation}	 
+	\item Entonces resulta:
+	\begin{equation}
+		y[n] = H(e^{j \, \omega}) \, e^{j \, \omega \, n}.
+	\end{equation}
+	Se dice que las funciones de la forma $e^{j \, \omega \, n}$ son \textit{autofunciones} (o funciones propias) de los sistemas lineales invariantes en el tiempo, siendo $H(e^{j \, \omega})$ su autovalor correspondiente.
+\end{enumerate}  
+
+\subsection{Respuestas}
+
+Estas son las respuestas a las preguntas planteadas arriba:
+
+\begin{enumerate}
+	\item ¿Qué significado tiene la propiedad conmutativa de los sistemas lineales?
+	Un sistema LIT con respuesta al impulso $h[n]$ responde a una entrada $x[n]$ igual que un sistema LIT con respuesta al impulso $x[n]$ responde a una entrada $h[n]$. Además, cuando conectamos en serie dos sistemas LIT, no importa el orden en que se conecten: el conjunto de los dos sistemas va a responder igual ante cualquier entrada.
+	
+	\item ¿Qué significado tiene la propiedad distributiva de los sistemas lineales?
+	Podemos implementar un sistema LIT con respuesta al impulso $h_{1}[n] + h_{2}[n]$ conectando en paralelo dos sistemas LIT cuyas respectivas respuestas al impulso sean $h_{1}[n]$ y $h_{2}[n]$.
+	
+	\item ¿Qué significado tiene la propiedad asociativa de los sistemas lineales?
+	Cuando conectamos en cascada (serie) sistemas LIT, podemos agruparlos para formar nuevos sistemas LIT equivalentes sin alterar la salida final.
+	
+	\item ¿Conoce algún sistema físico que no tenga memoria?
+	Un cable o un divisor resistivo ideal.
+	
+	\item ¿Conoce algún sistema físico que tenga memoria?
+	Un tanque de agua (acumula o "recuerda" el agua que entra) o un capacitor en un circuito eléctrico.
+	
+	\item ¿La siguiente afirmación es verdadera o falsa? "Si la entrada es nula para todo tiempo, entonces la salida es nula para todo tiempo."
+	\textbf{Verdadero}, pues si la entrada es nula, todos los productos en la suma de convolución son nulos.
+	
+	\item ¿La siguiente afirmación es verdadera o falsa? "Si la relación entre entrada y salida es $y[n] = x[n] \, \cos(n)$, entonces el sistema es LIT."
+	\textbf{Falso}, porque el sistema varía en el tiempo. La respuesta a un impulso depende del instante de tiempo en el que este ocurra:
+	\begin{equation}
+		y[n] = \delta[n - n_{0}] \, \cos(n_{0}).
+	\end{equation}
+	
+	\item ¿La siguiente afirmación es verdadera o falsa? Si la relación entre entrada y salida es $y[n] = \sum_{k=0}^{n} x[k]$, entonces el sistema es LIT.
+	\textbf{Verdadero}, pues dicha relación puede escribirse como la convolución de la entrada con un escalón unitario $h[n] = u[n]$:
+	\begin{equation}
+		y[n] = \sum_{k=-\infty}^{\infty} x[k] \, u[k] \, u[n-k].
+	\end{equation}
+\end{enumerate}

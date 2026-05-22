@@ -1,0 +1,455 @@
+\chapter{Software para modelización, análisis, procesamiento y síntesis de señales con Python}
+
+\section{Introducción a Python, NumPy y Matplotlib}
+
+Python es un lenguaje de programación de propósito general, pero al equiparlo con librerías científicas como \texttt{NumPy} (para cálculo numérico y arreglos) y \texttt{Matplotlib} (para graficación), se convierte en un entorno inmensamente poderoso, similar a Matlab/Octave, pero de código completamente abierto.
+
+En este apunte, mostramos algunas de las operaciones y comandos básicos para la operación interactiva utilizando Python.
+
+\subsection{La línea de comandos y el entorno}
+
+\begin{enumerate}
+	
+	\item Hoy en día, la forma más común de interactuar con Python para cálculo científico es a través de \textbf{Jupyter Notebooks} o consolas interactivas como \textbf{IPython}. En estos entornos, escribimos el código en "celdas" o líneas de comandos marcadas con \verb-In []:-.
+	
+	\item Para tener acceso a las funciones matemáticas y gráficos, siempre comenzaremos nuestros scripts importando las librerías fundamentales:
+	\begin{verbatim}
+		import numpy as np
+		import matplotlib.pyplot as plt
+	\end{verbatim}
+	
+	\item Para probar operaciones básicas podemos escribir:
+	\begin{verbatim}
+		2 + 2
+		3 - 5
+		3 / 1.4
+		2 * np.pi / 4
+		(1 + 2j) / (1 - 2j)
+	\end{verbatim}
+	\textbf{Nota:} En Python, la unidad imaginaria se representa con \texttt{j} en lugar de \texttt{i}, y siempre debe llevar un número delante (ej. \texttt{1j} en lugar de solo \texttt{j}).
+	
+	\item Si utilizamos un entorno tradicional, podemos guardar nuestras órdenes en un archivo de texto con extensión \texttt{.py} (un "script") y ejecutarlo completo desde la terminal con \texttt{python mi\_script.py}.
+\end{enumerate}
+
+\subsection{El sistema de ayuda}
+
+\begin{enumerate}
+	\item Para ver cómo se usa un comando en Python, utilizamos la función integrada \texttt{help()}:
+	\begin{verbatim}
+		help(np.cos)
+	\end{verbatim}
+	\item Si utilizamos IPython o Jupyter, podemos colocar un signo de interrogación al final de la función para abrir una ventana de ayuda rápida:
+	\begin{verbatim}
+		np.cos?
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Valores escalares}
+
+\begin{enumerate}
+	\item Como hemos visto, operamos con números reales y complejos, también llamados escalares.
+	\item Probemos los siguientes comandos:
+	\begin{verbatim}
+		(1 + 2j) * (1 - 2j)
+		45 * (56 + 1j) - 34 * (16 - 32j)
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Valores matriciales o arreglos}
+
+\begin{enumerate}
+	\item NumPy trabaja con un objeto fundamental llamado \texttt{ndarray} (n-dimensional array). Para crear vectores y matrices usamos la función \texttt{np.array()}.
+	\item Podemos crear un vector fila escribiendo:
+	\begin{verbatim}
+		c = np.array([1 + 2j, 1 - 3j])
+	\end{verbatim}
+	
+	\item Podemos crear un vector columna anidando listas (una lista de listas, donde cada sublista es una fila):
+	\begin{verbatim}
+		e = np.array([[1 + 2j], 
+		[1 - 3j]])
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Metáfora del entorno de trabajo}
+
+Podemos suponer, a modo de metáfora, que disponemos de un pizarrón donde escribimos las cuentas que vamos haciendo, línea por línea.
+
+\subsection{Variables}
+
+\begin{enumerate}
+	
+	\item Python permite asignar nombres a los diferentes valores mediante el operador \texttt{=}. El símbolo \texttt{\#} se usa para indicar que aquello escrito a su derecha es un comentario y no será ejecutado por el intérprete.
+	
+	\item Pruebe ingresar los siguientes valores:
+	\begin{verbatim}
+		a = 5                  # escalar real
+		b = 5 + 10j            # escalar complejo
+		c = np.array([1, 2, 3]) # vector de 1D
+		d = np.array([[1], [2], [3]]) # vector columna (matriz 3x1)
+		f = np.array([[1, 2, 3], 
+		[4, 5, 6], 
+		[7, 8, 9]]) # una matriz 3 x 3
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Operaciones con números complejos}
+
+\begin{enumerate}
+	\item A continuación vemos algunas de las operaciones que pueden realizarse con números complejos en NumPy. Pruebe ingresar:
+	\begin{verbatim}
+		x = 3 + 4j
+		np.real(x)  # 3.0
+		np.imag(x)  # 4.0
+		np.conj(x)  # 3.0 - 4.0j
+		np.abs(x)   # 5.0 (Módulo)
+		np.angle(x) # 0.9273 (Fase en radianes)
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Raíces y coeficientes de un polinomio}
+
+\begin{enumerate}
+	\item Supongamos que tenemos un polinomio general:
+	\begin{equation}
+		b_{n}x^{n}+b_{n-1}x^{n-1}+...+b_{0}=0.
+	\end{equation}
+	Para hallar las raíces del polinomio podemos colocar sus coeficientes en un arreglo ordenado (de mayor a menor grado) y usar la función \texttt{np.roots}:
+	\begin{verbatim}
+		p = [bn, ..., b0]
+		np.roots(p)
+	\end{verbatim}
+	
+	\item Supongamos que tenemos que hallar las raíces del polinomio $x^{2}+2x+3=0$. Escribamos entonces:
+	\begin{verbatim}
+		p = [1, 2, 3]
+		np.roots(p)
+	\end{verbatim}
+	
+	\item Supongamos ahora que conocemos las raíces y necesitamos hallar los coeficientes del polinomio originario. Podemos usar la función \texttt{np.poly}:
+	\begin{verbatim}
+		r = [-1.0, 2.7, -3.1, -3.1]
+		np.poly(r)
+	\end{verbatim}
+	
+	\item ¿Cuál le parece que es el resultado de la siguiente orden?
+	\begin{verbatim}
+		np.poly(np.roots([1, 2, 3, 4, 5]))
+	\end{verbatim}
+	
+\end{enumerate}
+
+\subsection{Generación de vectores y matrices}
+
+\begin{enumerate}
+	\item NumPy permite la generación de secuencias de valores. La función equivalente al operador dos puntos (\texttt{:}) es \texttt{np.arange(inicio, fin, paso)}.
+	\item \textbf{¡CUIDADO! DIFERENCIA CRÍTICA:} En Python, el valor de \texttt{fin} \textbf{NUNCA} se incluye en el arreglo resultante.
+	\begin{verbatim}
+		t = np.arange(1, 2.1, 0.1)
+	\end{verbatim}
+	Se genera el vector \texttt{[1.0, 1.1, ..., 2.0]}. Tuvimos que usar \texttt{2.1} como fin para que incluyera el \texttt{2.0}.
+	
+	\item Una forma mucho más segura para números con decimales es \texttt{np.linspace(inicio, fin, cantidad\_de\_puntos)}, que \textbf{sí} incluye el final:
+	\begin{verbatim}
+		t = np.linspace(1, 2, 11) # 11 puntos entre 1 y 2
+	\end{verbatim}
+	
+	\item Para generar matrices llenas de ceros o unos podemos usar las funciones \texttt{np.zeros} y \texttt{np.ones}, pasándoles una tupla con las dimensiones:
+	\begin{verbatim}
+		Z = np.zeros((3, 3))
+		U = np.ones((2, 4))
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Operaciones sobre vectores y matrices, primera parte}
+
+\begin{enumerate}
+	\item Para averiguar las dimensiones de un arreglo en NumPy usamos el atributo \texttt{.shape}:
+	\begin{verbatim}
+		t = np.linspace(1, 2, 11)
+		print(t.shape) # Imprime (11,)
+	\end{verbatim}
+	
+	\item Las operaciones algebraicas de suma, resta y multiplicación por escalares se realizan elemento a elemento de forma nativa:
+	\begin{verbatim}
+		t + 2
+		t - 2
+		t * 2
+		np.cos(t)
+		np.sin(2 * t - 1)
+	\end{verbatim}
+	
+	\item \textbf{¡CUIDADO! OTRA DIFERENCIA CRÍTICA:} A diferencia de otros lenguajes matemáticos, en NumPy el operador de multiplicación \texttt{*} y exponenciación \texttt{**} actúan \textbf{elemento a elemento por defecto}. No necesita poner un punto (\texttt{.}).
+	\begin{verbatim}
+		t * t   # Multiplicación elemento a elemento
+		t ** 2  # Eleva al cuadrado cada elemento
+	\end{verbatim}
+	
+	\item Si desea realizar un \textbf{producto matricial} verdadero (álgebra lineal), debe usar el operador \texttt{@} o la función \texttt{np.dot()}:
+	\begin{verbatim}
+		A = np.array([[1, 2], [3, 4]])
+		B = np.array([[5, 6], [7, 8]])
+		
+		C = A * B  # Producto elemento a elemento
+		D = A @ B  # PRODUCTO MATRICIAL REAL
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Operaciones sobre vectores y matrices, indexación y extracción}
+
+\begin{enumerate}
+	\item Ingresemos un vector:
+	\begin{verbatim}
+		v = np.array([10, 20, 30, 40, 50, 60, 70])
+	\end{verbatim}
+	
+	\item \textbf{¡ÍNDICES DESDE CERO!:} En Python, el primer elemento está en la posición \texttt{0}, no en la \texttt{1}.
+	\begin{verbatim}
+		v[0] # Extrae el primer elemento (10)
+		v[2] # Extrae el TERCER elemento (30)
+	\end{verbatim}
+	
+	\item También podemos extraer una porción (slice) del vector escribiendo \verb-v[i:j]-. En Python, esto extrae desde el índice \texttt{i} \textbf{hasta el índice j-1} (el límite superior no se incluye):
+	\begin{verbatim}
+		v[1:4] # Extrae los elementos en índices 1, 2 y 3: [20, 30, 40]
+	\end{verbatim}
+	
+	\item Podemos acceder al último elemento dinámicamente usando índices negativos:
+	\begin{verbatim}
+		v[-1] # Extrae el 70
+		v[1:] # Extrae desde el índice 1 hasta el final
+		v[:-1] # Extrae desde el principio hasta el penúltimo
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Álgebra lineal}
+
+\begin{enumerate}
+	\item El sub-módulo \texttt{np.linalg} contiene la librería de álgebra lineal. 
+	\begin{center}
+		\begin{tabular}{ll}
+			\textbf{Comando} & \textbf{Resultado} \\ \hline
+			\texttt{np.linalg.det(A)} & Determinante \\
+			\texttt{np.linalg.eig(A)} & Autovalores y autovectores \\
+			\texttt{np.linalg.inv(A)} & Inversa matricial \\
+			\texttt{np.linalg.svd(A)} & Descomposición SVD \\
+			\texttt{np.linalg.cond(A)} & Número de condición \\
+		\end{tabular}
+	\end{center}
+	
+	\item Supongamos un sistema de 2 ecuaciones lineales $Ax=b$:
+	\begin{verbatim}
+		A = np.array([[1, 2], [2, 1]])
+		b = np.array([[1], [2]])
+	\end{verbatim}
+	
+	\item El método recomendado y optimizado numérica y computacionalmente para resolver el sistema es usar la función \texttt{solve()}:
+	\begin{verbatim}
+		x = np.linalg.solve(A, b)
+	\end{verbatim}
+	
+	\item Verifique que el resultado es correcto calculando el vector de error (residuo):
+	\begin{verbatim}
+		e = (A @ x) - b
+		np.transpose(e) @ e   # Suma de los errores al cuadrado (cercana a 0)
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Graficación de funciones 2D con Matplotlib}
+
+\begin{enumerate}
+	\item Para graficar funciones usamos el módulo \texttt{pyplot} de Matplotlib. Escriba:
+	\begin{verbatim}
+		t = np.arange(0, 2*np.pi, 0.1)
+		y = np.cos(2 * t - 1)
+		
+		plt.figure(1)
+		plt.plot(t, y)
+		
+		plt.figure(2)
+		plt.stem(t, y)
+		plt.show() # Este comando abre las ventanas en pantalla
+	\end{verbatim}
+	
+	\item \texttt{plot} dibuja una señal de tiempo continuo uniendo los puntos con líneas, mientras que \texttt{stem} grafica la secuencia de valores discretos explícitos.
+	
+	\item Estos comandos admiten un parámetro de formato idéntico al de Matlab (\texttt{'r*:'}):
+	\begin{itemize}
+		\item \textbf{Colores:} \texttt{y}, \texttt{m}, \texttt{c}, \texttt{r}, \texttt{g}, \texttt{b}, \texttt{w}, \texttt{k}.
+		\item \textbf{Marcadores:} \texttt{.}, \texttt{o}, \texttt{x}, \texttt{*}, \texttt{s}.
+		\item \textbf{Líneas:} \texttt{-}, \texttt{:}, \texttt{-.}, \texttt{--}.
+	\end{itemize}
+	
+	\item Observe los comandos complementarios para enriquecer el gráfico:
+	\begin{verbatim}
+		plt.figure()
+		plt.plot(t, np.cos(t), 'm:o')
+		plt.grid(True)
+		plt.xlabel('Tiempo (s)')
+		plt.ylabel('Amplitud (V)')
+		plt.title('Función periódica')
+		plt.show()
+	\end{verbatim}
+	
+	\item El comando \texttt{subplot} permite colocar múltiples gráficos en la misma ventana (filas, columnas, índice activo):
+	\begin{verbatim}
+		plt.figure(figsize=(10,8)) # Ajusta el tamaño de la ventana
+		plt.subplot(2, 1, 1); plt.plot(t, np.cos(t))
+		plt.subplot(2, 1, 2); plt.stem(t, np.cos(t))
+		plt.show()
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Cómo guardar gráficos en archivos}
+
+\begin{enumerate}
+	\item Una vez dibujada la figura (y \textbf{antes} de llamar a \texttt{plt.show()}), podemos guardar el gráfico en alta calidad (PNG o PDF) utilizando:
+	\begin{verbatim}
+		plt.savefig('mi_grafico.png', dpi=300)
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Graficación de funciones en tres dimensiones}
+
+\begin{enumerate}
+	\item Es posible graficar curvas y superficies en 3D importando herramientas específicas e indicándole a la figura que la proyección es 3D:
+	\begin{verbatim}
+		fig = plt.figure()
+		ax = fig.add_subplot(projection='3d')
+		
+		# Ejemplo rápido
+		X, Y = np.meshgrid(np.linspace(-5, 5, 50), np.linspace(-5, 5, 50))
+		Z = np.sin(np.sqrt(X**2 + Y**2))
+		ax.plot_surface(X, Y, Z, cmap='viridis')
+		plt.show()
+	\end{verbatim}
+\end{enumerate}
+
+
+
+\subsection{Escritura y salida de texto formateado}
+
+\begin{enumerate}
+	\item Con la función nativa \texttt{print} podemos mostrar texto y valores. En Python moderno, lo mejor son los "f-strings" (cadenas formateadas), anteponiendo una \texttt{f} y colocando las variables entre llaves \texttt{\{\}}:
+	\begin{verbatim}
+		variable = 42
+		print(f"El resultado del cálculo es {variable}")
+		print(f"El valor de pi es aproximadamente {np.pi:.4f}")
+	\end{verbatim}
+	El modificador \texttt{:.4f} indica que se muestren 4 decimales.
+\end{enumerate}
+
+\subsection{Estructuras de Control: Iteración e identación}
+
+\begin{enumerate}
+	\item \textbf{¡CUIDADO! IDENTACIÓN:} En Python no se usa la palabra \texttt{end} para terminar un ciclo o condición. El bloque de código que pertenece al ciclo se define **únicamente** por su margen izquierdo (sangría o identación).
+	
+	\item Bucle \texttt{for} (la función \texttt{range(1, 9)} genera enteros del 1 al 8):
+	\begin{verbatim}
+		for x in range(1, 9):
+		y = 2 * x - 1
+		print(f"x = {x}; y = {y}")
+		# Aquí, al quitar la sangría, el bucle terminó.
+	\end{verbatim}
+	
+	\item Alternativamente, usando un bucle \texttt{while}:
+	\begin{verbatim}
+		x = 1
+		while x <= 8:
+		y = 2 * x - 1
+		print(f"x = {x}; y = {y}")
+		x = x + 1 
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{Toma de decisiones}
+
+\begin{enumerate}
+	\item El resto de la división entera se calcula con el operador \texttt{\%}.
+	\item Podemos condicionar la ejecución empleando \texttt{if}, \texttt{elif}, y \texttt{else}:
+	\begin{verbatim}
+		for x in range(1, 16):
+		if x % 2 == 0:
+		print(f"{x} es par")
+		elif x % 3 == 0:
+		print(f"{x} es impar y divisible por 3")
+		else:
+		print(f"{x} es impar")
+	\end{verbatim}
+\end{enumerate}
+
+\section{Ejemplo 1: Integración gráfica}
+
+En esta sección repasaremos los conceptos escribiendo un pequeño script para:
+\begin{enumerate}
+	\item Generar un vector eje de abscisas de 51 números.
+	\item Generar datos aleatorios asociados a ese eje.
+	\item Graficar con etiquetas correspondientes.
+\end{enumerate}
+
+Para graficar los números generados, escriba el siguiente código y ejecútelo:
+\begin{verbatim}
+	x = np.arange(1, 52)         # Vector de 1 a 51
+	y = np.random.rand(len(x))   # Ruido uniforme entre 0 y 1
+	
+	plt.plot(x, y, 'b-*')
+	plt.title('Señal estocástica generada por computadora')
+	plt.xlabel('Índice de muestra (n)')
+	plt.ylabel('Amplitud aleatoria')
+	plt.grid(True)
+	plt.show()
+\end{verbatim}
+
+\section{Ejemplo 2: Interacción con archivos de texto (I/O)}
+
+En Python, la lectura y escritura de matrices numéricas está extremadamente simplificada gracias a NumPy, evitando los ineficientes bucles anidados.
+
+\begin{enumerate}
+	\item \textbf{Escritura directa:} Supongamos que generamos una matriz de datos \texttt{A} de $3 \times 10$:
+	\begin{verbatim}
+		# Generamos datos de prueba
+		filas = np.arange(1, 4).reshape(3, 1) # Vector columna
+		cols = np.arange(1, 11).reshape(1, 10) # Vector fila
+		A = filas + cols  # Broadcasting mágico de NumPy genera matriz 3x10
+		
+		# Guardamos en archivo en una sola línea
+		np.savetxt('matriz_datos.txt', A, fmt='%d')
+	\end{verbatim}
+	
+	\item \textbf{Lectura directa:}
+	\begin{verbatim}
+		# Leemos el archivo y lo convertimos a matriz de enteros automáticamente
+		matriz_leida = np.loadtxt('matriz_datos.txt', dtype=int)
+		print(matriz_leida.shape) # Verificará que es (3, 10)
+	\end{verbatim}
+\end{enumerate}
+
+\section{Ejemplo 3: Vectorización eficiente y protección matemática}
+
+En el siguiente algoritmo procesaremos datos evitando el uso ineficiente de ciclos \texttt{for} y protegiéndonos de cálculos indefinidos (divisiones por cero).
+
+\begin{enumerate}
+	\item La indexación lógica \verb-(np.abs(vector) < eps)- nos permite encontrar y enmascarar valores peligrosamente cercanos a cero.
+	\item \texttt{eps} es la constante de "precisión de máquina", accesible vía \texttt{np.finfo(float).eps}.
+	
+	\begin{verbatim}
+		# Supongamos que tenemos una matriz_leida de Nx3 dimensiones
+		a = matriz_leida[:, 0]  # Extrae TODA la columna 0 (la primera)
+		b = matriz_leida[:, 1]
+		c = matriz_leida[:, 2]
+		
+		eps = np.finfo(float).eps
+		
+		# Protegemos el divisor 'c' de valer exactamente 0
+		ud = c + (np.abs(c) < eps) * eps 
+		vd = (a - b)
+		vd = vd + (np.abs(vd) < eps) * eps
+		
+		# Cálculos vectorizados: División punto a punto automática en NumPy
+		u = (a + b) / ud  
+		v = c / vd        
+		
+		print(u)
+		print(v)
+	\end{verbatim}
+\end{enumerate}

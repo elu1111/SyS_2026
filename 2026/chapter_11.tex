@@ -1,0 +1,88 @@
+\chapter{La transformada de Laplace}
+
+La transformada de Laplace transforma un problema en el dominio del tiempo (encontrar la solución de una ecuación diferencial) en un problema en el dominio de la frecuencia compleja $s$ (encontrar la función temporal que corresponde a la función de transferencia asociada a la ecuación diferencial).
+
+Aplicaremos las transformadas de Laplace y Fourier al estudio de la respuesta temporal y en frecuencia de circuitos eléctricos, electrónicos y sistemas dinámicos discretos o continuos.
+
+\section{Definiciones de la transformada de Laplace}
+
+\subsection{Transformada de Laplace bilateral}
+
+A continuación vemos las ecuaciones fundamentales que definen esta transformación:
+\begin{enumerate}
+	\item La ecuación de análisis (Transformada Directa):
+	\begin{equation}
+		X(s) = \int_{-\infty}^{\infty} x(t) \, e^{-st} \, dt.
+	\end{equation}
+	donde la variable compleja $s$ se define como $s = \sigma + j\omega$.
+	
+	\item La ecuación de síntesis (Transformada Inversa):
+	\begin{equation}
+		x(t) = \frac{1}{2\pi j} \int_{\sigma - j\infty}^{\sigma + j\infty} X(s) \, e^{st} \, ds,
+	\end{equation}
+	donde la integración se realiza a lo largo de una línea vertical en el plano complejo que se encuentra dentro de la región de convergencia.
+	
+	\item El par función-transformada se denota comúnmente como:
+	\begin{equation}
+		x(t) \stackrel{\mathcal{L}}{\longleftrightarrow} X(s).
+	\end{equation}
+\end{enumerate}
+
+\subsection{Transformada de Laplace unilateral}
+
+Para el análisis de sistemas causales y la resolución de ecuaciones diferenciales con condiciones iniciales, es mucho más práctica la transformada unilateral, donde el límite inferior de integración comienza en $0^{-}$ (para incluir posibles impulsos en el origen):
+\begin{equation}
+	X(s) = \int_{0^{-}}^{\infty} x(t) \, e^{-st} \, dt.
+\end{equation}
+
+\section{Región de Convergencia (ROC)}
+
+La Transformada de Laplace no converge para todos los valores de $s$. El conjunto de valores en el plano complejo $s$ para los cuales la integral $\int_{-\infty}^{\infty} |x(t) e^{-st}| dt < \infty$ se denomina \textbf{Región de Convergencia (ROC)}. 
+
+La ROC es fundamental porque la expresión algebraica $X(s)$ por sí sola no especifica unívocamente a la señal $x(t)$ en la transformada bilateral; es necesario conocer la ROC para determinar si la señal es causal (hacia la derecha), anticausal (hacia la izquierda) o bilateral.
+
+\section{Propiedades de la Transformada de Laplace}
+
+A continuación, se listan las propiedades operacionales más importantes de la transformada de Laplace (unilateral). Asumimos que $x(t) \stackrel{\mathcal{L}}{\longleftrightarrow} X(s)$ y $y(t) \stackrel{\mathcal{L}}{\longleftrightarrow} Y(s)$.
+
+\renewcommand{\arraystretch}{1.8} % Mejora el espaciado de las filas para las fracciones
+\begin{center}
+	\begin{tabular}{p{4.5cm} p{4cm} p{4.5cm}}
+		\hline
+		\textbf{Propiedad} & \textbf{Dominio del tiempo} & \textbf{Dominio de $s$} \\
+		\hline
+		Linealidad & $a \, x(t) + b \, y(t)$ & $a \, X(s) + b \, Y(s)$ \\
+		Desplazamiento temporal & $x(t-t_0) \, u(t-t_0)$ & $e^{-st_0} X(s)$ \quad ($t_0 > 0$) \\
+		Desplazamiento en $s$ & $e^{at} x(t)$ & $X(s-a)$ \\
+		Escalamiento temporal & $x(at)$ & $\frac{1}{a} X\left(\frac{s}{a}\right)$ \quad ($a > 0$) \\
+		Diferenciación en el tiempo & $\frac{dx(t)}{dt}$ & $s X(s) - x(0^{-})$ \\
+		Diferenciación de orden $n$ & $\frac{d^n x(t)}{dt^n}$ & $s^n X(s) - \sum_{k=1}^{n} s^{n-k} x^{(k-1)}(0^{-})$ \\
+		Integración en el tiempo & $\int_{0^{-}}^{t} x(\tau) d\tau$ & $\frac{1}{s} X(s)$ \\
+		Convolución & $x(t) * y(t)$ & $X(s) \cdot Y(s)$ \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\section{Pares Comunes de Transformadas de Laplace}
+
+La siguiente tabla resume las transformadas de Laplace de las señales elementales de tiempo continuo (asumiendo que las señales son causales, multiplicadas implícita o explícitamente por $u(t)$).
+
+\begin{center}
+	\begin{tabular}{ll}
+		\hline
+		\textbf{Señal en el tiempo $x(t)$} & \textbf{Transformada $X(s)$} \\
+		\hline
+		Impulso unitario: $\delta(t)$ & $1$ \\ 
+		Impulso desplazado: $\delta(t-t_0)$ & $e^{-st_0}$ \\
+		Escalón unitario: $u(t)$ & $\frac{1}{s}$ \\ 
+		Rampa: $t \, u(t)$ & $\frac{1}{s^2}$ \\
+		Potencia $n$: $t^n \, u(t)$ & $\frac{n!}{s^{n+1}}$ \\
+		Exponencial: $e^{-at} \, u(t)$ & $\frac{1}{s+a}$ \\
+		Exponencial ponderada: $t^n e^{-at} \, u(t)$ & $\frac{n!}{(s+a)^{n+1}}$ \\
+		Seno: $\sin(\omega t) \, u(t)$ & $\frac{\omega}{s^2+\omega^2}$ \\
+		Coseno: $\cos(\omega t) \, u(t)$ & $\frac{s}{s^2+\omega^2}$ \\
+		Seno amortiguado: $e^{-at}\sin(\omega t) \, u(t)$ & $\frac{\omega}{(s+a)^2+\omega^2}$ \\
+		Coseno amortiguado: $e^{-at}\cos(\omega t) \, u(t)$ & $\frac{s+a}{(s+a)^2+\omega^2}$ \\
+		\hline
+	\end{tabular}
+\end{center}

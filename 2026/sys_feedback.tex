@@ -1,0 +1,109 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{tikz}
+
+% Cargamos las bibliotecas necesarias
+\usetikzlibrary{shapes,arrows,positioning,calc}
+
+% --- Estilos locales para el diagrama TikZ ---
+\tikzset{
+	block/.style = {
+		draw, 
+		fill=blue!10, 
+		rectangle, 
+		minimum height=3em, 
+		minimum width=5em, 
+		line width=1pt, 
+		align=center, 
+		rounded corners=2pt 
+	},
+	sum/.style = {
+		draw, 
+		fill=blue!10, 
+		circle, 
+		minimum size=1.5em, 
+		line width=1pt,
+		inner sep=0pt
+	},
+	signal/.style = {
+		->, 
+		>=stealth', 
+		thick, 
+		shorten >=1pt, 
+		shorten <=1pt
+	},
+	label/.style = {
+		font=\small, 
+		midway, 
+		above,
+		align=center
+	},
+	branch/.style = {
+		fill, 
+		shape=circle, 
+		minimum size=4pt, 
+		inner sep=0pt
+	}
+}
+% --------------------------------------------
+
+\begin{document}
+	
+	\begin{figure}[htbp]
+		\centering
+		\begin{tikzpicture}[auto]
+			
+			% --- Definición de NODOS ---
+			% Nodo de entrada invisible
+			\node (input) at (0,0) {};
+			
+			% Sumador (donde se mezclan la entrada y la realimentación)
+			\node [sum] (sum) at (2.5,0) {$+$};
+			
+			% Sistema 1 (Ruta de avance / Forward path)
+			\node [block] (sys1) at (5,0) {Sistema 1 \\ $S_1$};
+			
+			% Punto de bifurcación para tomar la muestra de salida
+			\node [branch] (branch) at (7.5,0) {};
+			
+			% Nodo de salida invisible
+			\node (output) at (9.5,0) {};
+			
+			% Sistema 2 (Ruta de realimentación / Feedback path)
+			% Lo colocamos debajo del Sistema 1
+			\node [block] (sys2) at (5,-2) {Sistema 2 \\ $S_2$};
+			
+			% --- CONEXIONES ---
+			% Entrada -> Sumador (Añadimos un pequeño "+" para indicar suma positiva)
+			\draw [signal] (input) -- node[label] {Entrada, $x(t)$} 
+			node[pos=0.85, above left, font=\footnotesize] {$+$} (sum);
+			
+			% Sumador -> Sistema 1 (Señal de error)
+			\draw [signal] (sum) -- node[label] {$e(t)$} (sys1);
+			
+			% Sistema 1 -> Bifurcación -> Salida
+			\draw [signal] (sys1) -- (branch) -- node[label] {Salida, $y(t)$} (output);
+			
+			% Bifurcación -> Sistema 2 (Baja y dobla a la izquierda)
+			\draw [signal] (branch) |- (sys2);
+			
+			% Sistema 2 -> Sumador (Sigue a la izquierda y sube al sumador)
+			% Añadimos un pequeño "-" para indicar realimentación negativa (típico en control)
+			\draw [signal] (sys2) -| node[pos=0.9, right, font=\footnotesize] {$-$} (sum.south);
+			
+			% --- CAJA PUNTEADA ---
+			% Coordenadas absolutas que envuelven todo el lazo (desde antes del sumador hasta la bifurcación)
+			\draw[dashed, gray, thick, rounded corners=5pt]
+			(1.5, 1.2) rectangle (8.2, -3.2);
+			
+			% Etiqueta inferior de la caja
+			\node[font=\small] at (4.85, -2.9) {Sistema Total Comprendido};
+			
+		\end{tikzpicture}
+		\caption{Ejemplo de interconexión de sistemas con realimentación (feedback). La salida del Sistema 1 se mide y se hace pasar por el Sistema 2, para luego restarse a la señal de entrada original.}
+		\label{fig:interconexion_realimentacion}
+	\end{figure}
+	
+\end{document}

@@ -1,0 +1,107 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{tikz}
+
+% Cargamos las bibliotecas necesarias
+\usetikzlibrary{shapes,arrows,positioning,calc}
+
+% --- Estilos locales para el diagrama TikZ ---
+\tikzset{
+	block/.style = {
+		draw, 
+		fill=blue!10, 
+		rectangle, 
+		minimum height=3em, 
+		minimum width=5em, 
+		line width=1pt, 
+		align=center, 
+		rounded corners=2pt 
+	},
+	sum/.style = {
+		draw, 
+		fill=blue!10, 
+		circle, 
+		minimum size=1.5em, 
+		line width=1pt,
+		inner sep=0pt
+	},
+	signal/.style = {
+		->, 
+		>=stealth', 
+		thick, 
+		shorten >=1pt, 
+		shorten <=1pt
+	},
+	label/.style = {
+		font=\small, 
+		midway, 
+		above,
+		align=center
+	},
+	branch/.style = {
+		fill, 
+		shape=circle, 
+		minimum size=4pt, 
+		inner sep=0pt
+	}
+}
+% --------------------------------------------
+
+\begin{document}
+	
+	\begin{figure}[htbp]
+		\centering
+		\begin{tikzpicture}[auto]
+			
+			% --- Definición de NODOS ---
+			% Nodo de entrada invisible
+			\node (input) at (0,0) {};
+			
+			% Punto de bifurcación (el punto negro donde la señal se divide)
+			\node [branch] (split) at (2,0) {};
+			
+			% Sistemas en paralelo (arriba y abajo)
+			\node [block] (sys1) at (4.5, 1.5) {Sistema 1 \\ $S_1$};
+			\node [block] (sys2) at (4.5, -1.5) {Sistema 2 \\ $S_2$};
+			
+			% Sumador
+			\node [sum] (adder) at (7, 0) {$+$};
+			
+			% Nodo de salida invisible
+			\node (output) at (9.5, 0) {};
+			
+			% --- CONEXIONES ---
+			% Entrada general al nodo de bifurcación
+			\draw [signal] (input) -- node[label] {Entrada, $x(t)$} (split);
+			
+			% Bifurcación hacia los sistemas (el operador |- hace que la línea doble en ángulo recto)
+			\draw [signal] (split) |- (sys1);
+			\draw [signal] (split) |- (sys2);
+			
+			% Salidas de los sistemas hacia el sumador (el operador -| también hace el ángulo recto)
+			% Se añade un pequeño "+" cerca del sumador para indicar que las señales se suman
+			\draw [signal] (sys1) -| node[pos=0.25, label] {$y_1(t)$} (adder.north) 
+			node[pos=0.9, right, font=\footnotesize] {$+$};
+			
+			\draw [signal] (sys2) -| node[pos=0.25, below=0.1cm, font=\small, align=center] {$y_2(t)$} (adder.south) 
+			node[pos=0.9, right, font=\footnotesize] {$+$};
+			
+			% Salida general del sumador
+			\draw [signal] (adder) -- node[label] {Salida, $y(t)$} (output);
+			
+			% --- CAJA PUNTEADA ---
+			% Usamos coordenadas absolutas para asegurar que abarque todo (desde la bifurcación hasta el sumador)
+			\draw[dashed, gray, thick, rounded corners=5pt]
+			(1.5, 2.6) rectangle (7.6, -2.6);
+			
+			% Etiqueta inferior de la caja
+			\node[font=\small] at (4.55, -2.3) {Sistema Total Comprendido};
+			
+		\end{tikzpicture}
+		\caption{Ejemplo de interconexión de sistemas en paralelo. La señal de entrada se bifurca y excita a ambos sistemas simultáneamente, luego sus salidas se combinan en un sumador.}
+		\label{fig:interconexion_paralelo}
+	\end{figure}
+	
+\end{document}

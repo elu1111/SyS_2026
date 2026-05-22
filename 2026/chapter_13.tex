@@ -1,0 +1,388 @@
+\chapter{Series de Fourier (Tiempo discreto)}
+
+\section{Definiciones}
+
+\subsection{Señales periódicas}
+
+Recordemos que una función $x[n]$ es periódica si y solo si existe un número entero $N > 0$ que cumple la condición
+\begin{equation}
+	x[n] = x[n+N],
+\end{equation}
+para todo $n$. Por ejemplo, 
+\begin{align}
+	x[n] &= \cos \left(\frac{2\pi}{N} n\right) = \cos\left(\frac{2\pi}{N} (n + N)\right) = \cos \left(\frac{2\pi}{N} n + 2\pi\right),\\
+	x[n] &= \sin \left(\frac{2\pi}{N} n\right) = \sin\left(\frac{2\pi}{N} (n+N)\right) = \sin \left(\frac{2\pi}{N} n + 2\pi\right), \\
+	x[n] &= e^{j\frac{2\pi}{N} n} = e^{j\frac{2\pi}{N} (n + N)} = e^{j\frac{2\pi}{N}n + j2\pi} = e^{j\frac{2\pi}{N}n} e^{j2\pi}.
+\end{align}
+Recordemos que $e^{j2\pi} = \cos(2\pi) + j\sin(2\pi) = 1$.
+
+\subsection{Señales periódicas armónicamente relacionadas}
+
+Las señales periódicas armónicamente relacionadas cumplen con la condición
+\begin{equation}
+	\phi_{k}[n] = e^{jk\omega n} = e^{jk\frac{2\pi}{N}n}, \qquad \forall k=0, \pm 1, \pm 2, \dots  \label{NHar}
+\end{equation}
+o la condición
+\begin{equation}
+	\alpha_{k}[n] = \cos(k\omega n) = \cos \left(k\frac{2\pi}{N}n\right), \qquad \forall k=0, 1, 2, \dots, N - 1, 
+\end{equation}
+o la condición
+\begin{equation}
+	\beta_{k}[n] = \sin(k\omega n) = \sin \left(k\frac{2\pi}{N}n\right), \qquad \forall k=0, 1, 2, \dots, N - 1.
+\end{equation}
+En otras palabras, son funciones periódicas cuyas frecuencias son múltiplos enteros de una frecuencia fundamental.
+
+\begin{enumerate}
+	\item Cada una de estas señales tiene una frecuencia fundamental $\omega$ y período fundamental $N$.
+	\item La armónica $k$-ésima, para $k \neq 0$, es periódica con \textbf{período} $\frac{N}{k}$.
+	\item Solamente existen $N$ señales distintas en el conjunto descripto por (\ref{NHar}), o sea 
+	\begin{equation}
+		\phi_{k}[n] = \phi_{k+rN}[n].
+	\end{equation}
+	Para el caso de las exponenciales complejas podemos demostrar:
+	\begin{equation}
+		e^{j(k + rN)\frac{2\pi}{N}n} = e^{jk\frac{2\pi}{N}n + jrN\frac{2\pi}{N}n} = e^{jk\frac{2\pi}{N}n + jr2\pi n} = e^{jk\frac{2\pi}{N}n} (e^{j2\pi})^{rn} = e^{jk\frac{2\pi}{N}n}.
+	\end{equation}
+\end{enumerate}
+
+Por ejemplo, para $N = 4$ tenemos las armónicas
+\begin{equation}
+	x_{0}[n] = 1, \qquad x_{1}[n] = e^{j\frac{2\pi}{4}n}, \qquad x_{2}[n] = e^{j2\frac{2\pi}{4}n}, \qquad x_{3}[n] = e^{j3\frac{2\pi}{4}n}.
+\end{equation}
+Observemos las igualdades
+\begin{equation}
+	x_{k}[n] = e^{jk\frac{2\pi}{4}n} = x_{k}[n + 4] = e^{jk\frac{2\pi}{4}(n + 4)} = e^{jk\frac{2\pi}{4}n} e^{jk\frac{2\pi}{4}4} = e^{jk\frac{2\pi}{4}n},
+\end{equation}
+y
+\begin{equation}
+	x_{4}[n] = e^{j4\frac{2\pi}{4}n} = e^{j2\pi n} = 1 = x_{0}[n].
+\end{equation}
+
+\section{Serie de Fourier de tiempo discreto}
+
+\subsection{Síntesis}
+
+La serie de Fourier de tiempo discreto es una sumatoria de $N$ armónicas complejas de período $N$, y la podemos escribir así:
+\begin{equation}
+	x[n] = \sum_{k=0}^{N-1} a_{k} \phi_{k}[n] = \sum_{k=0}^{N-1} a_{k} e^{jk\omega n} = \sum_{k=0}^{N-1} a_{k} e^{jk\left(\frac{2\pi}{N}\right)n}.
+\end{equation}
+\begin{enumerate}
+	\item La sumatoria debe incluir solamente $N$ armónicas. 
+	\item El valor inicial de $k$ puede ser cualquiera (típicamente de $0$ a $N-1$ o centrado alrededor de $0$).
+\end{enumerate}
+
+\subsection{Análisis, o el cálculo de coeficientes de la serie de Fourier}
+
+\begin{enumerate}
+	\item Comenzamos escribiendo la serie de Fourier de una señal periódica de tiempo discreto:
+	\begin{equation}
+		x[n] = \sum_{k=0}^{N-1} a_{k} e^{jk\frac{2\pi}{N}n}.
+	\end{equation}
+	Multiplicando la serie por $e^{-jr\frac{2\pi}{N}n}$ obtenemos:
+	\begin{equation}
+		x[n] e^{-jr\frac{2\pi}{N}n} = \sum_{k=0}^{N-1} a_{k} e^{jk\frac{2\pi}{N}n} e^{-jr\frac{2\pi}{N}n}.
+	\end{equation}
+	
+	\item Sumamos ambos lados de la igualdad desde $n=0$ hasta $N-1$:
+	\begin{equation}
+		\sum_{n=0}^{N-1} x[n] e^{-jr\frac{2\pi}{N}n} = \sum_{n=0}^{N-1} \sum_{k=0}^{N-1} a_{k} e^{j(k-r)\frac{2\pi}{N}n}.
+	\end{equation}
+	
+	\item Invertimos el orden de las sumatorias a la derecha del signo de igualdad, y dado que $a_{k}$ no depende de $n$ se obtiene:
+	\begin{equation}
+		\sum_{n=0}^{N-1} x[n] e^{-jr\frac{2\pi}{N}n} = \sum_{k=0}^{N-1} a_{k} \left( \sum_{n=0}^{N-1} e^{j(k-r)\frac{2\pi}{N}n} \right).
+	\end{equation}
+	
+	\item Puede probarse que por ortogonalidad:
+	\begin{equation}
+		\sum_{n=0}^{N-1} e^{jk\frac{2\pi}{N}n} =
+		\begin{cases} 
+			N, & k=0, \pm N, \pm 2N, \dots \\ 
+			0, & k \neq 0, \pm N, \pm 2N, \dots
+		\end{cases},
+	\end{equation}
+	mediante el siguiente razonamiento:
+	\begin{enumerate}
+		\item Verificamos la igualdad trivial si $k$ es múltiplo de $N$: $e^{j0} = e^{jN\frac{2\pi}{N}n} = 1$, sumado $N$ veces da $N$.
+		\item Recordamos la propiedad de las series geométricas convergentes:
+		\begin{equation}
+			\sum_{n=0}^{N-1} a^n = \frac{1-a^{N}}{1-a}, \quad a \neq 1,
+		\end{equation}
+		para obtener:
+		\begin{equation}
+			\sum_{n=0}^{N-1} \left( e^{jk\frac{2\pi}{N}} \right)^n = \frac{1-\left(e^{jk\frac{2\pi}{N}}\right)^N}{1-e^{jk\frac{2\pi}{N}}} = \frac{1-e^{jk2\pi}}{1-e^{jk\frac{2\pi}{N}}} = 0.
+		\end{equation}
+	\end{enumerate}
+	
+	\item Entonces, todos los términos de la sumatoria exterior se anulan excepto cuando $k=r$, obteniendo:
+	\begin{equation}
+		\sum_{n=0}^{N-1} x[n] e^{-jr\frac{2\pi}{N}n} = a_{r} N,
+	\end{equation}
+	o sea:
+	\begin{equation}
+		a_{r} = \frac{1}{N} \sum_{n=0}^{N-1} x[n] e^{-jr\frac{2\pi}{N}n}.
+		\label{dtfs.ar}
+	\end{equation}
+\end{enumerate}
+
+\subsection{Ejemplo de cálculo de los coeficientes de una serie de Fourier}
+\begin{enumerate}
+	\item Consideremos una señal periódica con $N = 2$. Supongamos que $x[0] = 1$ y $x[1] = 0$.
+	Por lo tanto $x[2] = 1$, $x[3] = 0$, y así sucesivamente. ¿Cuáles son los coeficientes correspondientes?
+	
+	\item Dado que $N = 2$, los coeficientes a calcular son $a_{0}$ y $a_{1}$. Si recordamos la ecuación (\ref{dtfs.ar}):
+	\begin{equation}
+		a_{r} = \frac{1}{N} \sum_{n=0}^{N-1} x[n] e^{-jr\frac{2\pi}{N}n},
+	\end{equation}
+	podemos escribir, para $N = 2$:
+	\begin{equation}
+		a_{r} = \frac{1}{2} \left(x[0] e^{-jr\frac{2\pi}{2}0} + x[1] e^{-jr\frac{2\pi}{2}1}\right).
+	\end{equation}
+	
+	\item En nuestro caso, para $r = 0$ resulta:
+	\begin{equation}
+		a_{0} = \frac{1}{2} \left(x[0] e^{0} + x[1] e^{0}\right) = \frac{1}{2} (x[0] + x[1]),
+	\end{equation}
+	y para $r = 1$ resulta:
+	\begin{equation}
+		a_{1} = \frac{1}{2} \left(x[0] e^{0} + x[1] e^{-j\pi}\right).
+	\end{equation}
+	
+	\item Sustituyendo los valores de $x[0] = 1$ y $x[1] = 0$, obtenemos:
+	\begin{equation}
+		a_{0} = \frac{1}{2} (1 + 0) = \frac{1}{2},
+	\end{equation}
+	y
+	\begin{equation}
+		a_{1} = \frac{1}{2} (1 \times 1 + 0 \times e^{-j\pi}) = \frac{1}{2}.
+	\end{equation}
+\end{enumerate}
+
+\subsubsection{Ejercicios}
+
+\begin{enumerate}
+	\item Calcular los coeficientes de Fourier de una señal periódica $N = 2$, donde $x[0] = 0$ y $x[1] = 1$.
+	\item Calcular los coeficientes de Fourier de una señal periódica $N = 3$, donde $x[0] = 0$, $x[1] = 1$ y $x[2] = -1$.
+\end{enumerate}
+
+\section{Propiedades de las series de Fourier}
+
+Así indicaremos la relación entre una función y su serie de Fourier:
+\begin{equation}
+	x[n] \xrightarrow{FS} a_{k}.
+\end{equation}
+
+\subsection{Linealidad}
+
+Sean dos funciones con igual período $N$:
+\begin{align}
+	x[n] &= x[n+N], \\
+	y[n] &= y[n+N],
+\end{align}
+con coeficientes de Fourier:
+\begin{align}
+	x[n] &\xrightarrow{FS} a_{k}, \\
+	y[n] &\xrightarrow{FS} b_{k}.
+\end{align}
+Es posible probar que la combinación lineal en el tiempo resulta en una combinación lineal en frecuencia:
+\begin{equation}
+	z[n] = A x[n] + B y[n] \xrightarrow{FS} c_{k} = A a_{k} + B b_{k}.
+\end{equation}
+Queda como ejercicio para el lector.
+
+\subsection{Desplazamiento en el tiempo}
+
+\begin{enumerate}
+	\item Dadas las funciones periódicas:
+	\begin{align}
+		x[n] &= x[n+N], \\
+		y[n] &= x[n-n_{0}],
+	\end{align}
+	sus series de Fourier cumplen con la relación:
+	\begin{align}
+		x[n] &\xrightarrow{FS} a_{k}, \\
+		y[n] &\xrightarrow{FS} b_{k} = e^{-jk\frac{2\pi}{N}n_{0}} a_{k}.
+	\end{align}
+	
+	\item En efecto, escribiendo la ecuación de análisis:
+	\begin{equation}
+		b_{k} = \frac{1}{N} \sum_{n=0}^{N-1} x[n-n_{0}] e^{-jk\frac{2\pi}{N}n},
+	\end{equation}
+	podemos reemplazar $x[n-n_0]$ por su serie de Fourier de síntesis:
+	\begin{equation}
+		b_{k} = \frac{1}{N} \sum_{n=0}^{N-1} \left( \sum_{r=0}^{N-1} a_{r} e^{jr\frac{2\pi}{N}(n-n_{0})} \right) e^{-jk\frac{2\pi}{N}n}.
+	\end{equation}
+	
+	\item Agrupando términos obtenemos:
+	\begin{equation}
+		b_{k} = \frac{1}{N} \sum_{r=0}^{N-1} a_{r} e^{-jr\frac{2\pi}{N}n_{0}} \left( \sum_{n=0}^{N-1} e^{j(r-k)\frac{2\pi}{N}n} \right).
+	\end{equation}
+	
+	\item Aprovechando la propiedad de ortogonalidad vista anteriormente, la sumatoria interior sobre $n$ resulta en $N$ sólo cuando $r = k$, y $0$ en cualquier otro caso dentro del período.
+	\item Por lo tanto, el único término que sobrevive es cuando $r=k$:
+	\begin{equation}
+		b_{k} = a_{k} e^{-jk\frac{2\pi}{N}n_{0}}.
+	\end{equation}
+\end{enumerate}
+
+\subsection{Desplazamiento en frecuencia}
+
+Consideremos una señal periódica de período $N$, $x[n] = x[n+N]$, con coeficientes de Fourier $a_{k}$. Es posible probar que al multiplicar $x[n]$ por una armónica discreta de frecuencia $M$, los coeficientes se desplazan en el dominio frecuencial:
+\begin{equation}
+	e^{jM\left(\frac{2\pi}{N}\right)n} x[n] \xrightarrow{FS} a_{k-M}.
+\end{equation}
+
+\subsection{Conjugación e Inversión}
+
+Consideremos una señal periódica $x[n]$, con coeficientes $a_{k}$. 
+\begin{align}
+	x^*[n] &\xrightarrow{FS} a_{-k}^*, \\
+	x[-n] &\xrightarrow{FS} a_{-k}.
+\end{align}
+
+\subsection{Convolución periódica circular}
+
+Dadas dos señales periódicas $x[n]$ e $y[n]$ con coeficientes $a_k$ y $b_k$ respectivamente, la convolución circular genera el producto de sus coeficientes escalado por $N$:
+\begin{equation}
+	\sum_{r=0}^{N-1} x[r] y[n-r] \xrightarrow{FS} c_{k} = N a_{k} b_{k}.
+\end{equation}
+
+\subsection{Multiplicación}
+
+El producto de señales en el tiempo corresponde a la convolución de coeficientes en frecuencia:
+\begin{equation}
+	x[n] y[n] \xrightarrow{FS} c_{k} = \sum_{r=0}^{N-1} a_{r} b_{k-r}.
+\end{equation}
+
+\subsection{Relación de Parseval}
+
+La potencia media de una señal periódica en el tiempo se preserva en la sumatoria de las potencias de sus componentes espectrales:
+\begin{enumerate}
+	\item La potencia media de una señal periódica $N$ es:
+	\begin{equation}
+		P_x = \frac{1}{N}\sum_{n=0}^{N-1} |x[n]|^{2} = \frac{1}{N}\sum_{n=0}^{N-1} x[n] \overline{x[n]}
+	\end{equation}
+	
+	\item Sustituyendo la función conjugada por la representación conjugada de su serie de Fourier obtenemos:
+	\begin{equation}
+		P_x = \frac{1}{N} \sum_{n=0}^{N-1} x[n] \left(\sum_{k=0}^{N-1} \overline{a_{k}} e^{-j\frac{2\pi}{N}kn} \right).
+	\end{equation}
+	
+	\item Intercambiando sumatorias obtenemos:
+	\begin{equation}
+		P_x = \sum_{k=0}^{N-1} \overline{a_{k}} \left( \frac{1}{N}\sum_{n=0}^{N-1} x[n] e^{-j\frac{2\pi}{N}kn} \right).
+	\end{equation}
+	
+	\item Finalmente, observamos que la expresión entre paréntesis es exactamente la ecuación de análisis para $a_{k}$:
+	\begin{equation}
+		\frac{1}{N}\sum_{n=0}^{N-1} |x[n]|^{2} = \sum_{k=0}^{N-1} a_{k} \overline{a_{k}} = \sum_{k=0}^{N-1} |a_{k}|^2.
+	\end{equation}
+	La secuencia $|a_{k}|^{2}$, para $k = 0, 1, \dots, N - 1$ se denomina Espectro de Densidad de Potencia Discreta.
+\end{enumerate}
+
+\section{Cálculo de los coeficientes mediante la Transformada Discreta}
+
+\subsection{La forma matricial (DFT) y la introducción a la FFT}
+
+Lo que tradicionalmente calculamos como coeficientes de Fourier es equivalente a la Transformada Discreta de Fourier (DFT). A continuación veremos el desarrollo matricial de esta transformación, lo cual sienta las bases para el algoritmo de la Transformada Rápida de Fourier (Fast Fourier Transform, o FFT), un algoritmo de complejidad $\mathcal{O}(N \log N)$ para calcular estos mismos productos.
+
+\begin{enumerate}
+	\item Si observamos la fórmula de análisis de la serie discreta:
+	\begin{equation}
+		a_{r} =  \frac{1}{N} \sum_{n=0}^{N-1} x[n] e^{-jr\frac{2\pi}{N}n},
+	\end{equation}
+	podemos introducir la notación del núcleo de transformación, conocido como el factor "twiddle" $W$:
+	\begin{equation}
+		W = e^{-j\frac{2\pi}{N}}.
+	\end{equation}
+	Por tanto, podemos reescribir:
+	\begin{equation}
+		a_{r} =  \frac{1}{N} \sum_{n=0}^{N-1} x[n] W^{nr}.
+	\end{equation}
+	
+	\item Esta operación puede verse como un producto escalar entre vectores:
+	\begin{equation}
+		N a_{r} =
+		\begin{bmatrix}
+			W^{r \cdot 0} & W^{r \cdot 1} & \dots & W^{r(N-1)}
+		\end{bmatrix}
+		\cdot 
+		\begin{bmatrix}
+			x[0] \\ x[1] \\ \dots \\ x[N-1]
+		\end{bmatrix}.
+	\end{equation}
+	
+	\item Extendiendo esto a todos los coeficientes simultáneamente, se conforma la matriz de transformación DFT $\mathbf{M}_N$:
+	\begin{equation}
+		N \mathbf{a} = \mathbf{M}_N \mathbf{x} = 
+		\begin{bmatrix}
+			W^{0 \cdot 0} & W^{0 \cdot 1} & \dots & W^{0(N-1)} \\
+			W^{1 \cdot 0} & W^{1 \cdot 1} & \dots & W^{1(N-1)} \\
+			\dots & \dots & \dots & \dots \\
+			W^{(N-1)0} & W^{(N-1)1} & \dots & W^{(N-1)(N-1)}
+		\end{bmatrix}
+		\begin{bmatrix}
+			x[0] \\ x[1] \\ \dots \\ x[N-1]
+		\end{bmatrix}.
+	\end{equation}
+	
+	\item La matriz $\mathbf{M}_N$ posee importantes propiedades estructurales:
+	\begin{enumerate}
+		\item Es una matriz simétrica ($\mathbf{M}_N = \mathbf{M}_N^T$), puesto que $W^{nk} = W^{kn}$.
+		\item Sus columnas/filas son ortogonales conjugadas. El producto de $\mathbf{M}_N$ por su transpuesta conjugada (matriz Hermítica $\mathbf{M}_N^H$ o $\mathbf{M}_N^*$) es igual a $N$ veces la matriz identidad $\mathbf{I}$:
+		\begin{equation}
+			\mathbf{M}_{N}^H \mathbf{M}_{N} = \mathbf{M}_{N} \mathbf{M}_{N}^H = N \mathbf{I}.
+		\end{equation}
+		\item Gracias a esta ortogonalidad, si $N \mathbf{a} = \mathbf{M}_N \mathbf{x}$, el vector de muestras en el tiempo $\mathbf{x}$ puede recuperarse multiplicando por la Hermítica:
+		\begin{equation}
+			\mathbf{M}_{N}^H \mathbf{a} = \mathbf{x}.
+		\end{equation}
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{Implementación práctica: Octave/MATLAB}
+
+Generamos la matriz $M$ y verificamos sus propiedades.
+\lstinputlisting{./fft/demo_matriz.m}
+
+\subsubsection{Uso de la función integrada fft}
+\lstinputlisting{./fft/myfft.m}
+\lstinputlisting{./fft/demofft.m}
+\lstinputlisting{./fft/demofase.m}
+
+\subsubsection{Las diferencias entre notas musicales de diferentes instrumentos}
+\lstinputlisting{./fft/demo_instrumentos.m}
+
+\subsection{Implementación en Python (SciPy/NumPy)}
+
+Dado que hoy en día muchos pipelines de análisis de señales se desarrollan en Python (usando librerías especializadas para Data Science y Machine Learning), aquí mostramos la equivalencia para realizar el análisis espectral básico con \texttt{numpy.fft} y \texttt{matplotlib}.
+
+\begin{lstlisting}[language=Python]
+	import numpy as np
+	import matplotlib.pyplot as plt
+	
+	# Generar señal de prueba
+	N = 64
+	n = np.arange(N)
+	# Señal: Suma de dos armonicas de frecuencias distintas
+	x = np.cos(2 * np.pi * 3 * n / N) + 0.5 * np.sin(2 * np.pi * 10 * n / N)
+	
+	# Calcular coeficientes FFT (equivale a nuestro 'a')
+	# Dividimos por N para normalizar segun la definicion de Serie de Fourier
+	a_k = np.fft.fft(x) / N 
+	
+	# Calcular Espectro de Potencia Discreto
+	potencia = np.abs(a_k)**2
+	
+	# Eje de frecuencias k
+	k = np.arange(N)
+	
+	# Graficar
+	plt.figure(figsize=(10, 4))
+	plt.stem(k, potencia, basefmt="b-")
+	plt.title('Espectro de Densidad de Potencia')
+	plt.xlabel('Indice de frecuencia k')
+	plt.ylabel('|a_k|^2')
+	plt.grid(True)
+	plt.show()
+\end{lstlisting}

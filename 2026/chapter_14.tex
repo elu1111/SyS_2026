@@ -1,0 +1,300 @@
+\chapter{Transformada de Fourier de tiempo discreto}
+
+\section{Introducci\'{o}n}
+
+\begin{enumerate}
+	\item Vamos a ver como podemos \textbf{modificar} el concepto de \textbf{serie de Fourier} que relacionamos normalmente con las funciones peri\'{o}dicas de tiempo discreto \textbf{para estudiar funciones no peri\'{o}dicas} de tiempo discreto. Esto nos permite \textbf{definir} el concepto de \textbf{contenido de frecuencias de una se\~{n}al}, a\'{u}n cuando sea aperi\'{o}dica.
+	
+	\item Pensemos en una se\~{n}al $\hat{x}[n]$ peri\'{o}dica de tiempo discreto con un per\'{\i}odo fundamental $2N + 1$ definida por:
+	\begin{equation}
+		\hat{x}[n] = 
+		\begin{cases} 
+			0, & -N \leq n < -N_{1} \\ 
+			1, & -N_{1} \leq n \leq N_{1} \\ 
+			0, & N_{1} < n \leq N 
+		\end{cases}
+	\end{equation}
+	\begin{equation}
+		\hat{x}[n] = \hat{x}[n + 2N + 1].
+	\end{equation}
+	
+	\item Recordemos la ecuaci\'{o}n de an\'{a}lisis de la serie de Fourier de tiempo discreto; para este caso podemos escribir as\'{\i}:
+	\begin{equation}
+		a_{k} = \frac{1}{2N + 1} \sum_{n=-N_{1}}^{N_{1}} \hat{x}[n] e^{-jk\omega_{N}n},
+	\end{equation}
+	donde $\omega_{N} = \frac{2\pi}{2N + 1}$.
+	
+	\item Para el caso $k=0$ obtenemos el coeficiente $a_{0}$ (com\'{u}nmente llamado en electr\'{o}nica nivel de continua):
+	\begin{equation}
+		a_{0} = \frac{1}{2N + 1} \sum_{n=-N_{1}}^{N_{1}} 1 = \frac{2N_{1} + 1}{2N + 1}.
+	\end{equation}
+	El valor $\frac{2N_{1} + 1}{2N + 1}$ es denominado ciclo de trabajo del tren de pulsos, e indica el porcentaje del per\'{\i}odo en que la se\~{n}al es igual a $1$.
+	
+	\item Para el caso $k \neq 0$ obtenemos los dem\'{a}s coeficientes $a_{k}$:
+	\begin{equation}
+		a_{k} = \frac{1}{2N + 1} \sum_{n=-N_{1}}^{N_{1}} e^{-jk\omega_{N}n}.
+	\end{equation}
+	
+	\item Multiplicando ambos lados de la ecuaci\'{o}n por $2N + 1$ y desdoblando la sumatoria resulta:
+	\begin{equation}
+		(2N + 1) a_{k} = \sum_{n=-N_{1}}^{-1} e^{-jk\omega_{N}n} + \sum_{n=1}^{N_{1}} e^{-jk\omega_{N}n} + 1,
+	\end{equation}
+	que podemos escribir como:
+	\begin{equation}
+		(2N + 1) a_{k} = \sum_{n=-N_{1}}^{0} e^{-jk\omega_{N}n} + \sum_{n=0}^{N_{1}} e^{-jk\omega_{N}n} - 1,
+	\end{equation}
+	teniendo en cuenta que al poner un l\'{\i}mite igual a $0$ en ambas sumatorias estamos sumando dos veces un t\'{e}rmino $e^{0} = 1$ y restamos $1$ para no alterar la igualdad.
+	
+	\item Invertimos los l\'{\i}mites en la primer sumatoria e invertimos el signo del exponente correspondiente para no alterar el resultado:
+	\begin{equation}
+		(2N + 1) a_{k} = \sum_{n=0}^{N_{1}} e^{jk\omega_{N}n} + \sum_{n=0}^{N_{1}} e^{-jk\omega_{N}n} - 1.
+	\end{equation}
+	
+	\item Tenemos entonces dos sumatorias de sucesiones geom\'{e}tricas. Por lo tanto podemos escribir:
+	\begin{equation}
+		(2N + 1) a_{k} = \frac{1 - e^{jk\omega_{N}(N_{1}+1)}}{1 - e^{jk\omega_{N}}} + \frac{1 - e^{-jk\omega_{N}(N_{1}+1)}}{1 - e^{-jk\omega_{N}}} - 1. \label{ejemploTFTDinicial}
+	\end{equation}
+	
+	\item La utilidad de la ecuaci\'{o}n (\ref{ejemploTFTDinicial}) se ve si la escribimos as\'{\i}:
+	\begin{equation}
+		(2N + 1) a_{k} = \left. X(e^{j\omega}) \right|_{\omega = k\omega_{N}} =
+		\left. \frac{1 - e^{j\omega(N_{1}+1)}}{1 - e^{j\omega}} + \frac{1 - e^{-j\omega(N_{1}+1)}}{1 - e^{-j\omega}} - 1 \right|_{\omega=k\omega_{N}},  \label{funTFTDinicial}
+	\end{equation}
+	y entonces es evidente que la podemos interpretar como una \textbf{secuencia} formada por \textbf{muestras} de una \textbf{funci\'{o}n envolvente}. La variable $\omega$ es continua y la funci\'{o}n continua $X(e^{j\omega})$ muestreada en (\ref{funTFTDinicial}) es la envolvente de la secuencia $(2N+1) a_{k}$, formada por valores igualmente espaciados en frecuencia.
+	
+	\item Observe que la separaci\'{o}n de las muestras de la envolvente est\'{a} dada por:
+	\begin{equation}
+		\omega_{N} = \frac{2\pi}{2N + 1}.
+	\end{equation}
+	Entonces, cuanto mayor sea $N$ menor ser\'{a} $\omega_{N}$ y la cantidad de muestras en un intervalo dado de frecuencia ser\'{a} mayor.
+	
+	\item Si fijamos el valor $N_{1}$ (recordando que debe ser $N_{1} < N,$ por hip\'{o}tesis) la envolvente es independiente de $N$.
+\end{enumerate}
+
+\section{Las ecuaciones de an\'{a}lisis y s\'{\i}ntesis}
+
+\subsection{An\'{a}lisis}
+
+\begin{enumerate}
+	\item Definamos una se\~{n}al aperi\'{o}dica $x[n]$ de duración finita:
+	\begin{align}
+		0 \leq n \leq N_{1} &\implies x[n] \neq 0, \\
+		(n < 0) \vee (n > N_{1}) &\implies x[n] = 0.
+	\end{align}
+	
+	\item Definamos una se\~{n}al peri\'{o}dica $\tilde{x}[n] = \tilde{x}[n+N]$ (donde $N > N_{1}$) de forma tal que en un período coincida con la señal original:
+	\begin{align}
+		(n \bmod N) > N_{1} &\implies \tilde{x}[n] = 0, \\ 
+		(n \bmod N) \leq N_{1} &\implies \tilde{x}[n] = x[n \bmod N].
+	\end{align}
+	
+	\item La se\~{n}al peri\'{o}dica $\tilde{x}[n]$ se puede escribir como una serie de Fourier:
+	\begin{equation}
+		\tilde{x}[n] = \sum_{k=0}^{N-1} a_{k} e^{jk\left(\frac{2\pi}{N}\right)n},
+	\end{equation}
+	donde:
+	\begin{equation}
+		N a_{k} = \sum_{n=0}^{N-1} \tilde{x}[n] e^{-jk\left(\frac{2\pi}{N}\right)n}.
+	\end{equation}
+	
+	\item Entonces como $\tilde{x}[n] = x[n]$ en el intervalo $[0,N-1]$ se puede reemplazar $\tilde{x}[n]$ por $x[n]$:
+	\begin{equation}
+		N a_{k} = \sum_{n=0}^{N-1} \tilde{x}[n] e^{-jk\left(\frac{2\pi}{N}\right)n} = \sum_{n=0}^{N-1} x[n] e^{-jk\left(\frac{2\pi}{N}\right)n}.
+	\end{equation}
+	
+	\item Adem\'{a}s como $x[n] = 0$ fuera del intervalo $[0,N_{1}]$, podemos extender formalmente los l\'{\i}mites de la sumatoria a infinito:
+	\begin{equation}
+		N a_{k} = \sum_{n=0}^{N-1} x[n] e^{-jk\left(\frac{2\pi}{N}\right)n} = \sum_{n=-\infty}^{\infty} x[n] e^{-jk\left(\frac{2\pi}{N}\right)n}.
+	\end{equation}
+	
+	\item Definimos la ecuaci\'{o}n de an\'{a}lisis de la Transformada de Fourier de Tiempo Discreto (DTFT):
+	\begin{equation}
+		X(e^{j\omega}) = \sum_{n=-\infty}^{\infty} x[n] e^{-j\omega n}.
+	\end{equation}
+\end{enumerate}
+
+\subsection{S\'{\i}ntesis}
+
+\begin{enumerate}
+	\item Tenemos que los coeficientes de Fourier de la versión periodicada se pueden calcular tomando muestras de la DTFT:
+	\begin{equation}
+		N a_{k} = X(e^{jk\omega_{N}}),
+	\end{equation}
+	donde $\omega_{N} = \frac{2\pi}{N}$.
+	
+	\item Por lo tanto, podemos reescribir la serie de Fourier como:
+	\begin{equation}
+		\tilde{x}[n] = \sum_{k=0}^{N-1} \frac{1}{N} X(e^{jk\omega_{N}}) e^{jk\omega_{N}n}.
+	\end{equation}
+	Dado que $\omega_{N} = \frac{2\pi}{N}$ tenemos que $\frac{\omega_{N}}{2\pi} = \frac{1}{N}$ y por lo tanto:
+	\begin{equation}
+		\tilde{x}[n] = \frac{1}{2\pi} \sum_{k=0}^{N-1} X(e^{jk\omega_{N}}) e^{jk\omega_{N}n} \omega_{N}.
+	\end{equation}
+	
+	A medida que la cantidad de puntos $N \to \infty$, el incremento en frecuencia tiende a un diferencial $\omega_{N} \to d\omega$, la funci\'{o}n peri\'{o}dica $\tilde{x}[n]$ tiende a la original $x[n]$, y la suma de Riemann se convierte en la integral de s\'{\i}ntesis:
+	\begin{equation}
+		x[n] = \frac{1}{2\pi} \int_{2\pi} X(e^{j\omega}) e^{j\omega n} \, d\omega.
+	\end{equation}
+	(La integral se evalúa en cualquier intervalo de longitud $2\pi$, típicamente de $0$ a $2\pi$ o de $-\pi$ a $\pi$).
+\end{enumerate}
+
+\section{Convergencia de la Transformada de Fourier}
+
+La transformada de Fourier:
+\begin{equation}
+	X(e^{j\omega}) = \sum_{n=-\infty}^{\infty} x[n] e^{-j\omega n},
+\end{equation}
+de una secuencia $x[n]$ existe y converge uniformemente si la secuencia es absolutamente sumable:
+\begin{equation}
+	\sum_{n=-\infty}^{\infty} |x[n]| < \infty,
+\end{equation}
+\textbf{o} converge en el sentido de la energía mínima (error cuadrático medio nulo) si es de energía finita:
+\begin{equation}
+	\sum_{n=-\infty}^{\infty} |x[n]|^{2} < \infty.
+\end{equation}
+
+Observe que la ecuaci\'{o}n de s\'{\i}ntesis no presenta problemas de convergencia pues sus l\'{\i}mites de integraci\'{o}n est\'{a}n restringidos a un per\'{\i}odo finito:
+\begin{equation}
+	x[n] = \frac{1}{2\pi} \int_{0}^{2\pi} X(e^{j\omega}) e^{j\omega n} \, d\omega.
+\end{equation}
+
+\section{Transformada de Fourier para se\~{n}ales peri\'{o}dicas}
+
+\begin{enumerate}
+	\item Consideremos la se\~{n}al exponencial compleja pura:
+	\begin{equation}
+		x[n] = e^{j\omega_{0}n}.
+	\end{equation}
+	
+	\item Podemos probar que su Transformada de Fourier discreta es un tren de deltas de Dirac ponderados:
+	\begin{equation}
+		X(e^{j\omega}) = 2\pi \sum_{k=-\infty}^{\infty} \delta(\omega - \omega_{0} - 2\pi k).
+	\end{equation}
+	
+	\item Para hacerlo, usemos la ecuaci\'{o}n de s\'{\i}ntesis:
+	\begin{equation}
+		\frac{1}{2\pi} \int_{-\pi}^{\pi} X(e^{j\omega}) e^{j\omega n} \, d\omega = \frac{1}{2\pi} \int_{-\pi}^{\pi} \left( 2\pi \sum_{k=-\infty}^{\infty} \delta(\omega - \omega_{0} - 2\pi k) \right) e^{j\omega n} \, d\omega.
+	\end{equation}
+	
+	\item Observemos que el intervalo $[-\pi, \pi]$ contiene exactamente un impulso cuando $\omega = \omega_{0}$ (asumiendo $\omega_0$ en el rango principal, con $k=0$), por lo tanto:
+	\begin{equation}
+		\int_{-\pi}^{\pi} \delta(\omega - \omega_{0}) e^{j\omega n} \, d\omega = e^{j\omega_{0}n}.
+	\end{equation}
+	
+	\item En general, a una se\~{n}al peri\'{o}dica descrita por su Serie de Fourier:
+	\begin{equation}
+		x[n] = \sum_{k=0}^{N-1} a_{k} e^{jk\left(\frac{2\pi}{N}\right)n},
+	\end{equation}
+	le corresponde la Transformada de Fourier formada por deltas de Dirac en las frecuencias armónicas:
+	\begin{equation}
+		X(e^{j\omega}) = 2\pi \sum_{k=-\infty}^{\infty} a_{k} \delta\left(\omega - \frac{2\pi k}{N}\right).
+		\label{tfdperiodica}
+	\end{equation}
+	
+	\item Para probarlo formalmente, evaluamos la ecuación de s\'{\i}ntesis:
+	\begin{equation}
+		\frac{1}{2\pi} \int_{0}^{2\pi} \left( \sum_{k=-\infty}^{\infty} 2\pi a_{k} \delta\left(\omega - \frac{2\pi k}{N}\right) \right) e^{j\omega n} \, d\omega.
+	\end{equation}
+	Intercambiando la posici\'{o}n de las sumatorias y las integrales:
+	\begin{equation}
+		\sum_{k=-\infty}^{\infty} a_{k} \int_{0}^{2\pi} \delta\left(\omega - \frac{2\pi k}{N}\right) e^{j\omega n} \, d\omega.
+	\end{equation}
+	
+	\item Aplicando la propiedad de filtrado del impulso $\delta\left(\omega - \frac{2\pi k}{N}\right)$, el término $e^{j\omega n}$ se evalúa en $\omega = \frac{2\pi k}{N}$:
+	\begin{equation}
+		\sum_{k=-\infty}^{\infty} a_{k} e^{j\frac{2\pi k}{N}n} \left( \int_{0}^{2\pi} \delta\left(\omega - \frac{2\pi k}{N}\right) \, d\omega \right).
+	\end{equation}
+	
+	\item Evaluemos la integral de acuerdo al valor de $k$. Sabemos que el impulso debe estar dentro del intervalo de integración $[0, 2\pi)$ para que no sea nula:
+	\begin{equation}
+		\int_{0}^{2\pi} \delta\left(\omega - \frac{2\pi k}{N}\right) \, d\omega = 
+		\begin{cases}
+			1, & 0 \leq k < N, \\ 
+			0, & \text{en otro caso}.
+		\end{cases}
+	\end{equation}
+	
+	\item Por lo tanto, de la sumatoria infinita, solo sobreviven los $N$ términos correspondientes a un período fundamental:
+	\begin{equation}
+		x[n] = \sum_{k=0}^{N-1} a_{k} e^{jk\frac{2\pi}{N}n}.
+	\end{equation}
+\end{enumerate}
+
+\section{Propiedades de la Transformada de Fourier de Tiempo Discreto}
+
+A continuación se resumen las propiedades principales de la DTFT, denotando la relación como $x[n] \xrightarrow{TF} X(e^{j\omega})$.
+
+\subsection{Ecuaciones Base}
+\textbf{An\'{a}lisis:}
+\begin{equation}
+	X(e^{j\omega}) = \sum_{n=-\infty}^{\infty} x[n] e^{-j\omega n}.
+\end{equation}
+\textbf{S\'{\i}ntesis:}
+\begin{equation}
+	x[n] = \frac{1}{2\pi} \int_{2\pi} X(e^{j\omega}) e^{j\omega n} \, d\omega.
+\end{equation}
+
+\subsection{Periodicidad}
+La DTFT es siempre periódica en $\omega$ con período $2\pi$:
+\begin{equation}
+	X(e^{j(\omega + 2\pi)}) = X(e^{j\omega}).
+\end{equation}
+
+\subsection{Linealidad}
+Si $x[n] \xrightarrow{TF} X(e^{j\omega})$ y $y[n] \xrightarrow{TF} Y(e^{j\omega})$, entonces:
+\begin{equation}
+	a x[n] + b y[n] \xrightarrow{TF} a X(e^{j\omega}) + b Y(e^{j\omega}).
+\end{equation}
+
+\subsection{Desplazamiento en el tiempo}
+\begin{equation}
+	x[n - n_{0}] \xrightarrow{TF} e^{-j\omega n_{0}} X(e^{j\omega}).
+\end{equation}
+
+\subsection{Desplazamiento en frecuencia}
+\begin{equation}
+	e^{j\omega_{0}n} x[n] \xrightarrow{TF} X(e^{j(\omega - \omega_{0})}).
+\end{equation}
+
+\subsection{Conjugaci\'{o}n y Simetr\'{\i}a}
+\begin{equation}
+	x^*[n] \xrightarrow{TF} X^*(e^{-j\omega}).
+\end{equation}
+Si $x[n]$ es puramente real:
+\begin{align}
+	Even(x[n]) &\xrightarrow{TF} \Re[X(e^{j\omega})], \\
+	Odd(x[n]) &\xrightarrow{TF} j\Im[X(e^{j\omega})].
+\end{align}
+
+\subsection{Diferencia temporal (Primera Diferencia)}
+\begin{equation}
+	x[n] - x[n-1] \xrightarrow{TF} (1 - e^{-j\omega}) X(e^{j\omega}).
+\end{equation}
+
+\subsection{Acumulaci\'{o}n (Suma)}
+\begin{equation}
+	\sum_{k=-\infty}^{n} x[k] \xrightarrow{TF} \frac{X(e^{j\omega})}{1 - e^{-j\omega}} + \pi X(e^{j0}) \sum_{k=-\infty}^{\infty} \delta(\omega - 2\pi k).
+\end{equation}
+
+\subsection{Diferenciaci\'{o}n en frecuencia}
+\begin{equation}
+	n x[n] \xrightarrow{TF} j \frac{d X(e^{j\omega})}{d\omega}.
+\end{equation}
+
+\subsection{Relaci\'{o}n de Parseval}
+La energía en el tiempo es igual a la energía en frecuencia:
+\begin{equation}
+	\sum_{n=-\infty}^{\infty} |x[n]|^{2} = \frac{1}{2\pi} \int_{2\pi} |X(e^{j\omega})|^{2} \, d\omega.
+\end{equation}
+
+\subsection{Convoluci\'{o}n}
+La convolución en el dominio del tiempo equivale a un producto ordinario en frecuencia:
+\begin{equation}
+	y[n] = h[n] * x[n] \xrightarrow{TF} Y(e^{j\omega}) = H(e^{j\omega}) X(e^{j\omega}).
+\end{equation}
+
+\subsection{Multiplicaci\'{o}n (Modulación)}
+La multiplicación temporal equivale a la convolución periódica de sus transformadas:
+\begin{equation}
+	r[n] = x[n] y[n] \xrightarrow{TF} R(e^{j\omega}) = \frac{1}{2\pi} \int_{2\pi} X(e^{j\theta}) Y(e^{j(\omega - \theta)}) \, d\theta.
+\end{equation}

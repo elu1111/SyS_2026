@@ -1,0 +1,590 @@
+\documentclass[11pt,a4paper,openany]{book}
+
+% Preámbulo sugerido para matemáticas y señales
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{hyperref}
+
+\geometry{
+	a4paper,
+	left=3cm,
+	right=3cm,
+	top=3cm,
+	bottom=3cm,
+}
+
+\title{Señales y Sistemas\\ \Large Notas de Cátedra}
+\author{}
+\date{\today}
+
+\begin{document}
+	
+	\maketitle
+	\tableofcontents
+	
+	\part{Fundamentos y Sistemas LTI}
+	
+	% ==========================================
+	% SEMANA 1
+	% ==========================================
+	
+	\chapter{Señales en Tiempo Continuo (CT) y Discreto (DT)}
+	
+	% Aquí puedes insertar la introducción al capítulo.
+	
+	\section{Concepto de Señal}
+	% Definición matemática y ejemplos físicos (voltaje, presión, señales digitales).
+	
+	\section{Transformaciones de la variable independiente}
+	% Introducción a las transformaciones.
+	
+	\subsection{Desplazamiento temporal}
+	% Desarrollo para x(t - t_0) y x[n - n_0]
+	
+	\subsection{Reflexión (Inversión)}
+	% Desarrollo para x(-t) y x[-n]
+	
+	\subsection{Escalamiento temporal}
+	% Desarrollo para x(at) (compresión y expansión)
+	
+	\section{Señales Periódicas}
+	% Definición de periodo fundamental T y N.
+	
+	\section{Señales Elementales}
+	% Introducción a las señales básicas.
+	
+	\subsection{Exponenciales complejas y senoidales}
+	% Diferencias de periodicidad entre CT y DT.
+	
+	\subsection{La función impulso unitario y escalón unitario}
+	% Desarrollo sobre \delta y u. Relación entre ambas (derivada/integral y diferencia/suma).
+	
+	
+	\chapter{Definición y Propiedades de los Sistemas}
+	
+	% Aquí puedes insertar la introducción al capítulo.
+	
+	\section{Interconexiones de sistemas}
+	% Serie (cascada), paralelo y realimentación.
+	
+	\section{Propiedades Fundamentales}
+	% Definiciones y métodos de verificación.
+	
+	\subsection{Memoria}
+	% Sistemas instantáneos vs. sistemas con memoria.
+	
+	\subsection{Invertibilidad}
+	% Concepto de sistema inverso.
+	
+	\subsection{Causalidad}
+	% Dependencia de valores presentes y pasados.
+	
+	\subsection{Estabilidad (BIBO)}
+	% Entradas acotadas producen salidas acotadas.
+	
+	\subsection{Invarianza en el tiempo}
+	% El comportamiento no cambia con el tiempo.
+	
+	\subsection{Linealidad}
+	% Principios de aditividad y homogeneidad (superposición).
+	
+	
+	% ==========================================
+	% SEMANA 2
+	% ==========================================
+	
+	\chapter{La Suma de Convolución (Tiempo Discreto)}
+	
+	% Aquí puedes insertar la introducción al capítulo.
+	
+	\section{Representación de señales DT en términos de impulsos}
+	% Cómo "desarmar" x[n] usando \delta[n-k].
+	
+	\section{Respuesta al Impulso ($h[n]$)}
+	% Definición como la huella dactilar del sistema.
+	
+	\section{La Suma de Convolución}
+	% Desarrollo conceptual.
+	\begin{equation}
+		y[n] = \sum_{k=-\infty}^{\infty} x[k]h[n-k]
+	\end{equation}
+	
+	\section{Cálculo práctico}
+	% Método gráfico (reflejar, desplazar y multiplicar) y método analítico.
+	
+	
+	\chapter{La Integral de Convolución y Propiedades de LTI}
+	
+	% Aquí puedes insertar la introducción al capítulo.
+	
+	\section{Representación de señales CT en términos de impulsos}
+	% El concepto del límite de pulsos estrechos.
+	
+	\section{La Integral de Convolución}
+	% Desarrollo conceptual.
+	\begin{equation}
+		y(t) = \int_{-\infty}^{\infty} x(\tau)h(t-\tau) d\tau
+	\end{equation}
+	
+	\section{Propiedades de los sistemas LTI}
+	% Introducción a las propiedades.
+	
+	\subsection{Conmutatividad, Distributividad y Asociatividad}
+	% Desarrollo de las propiedades.
+	
+	\subsection{Caracterización de propiedades LTI a través de la respuesta al impulso}
+	% ¿Cómo saber si un sistema LTI es causal o estable mirando solo su respuesta al impulso h(t) o h[n]?
+	
+	\section{Respuesta al Escalón}
+	% Relación con la respuesta al impulso.
+	
+	% ==========================================
+	% BIBLIOGRAFÍA Y EJERCICIOS
+	% ==========================================
+	
+	\cleardoublepage
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Bibliografía y Ejercicios Recomendados}
+	\chapter*{Bibliografía y Ejercicios Recomendados}
+	
+	\textbf{Bibliografía específica para este bloque:}
+	\begin{itemize}
+		\item \textbf{Oppenheim:} Capítulo 1 (Secciones 1.1 a 1.6) y Capítulo 2 (Secciones 2.1 a 2.4).
+	\end{itemize}
+	
+	\textbf{Ejercicios recomendados:}
+	\begin{itemize}
+		\item Problemas de fin de capítulo 1.21 a 1.27 (propiedades de sistemas).
+		\item Problemas de fin de capítulo 2.21 a 2.23 (convoluciones básicas).
+	\end{itemize}
+	
+% ==========================================
+% INICIO DEL BLOQUE II
+% ==========================================
+
+\part{Análisis de Fourier}
+
+% ==========================================
+% SEMANA 3
+% ==========================================
+
+\chapter{Series de Fourier (Señales Periódicas)}
+
+\section{Serie de Fourier en Tiempo Continuo (CTFS)}
+% Desarrollo de los siguientes temas:
+% - Respuesta de sistemas LTI a exponenciales complejas: Autofunciones y autovalores H(j\omega).
+% - Representación de señales periódicas: Ecuaciones de síntesis y análisis.
+% - Determinación de coeficientes (a_k): Ortogonalidad de las exponenciales complejas.
+% - Fenómeno de Gibbs: Comportamiento en discontinuidades.
+% - Propiedades: Linealidad, desplazamiento, conjugación y simetría.
+% - Relación de Parseval.
+
+\section{Serie de Fourier en Tiempo Discreto (DTFS)}
+% Desarrollo de los siguientes temas:
+% - Diferencia fundamental con CTFS (periodicidad de las exponenciales discretas, N coeficientes).
+% - Ecuaciones de síntesis y análisis (sumatorias finitas).
+% - Propiedades de la DTFS.
+% - Sistemas LTI y Series de Fourier: Filtrado de señales periódicas.
+
+
+% ==========================================
+% SEMANA 4
+% ==========================================
+
+\chapter{Transformada de Fourier en Tiempo Continuo (CTFT)}
+
+\section{Representación de Señales Aperiódicas}
+% Extensión de la Serie de Fourier: El límite cuando el periodo T \to \infty.
+
+\subsection{El Par de la Transformada de Fourier}
+% Desarrollo conceptual y condiciones de convergencia (Dirichlet).
+
+\textbf{Ecuación de Análisis:}
+\begin{equation}
+	X(j\omega) = \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt
+\end{equation}
+
+\textbf{Ecuación de Síntesis:}
+\begin{equation}
+	x(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(j\omega) e^{j\omega t} d\omega
+\end{equation}
+
+% Ejemplos clásicos: Pulso rectangular y función Sinc.
+
+\section{Propiedades y Sistemas LTI en Frecuencia}
+% Desarrollo de propiedades clave (desplazamiento, escalamiento, diferenciación/integración).
+% Propiedad fundamental de Convolución: y(t) = x(t) * h(t) \iff Y(j\omega) = X(j\omega)H(j\omega).
+% Sistemas descritos por ecuaciones diferenciales (obtención de H(j\omega)).
+
+
+% ==========================================
+% SEMANA 5
+% ==========================================
+
+\chapter{Transformada de Fourier en Tiempo Discreto (DTFT)}
+
+\section{Definición y Pares Comunes}
+% Definición y justificación de por qué X(e^{j\omega}) es siempre periódica (periodo 2\pi).
+% Pares comunes: Impulso, escalón, señales exponenciales causales.
+% Dualidad entre las transformaciones (CTFS, DTFS, CTFT, DTFT).
+
+\section{Propiedades de la DTFT y Repaso Integral}
+% Convolución en tiempo discreto.
+% Sistemas descritos por ecuaciones de diferencias (obtención de H(e^{j\omega})).
+% Matriz comparativa de propiedades y resolución de dudas.
+
+
+% ==========================================
+% SEMANA 6
+% ==========================================
+
+\chapter{Evaluación del Bloque I y II}
+
+\section{Taller de Problemas}
+% Resolución de exámenes anteriores. 
+% Énfasis en linealidad/causalidad, convoluciones gráficas y espectros de magnitud/fase.
+
+\section{Primer Examen Parcial}
+% Temario: Capítulos 1 al 5 (Oppenheim).
+% Formato: 2 problemas LTI/convolución, 2 problemas Fourier (CT y DT).
+
+
+% ==========================================
+% BIBLIOGRAFÍA Y EJERCICIOS - BLOQUE II
+% ==========================================
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliografía y Ejercicios Recomendados - Bloque II}
+\chapter*{Bibliografía y Ejercicios Recomendados - Bloque II}
+
+\textbf{Bibliografía específica para este bloque:}
+\begin{itemize}
+	\item \textbf{Oppenheim, Willsky y Nawab:} Capítulos 3, 4 y 5 completos.
+\end{itemize}
+
+\textbf{Ejercicios clave recomendados:}
+\begin{itemize}
+	\item 3.22 (Cálculo de coeficientes de serie).
+	\item 4.21 (Pares de transformada en tiempo continuo).
+	\item 5.21 (Pares de transformada en tiempo discreto).
+\end{itemize}
+
+% ==========================================
+% INICIO DEL BLOQUE III
+% ==========================================
+
+\part{Caracterización y Muestreo}
+
+% ==========================================
+% SEMANA 7
+% ==========================================
+
+\chapter{Respuesta en Magnitud y Fase}
+
+\section{Análisis de la respuesta en frecuencia}
+% Representación de H(j\omega) y H(e^{j\omega}) en forma polar.
+
+\section{Efectos de la Fase}
+% Concepto de retraso de grupo (group delay) y distorsión de fase. Importancia de la fase lineal.
+
+\section{Escalas Logarítmicas}
+% Introducción a los diagramas de Bode (magnitud en dB y fase en grados).
+
+\section{Relación Tiempo-Frecuencia}
+% Cómo el ancho de banda en frecuencia afecta la rapidez de respuesta (tiempo de subida) en el dominio del tiempo.
+
+
+\chapter{Filtros y Sistemas de Segundo Orden}
+
+\section{Filtros Ideales}
+% Pasabajos, pasaaltos y pasabanda. La imposibilidad física de los filtros ideales (causalidad).
+
+\section{Filtros No Ideales}
+% Concepto de banda de paso, banda de transición y banda de rechazo.
+
+\section{Sistemas de primer y segundo orden}
+
+\subsection{Tiempo continuo}
+% Circuitos RC, RLC y su respuesta en frecuencia.
+
+\subsection{Tiempo discreto}
+% Ecuaciones de diferencias de primer y segundo orden.
+
+\section{Análisis de resonancia y amortiguamiento}
+% Desarrollo conceptual.
+
+
+% ==========================================
+% SEMANA 8
+% ==========================================
+
+\chapter{Muestreo en el Dominio del Tiempo}
+
+\section{Representación del muestreo como una multiplicación}
+% El tren de impulsos unitarios como señal de muestreo.
+
+\section{Efecto en el espectro}
+% Replicación del espectro de la señal original en múltiplos de la frecuencia de muestreo \omega_s.
+
+\section{El Teorema de Nyquist-Shannon}
+% Condición para evitar el solapamiento (aliasing): \omega_s > 2\omega_M.
+
+\section{Aliasing}
+% Qué ocurre cuando se submuestrea una señal (ejemplos visuales y auditivos).
+
+
+\chapter{Reconstrucción y Procesamiento Digital}
+
+\section{Reconstrucción de señales}
+% El filtro pasabajos ideal como interpolador.
+
+\section{Interpolación práctica}
+% Retención de orden cero (Zero-Order Hold) y de primer orden.
+
+\section{Procesamiento de tiempo continuo en tiempo discreto}
+
+\subsection{Diagrama de bloques}
+% C/D (Conversor Continuo a Discreto) \to Sistema LTI Discreto \to D/C (Conversor Discreto a Continuo).
+
+\subsection{Diseño de un sistema digital}
+% Cómo diseñar un sistema digital que emule un filtro analógico.
+
+\section{Diezmación e Interpolación}
+% Conceptos básicos de cambio de la frecuencia de muestreo en el dominio discreto.
+
+
+% ==========================================
+% BIBLIOGRAFÍA Y EJERCICIOS - BLOQUE III
+% ==========================================
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliografía y Ejercicios Recomendados - Bloque III}
+\chapter*{Bibliografía y Ejercicios Recomendados - Bloque III}
+
+\textbf{Bibliografía específica para este bloque:}
+\begin{itemize}
+	\item \textbf{Oppenheim, Willsky y Nawab:} Capítulo 6 (Secciones 6.1 a 6.5) y Capítulo 7 (Secciones 7.1 a 7.5).
+\end{itemize}
+
+\textbf{Ejercicios clave recomendados:}
+\begin{itemize}
+	\item 6.21 (Diagramas de magnitud y fase).
+	\item 7.21 y 7.22 (Cálculo de frecuencias de Nyquist y reconstrucción).
+\end{itemize}
+
+% ==========================================
+% INICIO DEL BLOQUE IV
+% ==========================================
+
+\part{Transformadas Complejas ($s$ y $z$)}
+
+% ==========================================
+% SEMANA 9
+% ==========================================
+
+\chapter{Definición y Región de Convergencia (ROC)}
+
+\section{De Fourier a Laplace}
+% Generalización de la transformada mediante la variable compleja s = \sigma + j\omega.
+
+\section{Definición de la Transformada bilateral}
+% Desarrollo conceptual.
+\begin{equation}
+	X(s) = \int_{-\infty}^{\infty} x(t) e^{-st} dt
+\end{equation}
+
+\section{La Región de Convergencia (ROC)}
+% Por qué el álgebra no es suficiente; importancia de la ROC para identificar la señal original.
+
+\section{Propiedades de la ROC}
+% Relación con la causalidad y la duración de la señal (señales de lado derecho, izquierdo y biltaterales).
+
+\section{Diagrama de Polos y Ceros}
+% Visualización de la función de transferencia H(s) en el plano s.
+
+\chapter{Propiedades y Estabilidad de Sistemas LTI}
+
+\section{Propiedades de Laplace}
+% Linealidad, desplazamiento, escalamiento y el teorema del valor inicial/final.
+
+\section{Transformada de Laplace Inversa}
+% Uso de fracciones parciales para volver al dominio del tiempo.
+
+\section{Análisis de Sistemas LTI}
+
+\subsection{Función de transferencia $H(s)$}
+% Desarrollo de la función de transferencia.
+
+\subsection{Causalidad}
+% La ROC es un semiplano a la derecha del polo más a la derecha.
+
+\subsection{Estabilidad}
+% Un sistema LTI es estable si y solo si la ROC incluye el eje j\omega (equivalente a decir que todos los polos están en el semiplano izquierdo para sistemas causales).
+
+
+% ==========================================
+% SEMANA 10
+% ==========================================
+
+\chapter{Definición y el Plano Z}
+
+\section{Generalización en tiempo discreto}
+% La variable compleja z = re^{j\omega}.
+
+\section{Definición de la Transformada Z}
+% Desarrollo conceptual.
+\begin{equation}
+	X(z) = \sum_{n=-\infty}^{\infty} x[n] z^{-n}
+\end{equation}
+
+\section{Relación entre el plano $s$ y el plano $z$}
+% El mapeo del eje imaginario de s al círculo unitario de z.
+
+\section{ROC en el plano Z}
+% Representación como anillos concéntricos. Propiedades de la ROC para secuencias finitas, derechas e izquierdas.
+
+\chapter{Propiedades, Inversa y Estabilidad}
+
+\section{Propiedades de la Transformada Z}
+% Desplazamiento temporal (el operador z^{-1} como delay), convolución y diferenciación en el dominio z.
+
+\section{Transformada Z Inversa}
+% Método de expansión en fracciones parciales y división larga (series de potencias).
+
+\section{Caracterización de Sistemas LTI en el dominio $z$}
+
+\subsection{Estabilidad y Causalidad}
+% Un sistema LTI discreto es estable si la ROC incluye el círculo unitario (|z|=1).
+% Para sistemas causales, esto implica que todos los polos deben estar dentro del círculo unitario.
+
+
+% ==========================================
+% BIBLIOGRAFÍA Y EJERCICIOS - BLOQUE IV
+% ==========================================
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliografía y Ejercicios Recomendados - Bloque IV}
+\chapter*{Bibliografía y Ejercicios Recomendados - Bloque IV}
+
+\textbf{Bibliografía específica para este bloque:}
+\begin{itemize}
+	\item \textbf{Oppenheim, Willsky y Nawab:} Capítulo 9 (Laplace) y Capítulo 10 (Z-Transform).
+\end{itemize}
+
+\textbf{Ejercicios clave recomendados:}
+\begin{itemize}
+	\item 9.21 y 9.22 (Identificar señales a partir de polos y ROC).
+	\item 10.21 y 10.22 (Transformada Z y diagramas de polos y ceros).
+\end{itemize}
+
+% ==========================================
+% INICIO DEL BLOQUE V
+% ==========================================
+
+\part{Aplicaciones, Filtros y Simulación}
+
+% ==========================================
+% SEMANA 11
+% ==========================================
+
+\chapter{Muestreo en el Dominio de la Frecuencia}
+
+\section{La Transformada Discreta de Fourier (DFT)}
+% Cómo representar el espectro de una señal mediante un número finito de muestras.
+
+\section{Relación entre la DTFT y la DFT}
+% Muestreo de la DTFT en el círculo unitario.
+
+\section{Resolución espectral}
+% El efecto del enventanado (windowing) y la longitud del registro de datos.
+
+\chapter{Algoritmos y Procesamiento Rápido}
+
+\section{Introducción a la FFT}
+% Concepto de diezmación en tiempo y frecuencia (eficiencia computacional).
+
+\section{Convolución Circular vs. Lineal}
+% Por qué la multiplicación en el dominio de la DFT no es exactamente igual a la convolución lineal y cómo corregirlo (zero-padding).
+
+
+% ==========================================
+% SEMANA 12
+% ==========================================
+
+\chapter{Estructuras de Filtros Digitales}
+
+\section{Representación mediante diagramas de bloques}
+% Sumadores, ganancias y retrasos ($z^{-1}$).
+
+\section{Formas Directas}
+% Forma Directa I y Forma Directa II (Canónica).
+
+\section{Efectos de la cuantización}
+% Breve introducción a los errores por precisión finita.
+
+\chapter{Filtros FIR e IIR}
+
+\section{Filtros de Respuesta al Impulso Finita (FIR)}
+% Propiedad de fase lineal y diseño por el método de ventanas (Hamming, Hann, Blackman).
+
+\section{Filtros de Respuesta al Impulso Infinita (IIR)}
+% Diseño a partir de prototipos analógicos (Butterworth, Chebyshev) mediante la Transformación Bilineal.
+
+
+% ==========================================
+% SEMANA 13
+% ==========================================
+
+\chapter{Representación en Variables de Estado (State-Space)}
+
+\section{Concepto de Estado}
+% Cómo pasar de ecuaciones diferenciales/diferencias de orden N a un sistema de N ecuaciones de primer orden.
+
+\section{Ecuaciones de estado y de salida}
+% Matrices A, B, C, D.
+
+\section{Ventajas de la representación de estado}
+% Modelado multivariable y simulación numérica eficiente.
+
+\chapter{Simulación Computacional}
+
+\section{Algoritmos de integración numérica}
+% Euler y Runge-Kutta (conceptos básicos aplicados a señales).
+
+\section{Simulación de sistemas realimentados}
+% Estabilidad numérica y retardo de transporte.
+
+\section{Uso de herramientas de software}
+% Breve repaso de cómo implementar estos modelos en entornos tipo MATLAB o Python (SciPy).
+
+
+% ==========================================
+% SEMANA 14
+% ==========================================
+
+\chapter{Taller de Integración}
+
+\section{Resolución de un problema ``extremo-a-extremo''}
+% Desde la toma de una señal continua, su muestreo, filtrado digital y reconstrucción.
+
+\section{Análisis de compromiso (\textit{trade-offs})}
+% Velocidad de muestreo vs. carga computacional.
+
+\chapter{Sesión de Consultas}
+
+\section{Repaso General}
+% Repaso de los conceptos más complejos del Bloque IV (Z y Laplace) y Bloque V.
+
+\section{Simulacro de examen parcial}
+% Preparación para la evaluación.
+
+
+% ==========================================
+%
+\end{document}

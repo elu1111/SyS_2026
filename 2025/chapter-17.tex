@@ -1,0 +1,263 @@
+\chapter{Muestreo en tiempo}
+
+\section{Introducci\'{o}n}
+
+\subsection{Definiciones b\'{a}sicas}
+
+\begin{enumerate}
+\item   Recordemos la definici\'{o}n \textbf{de la sucesi\'{o}n de funciones} cuyo l\'{\i}mite es el
+impulso unitario
+\begin{equation}
+  r_{\Delta} \left( t - t_{0} \right) = 
+  \left \{ \begin{array}{ll}
+       0                       &       t < t_{0},                                              \\
+  \\
+       \frac{1}{\Delta}        &       t_{0} \leq      t       \leq    t_{0} + \Delta,         \\
+  \\
+       0                       &       t_{0} + \Delta < t 
+  \end{array} \right.
+\end{equation}
+                donde $\Delta$ es una constante real no negativa.
+
+\item   Supongamos que tenemos una se\~{n}al $x \left( t \right)$. Podemos definir una nueva se\~{n}al
+\begin{equation}
+                        z \left( t \right) = x \left( t \right) \delta \left( t - t_{0}\right).
+                \end{equation}
+                
+\item Para obtener los valores de la funci\'{o}n $z(t)$, construyamos una sucesi\'{o}n de funciones
+                \begin{equation}
+                        z_{\Delta} \left( t \right) = \left \{
+                        \begin{array}{ll}
+                 0                                       &       t < t_{0},                              \\
+                 z\left( t \right) \frac{1}{\Delta}      &       t_{0} \leq t \leq t_{0} + \Delta,       \\
+                 0                                       &       t_{0} + \Delta < t.
+                        \end{array}
+                        \right.
+                \end{equation}
+                La funci\'{o}n $z \left( t \right)$ es el l\'{\i}mite de la sucesi\'{o}n cuando
+                $\Delta \rightarrow 0$, con la siguiente definici\'{o}n
+                \begin{equation}
+                        z\left(t \right) = \left \{
+                        \begin{array}{ll}
+                                0                       &       t \neq t_{0},   \\
+                                x\left(t_{0}\right)     &       t  = t_{0}.
+                        \end{array}             \label{muescont}
+                        \right.
+                \end{equation}
+
+\item   Podemos resumir la operaci\'{o}n realizada en la ec. (\ref{muescont}) como              
+                \begin{equation}
+                        z \left( t \right) = 
+                                x\left( t\right) \delta \left( t-t_{0}\right) =
+                                x\left( t_{0}\right) \delta \left( t-t_{0}\right) .
+                \end{equation}
+
+\end{enumerate}
+
+\section{Muestreo por modulaci\'{o}n con un tren de impulsos, tiempo continuo}
+
+\begin{enumerate}
+\item Veamos la Fig. (\ref{samponeeps}), y recordemos la definici\'{o}n de un tren de impulsos de tiempo 
+continuo
+\begin{equation}
+        p\left( t\right) =\sum_{n=-\infty }^{\infty }\delta \left( t-nT\right) .        \label{samptemp}
+\end{equation}
+Sabemos adem\'{a}s que la transformada de Fourier de $p(t)$ es
+\begin{equation}
+        P\left( j\omega \right) =
+                \frac{2\pi }{T}\sum_{k=-\infty }^{\infty }\delta\left( \omega -k\frac{2\pi }{T}\right) .
+                \label{fouriertrenimp}
+\end{equation}
+
+\item Calculemos ahora el producto de $p\left( t\right) $ con una se\~{n}al $x\left( t\right) $
+\begin{equation}
+        x_{p}\left( t\right) = x\left( t\right) p\left( t\right) = 
+                  \sum_{n=-\infty }^{\infty } x(t) \delta \left( t-nT\right).
+\end{equation}
+Por la propiedad del producto de una se\~{n}al con un impulso sabemos que
+\begin{equation}
+        x\left( t\right) \delta \left( t-t_{0}\right) =x\left( t_{0}\right) \delta \left( t-t_{0}\right) .
+\end{equation}
+Por lo tanto resulta 
+\begin{equation}
+        x_{p}\left( t\right) =\sum_{n=-\infty }^{\infty }x\left( nT\right) \delta \left( t-nT\right) .
+\end{equation}
+
+\item Por la propiedad de la multiplicaci\'{o}n de la Transformada de Fourier
+sabemos que la transformada de Fourier de la se\~{n}al $x_{p}(t)$ debe ser
+\begin{equation}
+        X_{p}\left( j\omega \right) =
+                \frac{1}{2\pi }
+                \int_{-\infty }^{\infty}
+                        X\left( j\theta \right) P\left( j\left( \omega -\theta \right) \right) d\theta .
+\end{equation}
+Teniendo en cuenta la ecuaci\'{o}n (\ref{fouriertrenimp}) escribimos
+\begin{equation}
+        X_{p}\left( j\omega \right) =
+\frac{1}{2\pi }
+\int_{-\infty }^{\infty}
+  \frac{2\pi }{T}
+  \sum_{k=-\infty }^{\infty }    
+      X\left( j\theta \right) \delta\left( \omega -k\frac{2\pi}{T} -\theta \right)  
+d\theta,
+\end{equation}
+donde, intercambiando las posiciones de la integral y la sumatoria y simplificando, finalmente 
+permite deducir
+\begin{equation}
+        X_{p}\left( j\omega \right) =
+  \frac{1}{T}
+  \sum_{k=-\infty }^{\infty }
+  \int_{-\infty }^{\infty}
+      X\left( j\theta \right) \delta\left( \omega -k\frac{2\pi}{T} -\theta \right)  
+  d\theta.
+\end{equation}
+
+\item Dada la propiedad de la convoluci\'{o}n de una se\~{n}al con un impulso
+\begin{equation}
+ X \left( j\omega \right) * \delta \left( \omega -k \frac{2\pi}{T} \right) =
+  X\left( j\omega - k \frac{2 \pi}{T} \right),
+\end{equation}
+resulta 
+\begin{equation}
+        X_{p}\left( j\omega \right) =
+ \frac{1}{T} 
+ \sum_{k=-\infty }^{\infty } X\left(j\left( \omega -k\frac{2\pi }{T}\right) \right) .    \label{sampomega}
+\end{equation}
+
+\item Para explicar en palabras la ec. (\ref{sampomega}), recordemos que se le da el nombre de 
+  espectro de la se\~{n}al $x(t)$ a su transformada de Fourier $X(j \omega)$. 
+  La ec. (\ref{sampomega}) es la transformada de Fourier de la se\~{n}al muestreada y 
+  es una sumatoria o superposici\'{o}n de copias del espectro original desplazadas en frecuencia a 
+  intervalos regulares $\frac{2 \pi}{T}$. 
+\end{enumerate}
+
+\begin{figure}
+        \centering
+        \includegraphics[height=3.5in]{./graphics/sampone.eps}
+        \caption{Muestreo en el dominio del tiempo: La se\~{n}al original se modula con 
+        tren de impulsos.}
+        \label{samponeeps}
+\end{figure}
+
+\section{Teorema del muestreo}
+
+\begin{enumerate}
+        \item   Sea $x\left( t\right) $ una se\~{n}al cuyo espectro tiene un ancho de banda limitado con 
+          $X\left( j\omega \right) =0$ para $\left| \omega \right| >\omega_{a}$, donde $\omega_{a}$ 
+          es el ancho de banda. Entonces $x\left( t\right) $ queda correctamente especificada por 
+          sus muestras $x\left( nT\right)$, $n=0, 1, 2,....,$ si
+        \begin{equation}
+                \omega_{s}=\frac{2\pi }{T}>2\omega_{a}.
+        \end{equation}
+        
+        \item En otras palabras, si generamos una se\~{n}al $x_{T}^{ }\left( t\right) $ modulando un tren 
+          de impulsos peri\'{o}dicos de frecuencia $\omega_{s}$ con una se\~{n}al $x\left( t\right),$ 
+          podemos recuperar la se\~{n}al $x(t)$ haciendo pasar la se\~{n}al $x_{T}\left( t\right)$ por un 
+          filtro pasabajos ideal con ganancia $T$ y frecuencia de corte superior a $\omega_{a}$ e inferior 
+          a $\omega_{s}-\omega_{a}$.
+
+        \item Las dos ecuaciones que debemos observar para entender la clave del muestreo son 
+          (\ref{samptemp}) y (\ref{sampomega}), repetidas a continuaci\'{o}n
+        \begin{equation}
+                p\left( t\right) =\sum_{n=-\infty }^{\infty }\delta \left( t-nT\right),
+        \end{equation}
+        \begin{equation}
+                X_{p}\left( j\omega \right) =
+                \frac{1}{T}
+                \sum_{k=-\infty }^{\infty } X\left(j\left( \omega -k\frac{2\pi }{T}\right) \right).
+        \end{equation}
+        La separaci\'{o}n en el tren de impulsos temporal es $T$, y en el tren de impulsos en frecuencia 
+        es $\frac{2\pi }{T}$. Cuando mayor es el tiempo de muestreo, menor es la separaci\'{o}n de los
+        centros de las copias del espectro original en frecuencia.
+
+        \item Si los centros de los espectros se acercan demasiado, entonces los extremos de las copias
+          del espectro original se superponen y confunden, provocando el fen\'{o}meno de aliasing.
+
+\end{enumerate}
+        
+\begin{figure}
+        \centering
+        \includegraphics[height=3.9in]{./graphics/samptwo.eps}
+        \caption{Muestreo en el dominio de la frecuencia. La multiplicaci\'{o}n en el dominio del tiempo
+        corresponde a una convoluci\'{o}n en el dominio de la frecuencia. La  convoluci\'{o}n de un impulso
+        ubicado en $\frac{k 2 \Pi}{T}$ con la se\~{n}al original genera una copia de esta cuya frecuencia
+        central es $\frac{k 2 \Pi}{T}$. Obtenemos as\'{\i} infinitas copias del espectro de la se\~{n}al
+        original ubicadas en las frecuencias $k \omega_{s}$.}
+        \label{samptwoeps}
+\end{figure}
+
+\begin{figure}
+        \centering
+        \includegraphics[height=4.0in]{./graphics/sampthree.eps}
+        \caption{Aliasing o enmascaramiento de frecuencias por muestreo demasiado lento.}
+        \label{sampthreeeps}
+\end{figure}
+
+\section{Reconstrucci\'{o}n ideal de se\~{n}ales muestreadas}
+
+\begin{enumerate}
+
+\item Recordemos la propiedad de la multiplicaci\'{o}n de la Transformada de Fourier
+        \begin{equation}
+                X(j \omega) \, H(j \omega)) 
+                \begin{array}{c} TF \\ \longleftrightarrow \end{array} x(t) * h(t).
+        \end{equation}
+        
+\item Supongamos un  filtro  pasabajo  ideal  cuya respuesta en frecuencia es
+        \begin{equation}
+                H(j \omega) =
+                        \left[  \begin{array}{cc}
+                                1       &       |\omega| \leq \omega_{c},       \\
+                                0       &       |\omega| > \omega_{c}.
+                        \end{array}\right.
+        \end{equation}
+        Por lo tanto su respuesta al impulso es
+        \begin{equation}
+                h(t) =   \omega_{c} \, T \, \frac{sin(\omega_{c} \, t)}{\pi \, \omega_{c} \, t}.
+        \end{equation}
+
+\item La se\~{n}al  reconstruida es  entonces
+        \begin{equation}
+                x_{r}\left(  t\right) =
+                \sum_{\infty}^{\infty}
+                        x(n T) \, \frac{\omega_{c} \, T}{\pi} \frac{sin(\omega_{c} \, (t-nT))}{\omega_{c} \, (t-nT)}.
+        \end{equation}
+
+\item Esta es una reconstrucci\'{o}n ideal porque estamos usando un filtro pasabajos ideal, cuya
+  respuesta es no causal.
+
+\end{enumerate}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=3in]{./graphics/muestreocontinua.eps}
+  \caption{Una se\~{n}al continua que ser\'{a} muestreada}
+  \label{muestreocontinuaeps}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=3in]{./graphics/muestreomuestreada.eps}
+  \caption{La se\~{n}al muestreada}
+  \label{muestreomuestreadaeps}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=3in]{./graphics/muestreoreconstruccion.eps}
+  \caption{Reconstrucci\'{o}n ideal de la se\~{n}al muestreada}
+  \label{muestreoreconstruccioneps}
+\end{figure}
+
+\section{Reconstrucci\'{o}n real de se\~{n}ales muestreadas}
+
+Una se\~{n}al continua muestreada se puede reconstruir mediante
+pulsos (vea la Figura \ref{muestreoreconstruccionrealeps})
+
+\begin{figure}
+  \centering
+  \includegraphics[height=3in]{./graphics/contconv222.eps}
+  \caption{Reconstrucci\'{o}n real de la se\~{n}al muestreada,
+    mediante sumatoria de pulsos}
+  \label{muestreoreconstruccionrealeps}
+\end{figure}

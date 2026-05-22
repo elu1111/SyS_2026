@@ -1,0 +1,998 @@
+\chapter{Software para modelizaci\'{o}n, análisis, procesamiento y síntesis de se\~{n}ales}
+
+\section{Introducci\'{o}n a Matlab / Octave}
+
+Matlab y Octave son int\'{e}rpretes que nos permite realizar c\'{a}lculos
+num\'{e}ricos, incluso con n\'{u}meros complejos, vectores y matrices,
+y realizar gr\'{a}ficos en distintas representaciones.
+
+En este apunte, mostramos algunas de las operaciones y comandos b\'{a}sicos para
+la operaci\'{o}n interactiva. 
+
+\subsection{La l\'{\i}nea de comandos}
+
+\begin{enumerate}
+
+\item Cuando Matlab/Octave comienza a ejecutarse, aparece una ventana tipo consola 
+ (sin interfaz gr\'{a}fica), y una l\'{\i}nea marcada con el s\'{\i}mbolo
+  \verb->>-. Esta es la l\'{\i}nea de comandos, donde escribimos las
+  diferentes ordenes.
+
+\item Para probar podemos escribir
+\begin{verbatim}
+2 + 2
+3 - 5
+3 / 1.4
+2 * pi / 4
+(1 + 2 * i) / (1 - 2 * i)
+\end{verbatim}
+Nota: $i$ es la unidad imaginaria.
+
+\item En las \'{u}ltimas versiones de Matlab/Octave, a medida que vamos
+  escribiendo comandos, estos quedan registrados a una historia de
+  comandos, que podemos revisar m\'{a}s tarde y recordar lo hecho.
+
+\item El comando diary nos permite grabar en un archivo de texto todas las
+ordenes, datos y resultados de una sesi\'{o}n. Para usar el comando
+diary escribamos en la l\'{\i}nea de comando
+\begin{verbatim}
+>> diary 'archivo.txt'
+\end{verbatim}
+
+\item La idea de esta clase es generar un archivo, denominado
+  \verb-archivo.txt- con todas las \'{o}rdenes dadas.
+
+\end{enumerate}
+
+\subsection{El sistema de ayuda}
+
+\begin{enumerate}
+\item Para ver como se usa un comando es posible escribir en la l\'{\i}nea
+de comando
+\begin{verbatim}
+>> help comando
+\end{verbatim}
+donde comando es el nombre del comando que nos interesa.
+
+\item La orden help comando nos da una descripci\'{o}n del comando y
+posiblemente una lista de comandos relacionados.
+\begin{verbatim}
+>> help diary
+\end{verbatim}
+\end{enumerate}
+
+\subsection{Valores escalares}
+
+\begin{enumerate}
+\item Como hemos visto, operamos con n\'{u}meros reales y complejos,
+tambi\'{e}n llamados escalares.
+
+\item La unidad imaginaria puede escribirse $i$ o $j$.
+
+\item Probemos los siguientes comandos
+\begin{verbatim}
+(1 + 2 * j) * (1 - 2 * i)
+45 * (56 + i) - 34 * (16 - 32 * j)
+\end{verbatim}
+\end{enumerate}
+
+\subsection{Valores matriciales o arreglos}
+
+\begin{enumerate}
+\item Matlab/Octave trabaja tambi\'{e}n con arreglos de reales y
+  complejos. 
+
+\item Podemos crear un vector fila escribiendo
+\begin{verbatim}
+[ 1 + 2 * i 1 - 3 * i]
+\end{verbatim}
+\begin{verbatim}
+[ 1 + 2 * i, 1 - 3 * i]
+\end{verbatim}
+
+\item Podemos crear un vector columna escribiendo
+\begin{verbatim}
+[ 1 + 2 * i; 1 - 3 * i]
+\end{verbatim}
+o
+\begin{verbatim}
+[ 1 + 2 * i
+  1 - 3 * i]
+\end{verbatim}
+\end{enumerate}
+
+\subsection{Met\'{a}fora de Matlab/Octave}
+
+Podemos suponer, a modo de met\'{a}fora, que disponemos de un
+pizarr\'{o}n donde escribimos las cuentas que vamos haciendo,
+l\'{\i}nea por l\'{\i}nea.
+
+\subsection{Variables}
+
+\begin{enumerate}
+
+\item A diferencia de una calculadora, Matlab/Octave permite asignar nombres
+  a los diferentes valores. Esta combinaci\'{o}n de nombre y valor
+  recibe el nombre de variable.
+
+\item A continuaci\'{o}n vemos ejemplos de los distintos tipos de variables.
+La constante $i$ es la unidad imaginaria, y ya est\'{a} definida en
+Matlab. El s\'{\i}mbolo \% se usa para indicar que aquello escrito a
+su derecha hasta el fin de la l\'{\i}nea es un comentario
+
+\item Pruebe ingresar lo que aparece entre \verb->>- y \verb-%-
+\begin{verbatim}
+>> a = 5        % escalar real
+>> b = 5 + 10 * i   % escalar complejo.
+>> c = [1 2 3]   % vector fila
+>> d = [1, 2, 3]    % otra forma de escribir un vector fila
+>> e = [1; 2; 3]    % un vector columna
+>> f = [1, 2, 3; 4, 5, 6; 7, 8, 9]; % una matriz 3 x 3
+\end{verbatim}
+
+\item Matlab considera comentario todo lo que aparece desp\'{u}es del s\'{\i}mbolo
+  \verb-%-, y no lo ejecuta.
+
+\end{enumerate}
+
+\subsection{Continuando con la met\'{a}fora de Matlab / Octave}
+
+\begin{enumerate}
+\item Las variables son similares a divisiones que dibujamos en nuestro
+pizarr\'{o}n, en las cuales escribimos los valores y los nombres
+respectivos.
+
+\item El espacio ocupado por las variables se denomina espacio de
+  trabajo.
+\end{enumerate}
+
+\subsubsection{Los comandos who y what}
+
+\begin{enumerate}
+\item El comando who da una lista de las variables presentes en el espacio
+de trabajo (workspace)
+
+\item Pruebe ingresar
+\begin{verbatim}
+>> help who
+\end{verbatim}
+
+\item El comando what da una lista de archivos matlab presentes en un
+directorio.  Verifique cual es el directorio por defecto.
+
+\item Pruebe ingresar
+\begin{verbatim}
+>> help what
+\end{verbatim}
+
+\item Pruebe ingresar
+\begin{verbatim}
+>> who
+>> what
+\end{verbatim}
+
+\end{enumerate}
+
+\subsection{Operaciones con n\'{u}meros complejos}
+
+\begin{enumerate}
+\item A continuaci\'{o}n vemos algunas de las operaciones que pueden
+realizarse con n\'{u}meros complejos
+
+\item Pruebe ingresar lo que aparece entre \verb->>- y \verb-%-
+\begin{verbatim}
+>> x = 3 + 4 * i
+>> real(x)  % 3
+>> imag(x)  % 4
+>> conj(x)  % 3 - 4 * i
+>> abs(x)   % 5
+>> angle(x) % 0.9273
+\end{verbatim}
+\end{enumerate}
+
+\subsection{Ra\'{\i}ces y coeficientes de un polinomio}
+
+\begin{enumerate}
+\item Supongamos que tenemos un polinomio
+\begin{equation}
+  b_{n}x^{n}+b_{n-1}x^{n-1}+...+b_{0}=0.
+\end{equation}
+Para hallar las ra\'{\i}ces del polin\'{o}mio podemos colocar los
+coeficientes del polinomio en un vector y usar la funci\'{o}n $roots$
+\begin{verbatim}
+p = [bn, ..., b0];
+roots(p)
+\end{verbatim}
+
+\item Supongamos que tenemos que hallar las ra\'{\i}ces de un polinomio
+\begin{equation}
+  x^{2}+2x+3=0.
+\end{equation}
+Escribamos entonces
+\begin{verbatim}
+p = [1,2,3];
+roots(p)
+\end{verbatim}
+
+\item Supongamos ahora que tenemos las ra\'{\i}ces y necesitamos hallar los
+coeficientes del polinomio. Podemos escribir entonces
+\begin{verbatim}
+>> r = [-1.0, 2.7, -3.1, -3.1];
+>> poly(r)
+\end{verbatim}
+
+\item Por ejemplo, si las ra\'{\i}ces son
+\begin{equation}
+  1,-1+2i,-1-2i,
+\end{equation}
+entonces para hallar los coeficientes del polinomio, debemos escribir
+\begin{verbatim}
+>> r = [1,-1+2*i,-1-2*i];
+>> poly(r)
+\end{verbatim}
+
+\item Pruebe con
+\begin{verbatim}
+>> p = [1, 2, 3, 4, 5];
+% el vector correspondiente al polinomio x^4+2x^3+3x^2+4x+5
+>> r = roots(p)
+>> poly(r)
+\end{verbatim}
+
+\item \textquestiondown Cu\'{a}l le parece que es el resultado de la
+siguiente orden?
+\begin{verbatim}
+poly(roots(p))
+\end{verbatim}
+
+\item Pruebe las siguientes \'{o}rdenes
+\begin{verbatim}
+>> help roots
+>> help poly
+\end{verbatim}
+
+\end{enumerate}
+
+\subsection{Generaci\'{o}n de vectores y matrices}
+
+\begin{enumerate}
+\item Matlab permite la generaci\'{o}n de valores y su asignaci\'{o}n a
+vectores y matrices mediante un mecanismo sumamente eficiente. 
+
+\item Por ejemplo, supongamos que deseamos obtener un vector con una lista de
+n\'{u}meros que comienza en $1,$ termina en $2$ con
+incrementos de $0.1$. Escribiendo
+\begin{verbatim}
+>> t = 1:0.1:2
+\end{verbatim}
+se obtiene el vector deseado. Observe que $t$ es un vector fila, es
+decir, est\'{a} formado por una fila de once columnas ($1 \times 11).$
+
+\item Si deseamos generar $t$ como un vector columna debemos escribir
+\begin{verbatim}
+>> t = (1:0.1:2)'
+\end{verbatim}
+
+\item Practique los siguientes puntos
+\begin{enumerate}
+\item Genere un vector que contenga valores entre $-2$ y $2$ separados
+  $0.01$.
+
+\item En especial, para generar matrices llenas de ceros o unos
+  podemos usar las funciones $Zeros$ y $Ones$, respectivamente.
+  Encuentre como se usan estas funciones y haga un ejemplo con cada
+  una.
+\end{enumerate}
+
+\end{enumerate}
+
+\subsection{Operaciones sobre vectores y matrices,  primera parte}
+
+\begin{enumerate}
+\item Matlab permite realizar operaciones con matrices siempre que sus
+dimensiones sean compatibles. Por lo tanto, primero veremos cu\'{a}l es
+la funci\'{o}n que nos permite averiguar las medidas de una variable.
+
+\item Pruebe los siguientes comandos
+\begin{verbatim}
+>> t = 1:0.1:2;
+>> size(t)
+>> size(t')
+\end{verbatim}
+
+\item Las operaciones de suma, resta y multiplicaci\'{o}n por escalares son
+muy simples. Pruebe los siguientes comandos
+\begin{verbatim}
+>> t + 2
+>> t - 2
+>> t * 2
+\end{verbatim}
+
+\item Estas operaciones se realizan sumando $2$, restando $2$ y
+multiplicando por $2$ cada elemento del vector. De la misma forma se
+pueden aplicar funciones trigonom\'{e}tricas
+\begin{verbatim}
+>> cos(t)
+>> sin(2 * t - 1)
+\end{verbatim}
+
+\item Supongamos ahora que queremos elevar al cuadrado cada elemento de un
+vector. Pruebe con los comandos
+\begin{verbatim}
+>> t .* t
+>> t .^2
+\end{verbatim}
+
+\item Para realizar el producto de dos vectores escriba
+\begin{verbatim}
+>> t' * t
+>> t * t'
+\end{verbatim}
+Indique la diferencia entre ambas operaciones
+
+\end{enumerate}
+
+\subsection{Operaciones sobre vectores y matrices, segunda parte}
+
+Es posible realizar operaciones vectoriales como el producto o la
+exponenciaci\'{o}n elemento a elemento, como la suma o la resta.
+
+\begin{enumerate}
+\item Definamos
+\begin{verbatim}
+x = [-1 2]
+y = [3 4]
+\end{verbatim}
+
+\item Si calculamos $z = x + y$ resulta $z = [(-1 + 3) , (2+ 4)]$.
+
+\item Si calculamos $z = x * y$ obtenemos un mensaje de error,
+  diciendo que los vectores no tienen dimensiones adecuadas para ser
+  multiplicados. \textquestiondown C\'{o}mo podemos obtener 
+  $[(-1 * 3), (2 * 4)]$?.
+
+\item Es posible emplear el operador $.*$ para multiplicar elemento a
+  elemento. Pruebe
+\begin{verbatim}
+x .* y
+\end{verbatim}
+y obtendr\'{a}
+\begin{verbatim}
+[-3 8]
+\end{verbatim}
+
+\item Lo mismo se puede hacer con la divisi\'{o}n 
+\begin{verbatim}
+x ./ y
+\end{verbatim}
+y la exponenciaci\'{o}n
+\begin{verbatim}
+x .^ y
+\end{verbatim}
+o
+\begin{verbatim}
+x .^ 2
+\end{verbatim}
+
+\end{enumerate}
+
+\subsection{Operaciones sobre vectores y matrices, tercera parte}
+
+\begin{enumerate}
+
+\item Ingresemos un vector
+\begin{verbatim}
+v = [1, 2, 3, 4, 5, 6, 7]
+\end{verbatim}
+
+\item Podemos manipular los valores almacenados en un vector $v$ empleando
+  la notaci\'{o}n \verb-v(i)-, donde $i$ es un n\'{u}mero entero mayor
+  que $0$. Pruebe
+\begin{verbatim}
+v(1)
+\end{verbatim}
+
+\item Tambi\'{e}n podemos manipular una parte del vector $v$
+  escribiendo \verb-v(i:j)-, donde $i$ es un n\'{u}mero entero mayor
+  que $0$, y $i <= j$. Pruebe
+\begin{verbatim}
+v(2:7)
+v(1:6)
+v(2:7) - v(1:6)
+\end{verbatim}
+
+\item Observe que tambi\'{e}n es posible escribir
+\begin{verbatim}
+v(2:end) - v(1:end-1)
+\end{verbatim}
+
+\item Matlab/Octave tiene una extensa librer\'{\i}a de funciones aplicables a
+vectores y matrices. A continuaci\'{o}n mostramos una peque\~{n}a
+tabla representativa
+\begin{center}
+  \begin{tabular}{ll}
+    Comando & Resultado \\
+    det & determinante de una matriz \\
+    eig & autovalores y autovectores \\
+    inv & inversa matricial \\
+    svd & valores singulares de una matriz \\
+    cond & numero de condicion de una matriz
+  \end{tabular}
+\end{center}
+
+\item Supongamos un sistema de $2$ ecuaciones con dos inc\'{o}gnitas
+\begin{equation}
+  Ax=b
+\end{equation}
+donde 
+\begin{verbatim}
+  A = [ 1, 2; 2, 1];
+  b = [ 1; 2];
+\end{verbatim}
+\begin{enumerate}
+\item Como se puede resolver este sistema de ecuaciones con alguna de
+  las funciones indicadas arriba?
+\begin{verbatim}
+  x = inv(A) * b;
+\end{verbatim}
+
+\item Como puede asegurar que el resultado es correcto?
+\begin{verbatim}
+  x = inv(A) * b;
+  e = A * x - b;
+  e' * e   % e' es el vector transpuesto
+\end{verbatim}
+
+\item Resuelva los sistemas de ecuaciones con los siguientes
+  coeficientes y calcule los errores correspondientes
+  \begin{eqnarray}
+    A_{1} &=&\left[
+      \begin{array}{cc}
+        1 & 1 \\
+        -1 & 1
+      \end{array}
+    \right] ,b_{1}=\left[
+      \begin{array}{c}
+        0 \\
+        1
+      \end{array}
+    \right] , \\
+    A_{2} &=&\left[
+      \begin{array}{cc}
+        100.0 & 100.0                               \\
+        100.0 & 100.0 + 5 * eps
+      \end{array}
+    \right] ,b_{2}=\left[
+      \begin{array}{c}
+        0 \\
+        1
+      \end{array}
+    \right] .
+  \end{eqnarray}
+
+\item \textquestiondown Para que sirve la variable $eps$?
+
+\item Escriba un peque\~{n}o resumen del uso de las operaciones
+  matriciales empleadas hasta ahora junto con sus conclusiones.
+
+\item Busque en la ayuda de Matlab/Octave el listado de operaciones
+  matriciales disponibles.
+\end{enumerate}
+
+\end{enumerate}
+
+\subsection{Graficaci\'{o}n de funciones}
+
+\begin{enumerate}
+\item Para graficar funciones existen en Matlab/Octave distintos comandos. 
+
+\item Escriba
+\begin{verbatim}
+>> t = 0:0.1: 2* pi;
+>> y = cos(2 * t - 1);
+>> figure(1); plot(t,y);
+>> figure(2); stem(t,y);
+\end{verbatim}
+
+\item Como ve, $figure$ sirve para generar distintas ventanas de
+graficaci\'{o}n, $%
+plot$ reconstruye una funci\'{o}n continua a partir de una secuencia de
+valores discretos uniendo los puntos con rectas, y $stem$ grafica una
+secuencia de valores discretos.
+
+\item Para obtener su propia interpretaci\'{o}n de estos comandos escriba
+\begin{verbatim}
+>> help figure
+>> help plot
+>> help stem
+\end{verbatim}
+
+\item Como puede ver, estos comandos tienen muchas opciones y est\'{a}n
+relacionadas con muchos otros comandos. Por ejemplo, si desea generar
+distintos distintos tipos de l\'{\i}neas y colores para los
+gr\'{a}ficos puede escribir \verb-plot (t, y, s)- donde $s$ es un
+string o cadena de car\'{a}cteres del tipo \verb-abc- donde $a$ es
+cualquiera de los siguientes c\'{o}digos
+\begin{verbatim}
+y (yellow) amarillo, 
+m (magenta o violeta), 
+c (cyan o celeste), 
+r (red o rojo), 
+g (green) verde, b (blue)
+azul, w (white), k (black) negro
+\end{verbatim}
+$b$ es cualquiera de los siguientes c\'{o}digos
+\begin{verbatim}
+. punto, 
+o circulo, 
+x equis, 
+* asterisco, 
+s (square) cuadrado, 
+d diamante o rombo, 
+v la letra v (abajo), 
+< menor (izquierda), 
+> mayor (derecha),
+^ carat (arriba), 
+p pentagrama, 
+h hexagrama
+\end{verbatim}
+y $c$ es cualquiera de los siguientes c\'{o}digos
+\begin{verbatim}
+- solida, 
+: punteada, 
+-. barra y punto, 
+-- barra.
+\end{verbatim}
+
+\item Por ejemplo,
+\begin{verbatim}
+>> plot(t,y,'c+:')
+\end{verbatim}
+dibuja una l\'{\i}nea color celeste con la interpolaci\'{o}n punteada
+uniendo las cruces en cada dato.
+
+\item Observe que con $grid$ puede superponer una grilla al dibujo, con $%
+xlabel$ coloca un t\'{\i}tulo al eje de coordenadas, $ylabel$ coloca un
+t\'{\i}tulo al eje de absisas, $title$ coloca un t\'{\i}tulo al gr\'{a}fico y $%
+clf$ borra el gr\'{a}fico anterior si lo hubiera. Pruebe
+
+\begin{verbatim}
+>> t = 0:0.1:2*pi;
+>> clf; plot(t,cos(t),'m:o');
+>> grid;
+>> xlabel('t');
+>> ylabel('cos(t)');
+>> title('funci\'{o}n peri\'{o}dica'); % Latex para acentos, solo en Matlab
+\end{verbatim}
+
+\item Un comando que nos resultar\'{a} \'{u}til es $subplot.$ Nos permite
+componer distintos subgr\'{a}ficos en una misma ventana. Pruebe
+\begin{verbatim}
+>> clf;
+>> subplot(3,2,1); plot(t,cos(t));
+>> subplot(3,2,2); stem(t,cos(t));
+>> subplot(3,2,3); plot(t,sin(t));
+>> subplot(3,2,4); stem(t,sin(t));
+>> subplot(3,2,5); plot(t,tan(t));
+>> subplot(3,2,6); stem(t,tan(t));
+>> help subplot
+\end{verbatim}
+
+\end{enumerate}
+
+\subsection{Como guardar gr\'{a}ficos en archivos postcript, Matlab}
+
+\begin{enumerate}
+
+\item Supongamos que hemos realizado un gr\'{a}fico cualquiera y lo queremos
+guardar en un archivo para incluirlo despu\'{e}s en un informe.
+
+\item Pruebe
+\begin{verbatim}
+>> t = 0:0.1:2*pi;
+>> clf; plot(t,cos(t));
+>> print -deps cos.eps
+\end{verbatim}
+
+\item Vea cuales son las opciones del comando print con el sistema de
+  ayuda.
+
+\item El archivo generado $cos.eps$ puede incluirse en un documento
+  Latex, y a continuaci\'{o}n generar un documento pdf.
+
+\end{enumerate}
+
+\subsection{Como guardar gr\'{a}ficos en archivos postcript, Octave}
+
+\begin{enumerate}
+\item Pruebe
+\begin{verbatim}
+>> t = 0:0.1:2*pi;
+>> clf; plot(t,cos(t));
+>> print('my_plot.tex', '-dtex');
+\end{verbatim}
+\end{enumerate}
+
+\subsection{Graficaci\'{o}n de funciones en tres dimensiones}
+
+\begin{enumerate}
+\item Es posible graficar curvas y superficies en ``tres dimensiones''. Por
+ejemplo, podemos usar el comando plot3.
+
+\item Busque la ayuda de plot3.
+        
+\item Haga un gr\'{a}fico con plot3.
+
+\item Grabe el gr\'{a}fico en un archivo.
+\end{enumerate}
+
+\subsection{Escritura de texto, o salida de datos en forma de texto}
+
+\begin{enumerate}
+\item Con el comando fprintf podemos escribir texto en la pantalla
+  (salida estandar).
+
+\item Busque la ayuda de fprintf.
+
+\item Compare el resultado de
+\begin{verbatim}
+>> fprintf('hola')
+\end{verbatim}
+con
+\begin{verbatim}
+>> fprintf('hola\n')
+\end{verbatim}
+El caracter \verb-\n- indica que el cursor debe moverse a la
+l\'{\i}nea siguiente.
+
+\item Es posible escribir datos de una forma similar a la de un
+  programa en C
+\begin{verbatim}
+>>  fprintf('entero %d real %f\n', 1, 1.44);
+>>  fprintf('strings %s\n', 'cadenas');
+\end{verbatim}
+
+\end{enumerate}
+
+\subsection{Iteraci\'{o}n de comandos}
+
+\begin{enumerate}
+
+\item Supongamos que deseamos armar una tabla de la funci\'{o}n $y = 2
+  \, x - 1$ para todos los valores enteros de $x$ entre $1$ y $8$.
+
+\item Podemos usar el comando 
+\begin{verbatim}
+for x = 1:8
+  fprintf('x = %d; y = %d\n', x, 2 * x - 1);
+end
+\end{verbatim}
+
+\item Podemos usar el comando 
+\begin{verbatim}
+x = 1;
+while (x <= 8)
+  fprintf('x = %d; y = %d\n', x, 2 * x - 1);
+  x = x + 1; 
+end
+\end{verbatim}
+
+\end{enumerate}
+
+\subsection{Toma de decisiones}
+
+\begin{enumerate}
+
+\item la funci\'{o}n \verb-mod(x, y)- calcula el resto de la
+  divisi\'{o}n entera, o sea el n\'{u}mero $r$ tal
+  que $x = q * y + r$, donde $y > r >= 0$, donde $q$, $r$, $x$, $y$
+  son enteros.
+
+\item Podemos tomar decisiones con el comando if, else, y elseif
+\begin{verbatim}
+for x = 1:15
+  if (mod(x, 2) == 0)
+     fprintf('%d es par\n', x);
+  elseif (mod(x, 3) == 0)
+     fprintf('%d es impar y divisible por 3\n', x);
+  else
+     fprintf('%d es impar\n', x);
+  end
+end
+\end{verbatim}
+
+\end{enumerate}
+
+\section{Ejemplo 1}
+
+En esta secci\'{o}n vemos 
+\begin{enumerate}
+\item Como generar una lista de $51$ n\'{u}meros,
+\item Imprimir en pantalla.
+\item Graficar, colocando las leyendas correspondientes a título, 
+      eje x, eje y.
+\item Guardar el gráfico en un archivo.
+\end{enumerate}
+La idea es hacer una pr\'{a}ctica de la escritura de un programa (a\'{u}n cuando este no tenga otra utilidad).
+
+Hay varias de formas de generar n\'{u}meros.
+\begin{enumerate}
+\item Con un ciclo for (Matlab)
+\begin{verbatim}
+for x = 1:51
+ fprintf('%d\n', x);
+end;
+\end{verbatim}
+
+\item Con un ciclo for (Octave)
+\begin{verbatim}
+for x = 1:51
+ fprintf('%d\n', x);
+endfor;
+\end{verbatim}
+
+\item Con un ciclo while (Matlab)
+\begin{verbatim}
+x = 1;
+while (x < 51)
+ fprintf('%d\n', x);
+ x = x + 1;
+endwhile
+\end{verbatim}
+
+\item Con un ciclo while (Octave)
+\begin{verbatim}
+x = 1;
+while (x < 51)
+ fprintf('%d\n', x);
+ x = x + 1;
+endwhile
+\end{verbatim}
+
+\item Generando un vector
+\begin{verbatim}
+x = 1:1:51
+\end{verbatim}
+\end{enumerate}
+
+Para graficar los n\'{u}meros generados, pruebe con
+\begin{verbatim}
+x = 1:1:51 % los datos del eje x
+y = rand(size(x)) % los datos del eje y, generados al azar
+plot(x, y); 
+title('n\'{u}meros generados por computadora');
+xlabel('n\'{u}meros consecutivos');
+ylabel('n\'{u}meros al azar');
+\end{verbatim}
+
+\textquestiondown Como puede variar el color y el tipo de las gr\'{a}ficas?
+
+A continuaci\'{o}n se explica como se hace para guardar los resultados
+en un archivo de texto.
+
+\section{Ejemplo 2}
+
+En esta secci\'{o}n veremos como escribir y leer archivos de texto.
+
+\begin{enumerate}
+\item Para leer y escribir archivos de texto, necesitamos primero abrir el
+archivo. Para esto usamos una funci\'{o}n denominada ``fopen''.
+
+\item ``fopen'' necesita como m\'{\i}nimo un nombre de archivo como
+  argumento de entrada. Por eso escribimos \verb-fopen('nombre');-.
+
+\item ``fopen'' devuelve un valor que tenemos que guardar en una
+  variable. Por lo tanto, el comando se escribe
+\begin{verbatim}
+fid = fopen('nombre.txt');
+\end{verbatim}
+La variable fid guarda un n\'{u}mero que funciona como identificador
+del archivo (``File IDentifier''). Si fopen falla, fid ser\'{a} igual
+a $-1$.
+
+\item Un archivo se puede abrir para leer, para escribir, o
+  para agregar.
+
+\item Cuando un archivo se abre para leer, el comando es
+\begin{verbatim}
+fid = fopen('archivo','r');
+\end{verbatim}
+Si el archivo no existe, el comando falla.
+
+\item Cuando un archivo se abre para escribir, el comando es
+\begin{verbatim}
+fid = fopen('archivo','w');
+\end{verbatim}
+Si el archivo no existe, se crea.
+
+\item Cuando un archivo se abre para agregar, el comando es
+\begin{verbatim}
+fid = fopen('archivo','a');
+\end{verbatim}
+Si el archivo no existe, se crea.
+
+\item Existen otras opciones que puede ver escribiendo ``help
+  fopen''. Por el momento, no las usaremos.
+
+\item Para escribir texto, podemos usar ``fprintf'' de la siguiente
+  forma
+\begin{verbatim}
+x = 2;
+y = 3;
+fprintf(fid, ``x = %d; y = %f'', x, y);
+\end{verbatim}
+
+\item Para leer, podemos usar ``fscanf'' de la siguiente
+  forma
+\begin{verbatim}
+A = fscanf(fid, ``%d'');
+\end{verbatim}
+
+\item Una ventaja de Matlab es que muchas funciones est\'{a}n
+  vectorizadas. Por lo tanto, escribiendo
+\begin{verbatim}
+[A,s] = fscanf(fid, ``%d'',[3,10]);
+\end{verbatim}
+podemos leer una matriz de 3 filas y 10 columnas (suponiendo que el
+archivo contenga esa informaci\'{o}n.
+
+\item Finalmente, tanto para lectura como para escritura, debemos
+  cerrar los archivos con el comando ``fclose(fid)''.
+
+\item Como ejemplo, veamos
+\begin{verbatim}
+% este programa escribe y lee 
+% una matriz de 3 filas y 10 columnas
+
+% abro archivo texto para escritura
+esc = fopen('texto','w');
+
+for x = 1:3
+    for y = 1:10
+
+        % escribo en archivo 
+        % identificado con la
+        % variable esc
+        fprintf(esc, '%d ', x + y);
+    end
+
+    % escribo en archivo 
+    % identificado con la
+    % variable esc
+    fprintf(esc,'\n');
+end
+
+% cierro archivo identificado con 
+% la variable esc
+fclose(esc);
+
+% abro archivo texto para lectura
+lec = fopen('texto','r');
+
+% leo archivo identificado con 
+% la variable lec
+[A,s] = fscanf(lec,'%d',[3,10]);
+
+% cierro archivo identificado con 
+% la variable lec
+fclose(lec);
+\end{verbatim}
+
+\item El archivo ``texto'' generado resulta ser
+\begin{verbatim}
+2 3 4 5 6 7 8 9 10 11 
+3 4 5 6 7 8 9 10 11 12 
+4 5 6 7 8 9 10 11 12 13 
+\end{verbatim}
+
+\item La variable A coincide con lo guardado en el archivo.
+
+\item La variable s es igual a $30$, porque se leyeron correctamente
+  $30$ n\'{u}meros enteros.
+
+\end{enumerate}
+
+\section{Ejemplo 3}
+
+En esta secci\'{o}n vemos como 
+\begin{enumerate}
+\item Leer una tabla de datos con tres columnas a las que llamaremos a, b, y c.
+\item Calcular las coordenadas $u = (a + b)/c, v = c / (a - b)$. Evitar problemas de división por cero.
+\item Imprimir u y v.
+\item Graficar los resultados u y v, colocando las leyendas correspondientes a t\'{\i}tulo, eje x, eje y.
+\end{enumerate}
+
+A continuaci\'{o}n vemos como realizar operaciones b\'{a}sicas con vectores y matrices.
+\begin{enumerate}
+
+\item Para generar un vector de $1001$ elementos, puedo escribir
+\begin{verbatim}
+x = 0:1:1000;
+\end{verbatim}
+
+\item Para el c\'{a}lculo del promedio debo sumar todos los elementos de
+$x$. Explique porqu\'{e} funciona el siguiente truco:
+\begin{verbatim}
+u = ones(size(x));
+suma = u' * x
+\end{verbatim}
+Para entenderlo, pruebe un vector $x$ con muy pocos elementos ($4$ o
+$5$).
+
+\item \textquestiondown C\'{o}mo calculan el promedio?
+
+\item Usamos la constante eps de Matlab para protegernos contra la
+  divisi\'{o}n  por cero.
+\item La constante eps es el n\'{u}mero m\'{a}s peque\~{n}o distinto de $0$ que maneja
+   Matlab.
+\item.Si un divisor es $0$, le sumo la constante eps.
+\item Para seleccionar toda la columna n de una matriz A, puedo escribir A(:,n).
+\item Al escribir : en A(:, n), Matlab se encarga de usar un ciclo for para recu-
+    perar todas las filas de la columna n de la matriz A.
+\item Para seleccionar toda la fila n de una matriz A, puedo escribir A(n,:).
+\item Al escribir : en A(n, :), Matlab se encarga de usar un ciclo for para recu-
+    perar todas las columnas de la fila n de la matriz A.
+\item Puedo verificar una condici\'{o}n sobre todo un vector sin escribir un ciclo.
+    Supongamos que $x = [1, 2, -3, -4, -6, 7, 8, 9]$. Entonces $y = x > 0$ me
+    permite obtener $y = [1, 1, 0, 0, 0, 1, 1, 1]$ donde los $1$ en las posiciones $1, 2,
+    6, 7 y 8$ de y me indican que $x(1)$ es mayor que $0$, $x(2)$ es mayor que $0$,
+    $x(6)$ es mayor que $0$, $x(7)$ es mayor que $0$ y $x(8)$ es mayor que $0$, y los $0$
+    en las posiciones $3$, $4$ y $5$ de y me indican que $x(3) <= 0$, $x(4) <= 0$ y
+    $x(5) <= 0$.
+\item Supongamos que queremos dividir todos los elementos del vector $x =
+    [1, 2, 3, 4]$, por los del vector $y = [2, 3, 4, 6]$ (ambos del mismo tama\~{n}o).
+    Podemos dividir elemento a elemento a los vectores x e y escribiendo $x./y$.
+\item Ejemplo
+\begin{verbatim}
+% este programa escribe y lee 
+% una matriz de 10 filas y 3 columnas
+
+% abro archivo texto para escritura
+esc = fopen('texto','w');
+
+for x = 1:10
+    for y = 1:3
+
+        % escribo en archivo 
+        % identificado con la
+        % variable esc
+        fprintf(esc, '%d ', x + y);
+    end
+
+    % escribo en archivo 
+    % identificado con la
+    % variable esc
+    fprintf(esc,'\n');
+end
+
+% cierro archivo identificado con 
+% la variable esc
+fclose(esc);
+
+% abro archivo texto para lectura
+lec = fopen('texto','r');
+
+% leo archivo identificado con 
+% la variable lec
+[A,s] = fscanf(lec,'%d',[10,3]);
+
+% cierro archivo identificado con 
+% la variable lec
+fclose(lec);
+
+% obtengo las filas por separado
+a = A(:,1);
+b = A(:,2);
+c = A(:,3);
+% obtengo los denominadores 
+% protegiendome de division por 0
+ud = c + (abs(c) < eps) * eps;
+vd = (a - b);
+vd = vd + (abs(vd) < eps) * eps;
+% observe el uso de ./ en lugar de /
+u = (a + b) ./ ud; % division elemento a elemento
+v = c ./ vd; % division elemento a elemento
+\end{verbatim}
+
+\end{enumerate}
+

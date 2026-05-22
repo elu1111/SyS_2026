@@ -1,0 +1,725 @@
+\chapter{Series de Fourier (Tiempo discreto)}
+
+\section{Definiciones}
+
+\subsection{Señales periódicas}
+
+Recordemos que una funci\'{o}n $x[n]$ es peri\'{o}dica si y solo si existe un n\'{u}mero entero $N > 0$
+que cumple la condici\'{o}n
+\begin{equation}
+x\left[ n\right] =x\left[ n+N\right],
+\end{equation}
+para todo $n$. 
+
+Por ejemplo, 
+\begin{eqnarray}
+x[n] &=&\cos (\frac{2 \, \pi }{N} \, n) = \cos(\frac{2 \, \pi}{N} \, (n + N)) = \cos (\frac{2 \, \pi}{N} \, n + 2 \, \pi),\\
+x\left[ n\right] &=&\sin (\frac{2 \, \pi }{N} \, n) = 
+\sin(\frac{2 \pi}{N} (n+N)) = \sin (\frac{2 \pi}{N} \, n + 2 \, \pi), \\
+x\left[ n\right] &=&
+e^{j\frac{2 \, \pi }{N} \, n} = 
+e^{j \, \frac{2 \, \pi}{N} \, (n + N)} = 
+e^{j \, \frac{2 \, \pi}{N} + j \, 2 \, \pi} = 
+e^{j \, \frac{2 \, \pi}{N}} \, e^{j \, 2 \, \pi}. 
+\end{eqnarray}
+
+Recordemos que $e^{j \, 2 \, \pi} = cos(2 \, \pi) + j \, sin(2 \, \pi) = 1$.
+
+\subsection{Se\~{n}ales peri\'{o}dicas arm\'{o}nicamente relacionadas}
+
+Las se\~ {n}ales per\'{o}dicas arm\'{o}nicamente relacionadas cumplen con la condici\'{o}n
+\begin{equation}
+\phi _{k}\left[ n\right] =e^{j \, k \, \omega \, n}=e^{j \, k \, \frac{2 \, \pi }{N} \, n}, \qquad \forall k=0,\pm 1,\pm 2,...  \label{NHar}
+\end{equation}
+o la condici\'{o}n
+\begin{equation}
+\alpha _{k}\left[ n\right] =\cos \left( k \, \omega \, n\right) =
+\cos \left(k \, \frac{2 \, \pi }{N} \, n\right), \qquad \forall k=0, 1, 2,..., N - 1, 
+\end{equation}
+o la condici\'{o}n
+\begin{equation}
+\beta _{k}\left[ n\right] =\sin \left( k \, \omega \, n\right) =
+\sin \left( k \, \frac{2 \, \pi }{N} \, n\right), \qquad \forall k=0, 1, 2,..., N - 1.
+\end{equation}
+En otras palabras, son funciones peri\'{o}dicas cuyas frecuencias son m\'{u}ltiplos enteros de una frecuencia fundamental.
+
+\begin{enumerate}
+\item  Cada una de estas se\~{n}ales tiene una frecuencia fundamental $\omega $ y 
+per\'{\i}odo fundamental $N$.
+
+\item  La arm\'{o}nica $k-$ésima, para $k \neq 0$, es peri\'{o}dica con \textbf{per\'{\i}odo }$\frac{N}{k}$.
+
+\item  Solamente existen $N$ se\~{n}ales distintas en el conjunto descripto
+por (\ref{NHar}) o sea 
+\begin{equation}
+\phi _{k}\left[ n\right] =\phi _{k+rN}\left[ n\right].
+\end{equation}
+Para el caso de las exponenciales complejas podemos demostrar
+\begin{equation}
+e^{j \, (k + r \, N) \, \frac{2 \, \pi}{N}} =
+e^{j \, k \, \frac{2 \, \pi}{N} + r \, N \, \frac{2 \, \pi}{N}} =
+e^{j \, k \, \frac{2 \, \pi}{N} + r \, 2 \, \pi} =
+e^{j \, k \, \frac{2 \, \pi}{N}} \, e^{r \, 2 \, \pi} = 
+e^{j \, k \, \frac{2 \, \pi}{N}}.
+\end{equation}
+
+\end{enumerate}
+
+Por ejemplo, para $N = 4$ tenemos las armónicas
+\begin{equation}
+ x_{0}[n] = 1, 
+ \qquad x_{1}[n] = e^{j \, 1 \, \frac{2 \, \pi}{4} \, n}, 
+ \qquad x_{2}[n] = e^{j \, 2 \, \frac{2 \, \pi}{4} \, n}, 
+ \qquad x_{3}[n] = e^{j \, 3 \, \frac{2 \, \pi}{4} \, n}.
+\end{equation}
+Observemos las igualdades
+\begin{equation}
+ x_{k}[n] = e^{j \, k \, \frac{2 \, \pi}{4} \, n} = x_{k}[n + 4] = e^{j \, k \, \frac{2 \, \pi}{4} \, (n + 4)} =
+ e^{j \, k \, \frac{2 \, \pi}{4} \, n} \, e^{j \, k \, \frac{2 \, \pi}{4} \, 4} =
+  e^{j \, k \, \frac{2 \, \pi}{4} \, n},
+\end{equation}
+y
+\begin{equation}
+ x_{4}[n] = e^{j \, 4 \, \frac{2 \, \pi}{4} \, n} = e^{j \, 2 \, \pi \, n} = 1 = x_{0}[n].
+\end{equation}
+
+
+\section{Serie de Fourier de tiempo discreto}
+
+\subsection{Síntesis}
+
+La serie de Fourier de tiempo discreto es una sumatoria de $N$ arm\'{o}nicas complejas de per\'{i}odo $N$, y la podemos escribir as\'{\i}
+\begin{equation}
+x\left[ n\right] =
+\sum_{k=0}^{N-1}a_{k} \, \phi _{k}\left[ n\right]
+=
+\sum_{k=0}^{N-1}a_{k} \, e^{j \, k \, \omega \, n}
+=
+\sum_{k=0}^{N-1}a_{k} \, e^{j \, k \, \left( \frac{2 \, \pi }{N}\right) \, n}.
+\end{equation}
+\begin{enumerate}
+\item La sumatoria debe incluir solamente $N$ arm\'{o}nicas. 
+\item El valor inicial de $k$ puede ser cualquiera.
+\end{enumerate}
+
+\subsection{Análisis, o el cálculo de coeficientes de la serie de Fourier}
+
+\begin{enumerate}
+\item Comenzamos escribiendo la serie de Fourier de una se\~{n}al peri\'{o}dica de tiempo discreto 
+\begin{equation}
+        x\left[ n\right] =
+                \sum_{k=0}^{N-1}a_{k} \, e^{j \, k \, \frac{2 \, \pi }{N} \, n}.
+\end{equation}
+Multiplicando la serie por $e^{-j \, r \, \frac{2 \, \pi }{N} \, n}$ obtenemos 
+\begin{equation}
+        x\left[ n\right] \, e^{-j \, r \, \frac{2 \, \pi }{N} \, n}=
+                \sum_{k=0}^{N-1}a_{k} \, e^{j \, k \, \frac{2 \, \pi }{N} \, n} \, e^{-j \, r \, \frac{2 \, \pi }{N} \, n},
+\end{equation}
+
+\item Sumamos ambos lados de la igualdad desde $n=0$ hasta $N-1$
+\begin{equation}
+        \sum_{n=0}^{N-1}x\left[ n\right] \, e^{-j \, r \, \frac{2 \, \pi }{N} \, n}
+        =
+        \sum_{n=0}^{N-1}\sum_{k=0}^{N-1}a_{k} \, e^{j \, \left( k-r\right) \, \frac{2 \, \pi }{N} \, n},
+\end{equation}
+
+\item Invertimos la posici\'{o}n de los signos de sumatoria a la derecha del signo $=$ y dado que $a_{k}$ no depende de $n$ se obtiene 
+\begin{equation}
+        \sum_{n=0}^{N-1}x\left[ n\right] \, e^{-j \, r \, \frac{2 \, \pi }{N} \, n}=
+                \sum_{k=0}^{N-1}a_{k} \,
+                        \left( \sum_{n=0}^{N-1} e^{j \, \left( k-r\right) \, \frac{2 \, \pi }{N}\, n}
+                        \right) .
+\end{equation}
+
+\item Puede probarse que 
+\begin{equation}
+\sum_{n=0}^{N-1}e^{j \, k \, \frac{2 \, \pi }{N}\, n}=
+        \left\{ 
+        \begin{array}{l}
+                        N, \\ 
+                        0,
+        \end{array}
+        \begin{array}{l}
+                k=0,\pm N,\pm 2N,... \\ 
+                k\neq 0,\pm N,\pm 2N,...
+        \end{array}
+        \right. ,
+\end{equation}
+mediante el siguiente razonamiento
+\begin{enumerate}
+        \item  Verificamos la igualdad 
+               $e^{j \, 0}=e^{j \, N \, \frac{2 \, \pi }{N}\, n}=e^{j \, 2 \, N \, \frac{2 \, \pi}{N}\, n}=...=1.$
+
+        \item  Recordamos la propiedad de las series geom\'{e}tricas convergentes
+        \begin{equation}
+                \sum_{n=0}^{N-1}a^n=\frac{1-a^{N}}{1-a}, a < 1,
+        \end{equation}
+        para obtener 
+        \begin{equation}
+                \sum_{n=0}^{N-1}\left( e^{j \, k \, \frac{2 \, \pi }{N} }\right) ^n=
+                        \frac{1-\left( e^{j \, k \, \frac{2 \, \pi }{N} }\right) ^{N}}
+                                {1-\left(e^{j \, k \, \frac{2 \, \pi }{N} }\right) }=
+                \frac{1-e^{j \, k \, 2 \, \pi }}{1-\left(e^{j \, k \, \frac{2 \, \pi }{N} }\right) }=0.
+        \end{equation}
+\end{enumerate}
+
+\item Entonces obtenemos 
+\begin{equation}
+        \sum_{n=0}^{N-1}x\left[ n\right] \, e^{-j \, r \, \frac{2 \, \pi }{N} \, n} = a_{r} \, N,
+\end{equation}
+o sea 
+\begin{equation}
+   a_{r} = \frac{1}{N}\sum_{n=0}^{N-1}x\left[ n\right] \, e^{-j \, r \, \frac{2 \, \pi }{N} \, n}. \label{dtfs.ar}
+\end{equation}
+\end{enumerate}
+
+\subsection{Ejemplo de c\'{a}lculo de los coeficientes de una serie de Fourier}
+\begin{enumerate}
+\item Consideremos una se\~{n}al peri\'{o}dica con $N = 2$. Supongamos que 
+\begin{equation}
+x[0] = 1,
+\end{equation} y 
+\begin{equation}
+x[1] = 0.
+\end{equation}
+Por lo tanto $x[2] = 1$, $x[3] = 0$, y as\'{\i} sucesivamente. \textquestiondown Cuales son los coeficientes correspondientes?
+
+\item Dado que $N = 2$ los coeficientes a calcular son $a_{0}$ y $a_{1}$. Si recordamos la ecuaci\'{o}n (\ref{dtfs.ar}) 
+\begin{equation}
+   a_{r} = \frac{1}{N}\sum_{n=0}^{N-1}x\left[ n\right] \, e^{-j \, r \, \frac{2 \, \pi }{N} \, n},
+\end{equation}
+podemos escribir, para $N = 2$,
+\begin{equation}
+a_{r} = \frac{1}{2} \, 
+\left(x[0] \, e^{j \, r \, \frac{2 \, pi}{2} \, 0} + x[1] \, e^{j \, r \, \frac{2 \, pi}{2} \, 1}\right). 
+\end{equation}
+
+\item En nuestro caso, para $r = 0$ resulta
+\begin{equation}
+a_{0} = \frac{1}{2} \, \left( 
+x[0] \, e^{j \, 0 \, \frac{2 \, \pi}{2} \, 0} +
+x[1] \, e^{j \, 0 \, \frac{2 \, \pi}{2} \, 1} 
+\right),
+\end{equation}
+y para $r = 1$ resulta
+\begin{equation}
+a_{1} = \frac{1}{2} \, \left( 
+x[0] \, e^{j \, 1 \, \frac{2 \, \pi}{2} \, 0} +
+x[1] \, e^{j \, 1 \, \frac{2 \, \pi}{2} \, 1} 
+\right).
+\end{equation}
+
+\item Sustituyendo los valores de $x[0] = 1$ y $x[1] = 0$, obtenemos
+\begin{equation}
+a_{0} = \frac{1}{2} \, \left( 
+1 \times 1 +
+0 \times 1
+\right) = \frac{1}{2},
+\end{equation}
+y
+\begin{equation}
+a_{1} = \frac{1}{2} \, \left( 
+1 \times 1 +
+0 \times e^{j \, \pi} 
+\right) = \frac{1}{2}.
+\end{equation}
+\end{enumerate}
+
+\subsubsection{Ejercicio}
+
+\begin{enumerate}
+\item Calcular los coeficientes de Fourier de una se\~{n}al peri\'{o}dica $N = 2$, donde $x[0] = 0$, y $x[1] = 1$.
+
+\item Calcular los coeficientes de Fourier de una se\~{n}al peri\'{o}dica $N = 3$, donde $x[0] = 0$, $x[1] = 1$ y $x[2] = -1$.
+\end{enumerate}
+
+\section{Propiedades de las series de Fourier}
+
+As\'{\i} indicaremos la relaci\'{o}n entre una funci\'{o}n y su serie de
+Fourier 
+\begin{equation}
+x\left[ n\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+a_{k}.
+\end{equation}
+
+\subsection{Linealidad}
+
+Sean dos funciones con igual per\'{\i}odo $N$
+\begin{eqnarray}
+x\left[ n\right] &=&x\left[ n+N\right] , \\
+y\left[ n\right] &=&y\left[ n+N\right] ,
+\end{eqnarray}
+con coeficientes de Fourier
+\begin{eqnarray}
+&&x\left[ n\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+a_{k}, \\
+&&y\left[ n\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+b_{k}.
+\end{eqnarray}
+Es posible probar
+\begin{equation}
+z\left[ n\right] = A \, x\left[ n\right] +B \, y\left[ n\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+c_{k}=A \, a_{k}+B \, b_{k}.
+\end{equation}
+Queda como ejercicio para el lector.
+
+\subsection{Desplazamiento en el tiempo}
+
+\begin{enumerate}
+
+\item Dadas las funciones peri\'{o}dicas
+\begin{eqnarray}
+x\left[ n\right] &=&x\left[ n+N\right] , \\
+y\left[ n\right] &=&x\left[ n-n_{0}\right] ,
+\end{eqnarray}
+sus series de Fourier cumplen con la relaci\'{o}n
+\begin{eqnarray}
+&&x\left[ n\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+a_{k}, \\
+&&y\left[ n\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+b_{k}=e^{-j \, k \, \frac{2 \, \pi }{N} \, n_{0}} \, a_{k}.
+\end{eqnarray}
+
+\item En efecto, escribiendo la ecuaci\'{o}n de an\'{a}lisis
+\begin{equation}
+b_{k}=
+\frac{1}{N} \, \sum_{n=0}^{N-1}x\left[ n-n_{0}\right] \, e^{-j \, k \, \frac{2 \, \pi }{N} \, n},
+\end{equation}
+donde podemos reemplazar $x[n]$ por su serie de Fourier
+\begin{equation}
+b_{k}=
+\frac{1}{N} \, \sum_{n=0}^{N-1}
+\left( \sum_{r=0}^{N-1}a_{r} \, e^{j \, r \, \frac{2 \, \pi}{N} \, \left( n-n_{0}\right) }
+\right) \, e^{-j \, k \, \frac{2 \, \pi }{N} \, n}.
+\end{equation}
+
+\item Agrupando t\'{e}rminos obtenemos
+\begin{equation}
+b_{k}=
+\frac{1}{N} \, \sum_{n=0}^{N-1}
+\left( 
+  \sum_{r=0}^{N-1}
+  a_{r} \, e^{-j \, r \, \frac{2 \, \pi }{N} \, n_{0}}
+  \, e^{j \, \left( r-k\right) \, \frac{2 \, \pi}{N} \, n}
+\right).
+\end{equation}
+
+\item Es posible agrupar t\'{e}rminos y aplicar la propiedad de suma
+  de una serie geom\'{e}trica para obtener
+\begin{equation}
+\left( \sum_{r=0}^{N-1}
+a_{r} \, e^{-j \, r \, \frac{2 \, \pi }{N} \, n_{0}} \, e^{j \, \left( r-k\right) \, \frac{2 \, \pi }{N} \, n}
+\right) =
+a_{r} \, e^{-j \, r \, \frac{2 \, \pi }{N} \, n_{0}} \, 
+\frac{1-e^{j \, \left( r-k\right) \, \frac{2 \, \pi }{N} \, N}}{1-e^{j \, \left( r-k\right) \, \frac{2 \, \pi }{N}}},
+\end{equation}
+
+\item Cuando $r\neq k,$ entonces
+\begin{equation}
+\frac{1-e^{j\left( r-k\right) \frac{2 \, \pi }{N} \, N}}{1-e^{j \, \left(r-k\right) \,
+\frac{2 \, \pi }{N}}}
+=
+\frac{1-e^{j \, \left( r-k\right) \, 2 \, \pi }}{1-e^{j \, \left(
+r-k\right) \, \frac{2 \, \pi }{N}}},
+\end{equation}
+\begin{equation}
+\frac{1-e^{j \, \left( r-k\right) \, 2 \, \pi }}{1-e^{j \, \left( r-k\right) \, \frac{2 \, \pi }{N}}}
+=
+\frac{1-1}{1-e^{j \, \left( r-k\right) \, \frac{2 \, \pi }{N}}}
+=0.
+\end{equation}
+
+\item Cuando $r=k,$ entonces 
+\begin{equation}
+\frac{1}{N} \, \sum_{n=0}^{N-1}\left(
+a_{k} \, e^{-j \, k \, \frac{2 \, \pi }{N} \, n_{0}} \, 
+e^{j \, \left(k-k\right) \, \frac{2 \, \pi }{N} \, n}\right) =
+\frac{a_{r} \, e^{-j \, r \, \frac{2 \, \pi }{N} \, n_{0}} \, N}{N},
+\end{equation}
+y por lo tanto 
+\begin{equation}
+b_{k}=a_{k} \, e^{-j \, k \, \frac{2 \, \pi }{N} \, n_{0}}.
+\end{equation}
+
+\end{enumerate}
+
+\subsection{Desplazamiento en frecuencia}
+
+Consideremos una se\~{n}al per\'{\i}odica $N$, $x\left[ n\right]
+=x\left[ n+N\right]$, con coeficientes de Fourier $a_{k}$. 
+Es posible probar que al multiplicar $x[n]$ por una arm\'{o}nica $M$, los
+coeficientes se desplazan en frecuencia, lo que se expresa como
+\begin{equation}
+e^{j \, M \, \left( \frac{2 \, \pi }{N}\right) \, n} \, x\left[ n\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+a_{k-M}.
+\end{equation}
+
+\subsection{Conjugaci\'{o}n}
+
+Consideremos una se\~{n}al per\'{\i}odica $N$, $x\left[ n\right]
+=x\left[ n+N\right]$, con coeficientes de Fourier $a_{k}$. 
+Es posible probar que al conjugar $x[n]$, los
+coeficientes se conjugan y invierten en frecuencia, lo que se expresa como
+\begin{equation}
+x^{*}\left[ n\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+a_{-k}^{*},
+\end{equation}
+
+\subsection{Inversi\'{o}n temporal}
+
+Consideremos una se\~{n}al per\'{\i}odica $N$, $x\left[ n\right]
+=x\left[ n+N\right]$, con coeficientes de Fourier $a_{k}$. Sea
+\begin{equation}
+y\left[ n\right] =x\left[ -n\right] ,
+\end{equation}
+
+Puede probarse que los coeficientes $a_{k}$ y $b_{k}$ se relacionan
+\begin{eqnarray}
+y\left[ n\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+b_{k}=a_{-k},
+\end{eqnarray}
+como se puede comprobar
+\begin{equation}
+x\left[ -n\right] =\sum_{k=0}^{N-1}a_{k} \, e^{-j \, k \, \frac{2 \, \pi }{N} \, n}
+=
+\sum_{l=1-N}^{0}a_{-l} \, e^{j \, l \, \frac{2 \, \pi }{N}\, n}.
+\end{equation}
+
+\subsection{Escalado temporal}
+
+Consideremos una se\~{n}al per\'{\i}odica $N$, $x\left[ n\right]
+=x\left[ n+N\right]$, con coeficientes de Fourier
+$a_{k}$. Consideremos la se\~{n}al $x_{m} = x[n + m \, N]$,
+\begin{equation}
+x_{m}\left[ n\right] =\left\{ 
+\begin{array}{l}
+x\left[ m \right] , \\ 
+0
+\end{array}
+\begin{array}{l}
+n=p \, m, \\ 
+n=p \, m+q, \, 0 < q < m.
+\end{array}
+\right.
+\end{equation}
+Puede probarse la relaci\'{o}n
+\begin{equation}
+x_{m}\left[ n\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+\frac{a_{k}}{m}.
+\end{equation}
+
+\subsection{Convoluci\'{o}n peri\'{o}dica}
+
+Consideremos dos se\~{n}ales per\'{\i}dicas $x[n] = x[n + N]$ e $y[n]
+= y[n + N]$, con coeficientes de Fourier $a_{k}$ y $b_{k}$. Puede
+definirse la operaci\'{o}n convoluci\'{o}n circular y calcularse los
+coeficientes de Fourier correspondientes
+\begin{equation}
+\sum_{r=0}^{N-1} x\left[ r\right] \, y\left[ n-r\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+c_{k}=N \, a_{k} \, b_{k}.
+\end{equation}
+
+\subsection{Multiplicaci\'{o}n}
+
+Consideremos dos se\~{n}ales per\'{\i}odicas $x[n] = x[n + N]$ e $y[n]
+= y[n + N]$, con coeficientes de Fourier $a_{k}$ y $b_{k}$. Puede
+definirse la operaci\'{o}n producto y calcularse los
+coeficientes de Fourier correspondientes
+\begin{equation}
+x\left[ n\right] \, y\left[ n\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+c_{k}=\sum_{r=0}^{N-1}a_{r} \, b_{k-r}.
+\end{equation}
+
+\subsection{Primera diferencia}
+
+Consideremos una se\~{n}al per\'{\i}odica $N$, $x\left[ n\right]
+=x\left[ n+N\right]$, con coeficientes de Fourier
+$a_{k}$. Puede definirse la operaci\'{o}n primera diferencia y
+calcularse los coeficientes de Fourier correspondientes
+\begin{equation}
+x\left[ n\right] -x\left[ n-1\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+\left( 1-e^{-j \, k \, \frac{2 \, \pi }{N}}\right) \, a_{k},
+\end{equation}
+
+\subsection{Suma corrida}
+
+Consideremos una se\~{n}al per\'{\i}odica $N$, $x\left[ n\right]
+=x\left[ n+N\right]$, con coeficientes de Fourier
+$a_{k}$. 
+Puede definirse la operaci\'{o}n suma corrida y
+calcularse los coeficientes de Fourier correspondientes
+\begin{equation}
+y\left[ n\right] =\sum_{k=-\infty }^nx\left[ k\right] 
+\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}
+ \frac{a_{k}}{\left( 1-e^{-j \, k \, \frac{2 \, \pi }{N}}\right) }.
+\end{equation}
+
+\subsection{Conjugaci\'{o}n y simetr\'{\i}a de la conjugaci\'{o}n}
+
+Consideremos una se\~{n}al per\'{\i}odica $N$, $x\left[ n\right]
+=x\left[ n+N\right]$, con coeficientes de Fourier
+$a_{k}$. Entonces pueden verificarse la simetr\'{\i}a de la conjugaci\'{o}n
+\begin{equation}
+a_{-k}=\overline{a_{k}}.
+\end{equation}
+
+\subsection{Se\~{n}ales reales pares}
+
+Consideremos una se\~{n}al per\'{\i}odica $N$, $x\left[ n\right]
+=x\left[ n+N\right]$, con coeficientes de Fourier
+$a_{k}$. La se\~{n}al $x[n]$ es par si y solo si la parte imaginaria
+de sus coeficientes es nula para todo k, o en otras palabras,
+\begin{equation}
+a_{-k}=a_{k}.
+\end{equation}
+
+\subsection{Se\~{n}ales reales impares}
+
+Consideremos una se\~{n}al per\'{\i}odica $N$, $x\left[ n\right]
+=x\left[ n+N\right]$, con coeficientes de Fourier
+$a_{k}$. La se\~{n}al $x[n]$ es impar si y solo si la parte real
+de sus coeficientes es nula para todo k, o en otras palabras,
+\begin{equation}
+a_{-k} = -a_{k}.
+\end{equation}
+
+\subsection{Parte par e impar de se\~{n}ales reales}
+
+La partes pares e impares de una se\~{n}al real de tiempo discreto
+$x[n] = x[n + N]$ con coeficientes de Fourier $a_{k}$ pueden calcularse a partir de sus coeficientes de Fourier
+\begin{eqnarray}
+x\left[ n\right] &=&x_{p}\left[ n\right] +x_i\left[ n\right] , \\
+x_{p}\left[ n\right] &=&x_{p}\left[ -n\right] , \\
+x_i\left[ n\right] &=&-x_i\left[ -n\right] , \\
+x_{p}\left[ n\right] 
+&\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}&
+\Re\left( a_{k}\right) , \\
+x_i\left[ n\right] 
+&\begin{array}{l}
+FS \\ 
+\longleftrightarrow
+\end{array}&
+\Im\left( a_{k}\right).
+\end{eqnarray}
+
+\subsection{Relaci\'{o}n de Parseval}
+
+\begin{enumerate}
+
+\item La potencia media de una se\~{n}al peri\'{o}dica $N$ es
+\begin{equation}
+        \frac{1}{N}\sum_{n=0}^{N-1}\left| x\left[ n\right]
+        \right|^{2}=
+        \frac{1}{N}\sum_{n=0}^{N-1} x\left[ n\right] \, \overline{x\left[ n \right]}
+\end{equation}
+
+\item Sustituyendo la funci\'{o}n conjugada por su serie de Fourier obtenemos
+\begin{equation}
+        \frac{1}{N}\sum_{n=0}^{N-1}\left| x\left[ n\right]
+        \right|^{2}=
+        \frac{1}{N} \sum_{n=0}^{N-1} x\left[ n\right] \, 
+        \left(\frac{1}{N}\sum_{k=0}^{N-1} \overline{a_{k}} \, e^{-j \, \frac{2 \, \pi}{N} \, k \, n} \right).
+\end{equation}
+
+\item Intercambiando sumatorias obtenemos
+\begin{equation}
+        \frac{1}{N}\sum_{n=0}^{N-1}\left| x\left[ n\right]
+        \right|^{2}=
+        \frac{1}{N}\sum_{k=0}^{N-1} \overline{a_{k}}  \, \left(
+        \frac{1}{N}\sum_{k=0}^{N-1} x\left[ n\right]  \, e^{-j \, \frac{2 \, \pi}{N} \, k \, n} \right).
+\end{equation}
+
+\item Finalmente, observemos que la expresi\'{o}n entre par\'{e}ntesis
+  puede sustituirse por $a_{k}$
+\begin{equation}
+        \frac{1}{N}\sum_{n=0}^{N-1}\left| x\left[ n\right]
+        \right|^{2}=
+        \sum_{k=0}^{N} a_{k} \, \overline{a_{k}}.
+\end{equation}
+
+\item La secuencia $|a_{k}|^{2}$, $k = 0, 1, ... N - 1$ se denomina Espectro
+de Densidad de Potencia.
+
+\end{enumerate}
+
+\section{C\'{a}lculo de los coeficientes, otra vez}
+
+\subsection{FFT, Teoría}
+
+A continuación vamos a ver el desarrollo de ideas de la transformada rápida de Fourier, o 
+Fast Fourier Transform.
+
+\begin{enumerate}
+\item Si observamos la f\'{o}rmula para calcular los coeficientes de las series de Fourier de tiempo discreto,
+\begin{equation}
+   a_{r} =  \frac{1}{N} \, \sum_{n=0}^{N-1}x\left[ n\right] \, e^{-j \, r \, \frac{2 \, \pi}{N} \, n},
+\end{equation}
+notaremos que es posible expresarla como
+\begin{equation}
+   a_{r} =  \frac{1}{N} \, \sum_{n=0}^{N-1}x\left[ n\right] \, W^{n \, r},
+\end{equation}
+definiendo
+\begin{equation}
+  W = e^{-j \, \frac{2 \, \pi}{N}}.
+\end{equation}
+
+\item Con esta transformaci\'{o}n es inmediato ver que el coeficiente $a_{r}$ puede expresarse como el producto de dos vectores
+\begin{equation}
+N \, a_{r} =
+\left[\begin{array}{ccccc}
+W^{r \, 0} & ... & W^{r \, n} & ... & W^{r \, (N-1)}
+\end{array} \right] \cdot 
+\left[\begin{array}{c}
+x[0]\\
+... \\
+x[n]\\
+... \\
+x[N-1]
+\end{array} \right].
+\end{equation}
+
+\item Por lo tanto, todos los coeficientes de la serie de Fourier pueden calcularse como un producto de 
+matriz por vector
+\begin{equation}
+N \, \left[ \begin{array}{c}
+a[0] \\
+... \\
+a[r] \\
+... \\
+a[N-1]
+\end{array} \right] =
+\left[ \begin{array}{cccccc}
+W^{0 \, 0} & ... & W^{0 \, n} & ... & W^{0 \, (N-1)} \\
+... & .... & ... & ... & ... \\
+W^{r \, 0} & ... & W^{r \, n} & ... & W^{r \, (N-1)} \\
+... & .... & ... & ... & ... \\
+W^{(N-1) \, 0} & ... & W^{(N-1) \, n} & ... & W^{(N-1) \, (N-1)}
+\end{array} \right] =
+\left[\begin{array}{c}
+x[0]\\
+... \\
+x[n]\\
+... \\
+x[N-1]
+\end{array} \right].
+\end{equation}
+
+\item Esta \'{u}ltima ecuaci\'{o}n transforma 
+la representaci\'{o}n $x[n]$ del dominio del tiempo en 
+la representaci\'{o}n $a[k]$ del dominio de la frecuencia.
+
+\item Podemos definir entonces la matriz
+\begin{equation}
+\mathbf{M}_{N} = 
+\left[ \begin{array}{cccccc}
+W^{0 \, 0} & ... & W^{0 \, n} & ... & W^{0 \, (N-1)} \\
+... & .... & ... & ... & ... \\
+W^{r \, 0} & ... & W^{r \, n} & ... & W^{r \, (N-1)} \\
+... & .... & ... & ... & ... \\
+W^{(N-1) \, 0} & ... & W^{(N-1) \, n} & ... & W^{(N-1) \, (N-1)}
+\end{array} \right].
+\end{equation}
+
+\item La matriz $\mathbf{M}_{N}$ tiene propiedades interesantes:
+\begin{enumerate}
+\item La matriz $\mathbf{M}_{N}$ es simétrica.
+\item El producto de $\mathbf{M}_{N}$ por su transpuesta es igual a $N$ veces la matriz identidad 
+$\mathbf{I}$
+\begin{equation}
+  \mathbf{M}_{N}^{t} \cdot \mathbf{M}_{N} = \mathbf{M}_{N} \cdot \mathbf{M}_{N}^{t} = N \, \mathbf{I}.
+\end{equation}
+\item El vector de coeficientes de Fourier $\mathbf{a}$
+puede obtenerse con la fórmula
+\begin{equation}
+ N \, \mathbf{a} = \mathbf{M}_{N} \cdot \mathbf{x},
+\end{equation}
+y el vector $x$ muestras en el dominio del tiempo puede recuperarse a partir de los coeficientes 
+$\mathbf{a}$
+\begin{equation}
+ N \, \mathbf{M}_{N}^{t} \cdot \mathbf{a} = \mathbf{x}.
+\end{equation}
+
+
+\end{enumerate}
+
+
+\end{enumerate}
+
+
+\subsection{FFT, práctica}
+
+\subsubsection{Como generar la matriz M}
+
+Generamos la matriz $M$ y verificamos sus propiedades.
+
+\lstinputlisting{./fft/demo_matriz.m}
+
+\subsection{Como usar la función fft de Matlab/Octave}
+
+\lstinputlisting{./fft/myfft.m}
+
+\lstinputlisting{./fft/demofft.m}
+
+\lstinputlisting{./fft/demofase.m}
+
+\subsection{Las diferencias entre notas musicales de diferentes instrumentos}
+
+\lstinputlisting{./fft/demo_instrumentos.m}

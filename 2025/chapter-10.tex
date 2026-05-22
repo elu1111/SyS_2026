@@ -1,0 +1,799 @@
+\chapter{Ecuaciones de diferencias finitas}
+
+\section{Introducci\'{o}n}
+
+En los sistemas lineales de tiempo discreto invariantes en el tiempo la entrada y la salida est\'{a}n 
+relacionadas por 
+\begin{enumerate}
+   \item  una ecuaci\'{o}n de diferencias 
+      \begin{equation}
+           \sum_{p=0}^{N}a_{p} \, y\left[ n-p\right] =\sum_{q=0}^{M}b_{q} \, x\left[ n-q\right]. 
+           \label{eqdiferencia}
+      \end{equation}
+
+   \item   la suma de convoluci\'{o}n
+        \begin{equation}
+                y[n] = \sum_{k=-\infty}^{\infty} x[k] \, h[n - k].
+        \end{equation}
+        
+\end{enumerate}
+Ambas formas deben ser equivalentes. Justamente esta equivalencia da pie a que podamos usar la
+transformada $Z$ para resolver ecuaciones de diferencias. Empezaremos estudiando la equivalencia entre 
+ambas formas de c\'{a}lculo para entradas de la forma $x[n] = z^{n}$, y despu\'{e}s generalizaremos 
+considerando entradas para las que existan las transformadas $Z$ correspondientes.
+
+\section{Ecuaci\'{o}n de diferencias con entrada exponencial compleja}
+
+Consideremos una ecuaci\'{o}n de diferencias de la forma 
+\begin{equation}
+   \sum_{p=0}^{N}a_{p} \, y\left[ n-p\right] =\sum_{q=0}^{M}b_{q} \, x\left[ n-q\right].
+\end{equation}
+Buscaremos la soluci\'{o}n para entradas de la forma 
+\begin{equation}
+x[n]=z^n ,
+\end{equation}
+donde $z$ es una variable compleja.
+
+\subsection{Soluci\'{o}n de una ecuaci\'{o}n de diferencias homog\'{e}nea}
+
+\begin{enumerate}
+
+\item Denominaremos $y_{h}\left[ n\right] $ a la soluci\'{o}n de la ecuaci\'{o}n homog\'{e}nea
+\begin{equation}
+        \sum_{p=0}^{N}a_{p} \, y_{h}\left[ n-p\right] =0.
+\end{equation}
+
+\item Supongamos que la soluci\'{o}n tiene la forma 
+\begin{equation}
+        y_{h}\left[ n\right] = Y \, \lambda^n,
+\end{equation}
+donde $Y$ es una variable real. Observemos que 
+\begin{equation}
+    y_{h}\left[ n-p\right] = Y \, \lambda^{n-p},
+\end{equation}
+para todos los valores de $p$ en el intervalo $[0,N]$.
+
+\item Sustituyendo en la ecuaci\'{o}n diferencial homog\'{e}nea obtenemos 
+\begin{equation}
+    \sum_{p=0}^{N}a_{p} \, Y \, \lambda^{n-p}  =\left( \sum_{p=0}^{N}a_{p} \, \lambda^{-p} \right) \, Y \, \lambda^{n}=0.
+\end{equation}
+No estamos interesados en la soluci\'{o}n trivial $Y=0$. Como la se\~{n}al $\lambda^{n}$ no se anula para 
+ning\'{u}n valor de $n$, tiene que ser 
+\begin{equation}
+  \left( \sum_{p=0}^{N}a_{p} \, \lambda ^{-p}\right) =
+  \lambda^{-N} \, \left( \sum_{p=0}^{N}a_{p} \, \lambda ^{N-p}\right) = 0.
+\end{equation}
+
+\item Definimos entonces al polinomio caracter\'{\i}stico $p(\lambda)$
+\begin{equation}
+  p(\lambda) = \left( \sum_{p=0}^{N}a_{p} \, \lambda ^{N-p}\right) = 
+  a_{0} \, \prod_{q=1}^{N} \left( \lambda - \lambda_{q} \right) = 0.
+\end{equation}
+Las ra\'{\i}ces $\lambda_{q}$ del polinomio caracter\'{\i}stico son llamadas 
+frecuencias, modos naturales o polos.
+
+\item Si las frecuencias o modos naturales son distintos 
+\begin{equation}
+        \left( i\neq j\longleftrightarrow \lambda _i\neq \lambda _{j}\right),
+\end{equation}
+entonces la soluci\'{o}n m\'{a}s general tiene la forma 
+\begin{equation}
+        y_{h}\left[ n\right] =\sum_{k=1}^{N}Y_{k} \, \lambda _{k}^n.
+\end{equation}
+
+\item Si hay $R<N$ frecuencias o modos naturales distintos la soluci\'{o}n homog\'{e}nea tiene la forma 
+\begin{equation}
+        y_{h}\left[ n\right] =\sum_{p=1}^{R}\left(\sum_{k=0}^{S_{p}-1}Y_{p,k} \, n^{k}\right) \, \lambda _{p}^n,
+\end{equation}
+donde $S_{p}$ indica la multiplicidad de $\lambda _{p}$ y $\sum_{p=1}^{R}S_{p}=N$.
+
+\end{enumerate}
+
+\subsubsection{Ejemplo}
+
+\begin{enumerate}
+
+\item Consideremos la ecuaci\'{o}n de diferencias
+\begin{equation}
+  -v_{o}\left[ n+1\right] +\left( 2+c\right) \, v_{o}\left[ n\right] -v_{o} \, \left[n-1\right] =
+     c \, v_{i}\left[ n\right].
+\end{equation}
+
+\item La ecuaci\'{o}n homog\'{e}nea asociada es
+\begin{equation}
+  -v_{o} \, \left[ n+1\right] +\left( 2+c\right) \, v_{o}\left[ n\right] -v_{o}\left[n-1\right] = 0.
+\end{equation}
+
+\item Suponiendo que
+\begin{equation}
+  \begin{array}{ccc}
+    v_{o}[n+1] = V \, \lambda^{n+1}, & v_{o}[n] = V \, \lambda^{n}, & v_{o}[n-1] = V \, \lambda^{n-1}, 
+  \end{array}
+\end{equation}
+reemplazamos en la ecuaci\'{o}n homog\'{e}nea
+\begin{equation}
+  -V \, \lambda^{n+1} + (2 + c) \, V \, \lambda^{n} - V \, \lambda^{n-1} = 0. \label{ecdifhomuno}
+\end{equation}
+
+\item Extrayendo el factor com\'{u}n $V \, \lambda^{n-1}$ obtenemos el polinomio caracter\'{\i}stico
+\begin{equation}
+  V \, \lambda^{n-1} \, (-\lambda^{2} + (2 + c) \, \lambda^{1} - 1) = 0. \label{ecdifhomdos}
+\end{equation}
+
+\item Las frecuencias naturales son 
+\begin{equation}
+        \lambda_{1,2}=\left( 1+\frac{c}{2}\right) \pm \sqrt{\left( 1+\frac{c}{2}\right)^{2}-1}.
+\end{equation}
+
+\item Observemos que
+\begin{equation}
+        \left( 
+                \left( 1+\frac{c}{2}\right) +
+                \sqrt{\left( 1+\frac{c}{2}\right)^{2}-1}
+        \right) 
+        \left( \left( 1+\frac{c}{2}\right) -\sqrt{\left( 1+\frac{c}{2}\right) ^{2}-1}
+        \right) =1.
+\end{equation}
+y por lo tanto 
+\begin{equation}
+        \lambda _{1}=\frac{1}{\lambda _{2}}.
+\end{equation}
+
+\item Entonces la soluci\'{o}n homog\'{e}nea es 
+\begin{equation}
+        v_{0}\left[ n\right] = V_{1} \, \lambda _{1}^n+ V_{2} \, \lambda _{1}^{-n}.
+\end{equation}
+
+\item Observe las ecs. (\ref{ecdifhomuno}) y (\ref{ecdifhomdos}). 
+\textquestiondown Porqu\'{e} el factor es $V \, \lambda^{n-1}$ en lugar de $V \, \lambda^{n-2}$, 
+dado que $N=2$?
+\end{enumerate}
+
+\subsection{Soluci\'{o}n particular de una ecuaci\'{o}n de diferencias para una entrada $z^{n}$}
+
+\subsubsection{Donde la entrada $z^{n}$ no es una frecuencia natural}
+
+\begin{enumerate}
+
+\item Consideremos la ecuaci\'{o}n de diferencias
+\begin{equation}
+  \sum_{p=0}^{N}a_{p} \, y\left[ n-p\right] =
+  \sum_{q=0}^{M}b_{q} \, x\left[ n-q\right]. \label{ecdiflinealnonat}
+\end{equation}
+
+\item Supongamos ahora que la entrada es una exponencial
+\begin{equation}
+  x\left[ n\right] = z^{n},
+\end{equation}
+y que la salida tiene la misma forma
+\begin{equation}
+  y\left[ n\right] = Y \, z^{n},
+\end{equation}
+donde $z$ no es igual a ninguna frecuencia natural. 
+Reemplazando en la ecuaci\'{o}n de diferencias resulta 
+\begin{equation}
+  \sum_{p=0}^{N}a_{p} \, Y \, z^{n-p}=\sum_{q=0}^{M}b_{q} \, z^{n-q}.
+\end{equation}
+
+\item Extrayendo factores comunes obtenemos 
+\begin{equation}
+  \left( \sum_{p=0}^{N}a_{p} \, z^{-p}\right) \, Y \, z^{n}=
+  \left(\sum_{q=0}^{M}b_{q} \, z^{-q}\right) \, z^{n}. \label{ecdifpart}
+\end{equation}
+Luego de dividir por $z^n$, podemos despejar $Y$
+\begin{equation}
+  Y=\frac{\left( \sum_{q=0}^{M}b_{q} \, z^{-q}\right) }{\left(\sum_{p=0}^{N}a_{p} \, z^{-p}\right) }.
+\end{equation}
+
+\item Por lo tanto, una soluci\'{o}n particular de la ecuaci\'{o}n (\ref{ecdiflinealnonat}) 
+para una entrada exponencial $z^{n}$ es
+\begin{equation}
+  y_{p}[n] =
+    \frac{\left( \sum_{q=0}^{M}b_{q} \, z^{-q}\right) }{\left(\sum_{p=0}^{N}a_{p} \, z^{-p}\right) } \, z^{n}.
+    \label{eqhzorig}
+\end{equation}
+
+\end{enumerate}
+
+\subsubsection{Donde la entrada $z^{n}$ es una frecuencia natural}
+
+\begin{enumerate}
+
+\item Consideremos la ecuaci\'{o}n de diferencias
+\begin{equation}
+  \sum_{p=0}^{N}a_{p} \, y\left[ n-p\right] =
+  \sum_{q=0}^{M}b_{q} \, x\left[ n-q\right]. \label{ecdiflinealnat}
+\end{equation}
+
+\item Supongamos ahora que la entrada es una frecuencia natural
+\begin{equation}
+  x\left[ n\right] = \lambda^{n}.
+\end{equation}
+Por lo tanto debe cumplirse (ver ec. \ref{ecdifpart})
+\begin{equation}
+  \left( \sum_{p=0}^{N}a_{p} \, \lambda^{-p}\right) = 0,
+\end{equation}
+anul\'{a}ndose as\'{\i} el \textbf{denominador} de la ec. (\ref{eqhzorig}).
+
+\item Este es un fen\'{o}meno denominado resonancia. Se produce cuando las entradas coinciden con las
+frecuencias naturales del sistema, y provocan una amplificaci\'{o}n de la salida. Esta ha sido la causa
+de la destrucci\'{o}n de puentes y aviones. Busque referencias en Internet sobre el puente sobre el 
+r\'{\i}o Tacoma, o Tacoma River, o Tacoma Bridge.
+
+\item En este caso, la respuesta forzada del sistema es
+\begin{equation}
+  y[n] = \left(n^{M} + \sum_{k=0}^{M-1} c_{k} \, n^{k}\right) \lambda^{n}, \label{resonanciadiscreta}
+\end{equation}
+donde $M$ es la multiplicidad de la frecuencia natural $\lambda$, y los coeficientes $c_{k}$ se
+determinan mediante condiciones iniciales.
+
+\item Por ejemplo, consideremos la ecuaci\'{o}n de diferencias
+\begin{equation}
+  y[n] - \lambda y[n-1]= \lambda^{n}. 
+\end{equation}
+Podemos comprobar que sustituyendo
+\begin{eqnarray}
+  y[n] &=&  (n + c) \, \lambda^{n}, \label{resonanciadiscretarespuesta} \\
+  y[n-1] &=&  ((n - 1) + c) \, \lambda^{n-1},
+\end{eqnarray}
+en la ec. (\ref{resonanciadiscreta}), obtenemos
+\begin{equation}
+  (n + c) \, \lambda^{n} - \lambda \, ((n - 1) + c) \, \lambda^{n-1} = \lambda^{n}.
+\end{equation}
+Reagrupando y simplificando, resulta
+\begin{equation}
+   n \, \lambda^{n} - n \, \lambda^{n} + c \, \lambda^{n} - c \, \lambda^{n} + \lambda^{n} = \lambda^{n}.
+\end{equation}
+Por lo tanto la respuesta forzada es de la forma (\ref{resonanciadiscreta}).
+
+\end{enumerate}
+
+\subsection{Soluci\'{o}n general de la ecuaci\'{o}n de diferencias para una entrada $z^{n}$}
+
+\subsubsection{Donde $z^{n}$ no es una frecuencia natural}
+
+La soluci\'{o}n general buscada de la ecuaci\'{o}n de diferencias
+\begin{equation}
+        \sum_{p=0}^{N}a_{p}y\left[ n-p\right] =\sum_{q=0}^{M}b_{q}x\left[ n-q\right].
+\end{equation}
+es de la forma
+\begin{equation}
+   y[n] = y_{h} + y_{p}[n] = 
+     \left(\sum_{k=1}^{N}Y_{k}\lambda _{k}^n \right) +
+    \frac{\left( \sum_{q=0}^{M}b_{q}z^{-q}\right) }{\left(\sum_{p=0}^{N}a_{p}z^{-p}\right) } z^{n}.
+\end{equation}
+
+\subsubsection{Donde la entrada $z^{n}$ es una frecuencia natural}
+
+\section{Definici\'{o}n de la funci\'{o}n de transferencia para sistemas de tiempo discreto}
+
+Definamos entonces 
+\begin{equation}
+  H\left( z\right) =
+  \frac{\left( \sum_{q=0}^{M}b_{q}z^{-q}\right) }{\left(\sum_{p=0}^{N}a_{p}z^{-p}\right) },
+  \label{eqhzdef}
+\end{equation}
+como la funci\'{o}n de transferencia asociado a la ecuaci\'{o}n de diferencias
+\begin{equation}
+  \sum_{p=0}^{N}a_{p}y\left[ n-p\right] =
+  \sum_{q=0}^{M}b_{q}x\left[ n-q\right].  
+\end{equation}
+
+\subsection{Ejemplo uno}
+
+\begin{enumerate}
+
+\item La ecuaci\'{o}n de diferencias
+\begin{equation}
+  y[n] - y[n-1] = \tau x[n],
+\end{equation}
+tiene una funci\'{o}n de transferencia asociada
+\begin{equation}
+  H(z) = \frac{\tau}{1-z^{-1}}.
+\end{equation}
+
+\item La ecuaci\'{o}n de diferencias
+\begin{equation}
+  y[n] - y[n-2] = 2 \tau x[n-1],
+\end{equation}
+tiene una funci\'{o}n de transferencia asociada
+\begin{equation}
+  H(z) = \frac{2 \tau z^{-1}}{1-z^{-2}}.
+\end{equation}
+
+\end{enumerate}
+
+\subsection{Ejemplo dos}
+
+Veremos la reconstrucci\'{o}n de una ecuaci\'{o}n de diferencias a partir de
+una funci\'{o}n de transferencia. Consideremos 
+\begin{equation}
+        H\left( z\right) =\frac{z}{z+1}.
+\end{equation}
+\textquestiondown Cu\'{a}l es la ecuaci\'{o}n de diferencias correspondiente?
+Hagamos 
+\begin{equation}
+        H(z)\left( z+1\right) = z,
+\end{equation}
+y multipliquemos ambos lados por $z^n$
+\begin{equation}
+        H(z)z^n\left( z+1\right) =z^{n}z,
+\end{equation}
+de donde se puede obtener la ecuaci\'{o}n diferencia 
+\begin{equation}
+        y\left[ n+1\right] +y\left[ n\right] = z^{n+1} .
+\end{equation}
+
+\subsection{Pregunta}
+
+Compare las funciones de transferencia con sus respectivas ecuaciones de diferencias.
+\textquestiondown Encuentra la relaci\'{o}n existente entre los exponentes de $z$ en las funciones de 
+transferencia, los \'{\i}ndices de los coeficientes y los desplazamientos en el tiempo de la entrada
+y la salida?
+
+\section{Polos y ceros de la funci\'{o}n de transferencia}
+
+\begin{enumerate}
+
+\item La funci\'{o}n de transferencia puede expresarse como 
+\begin{equation}
+H\left( z\right) =
+        \frac{\left( \sum_{q=0}^{M}b_{q}z^{q}\right) }{\left(\sum_{p=0}^{N}a_{p}z^{p}\right) }=
+        K\frac{\left(\Pi _{q=1}^{M} z-c_{q} \right)}
+         {\left(\Pi _{p=1}^{N} z-d_{p} \right)},
+\end{equation}
+donde $K=\frac{b_{M}}{a_{N}}$.
+Nos referiremos a $c_{q}$ como los ceros, 
+a $d_{p}$ como los polos, y a $K$ como la ganancia.
+
+\item La posici\'{o}n de los ceros y polos en el plano complejo determinan el tipo de din\'{a}mica 
+del sistema. El factor de ganancia $K$ s\'{o}lo determina la amplitud de la respuesta.
+
+\item La funci\'{o}n de transferencia $H\left( z\right) $ relacionada con una ecuaci\'{o}n de 
+diferencia contiene la misma informaci\'{o}n que esta. Ambas est\'{a}n definidas por $N+M+1$ 
+n\'{u}meros: $N$ polos, $M$ ceros y una constante o ganancia.
+
+\end{enumerate}
+
+\subsection{Soluci\'{o}n general de la ecuaci\'{o}n de diferencias con entrada exponencial compleja}
+
+\begin{enumerate}
+
+\item La soluci\'{o}n general de la ecuaci\'{o}n de diferencias 
+\begin{equation}
+        \sum_{p=0}^{N}a_{p}y\left[ n-p\right] =\sum_{q=0}^{M}b_{q}x\left[ n-q\right],
+\end{equation}
+con entrada exponencial compleja $x[n] = z^{n}$ es
+\begin{equation}
+  y[n] = H(z) z^{n} + y_{h}[n],
+\end{equation}
+donde
+\begin{equation}
+     H(z) = \frac{\left( \sum_{q=0}^{M}b_{q}z^{-q}\right) }{\left(\sum_{p=0}^{N}a_{p}z^{-p}\right) },
+\end{equation}
+y $y_{h}[n]$ satisface la ecuaci\'{o}n homog\'{e}nea
+\begin{equation}
+        \sum_{p=0}^{N}a_{p}y_{h}\left[ n-p\right] = 0.
+\end{equation}
+
+\item Para determinar por completo la soluci\'{o}n total necesitamos determinar los 
+$N$ coeficientes $A_{1},$ ..., $A_{N}.$ que forman parte de la soluci\'{o}n homog\'{e}nea $y_{h}[n]$.
+Estos pueden ser determinados a partir de $N$ condiciones iniciales que deben ser especificadas. 
+Se obtiene as\'{\i} un conjunto de $N$ ecuaciones algebraicas cuyas inc\'{o}gnitas
+son los $N$ coeficientes $A_{1},$ ..., $A_{N}$.
+
+\end{enumerate}
+
+\section{Respuesta a exponenciales complejas}
+
+\begin{enumerate}
+
+\item Sea el sistema definido por la suma de convoluci\'{o}n, 
+\begin{equation}
+        y\left[ n\right] =
+                \sum_{k=-\infty }^{\infty }x\left[ k\right] h\left[ n-k\right] =
+                \sum_{k=-\infty }^{\infty }h\left[ k\right] x\left[ n-k\right] ,
+\end{equation}
+donde $h\left[ n\right] $ es la respuesta al impulso, $x\left[ n\right] $ es la entrada e 
+$y\left[ n\right] $ es la salida correspondiente.
+
+\item Sup\'{o}ngamos una entrada exponencial compleja 
+\begin{equation}
+        x\left[ n\right] =z^{n}.
+\end{equation}
+Por lo tanto, la suma de convoluci\'{o}n correspondiente es 
+\begin{equation}
+        y\left[ n\right] =
+                \sum_{k=-\infty }^{\infty }h\left[ k\right] x\left[ n-k\right] =
+                \sum_{k=-\infty }^{\infty }h\left[ k\right] z^{n-k},
+\end{equation}
+que puede expresarse como 
+\begin{equation}
+y\left[ n\right] =\left( \sum_{k=-\infty }^{\infty }h\left[ k\right]z^{-k}\right) z^n.
+\end{equation}
+
+\item Vemos que la funci\'{o}n definida por
+\begin{equation}
+        H\left( z\right) =\left( \sum_{k=-\infty }^{\infty }h\left[ k\right]z^{-k}\right),
+\end{equation}
+es la transformada Z bilateral de la respuesta al impulso del sistema.
+
+\item \textbf{Muy importante: La transformada Z de la respuesta al impulso del sistema es la 
+funci\'{o}n de transferencia del sistema.}
+
+\end{enumerate}
+
+\section{Soluci\'{o}n general de la ecuaci\'{o}n de diferencias}
+
+\subsection{Introducci\'{o}n}
+
+\begin{enumerate}
+
+\item Hemos visto que podemos obtener la funci\'{o}n de transferencia de un sistema 
+(la transformada $Z$ de la respuesta al impulso) suponiendo que la entrada es $x[n] = z^{n}$. 
+En este caso la salida es $y[n] = H(z) z^{n}$.
+
+\item Adem\'{a}s, una soluci\'{o}n particular de la ecuaci\'{o}n de diferencias 
+est\'{a} dada por la convoluci\'{o}n de la respuesta al impulso $h[n]$ con la 
+entrada $x[n]$. 
+
+\item Disponiendo de $H(z)$ es posible evitar el c\'{a}lculo de la convoluci\'{o}n, 
+porque una propiedad de la transformada $Z$ es que la transformada de una 
+convoluci\'{o}n de dos se\~{n}ales $h[n]$ y $x[n]$ es el producto de las 
+transformadas $H(z)$ y $X(z)$. Por lo tanto podemos:
+\begin{enumerate}
+   \item Calcular $X(z)$.
+   \item Obtener $y_{p}[n]$ tal que $Z(y_{p}[n]) = H(z) X(z)$ mediante la 
+     transformada $Z$ bilateral, realizando la suposici\'{o}n correspondiente 
+     sobre la regi\'{o}n de convergencia y por lo tanto sobre la causalidad o no 
+     del sistema lineal descripto por la ecuaci\'{o}n de diferencias.
+\end{enumerate}
+
+\item Sumando la soluci\'{o}n particular $y_{p}[n]$ encontrada en el paso anterior a 
+  la soluci\'{o}n de la ecuaci\'{o}n homog\'{e}nea $y_{h}[n]$, obtenemos finalmente 
+  la soluci\'{o}n general $y[n]$.
+
+\end{enumerate}
+
+\subsection{Sistemas causales}
+
+\begin{enumerate}
+
+\item Supondremos que el sistema definido por la ecuaci\'{o}n de diferencias 
+\begin{equation}
+   \sum_{p=0}^{N}a_{p}y\left[ n-p\right] =\sum_{q=0}^{M}b_{q}x\left[ n-q\right]. \label{eqdtdcausal}
+\end{equation}
+es \textbf{causal}, o sea que su respuesta al impulso es nula para $n < 0$.
+
+\item Comprobaremos que la soluci\'{o}n causal de la ecuaci\'{o}n de diferencias (\ref{eqdtdcausal}) es
+\begin{equation}
+   y[n] = \left( \sum_{k=1}^{N} c_{k} \lambda_{k}^{n} u[n] \right) +
+     \left( \sum_{k=0}^{n} h[n-k] x[k] \right). \label{solgenecdif}
+\end{equation}
+donde $\lambda_{k}$, $k \in [1,N]$ son las $N$ ra\'{\i}ces simples del polinomio caracter\'{\i}stico
+\begin{equation}
+  p(\lambda) = \left( \sum_{p=0}^{N}a_{p}\lambda ^{N-p}\right) = 
+  a_{N} \prod_{k=1}^{N} \left( \lambda - \lambda_{k} \right). \label{eqdtdcausalpolcar}
+\end{equation}
+
+\item Supondremos que la respuesta al impulso es una combinaci\'{o}n lineal de funciones 
+$\lambda_{k}^{n} u[n]$
+\begin{equation}
+   h[n] = \sum_{k=1}^{N} d_{k} \lambda_{k}^{n} u[n].
+\end{equation}
+donde $\lambda_{k}$, $k \in [1,N]$, son ra\'{\i}ces del polinomio caracter\'{\i}stico 
+(\ref{eqdtdcausalpolcar}).
+
+\item Recordemos que hemos llegado a la conclusi\'{o}n de que la transformada $Z$ de la respuesta causal 
+al impulso es la funci\'{o}n de transferencia $H(z)$ definida como
+\begin{equation}
+  H\left( z\right) =
+  \frac{\left( \sum_{q=0}^{M}b_{q}z^{-q}\right) }{\left(\sum_{p=0}^{N}a_{p}z^{-p}\right) } = 
+  \sum_{k=0 }^{\infty }h\left[ k\right]z^{-k}.
+\end{equation}
+Tomando la transformada $Z$ de $h[n]$ encontramos
+\begin{equation}
+  Z(h[n]) = \sum_{k=-\infty}^{\infty} \left(\sum_{s=1}^{N} d_{s} \lambda_{s}^{k} u[k] \right) z^{-k}.
+\end{equation}
+Intercambiando la posici\'{o}n de las sumatorias resulta
+\begin{equation} \label{ecuazetabilateral}
+  Z(h[n]) = \sum_{s=1}^{N} d_{s} \left( \sum_{k=-\infty}^{\infty} \lambda_{s}^{k} u[k] z^{-k} \right).
+\end{equation}
+Es posible cambiar el valor inicial de $k$ debido al factor $u[k]$,
+\begin{equation} \label{ecuazetaunilateral}
+  Z(h[n]) = \sum_{s=1}^{N} d_{s} \left( \sum_{k=0}^{\infty} \lambda_{s}^{k} z^{-k} \right).
+\end{equation}
+Por lo tanto debe ser
+\begin{equation}
+  H\left( z\right) = Z(h[n]) =
+  \frac{\left( \sum_{q=0}^{M}b_{q}z^{-q}\right) }{\left(\sum_{p=0}^{N}a_{p}z^{-p}\right) } = 
+  \sum_{s=1}^{N} d_{s} \frac{1}{1 - (\lambda_{s} z^{-1})},
+\end{equation}
+donde $\left \|(\lambda_{s} z^{-1}) \right\| < 1$, $s \in [1,N]$, en la regi\'{o}n de convergencia.
+
+\item Observemos la diferencia entre las ecuaciones 
+  (\ref{ecuazetabilateral}) y (\ref{ecuazetaunilateral}). Hemos supuesto que el sistema es causal, y 
+por lo tanto en su respuesta al impulso aparece el factor $u[n]$ en estas ecuaciones. 
+Se justifica as\'{\i} el empleo de la transformada $Z^{+}$ (unilateral).
+
+\item Si la entrada es un impulso, y las condiciones iniciales son nulas (o sea, 
+$c_{k} = 0$) obtenemos
+\begin{equation}
+   h[n] = \sum_{k=0}^{\infty} h[k] \delta[n-k].
+\end{equation}
+
+\item Podemos comprobar que la soluci\'{o}n $y[n]$ tiene la forma indicada en la ec. (\ref{solgenecdif}) 
+por dos caminos distintos: en el dominio del tiempo y en el dominio $z$. 
+
+\item En el dominio del tiempo, podemos escribir
+\begin{equation}
+   y[n-p] = 
+       \left( \sum_{k=1}^{N} c_{k} \lambda_{k}^{n-p} u[n-p] \right) +
+       \left( \sum_{k=0}^{n-p} h[n-k-p] x[k] \right),
+\end{equation}
+Reemplazando en la ecuaci\'{o}n de diferencias, resulta
+\begin{equation}
+   \sum_{p=0}^{N}a_{p}y\left[ n-p\right] =
+   \left( \begin{array}{c}
+       \sum_{p=0}^{N}a_{p}
+       \left( \sum_{k=1}^{N} c_{k} \lambda_{k}^{n-p} u[n-p] \right) + \\
+       \\
+       \sum_{p=0}^{N}a_{p}
+       \left( \sum_{k=0}^{n-p} h[n-k-p] x[k] \right)
+ \end{array} \right).
+\end{equation}
+Observemos que podemos escribir
+\begin{equation}
+  \sum_{p=0}^{N}a_{p}
+  \left( \sum_{k=1}^{N} c_{k} \lambda_{k}^{n-p} u[n-p] \right) =
+  \sum_{k=1}^{N} c_{k} \lambda_{k}^{n} \sum_{p=0}^{N} a_{p} \lambda_{k}^{-p} u[n-p].
+\end{equation}
+
+\end{enumerate}
+
+\subsection{Resumen: La funci\'{o}n de transferencia}
+
+Debemos recordar que
+\begin{enumerate}
+\item   $H(z)$ es una funci\'{o}n racional en $z$ para ecuaciones de diferencias con coeficientes
+  constantes y sin retardos.
+  
+\item   $H(z)$ caracteriza al sistema lineal.
+  
+\item   $H(z)$ define la relaci\'{o}n entre entrada y salida.
+  
+\item   $H(z)$ se calcula de dos formas:
+  \begin{enumerate}
+  \item Considerando una entrada exponencial compleja $x[n] = z^{n}$.
+  \item Aplicando la transformada $Z$ unilateral con condiciones iniciales nulas a 
+    la ecuaci\'{o}n diferencial.
+  \end{enumerate}
+\end{enumerate}
+
+\subsection{Ejemplo}
+
+\begin{enumerate}
+
+\item Hemos considerado anteriormente una versi\'{o}n discretizada del sistema de tiempo continuo cuya 
+ecuaci\'{o}n diferencial es 
+\begin{equation}
+        \frac{dv_o\left( t\right) }{dt}+\frac{1}{RC}v_o\left( t\right) =\frac{1}{RC}v_i\left( t\right) ,
+\end{equation}
+y su respuesta al escal\'{o}n, comenzando de $v_o\left( 0\right) =0,$ es 
+\begin{equation}
+        v_o\left( t\right) =\left( 1-e^{-\frac{t}{RC}}\right) u\left( t\right) .
+\end{equation}
+Hemos mostrado que una aproximaci\'{o}n discreta de este sistema permite obtener la ecuaci\'{o}n de 
+diferencias 
+\begin{equation}
+        v_o\left[ n+1\right] =\left( 1-\alpha \right) v_o\left[ n\right] +\alpha v_i\left[ n\right] ,
+\end{equation}
+donde 
+\begin{equation}
+        \alpha =\frac{T}{RC}.
+\end{equation}
+
+\item Podemos obtener la funci\'{o}n de transferencia del sistema sustituyendo 
+\begin{equation}
+        v_i\left[ n\right] =z^n,
+\end{equation}
+y 
+\begin{equation}
+        v_o\left[ n\right] =V_o z^n,
+\end{equation}
+en la ecuaci\'{o}n de diferencias para obtener 
+\begin{equation}
+        V_oz^{n+1}=\left( 1-\alpha \right) V_oz^n+\alpha z^n,
+\end{equation}
+que puede simplificarse 
+\begin{equation}
+        V_oz=\left( 1-\alpha \right) V_o+\alpha.
+\end{equation}
+Por lo tanto 
+\begin{equation}
+        H\left( z\right) = V_o\left( z\right) = \frac{\alpha }{z-\left( 1-\alpha \right) }.
+\end{equation}
+
+\item La frecuencia natural del sistema es 
+\begin{equation}
+        \lambda =\left( 1-\alpha \right) ,
+\end{equation}
+y por lo tanto la soluci\'{o}n tiene la forma 
+\begin{equation}
+     v_o\left[ n\right] =\left( A\left( 1-\alpha \right) ^n+H\left( 1\right) 1^n\right) u\left[ n\right] .
+\end{equation}
+
+\item Como $H\left( 1\right) =1,$ resulta 
+\begin{equation}
+  v_o\left[ n\right] =\left( A\left( 1-\alpha \right) ^n+1\right) u\left[ n\right] .
+\end{equation}
+Finalmente, la condici\'{o}n inicial $v_o\left[ 0\right] =0$ implica que 
+$A=-1$ y por lo tanto la soluci\'{o}n es 
+\begin{equation}
+  v_o\left[ n\right] =\left( 1-\left( 1-\alpha \right) ^n\right) u\left[ n\right] .
+\end{equation}
+
+\end{enumerate}
+
+\section{Estabilidad de sistemas LIT}
+
+\subsection{Sistemas con un polo}
+
+La funci\'{o}n de transferencia correspondiente a la ecuaci\'{o}n
+diferencial 
+\begin{equation}
+        y\left[ n+1\right] +ay\left[ n\right] =bx\left[ n\right] ,
+\end{equation}
+puede calcularse suponiendo que 
+\begin{eqnarray}
+        x\left[ n\right] &=&Xz^n, \\
+        y\left[ n\right] &=&Yz^n\longleftrightarrow y\left[ n+1\right] =Yz^{n+1}.
+\end{eqnarray}
+Reemplazando en la ecuaci\'{o}n diferencial 
+\begin{equation}
+        Yz^{n+1}+aYz^n=bXz^n
+\end{equation}
+Simplificando y agrupando 
+\begin{equation}
+        \left( z+a\right) Y=bX.
+\end{equation}
+Despejando $\frac{Y}{X}$, resulta 
+\begin{equation}
+        H\left( z\right) =\frac{Y}{X}=\frac{b}{z+a},
+\end{equation}
+Recuerde que la soluci\'{o}n de la ecuaci\'{o}n homog\'{e}nea es 
+\begin{equation}
+        y\left[ n\right] =Y\left( -a\right) ^n.
+\end{equation}
+\begin{enumerate}
+        \item   Si $\left| a\right| < 1$ entonces 
+        \begin{equation}
+                \begin{array}{c}
+                        Lim \\ 
+                        t\rightarrow \infty
+                \end{array}
+                y\left[ n\right] =0,
+        \end{equation}
+        y por lo tanto el sistema es estable. 
+        
+        \item   Si $\left| a\right| > 1,$ entonces 
+        \begin{equation}
+                \begin{array}{c}
+                        Lim \\ 
+                        n\rightarrow \infty
+                \end{array}
+                y\left[ n\right] =\infty .
+        \end{equation}
+        y el sistema es inestable.
+        
+        \item   Si $\left| a\right| = 1,$ entonces 
+        \begin{equation}
+                \begin{array}{c}
+                        Lim \\ 
+                        n\rightarrow \infty
+                \end{array}
+                y\left[ n\right] = 1,
+        \end{equation}
+        y el sistema es estable en el sentido de que una entrada acotada genera una salida limitada.
+\end{enumerate}
+
+\subsection{Sistemas con dos polos}
+
+La funci\'{o}n de transferencia correspondiente a la ecuaci\'{o}n de
+diferencias 
+\begin{equation}
+        y\left[ n+2\right] +ay\left[ n+1\right] +by\left[ n\right] =cx\left[ n\right],
+\end{equation}
+puede calcularse suponiendo que 
+\begin{eqnarray}
+        x\left[ n\right] &=&Xz^n, \\
+        y\left[ n\right] &=&Yz^n, \\
+        y\left[ n+1\right] &=&Yz^{n+1}, \\
+        y\left[ n+2\right] &=&Yz^{n+2}.
+\end{eqnarray}
+Reemplazamos en la ecuaci\'{o}n de diferencias 
+\begin{equation}
+        z^{2}Yz^n+azYz^n+bYz^n=cXz^n.
+\end{equation}
+Simplificamos y agrupamos 
+\begin{equation}
+        \left( z^{2}+az+b\right) Y=cX.
+\end{equation}
+Despejando $\frac{Y}{X}$ resulta 
+\begin{equation}
+        \frac{Y}{X}=H\left( z\right) =\frac{c}{\left( z^{2}+az+b\right) }.
+\end{equation}
+Observe que si $d_{1}\neq d_{2}$ (los polos de $H\left( z\right) )$ son distintos entre s\'{\i} entonces 
+\begin{equation}
+        H\left( s\right) =\frac{r_{1}}{z+d_{1}}+\frac{r_{2}}{z+d_{2}}.
+\end{equation}
+Las constantes $r_{1}$ y $r_{2}$ pueden calcularse 
+\begin{eqnarray}
+\left. H\left( z\right) \left( z+d_{1}\right) \right| _{z=-d_{1}} &=&
+\left.\left( \frac{r_{1}}{z+d_{1}}+\frac{r_{2}}{z+d_{2}}\right) \left(z+d_{1}\right) \right| _{z=-d_{1}},\\
+\left. H\left( z\right) \left( z+d_{2}\right) \right| _{z=-d_{2}} &=&
+\left.\left( \frac{r_{1}}{z+d_{1}}+\frac{r_{2}}{z+d_{2}}\right) \left(z+d_{2}\right) \right| _{z=-d_{2}}.
+\end{eqnarray}
+Entonces podemos calcular la secuencia $y\left[ n\right] =h\left[ n\right] $ respuesta a una entrada
+\begin{equation} 
+        x\left[ n\right] =\delta \left[ n\right] =
+                \left\{ \begin{array}{c}
+                        n=0\rightarrow 1 \\ 
+                        n\neq 0\rightarrow 0
+                \end{array} \right.
+\end{equation} como 
+\begin{equation}
+h\left[ n\right] =\left( r_{1}\left( -d_{1}\right) ^n+r_{2}\left(-d_{2}\right) ^n\right) u\left[ n\right].
+\end{equation}
+
+\begin{enumerate}
+\item   Si $\left| d_{1}\right| <1$ y $\left| d_{2}\right| <1$ simult\'{a}neamente, entonces el sistema es 
+estable porque
+        \begin{equation}
+                \begin{array}{c}
+                        Lim \\ 
+                        n\rightarrow \infty
+                \end{array}
+                h\left[ n\right] =0.
+        \end{equation}
+        
+\item   En cambio, si $\left| d_{1}\right| >1$ o $\left|d_{2}\right| >1,$ entonces el sistema es inestable 
+porque 
+        \begin{equation}
+                \begin{array}{c}
+                        Lim \\ 
+                        n\rightarrow \infty
+                \end{array}
+                h\left[ n\right] =\infty .
+        \end{equation}
+\end{enumerate}
+
+\section{Aplicaci\'{o}n}
+
+\subsection{Red el\'{e}ctrica en escalera}
+
+En la figura \ref{laddercircuiteps}, $r$ es la resistencia serie y $g$
+es la conductancia shunt. Aplicando la ley de Kirchoff de las
+corrientes en el nodo central tenemos 
+\begin{equation}
+        \frac{v_{0}\left[ n-1\right] - v_{0}\left[ n\right] }{r}+
+        \frac{v_{0}\left[ n+1\right] - v_{0}\left[ n\right] }{r}+
+        g\left( v_i\left[ n\right] -v_o\left[n\right] \right) = 0,
+\end{equation}
+de donde se obtiene la ecuaci\'{o}n de diferencias
+\begin{equation}
+        -v_{0}\left[ n+1\right] +
+        \left( 2+rg\right) v_{0}\left[ n\right] -
+        v_{0}\left[n-1\right] =
+        rgv_i\left[ n\right].  \label{sisCuatro}
+\end{equation}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=2in]{./graphics/ladder_circuit.eps}
+  \caption{Circuito escalera}
+  \label{laddercircuiteps}
+\end{figure}
+
+Falta completar
+

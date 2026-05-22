@@ -1,0 +1,228 @@
+\chapter{Muestreo en tiempo}
+
+\section{Introducci\'{o}n}
+
+\subsection{Definiciones b\'{a}sicas}
+
+\begin{enumerate}
+	\item Recordemos la definici\'{o}n \textbf{de la sucesi\'{o}n de funciones} cuyo l\'{\i}mite es el impulso unitario:
+	\begin{equation}
+		r_{\Delta} (t - t_{0}) = 
+		\begin{cases}
+			0 & t < t_{0}, \\
+			\frac{1}{\Delta} & t_{0} \leq t \leq t_{0} + \Delta, \\
+			0 & t > t_{0} + \Delta.
+		\end{cases}
+	\end{equation}
+	donde $\Delta$ es una constante real positiva.
+	
+	\item Supongamos que tenemos una se\~{n}al continua $x(t)$. Podemos definir una nueva se\~{n}al al multiplicarla por un impulso desplazado:
+	\begin{equation}
+		z(t) = x(t) \delta(t - t_{0}).
+	\end{equation}
+	
+	\item Para obtener los valores de la funci\'{o}n $z(t)$, construyamos una sucesi\'{o}n de funciones evaluando $x(t)$ con $r_{\Delta}$:
+	\begin{equation}
+		z_{\Delta}(t) = 
+		\begin{cases}
+			0 & t < t_{0}, \\
+			x(t) \frac{1}{\Delta} & t_{0} \leq t \leq t_{0} + \Delta, \\
+			0 & t > t_{0} + \Delta.
+		\end{cases}
+	\end{equation}
+	La funci\'{o}n $z(t)$ es el l\'{\i}mite de esta sucesi\'{o}n cuando $\Delta \rightarrow 0$. Evaluando el límite, por la continuidad de $x(t)$, se obtiene:
+	\begin{equation}
+		z(t) = 
+		\begin{cases}
+			0 & t \neq t_{0}, \\
+			x(t_{0}) & t = t_{0}.
+		\end{cases}             
+		\label{muescont}
+	\end{equation}
+	
+	\item Podemos resumir la operaci\'{o}n fundamental del muestreo mediante la propiedad de filtrado del impulso:              
+	\begin{equation}
+		z(t) = x(t) \delta(t-t_{0}) = x(t_{0}) \delta(t-t_{0}).
+	\end{equation}
+\end{enumerate}
+
+\section{Muestreo por modulaci\'{o}n con un tren de impulsos (tiempo continuo)}
+
+\begin{enumerate}
+	\item Veamos la Fig. (\ref{samponeeps}), y recordemos la definici\'{o}n de un tren de impulsos de tiempo continuo de per\'{\i}odo $T$:
+	\begin{equation}
+		p(t) = \sum_{n=-\infty}^{\infty} \delta(t-nT).
+		\label{samptemp}
+	\end{equation}
+	Sabemos adem\'{a}s que la Transformada de Fourier de $p(t)$ es otro tren de impulsos en el dominio de la frecuencia:
+	\begin{equation}
+		P(j\omega) = \frac{2\pi}{T} \sum_{k=-\infty}^{\infty} \delta\left(\omega - k\frac{2\pi}{T}\right).
+		\label{fouriertrenimp}
+	\end{equation}
+	
+	\item Calculemos ahora el producto de $p(t)$ con una se\~{n}al continua $x(t)$, lo cual modela el muestreo ideal:
+	\begin{equation}
+		x_{p}(t) = x(t) p(t) = \sum_{n=-\infty}^{\infty} x(t) \delta(t-nT).
+	\end{equation}
+	Por la propiedad del producto de una se\~{n}al con un impulso, sabemos que $x(t) \delta(t-nT) = x(nT) \delta(t-nT)$. Por lo tanto, resulta: 
+	\begin{equation}
+		x_{p}(t) = \sum_{n=-\infty}^{\infty} x(nT) \delta(t-nT).
+	\end{equation}
+	
+	\item Por la propiedad de la multiplicaci\'{o}n en el tiempo de la Transformada de Fourier, sabemos que a un producto en el tiempo le corresponde una convoluci\'{o}n en frecuencia:
+	\begin{equation}
+		X_{p}(j\omega) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(j\theta) P(j(\omega - \theta)) \, d\theta.
+	\end{equation}
+	Sustituyendo la ecuaci\'{o}n (\ref{fouriertrenimp}) escribimos:
+	\begin{equation}
+		X_{p}(j\omega) = \frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{2\pi}{T} \sum_{k=-\infty}^{\infty} X(j\theta) \delta\left(\omega - \theta - k\frac{2\pi}{T}\right) d\theta.
+	\end{equation}
+	Intercambiando las posiciones de la integral y la sumatoria, y simplificando los factores $2\pi$, deducimos:
+	\begin{equation}
+		X_{p}(j\omega) = \frac{1}{T} \sum_{k=-\infty}^{\infty} \int_{-\infty}^{\infty} X(j\theta) \delta\left(\omega - \theta - k\frac{2\pi}{T}\right) d\theta.
+	\end{equation}
+	
+	\item Dada la propiedad de la convoluci\'{o}n de una se\~{n}al con un impulso desplazado:
+	\begin{equation}
+		X(j\omega) * \delta\left(\omega - k\frac{2\pi}{T}\right) = X\left(j\left(\omega - k\frac{2\pi}{T}\right)\right),
+	\end{equation}
+	resulta la expresi\'{o}n fundamental del espectro muestreado:
+	\begin{equation}
+		X_{p}(j\omega) = \frac{1}{T} \sum_{k=-\infty}^{\infty} X\left(j\left(\omega - k\frac{2\pi}{T}\right)\right).
+		\label{sampomega}
+	\end{equation}
+	
+	\item Para explicar en palabras la ec. (\ref{sampomega}): el espectro de la se\~{n}al muestreada $X_p(j\omega)$ consiste en una sumatoria infinita o superposici\'{o}n de copias exactas del espectro original $X(j\omega)$, escaladas por $1/T$ y desplazadas en frecuencia a intervalos regulares múltiplos de la frecuencia de muestreo $\omega_s = \frac{2\pi}{T}$.
+\end{enumerate}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3.5in]{./graphics/sampone.eps}
+	\caption{Muestreo en el dominio del tiempo: La se\~{n}al original se modula con un tren de impulsos.}
+	\label{samponeeps}
+\end{figure}
+
+\section{Teorema del muestreo de Nyquist-Shannon}
+
+\begin{enumerate}
+	\item Sea $x(t)$ una se\~{n}al de banda limitada (es decir, su espectro es nulo por encima de cierta frecuencia máxima), tal que $X(j\omega) = 0$ para $|\omega| > \omega_{a}$, donde $\omega_{a}$ es el ancho de banda o frecuencia máxima presente en la se\~{n}al. Entonces, $x(t)$ queda correcta y unívocamente especificada por sus muestras $x(nT)$ si la frecuencia de muestreo $\omega_s$ cumple con la \textbf{condición de Nyquist}:
+	\begin{equation}
+		\omega_{s} = \frac{2\pi}{T} > 2\omega_{a}.
+	\end{equation}
+	
+	\item En otras palabras, si generamos una se\~{n}al muestreada $x_{p}(t)$ modulando un tren de impulsos peri\'{o}dicos de frecuencia $\omega_{s}$ con la se\~{n}al original $x(t)$, podemos recuperar $x(t)$ íntegramente haciendo pasar $x_{p}(t)$ por un filtro pasabajos ideal con ganancia $T$ y frecuencia de corte $\omega_c$ tal que $\omega_{a} < \omega_{c} < (\omega_{s}-\omega_{a})$.
+	
+	\item Las dos ecuaciones que debemos observar para entender la clave del muestreo en los dominios temporal y frecuencial son (\ref{samptemp}) y (\ref{sampomega}):
+	\begin{align}
+		p(t) &= \sum_{n=-\infty}^{\infty} \delta(t-nT), \\
+		X_{p}(j\omega) &= \frac{1}{T} \sum_{k=-\infty}^{\infty} X\left(j\left(\omega - k\frac{2\pi}{T}\right)\right).
+	\end{align}
+	La separaci\'{o}n en el tren de impulsos temporal es $T$, y en el dominio espectral las réplicas están separadas por $\omega_s = \frac{2\pi}{T}$. Cuanto mayor sea la frecuencia de muestreo (menor tiempo $T$), mayor será la separaci\'{o}n entre las copias del espectro.
+	
+	\item Si la frecuencia de muestreo no es suficientemente alta ($\omega_s \leq 2\omega_a$), las copias desplazadas del espectro se superponen. Este solapamiento mezcla las altas frecuencias con las bajas, provocando una distorsión irreversible conocida como \textbf{aliasing} o solapamiento espectral.
+\end{enumerate}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3.9in]{./graphics/samptwo.eps}
+	\caption{Muestreo en el dominio de la frecuencia. La multiplicaci\'{o}n en el dominio del tiempo corresponde a una convoluci\'{o}n en el dominio de la frecuencia, generando infinitas réplicas del espectro original centradas en múltiplos de $\omega_{s}$.}
+	\label{samptwoeps}
+\end{figure}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=4.0in]{./graphics/sampthree.eps}
+	\caption{Aliasing o solapamiento de frecuencias provocado por un muestreo demasiado lento ($\omega_s < 2\omega_a$).}
+	\label{sampthreeeps}
+\end{figure}
+
+\section{Reconstrucci\'{o}n ideal de se\~{n}ales muestreadas}
+
+\begin{enumerate}
+	\item Para recuperar la señal en el tiempo, debemos filtrar las réplicas espectrales. Recordemos la propiedad de la multiplicaci\'{o}n en el dominio de Fourier:
+	\begin{equation}
+		X(j\omega) = X_p(j\omega) H(j\omega) \quad \xrightarrow{\mathcal{F}^{-1}} \quad x(t) = x_p(t) * h(t).
+	\end{equation}
+	
+	\item Supongamos un filtro de reconstrucción pasabajos ideal cuya respuesta en frecuencia es:
+	\begin{equation}
+		H(j\omega) = 
+		\begin{cases}
+			T & |\omega| \leq \omega_{c}, \\
+			0 & |\omega| > \omega_{c}.
+		\end{cases}
+	\end{equation}
+	Calculando la Transformada Inversa de Fourier, su respuesta al impulso es la función seno cardinal ($\text{sinc}$):
+	\begin{equation}
+		h(t) = T \frac{\sin(\omega_{c} t)}{\pi t}.
+	\end{equation}
+	Para una reconstrucción exacta (asumiendo muestreo a la tasa de Nyquist), usualmente se elige $\omega_c = \omega_s / 2 = \pi / T$, resultando en $h(t) = \frac{\sin(\pi t / T)}{\pi t / T}$.
+	
+	\item La se\~{n}al reconstruida en el tiempo se obtiene convolucionando $x_p(t)$ con $h(t)$:
+	\begin{equation}
+		x_{r}(t) = \sum_{n=-\infty}^{\infty} x(nT) \left[ T \frac{\sin(\omega_{c} (t-nT))}{\pi (t-nT)} \right].
+	\end{equation}
+	
+	\item Esta es una \textbf{reconstrucci\'{o}n ideal} de ancho de banda estrictamente limitado, conocida como \textit{Interpolación de Whittaker-Shannon}. Es irrealizable en la pr\'{a}ctica porque requiere un filtro pasabajos ideal, cuya respuesta al impulso $h(t)$ se extiende desde $t = -\infty$ hasta $\infty$ (es un sistema fuertemente no causal).
+\end{enumerate}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3in]{./graphics/muestreocontinua.eps}
+	\caption{Se\~{n}al continua original lista para ser muestreada.}
+	\label{muestreocontinuaeps}
+\end{figure}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3in]{./graphics/muestreomuestreada.eps}
+	\caption{Se\~{n}al muestreada $x_p(t)$ representada como un tren de impulsos modulados.}
+	\label{muestreomuestreadaeps}
+\end{figure}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3in]{./graphics/muestreoreconstruccion.eps}
+	\caption{Reconstrucci\'{o}n ideal sumando las funciones sinc desplazadas.}
+	\label{muestreoreconstruccioneps}
+\end{figure}
+
+\section{Reconstrucci\'{o}n real de se\~{n}ales muestreadas}
+
+En la pr\'{a}ctica, los conversores Digital-a-Analógico (DAC) no generan impulsos ideales de duración nula ni utilizan filtros no causales, sino que mantienen el nivel del voltaje constante durante todo el período de muestreo $T$. Este método se conoce como \textbf{Retenedor de Orden Cero} (ZOH, por sus siglas en inglés \textit{Zero-Order Hold}).
+
+\begin{enumerate}
+	\item En el dominio del tiempo, la reconstrucción real mediante un ZOH equivale a convolucionar el tren de impulsos muestreado $x_p(t)$ con un pulso rectangular $h_0(t)$ definido por:
+	\begin{equation}
+		h_0(t) = 
+		\begin{cases}
+			1 & 0 \leq t < T \\
+			0 & \text{en otro caso.}
+		\end{cases}
+	\end{equation}
+	La señal de salida será una aproximación "escalonada" de la señal original.
+	
+	\item La respuesta en frecuencia de este filtro retenedor se obtiene calculando la Transformada de Fourier del pulso rectangular $h_0(t)$:
+	\begin{equation}
+		H_0(j\omega) = \int_{0}^{T} e^{-j\omega t} dt = \frac{1 - e^{-j\omega T}}{j\omega} = e^{-j\omega T/2} \left[ \frac{2 \sin(\omega T / 2)}{\omega} \right].
+	\end{equation}
+	Expresando esto en términos de una amplitud y una fase:
+	\begin{equation}
+		H_0(j\omega) = T \, \frac{\sin(\omega T/2)}{\omega T/2} \, e^{-j\omega T/2}.
+	\end{equation}
+	
+	\item Analizando $H_0(j\omega)$ notamos dos efectos indeseados en la reconstrucción real:
+	\begin{itemize}
+		\item \textbf{Efecto de apertura:} A diferencia del filtro ideal pasabajos que es plano en la banda pasante, la magnitud del ZOH decae según la forma de un $|\text{sinc}|$, lo que atenúa progresivamente las altas frecuencias dentro de la banda base de la señal.
+		\item \textbf{Imágenes de alta frecuencia no filtradas:} La magnitud no cae abruptamente a cero fuera de la banda base, dejando "imágenes" o lóbulos residuales en alta frecuencia que se manifiestan como los bordes abruptos de los "escalones" en el dominio del tiempo.
+	\end{itemize}
+	
+	\item Para solucionar estas distorsiones, la señal escalonada generada por el ZOH suele pasarse posteriormente por un \textbf{filtro de suavizado o anti-imagen} analógico en cascada, el cual recorta las imágenes de alta frecuencia y puede incluir una compensación inversa para corregir la caída del lóbulo principal.
+\end{enumerate}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=3in]{./graphics/contconv222.eps}
+	\caption{Reconstrucci\'{o}n real de la se\~{n}al muestreada mediante un retenedor de orden cero (sumatoria de pulsos rectangulares).}
+	\label{muestreoreconstruccionrealeps}
+\end{figure}

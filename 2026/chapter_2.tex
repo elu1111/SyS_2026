@@ -1,0 +1,611 @@
+\chapter{Sistemas (y señales)}
+
+\section{Introducción}
+
+\subsection{Definiciones}
+
+\begin{enumerate}
+	\item Las señales son magnitudes naturales variables portadoras de información entre sistemas, representadas por funciones de variables independientes.
+	\item Los sistemas son conjuntos de partes que interactúan entre si, con un propósito común.
+	\item Los sistemas reciben señales de entrada para entregar señales de salida.
+	\item Sistema de tiempo continuo es aquel que recibe, procesa y entrega solamente señales de tiempo continuo.
+	\item Sistema de tiempo discreto es aquel que recibe, procesa y entrega solamente señales de tiempo discreto.
+	\item Sistema híbrido es aquel que recibe, procesa y entrega señales de tiempo continuo y discreto.
+	\item Los sistemas pueden representarse mediante relaciones entre las señales de entrada y salida.
+	\item En el caso de sistemas de tiempo continuo, simbolizados
+	\begin{equation}
+		x(t) \rightarrow S \rightarrow y(t),
+	\end{equation}
+	podemos emplear los siguientes operadores matemáticos para describirlos:
+	\begin{enumerate}
+		\item Ecuaciones algebraicas
+		\begin{equation}
+			F(t, x(t), y(t)) = 0,
+		\end{equation}
+		donde $x(t)$ es la entrada e $y(t)$ es la salida del sistema. Por ejemplo:
+		\begin{equation}
+			y(t) - x(t) \, \cos(2 \, t) = 0.
+		\end{equation}
+		
+		\item Ecuaciones diferenciales donde $x(t)$ es la entrada e $y(t)$ es la salida del sistema. Por ejemplo:
+		\begin{equation}
+			\frac{d y(t)}{dt} + 2 \, y(t) - x(t) = 0.
+		\end{equation}
+	\end{enumerate}
+	
+	\item En el caso de sistemas de tiempo discreto, simbolizados
+	\begin{equation}
+		x[n] \rightarrow S \rightarrow y[n],
+	\end{equation}
+	podemos emplear los siguientes operadores matemáticos para describirlos:
+	\begin{enumerate}
+		\item Ecuaciones algebraicas donde $x[n]$ es la entrada e $y[n]$ es la salida del sistema. Por ejemplo:
+		\begin{equation}
+			y[n] - x[n] \, 2^{-n} = 0.
+		\end{equation}
+		
+		\item Ecuaciones de diferencias finitas donde $x[n]$ es la entrada e $y[n]$ es la salida del sistema. Por ejemplo:
+		\begin{equation}
+			y[n] - x[n] + x[n-1] - \frac{x[n-1]}{2} - y[n-1] - 2 \, y[n-2] + 4 \, y[n-3] = 0.
+		\end{equation}
+	\end{enumerate}
+	
+	\item Las descripciones de sistemas, ya sean ecuaciones algebraicas, ecuaciones diferenciales, o de diferencias son modelos matemáticos del sistema, y los podemos usar para análisis y diseño.
+\end{enumerate}
+
+\subsection{Ejemplos}
+
+\subsubsection{Divisor resistivo de tensión}
+Supongamos que tenemos un divisor resistivo de tensión donde la relación entre la tensión de entrada $v_{e}(t)$ y salida $v_{s}(t)$ es la ecuación:
+\begin{equation}
+	V_{s}(t) = \frac{R_{2}}{R_{1} + R_{2}} \, V_{e}(t). \label{divires}
+\end{equation}
+Esta es una ecuación algebraica de tiempo continuo. Ver Figura (\ref{circuitoeps}).
+
+\subsubsection{Circuito RC Serie}
+Supongamos que tenemos un circuito RC serie descripto por la ecuación diferencial:
+\begin{equation}
+	\frac{dv_{c}(t)}{dt} + \frac{1}{R \, C} \, v_{c}(t) = \frac{1}{R \, C} \, v_{s}(t). \label{rcserie}
+\end{equation}
+donde
+\begin{itemize}
+	\item $v_{c}(t)$ tensión en el capacitor,
+	\item $v_{s}(t)$ tensión en la fuente,
+	\item $R$ valor de la resistencia,
+	\item $C$ valor del capacitor.
+\end{itemize}
+Ver Figura (\ref{circuitoeps}).
+
+\subsubsection{Un negocio}
+Supongamos que el dueño de un negocio repone todos los días la mercadería. La ecuación que describe la relación entre la cantidad de mercadería que entra en el depósito y el dinero necesario para comprarla es:
+\begin{equation}
+	t[n] = p \, (m - x[n]).
+\end{equation}
+donde
+\begin{itemize}
+	\item $x[n]$ es la cantidad de mercadería en el depósito,
+	\item $m$ la cantidad máxima de mercadería que puede tener guardada,
+	\item $p$ el precio unitario,
+	\item $t[n]$ el pago por la compra del día $n$.
+\end{itemize}
+Esta es una ecuación algebraica de tiempo discreto.
+
+\subsubsection{Cuenta bancaria}
+Supongamos que tenemos una cuenta bancaria en la que obtenemos cierto interés mensual por mantener cierto depósito de dinero. La ecuación de diferencias que nos dice cuánto dinero tendremos el próximo mes es:
+\begin{equation}
+	y[n+1] = (1 + c/100) \, y[n] + x[n],
+\end{equation}
+donde
+\begin{itemize}
+	\item $y[n+1]$ dinero en la cuenta el próximo mes,
+	\item $y[n]$ dinero en la cuenta este mes,
+	\item $x[n]$ dinero depositado o extraído este mes,
+	\item $c$ interés.
+\end{itemize}
+Esta es una ecuación de diferencias y por lo tanto, de tiempo discreto.
+
+\subsubsection{Cálculo de raíces de polinomios}
+Supongamos que tenemos que calcular \textbf{una} raíz del polinomio
+\begin{equation}
+	Q(x) = 0.
+\end{equation}
+Para obtener \textbf{una} solución podemos escribir la ecuación de diferencias
+\begin{equation}
+	x_{k+1} = x_{k} - \left(\frac{Q(x)}{\frac{d Q(x)}{dx}}\right)_{x=x_{k}}.
+\end{equation}
+Si damos a $x_{0}$ un valor suficientemente cercano a \textbf{la} raíz buscada del polinomio $Q(x)$, obtendremos una secuencia que converge rápidamente. Por ejemplo, si consideramos el polinomio
+\begin{equation}
+	Q(x) = x^{2} - 2 = 0, 
+\end{equation}
+calcularemos la raíz cuadrada de $2$. Por lo tanto, iteramos la ecuación de diferencias
+\begin{equation}
+	x_{k+1} = \frac{2 + x^{2}_{k}}{2 x_{k}}, \qquad x_{0} = 2,
+\end{equation}
+para obtener los primeros cinco valores de la secuencia
+\begin{equation}
+	\begin{array}{llllll}
+		2 & 1.5 & 1.41667 & 1.41422 & 1.41421 & ...
+	\end{array}
+\end{equation}
+que como vemos se acerca rápidamente al resultado correcto.
+
+
+\section{Modelos}
+
+Necesitamos describir los sistemas con los que trabajamos para poder analizarlos, verificar sus propiedades, o para diseñar nuevos sistemas. Como ya vimos, podemos usar ecuaciones diferenciales y ecuaciones de diferencias.
+
+\subsection{Ecuaciones diferenciales}
+
+Consideremos una ecuación diferencial
+\begin{equation}
+	\frac{d^{N} y(t)}{dt^{N}} + \sum_{i=0}^{N-1} a_{i} \, \frac{d^{i} y(t)}{dt^{i}} = \sum_{j=0}^{M} b_{j} \, \frac{d^{j} x(t)}{dt^{j}},
+\end{equation}
+donde $x(t)$ es la entrada, $y(t)$ es la salida, y los coeficientes $a_{i}$ y $b_{j}$ son constantes reales, $N \geq 1$, $M \geq 0$, $N > M$. Por ejemplo,
+\begin{equation}
+	\frac{d^{3}y(t)}{dt^{3}} + 3 \, \frac{d^{2}y(t)}{dt^{2}} + 2 \, \frac{dy(t)}{dt} + y(t) = x(t).
+\end{equation}
+Las ecuaciones diferenciales pueden escribirse como un sistema de ecuaciones diferenciales de primer orden denominadas ecuaciones de estado empleando variables de estado. Una posible definición de las variables de estado es la siguiente:
+\begin{eqnarray}
+	v_{1}   &=& y(t),                                               \\
+	v_{k+1} &=& \frac{dv_{k}}{dt} = \frac{d^{k}y}{dt^{k}}, \quad 0 < k < N .
+\end{eqnarray}
+Con esta definición podemos escribir las ecuaciones de estado:
+\begin{eqnarray}
+	\frac{dv_{k}}{dt} &=& v_{k+1}, \quad 1 \leq k < N,  \\
+	\frac{dv_{N}}{dt} &=& G(t, x(t), v_{1}, v_{2},...,v_{N}).
+\end{eqnarray}
+Por ejemplo, para
+\begin{equation}
+	\frac{d^{3}y(t)}{dt^{3}} + 3 \, \frac{d^{2}y(t)}{dt^{2}} + 2 \, \frac{dy(t)}{dt} + y(t) = x(t),
+\end{equation}
+definimos
+\begin{equation}
+	v_{1} = y(t),
+\end{equation}
+\begin{equation}
+	\frac{dv_{1}}{dt} = v_{2} = \frac{dy(t)}{dt},
+\end{equation}
+\begin{equation}
+	\frac{dv_{2}}{dt} = v_{3} = \frac{d^{2}y(t)}{dt^{2}},
+\end{equation}
+\begin{equation}
+	\frac{dv_{3}}{dt} = \frac{d^{3}y(t)}{dt^{3}} = -v_{1} - 2 \, v_{2} - 3 \, v_{3} + x(t).
+\end{equation}
+En forma matricial:
+\begin{equation}
+	\begin{bmatrix}
+		\dot{v}_{1} \\
+		\dot{v}_{2} \\
+		\dot{v}_{3}
+	\end{bmatrix} 
+	= \begin{bmatrix}
+		0 & 1 & 0 \\
+		0 & 0 & 1 \\
+		-1 & -2 & -3
+	\end{bmatrix} 
+	\begin{bmatrix}
+		v_{1}\\
+		v_{2}\\
+		v_{3}
+	\end{bmatrix}
+	+
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		1
+	\end{bmatrix} \, x(t).
+\end{equation}
+Las principales razones para emplear ecuaciones de estado son las siguientes:
+\begin{enumerate}
+	\item La teoría de ecuaciones diferenciales en esta notación permite trabajar con sistemas de varias entradas y varias salidas.
+	\item Es muy sencillo programar computadoras para trabajar con esta notación.
+	\item Esta notación permite realizar simulaciones por computadora de grandes sistemas con muchas entradas y muchas salidas.
+\end{enumerate}
+
+\subsection{Ecuaciones de diferencias}
+
+Consideremos una ecuación de diferencias
+\begin{equation}
+	F(n, x[n], y[n-1],..., y[n-M+1]) = y[n].
+\end{equation}
+donde $x[n]$ es la entrada, $y[n]$ es la salida, y $M > 1$. Por ejemplo
+\begin{equation}
+	y[n+1] + \frac{1}{2} \, y[n] + \frac{1}{4} \, y[n-1] + \frac{1}{8} \, y[n-2] - x[n] = 0.
+\end{equation}
+Las ecuaciones de diferencias pueden escribirse como un sistema de ecuaciones de diferencias de primer orden denominadas ecuaciones de estado. Una posible definición de las variables de estado es:
+\begin{eqnarray}
+	v_{1}[n]   &=& y[n],                                               \\
+	v_{k+1}[n] &=& v_{k}[n-1] = y[n-k], \quad 0 < k < M .
+\end{eqnarray}
+Con esta definición podemos escribir las ecuaciones de estado:
+\begin{eqnarray}
+	v_{k}[n+1] &=& v_{k+1}[n], \quad 1 \leq k < M,  \\
+	v_{M}[n+1] &=& G(n, x[n], v_{1}[n], v_{2}[n],...,v_{M}[n]).
+\end{eqnarray}
+Por ejemplo, considerando la ecuación de diferencias
+\begin{equation}
+	y[n+1] + \frac{1}{2} \, y[n] + \frac{1}{4} \, y[n-1] + \frac{1}{8} \, y[n-2] - x[n] = 0,
+\end{equation}
+podemos definir las variables de estado
+\begin{equation}
+	v_{1}[n] = y[n-2],
+\end{equation}
+\begin{equation}
+	v_{2}[n] = y[n-1] = v_{1}[n+1],
+\end{equation}
+\begin{equation}
+	v_{3}[n] = y[n] = v_{2}[n+1],
+\end{equation}
+\begin{equation}
+	v_{3}[n+1] = y[n+1] = - \frac{1}{2} \, v_{3}[n] - \frac{1}{4} \, v_{2}[n] - \frac{1}{8} \, v_{1}[n] + x[n].
+\end{equation}
+En forma matricial:
+\begin{equation}
+	\begin{bmatrix}
+		v_{1}[n+1] \\
+		v_{2}[n+1] \\
+		v_{3}[n+1]
+	\end{bmatrix} 
+	= \begin{bmatrix}
+		0 & 1 & 0 \\
+		0 & 0 & 1 \\
+		-\frac{1}{8} & -\frac{1}{4} & -\frac{1}{2}
+	\end{bmatrix} 
+	\begin{bmatrix}
+		v_{1}[n]\\
+		v_{2}[n]\\
+		v_{3}[n]
+	\end{bmatrix}
+	+
+	\begin{bmatrix}
+		0 \\
+		0 \\
+		1
+	\end{bmatrix} \, x[n].
+\end{equation}
+
+\subsection{De ecuación diferencial a ecuación de diferencias}
+
+\subsubsection{Aproximando la derivada, hacia adelante}
+Sabemos que por definición de derivada
+\begin{equation}
+	\frac{dy}{dt} = \lim_{\Delta \rightarrow 0} \frac{y(t+\Delta) - y(t)}{\Delta}.
+\end{equation}
+Entonces, si cambiamos el límite por un $\Delta$ pequeño, podemos escribir
+\begin{equation}
+	\frac{dy}{dt} \approx \frac{y[n+1] - y[n]}{\Delta}.
+\end{equation}
+Entonces, si tenemos la ecuación diferencial
+\begin{equation}
+	\frac{dy(t)}{dt} + 2 \, y(t) = x(t),
+\end{equation}
+resulta la ecuación de diferencias
+\begin{equation}
+	\frac{y[n+1] - y[n]}{\Delta} + 2 \, y[n] = x[n],
+\end{equation}
+o
+\begin{equation}
+	(y[n+1] - y[n]) + 2 \,  \Delta \, y[n] = \Delta \, x[n],
+\end{equation}
+y finalmente
+\begin{equation}
+	y[n+1] + (2 \, \Delta - 1) \, y[n] = \Delta \, x[n].
+\end{equation}
+
+\subsubsection{Aproximando la derivada, hacia atrás}
+Podemos cambiar levemente la definición de derivada
+\begin{equation}
+	\frac{dy}{dt} = \lim_{\Delta \rightarrow 0} \frac{y(t) - y(t-\Delta)}{\Delta}.
+\end{equation}
+Entonces, si cambiamos el límite por un $\Delta$ pequeño, podemos escribir
+\begin{equation}
+	\frac{dy}{dt} \approx \frac{y[n] - y[n-1]}{\Delta}.
+\end{equation}
+Entonces, si tenemos la ecuación diferencial
+\begin{equation}
+	\frac{dy(t)}{dt} + 2 \, y(t) = x(t),
+\end{equation}
+resulta la ecuación de diferencias
+\begin{equation}
+	\frac{y[n] - y[n-1]}{\Delta} + 2 \, y[n] = x[n],
+\end{equation}
+o
+\begin{equation}
+	(y[n] - y[n-1]) + 2 \,  \Delta \, y[n] = \Delta \, x[n],
+\end{equation}
+y finalmente
+\begin{equation}
+	(1 + 2 \, \Delta) \, y[n] - y[n-1] = \Delta \, x[n].
+\end{equation}
+
+\subsubsection{Otra aproximación de derivada}
+Otra forma de definir derivada es
+\begin{equation}
+	\frac{dy}{dt} = \lim_{\Delta \rightarrow 0} \frac{y(t+\Delta) - y(t-\Delta)}{2 \, \Delta}.
+\end{equation}
+Entonces podemos aproximar, para un $\Delta$ pequeño
+\begin{equation}
+	\frac{dy}{dt} \approx \frac{y(t+\Delta) - y(t-\Delta)}{2 \, \Delta}.
+\end{equation}
+Entonces, si tenemos la ecuación diferencial
+\begin{equation}
+	\frac{dy(t)}{dt} + 2 \, y(t) = x(t),
+\end{equation}
+resulta la ecuación de diferencias
+\begin{equation}
+	\frac{y[n+1] - y[n-1]}{2 \, \Delta} + 2 \, y[n] = x[n],
+\end{equation}
+o
+\begin{equation}
+	(y[n+1] - y[n-1]) + 4 \, \Delta \, y[n] = 2 \, \Delta \, x[n],
+\end{equation}
+y finalmente
+\begin{equation}
+	y[n+1] + 4 \, \Delta \, y[n] - y[n-1] = 2 \, \Delta \, x[n].
+\end{equation}
+
+
+\section{Propiedades de sistemas}
+
+Vamos a establecer un vocabulario básico para estudiar distintas características de sistemas.
+
+\subsection{Sistemas sin memoria o estáticos}
+Los sistemas sin memoria o estáticos son aquellos en los que la salida actual depende únicamente de la entrada actual.
+\begin{equation}
+	y(t) = 2 \, x(t),
+\end{equation}
+\begin{equation}
+	y[n] = (x[n])^{3} + 4 \, x[n].
+\end{equation}
+
+\subsection{Sistemas con memoria o dinámicos}
+Los sistemas con memoria o dinámicos son aquellos en los que la salida actual depende de entradas de un momento distinto al actual. Por ejemplo:
+\begin{equation}
+	\frac{dy(t)}{dt} + a \, y(t) = x(t),
+\end{equation}
+\begin{equation}
+	\int_{0}^{t} x(\tau) \, d\tau = y(t),
+\end{equation}
+\begin{equation}
+	y(t)=x(t)-x(t-\tau ),
+\end{equation}
+\begin{equation}
+	y[n] = \sum_{k=0}^{2}x[n-k] = x[n] + x[n-1] + x[n-2].
+\end{equation}
+
+\subsection{Sistemas inversos}
+Un sistema $S$ tiene un sistema inverso $S^{-1}$ si su composición es tal que
+\begin{equation}
+	x(t) = S^{-1}(S(x(t))),
+\end{equation}
+\begin{equation}
+	x[n] = S^{-1}(S(x[n])).
+\end{equation}
+Tengamos en cuenta que un sistema puede no tener sistema inverso. Por ejemplo:
+\begin{equation}
+	y(t) = (x(t))^{2}.
+\end{equation}
+
+\subsection{Sistemas causales}
+Un sistema es causal o no anticipativo si su salida no depende de entradas futuras. Por ejemplo:
+\begin{equation}
+	y(t) = a \, x(t),
+\end{equation}
+\begin{equation}
+	y[n] = x[n-1] + x[n-2].
+\end{equation}
+Todos los sistemas sin memoria son causales.
+
+\subsection{Sistemas no causales}
+Un sistema es no causal o anticipativo si su salida depende de entradas futuras. Por ejemplo, consideremos la ecuación:
+\begin{equation}
+	y[n] = \frac{1}{5} \, \sum_{k=-2}^{2}x[n-k].
+\end{equation}
+Calculemos la salida para $y[2]$. Expandiendo la sumatoria obtenemos:
+\begin{equation}
+	y[2] = \frac{1}{5} \, \left( x[2-(-2)] + x[2-(-1)] + x[2-0] + x[2-1] + x[2-2] \right).
+\end{equation}
+Simplificando, resulta:
+\begin{equation}
+	y[2] = \frac{1}{5} \left( x[4] + x[3] + x[2] + x[1] + x[0] \right).
+\end{equation}
+Como podemos ver, para calcular $y[2]$ necesitamos conocer las entradas futuras $x[4]$ y $x[3]$. Por lo tanto, el sistema es no causal.
+
+\subsection{Sistemas dinámicos autónomos}
+Un sistema dinámico es autónomo si:
+\begin{itemize}
+	\item Su ecuación diferencial es del tipo:
+	\begin{equation}
+		F\left(y(t), \frac{dy}{dt}, \dots, \frac{d^{M}y}{dt^{M}}\right) = 0,                  
+	\end{equation}
+	donde $y(t)$ es la salida del sistema.
+	\item Su ecuación de diferencias es del tipo:
+	\begin{equation}
+		F(y[n], \dots, y[n-M]) = 0, 
+	\end{equation}
+	donde $y[n]$ es la salida del sistema.
+\end{itemize}
+
+\subsection{Sistemas dinámicos no autónomos}
+Un sistema dinámico es no autónomo si:
+\begin{itemize}
+	\item Su ecuación diferencial es del tipo:
+	\begin{equation}
+		F\left(t, x(t), \frac{dx}{dt}, \dots, \frac{d^{N}x}{dt^{N}}, y(t), \frac{dy}{dt}, \dots, \frac{d^{M}y}{dt^{M}}\right) = 0,
+	\end{equation}
+	donde $x(t)$ es la entrada e $y(t)$ es la salida del sistema.
+	\item Su ecuación de diferencias es del tipo:
+	\begin{equation}
+		F(n, x[n], \dots, x[n-N], y[n], \dots, y[n-M]) = 0, 
+	\end{equation}
+	donde $x[n]$ es la entrada e $y[n]$ es la salida del sistema.
+\end{itemize}
+
+\subsection{Linealidad homogénea}
+Una función es lineal homogénea sí y solo sí:
+\begin{equation}
+	f(a \, x_{1} + b \, x_{2}) = a \, f(x_{1}) + b \, f(x_{2}).
+\end{equation}
+Por ejemplo, $y = f(x) = m \, x$ es una función lineal, porque se cumple:
+\begin{equation}
+	\begin{array}{ll}
+		y_{1} & = m \, x_{1}, \\ 
+		y_{2} & = m \, x_{2}, \\ 
+		a \, y_{1}+ b \, y_{2} & = a \, m \, x_{1} + b \, m \, x_{2} = m \, (a \, x_{1}+ b \, x_{2}).
+	\end{array}
+\end{equation}
+En cambio, $y = f(x) = m \, x + 1$ no es una función lineal como podemos verificar:
+\begin{equation}
+	\begin{array}{ll}
+		y_{1} & = m \, x_{1}+1, \\ 
+		y_{2} & = m \, x_{2}+1, \\ 
+		a \, y_{1}+ b \, y_{2} & = m \, (a\, x_{1}+ b \, x_{2}) + (a+b) \neq m \, (a \, x_{1}+b \, x_{2}) + 1.
+	\end{array}
+\end{equation}
+
+\subsection{Sistemas lineales}
+Se dice que un sistema $S$ es lineal si su respuesta para una entrada compuesta $a \, x_{1}+b \, x_{2}$ cumple con la siguiente propiedad:
+\begin{equation}
+	S(a \, x_{1}+ b\, x_{2}) = a \, S(x_{1}) + b \, S(x_{2}),
+\end{equation}
+conocida como principio de superposición.
+
+\subsection{Sistemas no lineales}
+Se dice que un sistema $f$ es no lineal si su respuesta para una entrada compuesta $a \, x_{1}+b \, x_{2}$ cumple con la siguiente propiedad:
+\begin{equation}
+	f(a \, x_{1}+b \, x_{2}) \neq a \, f(x_{1}) + b \, f(x_{2}),
+\end{equation}
+y por lo tanto, \textbf{NO} cumple con el principio de superposición. Por ejemplo, esta ecuación diferencial no es lineal:
+\begin{equation}
+	\frac{dy(t)}{dt} = y(t) \, (M - y(t)) + x(t).
+\end{equation}
+
+\subsection{Puntos de equilibrio}
+\begin{enumerate}
+	\item Un sistema dinámico de tiempo continuo con ecuación de estado $\mathbf{\dot x} = f(\mathbf{x})$, tiene un punto de equilibrio $\mathbf{x_{e}}$ si se satisface la siguiente ecuación:
+	\begin{equation}
+		\mathbf{0} = f(\mathbf{x_{e}}).
+	\end{equation}
+	
+	\item Un sistema dinámico de tiempo discreto con ecuación de estados $\mathbf{x_{k+1}} = f(\mathbf{x_{k}})$, tiene un punto de equilibrio $\mathbf{x_{e}}$ si se satisface la siguiente ecuación:
+	\begin{equation}
+		\mathbf{x_{e}} = f(\mathbf{x_{e}}).
+	\end{equation}
+\end{enumerate}
+
+\subsection{Sistemas dinámicos estables}
+\begin{enumerate}
+	\item \textbf{Sistemas no autónomos} (BIBO: Bounded Input Bounded Output) La salida permanece acotada para entradas acotadas.
+	\item \textbf{Sistemas autónomos} El sistema estable evoluciona por si sólo a un estado de equilibrio.
+\end{enumerate}
+
+\subsection{Sistemas invariantes en el tiempo}
+Un sistema invariante en el tiempo es aquél cuyas características y comportamiento están fijas en el tiempo. Este tipo de sistemas para una entrada determinada generan la misma salida independientemente del momento de aplicación.
+\begin{enumerate}
+	\item La salida $y(t)$ para la entrada $x(t+t_{0})$ es independiente del valor $t_{0}$.
+	\item La salida $y[n]$ para la entrada $x[n + n_{0}]$ es independiente del valor $n_{0}$.
+\end{enumerate}
+
+\subsection{Sistemas variantes en el tiempo}
+Si un sistema no es invariante en el tiempo, entonces se dice que es variante. En realidad, todos los sistemas físicos \textbf{son} variantes, debido al deterioro natural impuesto por la termodinámica. Lo que sucede es que con una escala de tiempo adecuada, el deterioro puede ignorarse.
+
+\subsection{Ejemplos de Clasificación}
+
+\subsubsection{Clasificación 1}
+Supongamos un sistema definido por:
+\begin{equation}
+	y(t) = g(t) \, x(t).
+\end{equation}
+¿Es lineal? Si, como podemos ver en las siguientes ecuaciones:
+\begin{eqnarray}
+	y(t) &=& g(t) \, (a \, x_{1}(t) + b \, x_{2}(t)) = a \, g(t) \, x_{1}(t) + b \, g(t) \, x_{2}(t),    \\
+	y(t) &=& a \, y_{1}(t) + b \, y_{2}(t).
+\end{eqnarray}
+¿Es invariante en el tiempo? No, como podemos ver:
+\begin{eqnarray}
+	y_{1}(t) &=& g(t) \, x_{1}(t) \rightarrow y_{1}(t-\tau) = g(t-\tau) \, x_{1}(t-\tau), \\
+	y_{2}(t) &=& g(t) \, x_{1}(t-\tau).
+\end{eqnarray}
+¿Tiene memoria? No, porque no necesitamos conocer otro valor que el de la entrada actual para calcular la salida.
+
+\subsubsection{Un sistema abstracto, tiempo continuo}
+El sistema:
+\begin{equation}
+	y(t) = S(x(t)) = 2 x(t),
+\end{equation}
+es un sistema sin memoria o estático de tiempo continuo que tiene un sistema inverso:
+\begin{equation}
+	S^{-1}(x(t)) = \frac{1}{2} x(t).
+\end{equation}
+
+\subsubsection{Otro sistema abstracto, tiempo discreto}
+El sistema:
+\begin{equation}
+	y[n] = \sum_{k=0}^{\infty} x[n-k],
+\end{equation}
+es un sistema con memoria o dinámico de tiempo discreto que tiene un sistema inverso:
+\begin{eqnarray}
+	x[n] &=& y[n] - y[n-1] = \left(\sum_{k=0}^{\infty} x[n-k]\right) - \left( \sum_{k=0}^{\infty}x[n-1-k]\right), \\
+	x[n] &=& x[n] + \left( \sum_{k=1}^{\infty} x[n-k]\right) - \left(\sum_{k=0}^{\infty}x[n-1-k]\right).
+\end{eqnarray}
+Haciendo el cambio de variable $p = k - 1$ en la primera sumatoria, obtenemos:
+\begin{equation}
+	x[n] = x[n] + \left( \sum_{p=0}^{\infty} x[n-1-p]\right) - \left(\sum_{k=0}^{\infty} x[n-1-k]\right) = x[n].
+\end{equation}
+
+\section{Diagrama de bloques}
+
+\begin{enumerate}
+	\item Es posible hacer descripciones de sistemas usando:
+	\begin{enumerate}
+		\item bloques que representan los distintos componentes del sistema.
+		\item flechas que representan los flujos de señal entre los componentes (qué salida se conecta a qué entrada).
+	\end{enumerate}
+	
+	\item Se pueden hacer diagramas de bloques del mismo sistema con énfasis en distintos aspectos:
+	\begin{enumerate}
+		\item Caja negra, con énfasis en los conjuntos de entradas y salidas.
+		\item Caja blanca, con énfasis en las relaciones entre los distintos componentes del sistema.
+	\end{enumerate}
+	
+	\item Existen varias formas de interconectar sistemas:
+	\begin{enumerate}
+		\item Conexión serie.
+		\item Conexión paralelo.
+		\item Retroalimentación.
+	\end{enumerate}
+\end{enumerate}
+
+\section{Ejemplos Prácticos}
+
+\subsection{Planteo}
+Indique si los sistemas definidos por las siguientes relaciones entrada salida son lineales o no lineales:
+\begin{enumerate}
+	\item $y[n+1] = \frac{1}{2} y[n] + x[n]$,
+	\item $y[n+1] = -\frac{1}{4} y[n] + x[n]$,
+	\item $y[n+1] = \begin{cases} \frac{1}{2}y[n] + x[n], & y[n] > \frac{1}{2}, \\ -\frac{1}{4}y[n] + x[n], & y[n] \leq \frac{1}{2}. \end{cases}$
+\end{enumerate}
+
+\subsection{Solución}
+\begin{enumerate}
+	\item $y[n+1] = \frac{1}{2}y[n] + x[n]$: Sistema lineal, ecuación de diferencias donde aparecen las señales multiplicadas por coeficientes constantes y sumadas.
+	\item $y[n+1] = -\frac{1}{4}y[n] + x[n]$: Sistema lineal, ecuación de diferencias donde aparecen las señales multiplicadas por coeficientes constantes y sumadas.
+	\item $y[n+1] = \begin{cases} \frac{1}{2}y[n] + x[n], & y[n] > \frac{1}{2}, \\ -\frac{1}{4}y[n] + x[n], & y[n] \leq \frac{1}{2}. \end{cases}$ Sistema no lineal, o lineal a tramos. No cumple con el principio de superposición de forma generalizada.
+\end{enumerate}
+
+\section{Para practicar}
+
+Escriba un programa que calcule la raíz cúbica de $10$ mediante una ecuación de diferencias. Haga la verificación correspondiente.
+Si planteamos:
+\begin{equation}
+	p(x) = x^{3} - 10,
+\end{equation}
+podemos calcular la derivada:
+\begin{equation}
+	\frac{dp(x)}{dx} = 3 \, x^{2}.
+\end{equation}
+Entonces podemos escribir la ecuación de diferencias basada en el método de Newton-Raphson:
+\begin{equation}
+	x[n+1] = x[n] - \frac{x[n]^{3} - 10}{3 \, x[n]^{2}},
+\end{equation}
+Supongamos $x[0] = 1$ o un valor inicial conveniente.

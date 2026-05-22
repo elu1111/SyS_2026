@@ -1,0 +1,391 @@
+\chapter{Ecuaciones de diferencias finitas}
+
+\section{Introducci\'{o}n}
+
+En los sistemas lineales de tiempo discreto invariantes en el tiempo la entrada y la salida est\'{a}n relacionadas por:
+\begin{enumerate}
+	\item una ecuaci\'{o}n de diferencias 
+	\begin{equation}
+		\sum_{p=0}^{N}a_{p} y[n-p] = \sum_{q=0}^{M}b_{q} x[n-q]. \label{eqdiferencia}
+	\end{equation}
+	
+	\item la suma de convoluci\'{o}n
+	\begin{equation}
+		y[n] = \sum_{k=-\infty}^{\infty} x[k] h[n - k].
+	\end{equation}
+\end{enumerate}
+
+Ambas formas deben ser equivalentes. Justamente esta equivalencia da pie a que podamos usar la transformada $Z$ para resolver ecuaciones de diferencias. Empezaremos estudiando la equivalencia entre ambas formas de c\'{a}lculo para entradas de la forma $x[n] = z^{n}$, y despu\'{e}s generalizaremos considerando entradas para las que existan las transformadas $Z$ correspondientes.
+
+\section{Ecuaci\'{o}n de diferencias con entrada exponencial compleja}
+
+Consideremos una ecuaci\'{o}n de diferencias de la forma:
+\begin{equation}
+	\sum_{p=0}^{N}a_{p} y[n-p] = \sum_{q=0}^{M}b_{q} x[n-q].
+\end{equation}
+Buscaremos la soluci\'{o}n para entradas de la forma:
+\begin{equation}
+	x[n] = z^n,
+\end{equation}
+donde $z$ es una variable compleja.
+
+\subsection{Soluci\'{o}n de una ecuaci\'{o}n de diferencias homog\'{e}nea}
+
+\begin{enumerate}
+	\item Denominaremos $y_{h}[n]$ a la soluci\'{o}n de la ecuaci\'{o}n homog\'{e}nea:
+	\begin{equation}
+		\sum_{p=0}^{N}a_{p} y_{h}[n-p] = 0.
+	\end{equation}
+	
+	\item Supongamos que la soluci\'{o}n tiene la forma:
+	\begin{equation}
+		y_{h}[n] = Y \lambda^n,
+	\end{equation}
+	donde $Y$ es una constante. Observemos que:
+	\begin{equation}
+		y_{h}[n-p] = Y \lambda^{n-p},
+	\end{equation}
+	para todos los valores de $p$ en el intervalo $[0,N]$.
+	
+	\item Sustituyendo en la ecuaci\'{o}n de diferencias homog\'{e}nea obtenemos:
+	\begin{equation}
+		\sum_{p=0}^{N}a_{p} Y \lambda^{n-p} = \left( \sum_{p=0}^{N}a_{p} \lambda^{-p} \right) Y \lambda^{n} = 0.
+	\end{equation}
+	No estamos interesados en la soluci\'{o}n trivial $Y=0$. Como la se\~{n}al $\lambda^{n}$ no se anula para ning\'{u}n valor finito de $n$, tiene que ser:
+	\begin{equation}
+		\left( \sum_{p=0}^{N}a_{p} \lambda^{-p} \right) = \lambda^{-N} \left( \sum_{p=0}^{N}a_{p} \lambda^{N-p} \right) = 0.
+	\end{equation}
+	
+	\item Definimos entonces al polinomio caracter\'{\i}stico $p(\lambda)$:
+	\begin{equation}
+		p(\lambda) = \sum_{p=0}^{N}a_{p} \lambda^{N-p} = a_{0} \prod_{q=1}^{N} ( \lambda - \lambda_{q} ) = 0.
+	\end{equation}
+	Las ra\'{\i}ces $\lambda_{q}$ del polinomio caracter\'{\i}stico son llamadas frecuencias, modos naturales o polos.
+	
+	\item Si las frecuencias o modos naturales son distintos ($\lambda_i \neq \lambda_j$ para $i \neq j$), entonces la soluci\'{o}n m\'{a}s general tiene la forma:
+	\begin{equation}
+		y_{h}[n] = \sum_{k=1}^{N} Y_{k} \lambda_{k}^n.
+	\end{equation}
+	
+	\item Si hay $R<N$ frecuencias o modos naturales distintos, la soluci\'{o}n homog\'{e}nea tiene la forma:
+	\begin{equation}
+		y_{h}[n] = \sum_{p=1}^{R} \left(\sum_{k=0}^{S_{p}-1} Y_{p,k} n^{k} \right) \lambda_{p}^n,
+	\end{equation}
+	donde $S_{p}$ indica la multiplicidad de $\lambda_{p}$ y $\sum_{p=1}^{R}S_{p} = N$.
+\end{enumerate}
+
+\subsubsection{Ejemplo}
+
+\begin{enumerate}
+	\item Consideremos la ecuaci\'{o}n de diferencias:
+	\begin{equation}
+		-v_{o}[n+1] + (2+c) v_{o}[n] - v_{o}[n-1] = c v_{i}[n].
+	\end{equation}
+	
+	\item La ecuaci\'{o}n homog\'{e}nea asociada es:
+	\begin{equation}
+		-v_{o}[n+1] + (2+c) v_{o}[n] - v_{o}[n-1] = 0.
+	\end{equation}
+	
+	\item Suponiendo que $v_{o}[n] = V \lambda^{n}$, reemplazamos en la ecuaci\'{o}n homog\'{e}nea:
+	\begin{equation}
+		-V \lambda^{n+1} + (2 + c) V \lambda^{n} - V \lambda^{n-1} = 0. \label{ecdifhomuno}
+	\end{equation}
+	
+	\item Extrayendo el factor com\'{u}n $V \lambda^{n-1}$ obtenemos el polinomio caracter\'{\i}stico:
+	\begin{equation}
+		V \lambda^{n-1} (-\lambda^{2} + (2 + c) \lambda - 1) = 0. \label{ecdifhomdos}
+	\end{equation}
+	
+	\item Las frecuencias naturales son las raíces de $-\lambda^{2} + (2 + c) \lambda - 1 = 0$:
+	\begin{equation}
+		\lambda_{1,2} = \left( 1+\frac{c}{2}\right) \pm \sqrt{\left( 1+\frac{c}{2}\right)^{2}-1}.
+	\end{equation}
+	
+	\item Observemos que el producto de las raíces es:
+	\begin{equation}
+		\lambda_1 \lambda_2 = \left( 1+\frac{c}{2} + \sqrt{\dots} \right) \left( 1+\frac{c}{2} - \sqrt{\dots} \right) = \left( 1+\frac{c}{2}\right)^2 - \left(\left( 1+\frac{c}{2}\right)^2 - 1\right) = 1.
+	\end{equation}
+	Y por lo tanto $\lambda_{1} = \lambda_{2}^{-1}$.
+	
+	\item Entonces la soluci\'{o}n homog\'{e}nea es:
+	\begin{equation}
+		v_{o}[n] = V_{1} \lambda_{1}^n + V_{2} \lambda_{1}^{-n}.
+	\end{equation}
+	
+	\item Observe las ecs. (\ref{ecdifhomuno}) y (\ref{ecdifhomdos}). ¿Por qué el factor extraído es $V \lambda^{n-1}$ en lugar de $V \lambda^{n-2}$, dado que el orden $N=2$? Porque hemos escrito la ecuación centrada en $n$, con un adelanto $n+1$ y un atraso $n-1$, por lo que el menor exponente de la serie de tres términos es $n-1$.
+\end{enumerate}
+
+\subsection{Soluci\'{o}n particular de una ecuaci\'{o}n de diferencias para una entrada $z^{n}$}
+
+\subsubsection{Donde la entrada $z^{n}$ no es una frecuencia natural}
+
+\begin{enumerate}
+	\item Consideremos la ecuaci\'{o}n de diferencias:
+	\begin{equation}
+		\sum_{p=0}^{N}a_{p} y[n-p] = \sum_{q=0}^{M}b_{q} x[n-q]. \label{ecdiflinealnonat}
+	\end{equation}
+	
+	\item Supongamos ahora que la entrada es una exponencial $x[n] = z^{n}$, y que la salida tiene la misma forma $y[n] = Y z^{n}$, donde $z$ no es igual a ninguna frecuencia natural. Reemplazando en la ecuaci\'{o}n de diferencias resulta:
+	\begin{equation}
+		\sum_{p=0}^{N}a_{p} Y z^{n-p} = \sum_{q=0}^{M}b_{q} z^{n-q}.
+	\end{equation}
+	
+	\item Extrayendo factores comunes obtenemos:
+	\begin{equation}
+		\left( \sum_{p=0}^{N}a_{p} z^{-p} \right) Y z^{n} = \left(\sum_{q=0}^{M}b_{q} z^{-q} \right) z^{n}. \label{ecdifpart}
+	\end{equation}
+	Luego de dividir por $z^n$, podemos despejar la amplitud $Y$:
+	\begin{equation}
+		Y = \frac{\sum_{q=0}^{M}b_{q} z^{-q}}{\sum_{p=0}^{N}a_{p} z^{-p}}.
+	\end{equation}
+	
+	\item Por lo tanto, una soluci\'{o}n particular de la ecuaci\'{o}n (\ref{ecdiflinealnonat}) para una entrada exponencial $z^{n}$ es:
+	\begin{equation}
+		y_{p}[n] = \frac{\sum_{q=0}^{M}b_{q} z^{-q}}{\sum_{p=0}^{N}a_{p} z^{-p}} z^{n}. \label{eqhzorig}
+	\end{equation}
+\end{enumerate}
+
+\subsubsection{Donde la entrada $z^{n}$ es una frecuencia natural}
+
+\begin{enumerate}
+	\item Consideremos la misma ecuaci\'{o}n de diferencias (\ref{ecdiflinealnonat}).
+	\item Supongamos ahora que la entrada excitadora es exactamente una frecuencia natural del sistema:
+	\begin{equation}
+		x[n] = \lambda^{n}.
+	\end{equation}
+	Por definición de modo natural, sabemos que la suma de sus coeficientes se anula:
+	\begin{equation}
+		\sum_{p=0}^{N}a_{p} \lambda^{-p} = 0.
+	\end{equation}
+	Esto anula el \textbf{denominador} de la ecuación (\ref{eqhzorig}), impidiendo el uso directo de esa fórmula.
+	
+	\item Este es un fen\'{o}meno denominado resonancia. Se produce cuando las entradas coinciden con las frecuencias naturales del sistema, y provocan una amplificaci\'{o}n progresiva de la salida. (Esta ha sido la causa de la destrucci\'{o}n de puentes y estructuras; busque referencias en Internet sobre el colapso del puente de Tacoma Narrows).
+	
+	\item En este caso discreto, la respuesta forzada del sistema debe multiplicarse por un polinomio en $n$:
+	\begin{equation}
+		y_{p}[n] = \left( c n^{M} + \sum_{k=0}^{M-1} c_{k} n^{k} \right) \lambda^{n}, \label{resonanciadiscreta}
+	\end{equation}
+	donde $M$ es la multiplicidad de la frecuencia natural $\lambda$ en el polinomio característico, y los coeficientes se determinan mediante las condiciones de borde.
+	
+	\item Por ejemplo, consideremos la ecuaci\'{o}n de diferencias simple:
+	\begin{equation}
+		y[n] - \lambda y[n-1] = \lambda^{n}.
+	\end{equation}
+	Sustituyendo una solución de la forma $y[n] = (n + c) \lambda^{n}$:
+	\begin{align}
+		(n + c) \lambda^{n} - \lambda ((n - 1) + c) \lambda^{n-1} &= \lambda^{n} \\
+		(n + c) \lambda^{n} - (n - 1 + c) \lambda^{n} &= \lambda^{n} \\
+		\lambda^{n} (n + c - n + 1 - c) &= \lambda^{n} \\
+		\lambda^{n} &= \lambda^{n}.
+	\end{align}
+	Lo que demuestra que la respuesta forzada adopta efectivamente la forma indicada en (\ref{resonanciadiscretarespuesta}).
+\end{enumerate}
+
+\subsection{Soluci\'{o}n general de la ecuaci\'{o}n de diferencias para una entrada $z^{n}$}
+
+\subsubsection{Donde $z^{n}$ no es una frecuencia natural}
+
+La soluci\'{o}n completa de la ecuaci\'{o}n de diferencias es la superposición de la solución homogénea y la particular:
+\begin{equation}
+	y[n] = y_{h}[n] + y_{p}[n] = \left(\sum_{k=1}^{N}Y_{k}\lambda_{k}^n \right) + \frac{\sum_{q=0}^{M}b_{q}z^{-q}}{\sum_{p=0}^{N}a_{p}z^{-p}} z^{n}.
+\end{equation}
+
+\subsubsection{Donde la entrada $z^{n}$ es una frecuencia natural}
+
+Como vimos en la sección anterior, si $z = \lambda_k$, el término forzado particular adopta la forma $C \cdot n \cdot \lambda_k^n$, quedando la solución total como:
+\begin{equation}
+	y[n] = \left(\sum_{k=1}^{N}Y_{k}\lambda_{k}^n \right) + C n \lambda_k^{n}.
+\end{equation}
+
+\section{Definici\'{o}n de la funci\'{o}n de transferencia para sistemas de tiempo discreto}
+
+Definamos entonces a la función $H(z)$:
+\begin{equation}
+	H(z) = \frac{\sum_{q=0}^{M}b_{q}z^{-q}}{\sum_{p=0}^{N}a_{p}z^{-p}}, \label{eqhzdef}
+\end{equation}
+como la funci\'{o}n de transferencia asociada a la ecuaci\'{o}n de diferencias:
+\begin{equation}
+	\sum_{p=0}^{N}a_{p} y[n-p] = \sum_{q=0}^{M}b_{q} x[n-q].
+\end{equation}
+
+\subsection{Ejemplo uno}
+
+\begin{enumerate}
+	\item La ecuaci\'{o}n de diferencias:
+	\begin{equation}
+		y[n] - y[n-1] = \tau x[n],
+	\end{equation}
+	tiene una funci\'{o}n de transferencia asociada:
+	\begin{equation}
+		H(z) = \frac{\tau}{1-z^{-1}}.
+	\end{equation}
+	
+	\item La ecuaci\'{o}n de diferencias:
+	\begin{equation}
+		y[n] - y[n-2] = 2 \tau x[n-1],
+	\end{equation}
+	tiene una funci\'{o}n de transferencia asociada:
+	\begin{equation}
+		H(z) = \frac{2 \tau z^{-1}}{1-z^{-2}}.
+	\end{equation}
+\end{enumerate}
+
+\subsection{Ejemplo dos}
+
+Veremos la reconstrucci\'{o}n de una ecuaci\'{o}n de diferencias a partir de una funci\'{o}n de transferencia. Consideremos:
+\begin{equation}
+	H(z) = \frac{Y(z)}{X(z)} = \frac{z}{z+1}.
+\end{equation}
+¿Cu\'{a}l es la ecuaci\'{o}n de diferencias correspondiente?
+
+Dividimos numerador y denominador por $z$ para obtener potencias negativas (retrasos estándar en tiempo discreto):
+\begin{equation}
+	H(z) = \frac{Y(z)}{X(z)} = \frac{1}{1 + z^{-1}}.
+\end{equation}
+Multiplicamos en forma cruzada:
+\begin{equation}
+	Y(z) (1 + z^{-1}) = X(z).
+\end{equation}
+Aplicando la transformada Z inversa, recordando que $z^{-1} Y(z) \leftrightarrow y[n-1]$:
+\begin{equation}
+	y[n] + y[n-1] = x[n].
+\end{equation}
+Alternativamente, si definimos la ecuación adelantada:
+\begin{equation}
+	y[n+1] + y[n] = x[n+1].
+\end{equation}
+
+\section{Polos y ceros de la funci\'{o}n de transferencia}
+
+\begin{enumerate}
+	\item La funci\'{o}n de transferencia puede expresarse, factorizando en función de $z$, como:
+	\begin{equation}
+		H(z) = \frac{\sum_{q=0}^{M}b_{q}z^{-q}}{\sum_{p=0}^{N}a_{p}z^{-p}} = K \frac{\prod_{q=1}^{M} (z-c_{q})}{\prod_{p=1}^{N} (z-d_{p})},
+	\end{equation}
+	donde $K$ es un factor de escala. Nos referiremos a $c_{q}$ como los ceros, a $d_{p}$ como los polos, y a $K$ como la ganancia.
+	
+	\item La posici\'{o}n de los ceros y polos en el plano complejo $Z$ determinan el tipo de din\'{a}mica del sistema (amortiguamiento, frecuencia de oscilación, estabilidad). El factor de ganancia $K$ s\'{o}lo determina la amplitud general de la respuesta.
+\end{enumerate}
+
+\section{Soluci\'{o}n general de la ecuaci\'{o}n de diferencias}
+
+\subsection{Sistemas causales}
+
+\begin{enumerate}
+	\item Supondremos que el sistema definido por la ecuaci\'{o}n de diferencias:
+	\begin{equation}
+		\sum_{p=0}^{N}a_{p} y[n-p] = \sum_{q=0}^{M}b_{q} x[n-q], \label{eqdtdcausal}
+	\end{equation}
+	es \textbf{causal}, o sea que su respuesta al impulso es nula para $n < 0$.
+	
+	\item Comprobaremos que la soluci\'{o}n causal de esta ecuaci\'{o}n es la suma de la respuesta libre y la convolución forzada:
+	\begin{equation}
+		y[n] = \left( \sum_{k=1}^{N} c_{k} \lambda_{k}^{n} u[n] \right) + \left( \sum_{k=0}^{n} h[n-k] x[k] \right), \label{solgenecdif}
+	\end{equation}
+	donde $\lambda_{k}$ son las $N$ ra\'{\i}ces simples del polinomio caracter\'{\i}stico.
+\end{enumerate}
+
+\subsection{Ejemplo}
+\begin{enumerate}
+	\item Una aproximaci\'{o}n discreta de un circuito RC permite obtener la ecuaci\'{o}n de diferencias:
+	\begin{equation}
+		v_o[n+1] = (1-\alpha) v_o[n] + \alpha v_i[n], \quad \text{donde } \alpha = \frac{T}{RC}.
+	\end{equation}
+	
+	\item Podemos obtener la funci\'{o}n de transferencia aplicando Transformada Z (o asumiendo $z^n$):
+	\begin{equation}
+		z V_o(z) = (1-\alpha) V_o(z) + \alpha V_i(z).
+	\end{equation}
+	Despejando:
+	\begin{equation}
+		H(z) = \frac{V_o(z)}{V_i(z)} = \frac{\alpha}{z - (1-\alpha)}.
+	\end{equation}
+	
+	\item La frecuencia natural del sistema está en el polo:
+	\begin{equation}
+		\lambda = 1-\alpha.
+	\end{equation}
+\end{enumerate}
+
+\section{Estabilidad de sistemas LIT}
+
+\subsection{Sistemas con un polo}
+
+La funci\'{o}n de transferencia correspondiente a la ecuaci\'{o}n de diferencias $y[n+1] + ay[n] = bx[n]$ es:
+\begin{equation}
+	H(z) = \frac{Y(z)}{X(z)} = \frac{b}{z+a}.
+\end{equation}
+Recuerde que la soluci\'{o}n de la ecuaci\'{o}n homog\'{e}nea dictamina el régimen transitorio: $y_h[n] = Y(-a)^n$.
+
+\begin{enumerate}
+	\item Si $|a| < 1$ entonces:
+	\begin{equation}
+		\lim_{n \to \infty} y_h[n] = 0,
+	\end{equation}
+	y por lo tanto el sistema es \textbf{estable} (el polo está dentro del círculo unitario).
+	
+	\item Si $|a| > 1,$ entonces:
+	\begin{equation}
+		\lim_{n \to \infty} |y_h[n]| = \infty,
+	\end{equation}
+	y el sistema es \textbf{inestable} (el polo está fuera del círculo unitario).
+	
+	\item Si $|a| = 1,$ entonces la magnitud se mantiene acotada (oscilador o integrador marginalmente estable).
+\end{enumerate}
+
+\subsection{Sistemas con dos polos}
+Para $y[n+2] + a y[n+1] + b y[n] = c x[n]$, la transferencia es:
+\begin{equation}
+	H(z) = \frac{c}{z^2 + a z + b}.
+\end{equation}
+Si expandimos $H(z)$ y hallamos los polos $d_1$ y $d_2$:
+\begin{enumerate}
+	\item Si $|d_1| < 1$ y $|d_2| < 1$ simultáneamente, el sistema es \textbf{estable} porque su respuesta al impulso decae a cero:
+	\begin{equation}
+		\lim_{n \to \infty} h[n] = 0.
+	\end{equation}
+	
+	\item En cambio, si $|d_1| > 1$ o $|d_2| > 1,$ el sistema es \textbf{inestable} porque:
+	\begin{equation}
+		\lim_{n \to \infty} |h[n]| = \infty.
+	\end{equation}
+\end{enumerate}
+
+\section{Aplicaci\'{o}n}
+
+\subsection{Red el\'{e}ctrica en escalera}
+
+En la figura \ref{laddercircuiteps}, $r$ es la resistencia serie y $g$ es la conductancia en derivación (shunt). Aplicando la ley de corrientes de Kirchhoff en el nodo central discreto (índice $n$), tenemos:
+\begin{equation}
+	\frac{v_0[n-1] - v_0[n]}{r} + \frac{v_0[n+1] - v_0[n]}{r} + g(v_i[n] - v_0[n]) = 0.
+\end{equation}
+Multiplicando todo por $r$, ordenando términos y despejando obtenemos la ecuación de diferencias espacial:
+\begin{equation}
+	-v_0[n+1] + (2+rg) v_0[n] - v_0[n-1] = rg v_i[n]. \label{sisCuatro}
+\end{equation}
+
+Podemos analizar el comportamiento de esta red hallando su "función de transferencia espacial". Aplicando la transformada $Z$ (donde $z$ ahora representa un operador de desplazamiento espacial a lo largo de los nodos, no de tiempo):
+\begin{equation}
+	(-z + (2+rg) - z^{-1}) V_0(z) = rg V_i(z).
+\end{equation}
+Reordenando para hallar los polos (multiplicando por $-z$):
+\begin{equation}
+	z^2 - (2+rg)z + 1 = 0.
+\end{equation}
+Resolviendo la ecuación característica para encontrar las frecuencias naturales $\lambda_{1,2}$:
+\begin{equation}
+	\lambda_{1,2} = \frac{(2+rg) \pm \sqrt{(2+rg)^2 - 4}}{2}.
+\end{equation}
+Dado que tanto las resistencias como las conductancias son valores físicos positivos ($r > 0, g > 0$), el término $(2+rg)$ es estrictamente mayor que $2$. Al evaluar las raíces, la cantidad subradical es positiva, dando dos polos reales distintos. Además, como el coeficiente independiente del polinomio es $1$, sabemos que $\lambda_1 \cdot \lambda_2 = 1$. 
+
+Al ser el término de suma $(2+rg) > 2$, se garantiza que una de las raíces (digamos $\lambda_1$) será estrictamente \textbf{mayor que 1}, mientras que la otra $\lambda_2$ será \textbf{menor que 1}. 
+
+Esto significa que, desde la perspectiva de sistemas causales, esta red escalera es matemáticamente inestable a lo largo del índice $n$. Físicamente, esto se interpreta indicando que si inyectamos una señal en un extremo, el voltaje decaerá o crecerá exponencialmente a medida que avanzamos por los nodos de la escalera, un fenómeno clásico en líneas de transmisión y atenuadores iterativos.
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[height=2in]{./graphics/ladder_circuit.eps}
+	\caption{Circuito eléctrico iterativo en escalera.}
+	\label{laddercircuiteps}
+\end{figure}

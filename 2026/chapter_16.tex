@@ -1,0 +1,300 @@
+\chapter{La transformada Zeta}
+
+\section{Introducci\'{o}n}
+
+\subsection{Origen de la transformada Zeta}
+
+\begin{enumerate}
+	
+	\item Calculemos la salida de un sistema LIT de tiempo discreto y respuesta al impulso $h[n]$ cuando la entrada es $x[n] = z^{n}$ ($z$ es una variable compleja) mediante la suma de convoluci\'{o}n[cite: 346, 347]:
+	\begin{equation}
+		y[n] = \sum_{k=-\infty}^{\infty} h[k] x[n-k] = \sum_{k=-\infty}^{\infty} h[k] z^{n-k}.
+	\end{equation}
+	
+	\item Observemos que $z^{n-k} = z^{n} z^{-k}$. Por lo tanto podemos escribir[cite: 348]:
+	\begin{equation}
+		y[n] = \left(\sum_{k=-\infty}^{\infty} h[k] z^{-k} \right) z^{n} = Z\{h[n]\} z^{n}, \label{motivozeta}
+	\end{equation}
+	dado que el factor $z^{n}$ es una constante para la sumatoria[cite: 348]. En este caso, $Z\{h[n]\}$ representa a la transformada $Z$ bilateral de $h[n]$[cite: 349].
+	
+	\item En el caso especial en que el sistema sea causal, la respuesta al impulso es nula para $n<0$[cite: 350]. Entonces la ecuaci\'{o}n (\ref{motivozeta}) se modifica[cite: 351]:
+	\begin{equation}
+		y[n] = \left(\sum_{k=0}^{\infty} h[k] z^{-k} \right) z^{n} = Z^{+}\{h[n]\} z^{n}.
+	\end{equation}
+	En este caso, $Z^{+}\{h[n]\}$ representa la transformada $Z$ unilateral de $h[n]$[cite: 352].
+\end{enumerate}
+
+\subsection{Ecuaci\'{o}n de an\'{a}lisis (bilateral)}
+La transformada $Z$ bilateral de una secuencia $x[n]$ se define mediante la ecuaci\'{o}n de an\'{a}lisis[cite: 353]:
+\begin{equation}
+	X(z) = \sum_{n=-\infty}^{\infty} x[n] z^{-n}.
+\end{equation}
+
+\subsection{Ecuaci\'{o}n de an\'{a}lisis (unilateral)}
+La transformada $Z$ unilateral de una secuencia $x[n]$ se define mediante la ecuaci\'{o}n de an\'{a}lisis[cite: 354]:
+\begin{equation}
+	X^{+}(z) = \sum_{n=0}^{\infty} x[n] z^{-n}.
+\end{equation}
+Observe que la diferencia con la transformada bilateral es que el l\'{\i}mite inferior de la sumatoria es $0$, en vez de ser $-\infty$[cite: 355]. Esto significa que si la se\~{n}al $x[n]$ es nula para $n < 0$ ambas transformadas coinciden[cite: 356].
+
+\subsection{Ecuaci\'{o}n de s\'{\i}ntesis}
+La transformada $Z$ inversa (ya sea bilateral o unilateral) est\'{a} definida por la ecuaci\'{o}n de s\'{\i}ntesis[cite: 357]:
+\begin{equation}
+	x[n] = \frac{1}{2\pi j} \oint_{C} X(z) z^{n-1} dz.
+\end{equation}
+
+\subsection{Aclaraciones respecto a ambas transformadas}
+
+\begin{enumerate}
+	\item La funci\'{o}n $X(z)$, tanto para el caso bilateral como el unilateral, est\'{a} definida para una regi\'{o}n en el plano complejo $z$, denominada \textbf{regi\'{o}n de convergencia}, para la cu\'{a}l la sumatoria de la ecuaci\'{o}n de an\'{a}lisis existe[cite: 358].
+	\item Como $z$ es una cantidad compleja, $X(z)$ es una funci\'{o}n compleja de una variable compleja[cite: 359]. Entonces, la ecuaci\'{o}n de s\'{\i}ntesis implica integraci\'{o}n en el dominio complejo $z$. Solamente usaremos esta f\'{o}rmula para probar teoremas y en algunos ejemplos puntuales[cite: 360].
+\end{enumerate}
+
+\subsection{Ejemplos de Transformada Z} \label{zetaejemplouno}
+
+\begin{enumerate}
+	
+	\item Calculemos la transformada $Z$ bilateral de un impulso unitario $x[n] = \delta[n]$[cite: 361]. Entonces escribimos[cite: 362]:
+	\begin{equation}
+		X(z) = \sum_{k=-\infty}^{\infty} \delta[k] z^{-k}.
+	\end{equation}
+	Dado que $\delta[k] = 1$ si y solo si $k=0$, entonces resulta:
+	\begin{equation}
+		X(z) = \delta[0] z^{0} = 1. 
+	\end{equation}
+	
+	\item Calculemos la transformada $Z$ bilateral de un impulso unitario desplazado en el tiempo $x[n] = \delta[n-m]$[cite: 363]. Entonces escribimos[cite: 364]:
+	\begin{equation}
+		X(z) = \sum_{k=-\infty}^{\infty} \delta[k-m] z^{-k}.
+	\end{equation}
+	Dado que $\delta[k-m] = 1$ si y solo si $k=m$, resulta[cite: 365]:
+	\begin{equation}
+		X(z) = \delta[0] z^{-m} = z^{-m}.
+	\end{equation}
+	
+	\item Calculemos la transformada $Z$ bilateral de un escal\'{o}n unitario $x[n] = u[n]$[cite: 366]. Entonces escribimos[cite: 367]:
+	\begin{equation}
+		X(z) = \sum_{k=-\infty}^{\infty} u[k] z^{-k}.
+	\end{equation}
+	Dado que $u[k] = 1$ si y solo si $k \geq 0$, resulta[cite: 368]:
+	\begin{equation}
+		X(z) = \sum_{k=0}^{\infty} z^{-k}.
+	\end{equation}
+	Observemos que $\sum_{k=0}^{\infty} z^{-k}$ es una serie geom\'{e}trica de raz\'{o}n $z^{-1}$. Para que esta serie sea convergente debe ser $|z^{-1}| \leq 1$[cite: 369].
+	
+	\item Calculemos la transformada $Z$ bilateral de una exponencial \textbf{causal} de duraci\'{o}n infinita[cite: 370]:
+	\begin{equation}
+		x[n] = a^{n} u[n].
+	\end{equation}
+	La ecuaci\'{o}n de an\'{a}lisis correspondiente es[cite: 371]:
+	\begin{equation}
+		X(z) = \sum_{k=-\infty}^{\infty} x[k] z^{-k}.
+	\end{equation}
+	Por lo tanto, escribimos:
+	\begin{equation}
+		X(z) = \sum_{k=0}^{\infty} a^k z^{-k} = \frac{1}{1-a z^{-1}},
+	\end{equation}
+	donde $|a z^{-1}| < 1 \Leftrightarrow |z| > |a|$[cite: 372].
+	La regi\'{o}n de convergencia es el exterior de un c\'{\i}rculo de radio $|a|$ centrado en el origen[cite: 373].
+	
+\end{enumerate}
+
+\section{La transformada $Z$, la transformada de Fourier, y la regi\'{o}n de convergencia} \label{zetaconv}
+
+\subsection{Desarrollo te\'{o}rico}
+
+\begin{enumerate}
+	\item Consideremos la ecuaci\'{o}n de s\'{\i}ntesis de la transformada bilateral[cite: 374]:
+	\begin{equation}
+		X(z) = \sum_{k=-\infty}^{\infty} x[k] z^{-k}.
+	\end{equation}
+	
+	\item Expresemos la variable compleja $z$ en forma polar[cite: 375]:
+	\begin{equation}
+		z = r e^{j \omega},
+	\end{equation}
+	donde $r = |z|$, y $\omega = \angle(z)$, obteniendo[cite: 376]:
+	\begin{equation}
+		X(r e^{j \omega}) = \sum_{k=-\infty}^{\infty} x[k] (r e^{j \omega})^{-k}.
+	\end{equation}
+	Reagrupando factores, resulta finalmente[cite: 377]:
+	\begin{equation}
+		X(r e^{j \omega}) = \sum_{k=-\infty}^{\infty} \left( x[k] r^{-k} \right) e^{-j k \omega}.
+	\end{equation}
+	
+	\item La funci\'{o}n $X(r e^{j \omega})$ es la Transformada de Fourier del producto $x[k] r^{-k},$ y la Transformada Zeta evaluada sobre el c\'{\i}rculo unitario $e^{j \omega}$ coincide con la Transformada de Fourier[cite: 378].
+	\item Para que exista la transformada $Z$ de $x[k]$ debe existir la transformada discreta de Fourier de $x[k] r^{-k}$ para alg\'{u}n valor de $r$[cite: 379].
+	\item Los valores de $r$ para los cuales existe la transformada discreta de Fourier de $x[k] r^{-k}$ definen la regi\'{o}n de convergencia de la transformada $Z$ de $x[n]$[cite: 380].
+	
+	\item Cuando hablamos de la existencia de $X(z)$, lo que estamos afirmando es que la magnitud de $X(z)$ est\'{a} acotada por un n\'{u}mero $M$ finito[cite: 381]:
+	\begin{equation}
+		|X(z)| < M < \infty.
+	\end{equation}
+	Para determinar la regi\'{o}n de convergencia debemos encontrar una cota superior para $|X(z)|$[cite: 382]. Para esto planteamos[cite: 383, 384]:
+	\begin{equation}
+		|X(z)| = \left| \sum_{k=-\infty}^{\infty} x[k] r^{-k} e^{-j \omega k} \right|.
+	\end{equation}
+	Aplicando la desigualdad triangular[cite: 385]:
+	\begin{equation}
+		|X(z)| \leq \sum_{k=-\infty}^{\infty} \left| x[k] r^{-k} e^{-j \omega k} \right|,
+	\end{equation}
+	y dado que $|e^{-j \omega k}| = 1$ [cite: 386], finalmente obtenemos[cite: 387, 388]:
+	\begin{equation}
+		|X(z)| \leq \sum_{k=-\infty}^{\infty} \left| x[k] r^{-k} \right| \leq M.
+	\end{equation}
+	
+	\item Podemos sacar como conclusi\'{o}n que determinar la regi\'{o}n de convergencia equivale a hallar los valores de $r$ para los cuales la secuencia $x[n] r^{-n}$ es absolutamente sumable[cite: 389]. Esto coincide con las condiciones de Dirichlet para la existencia de la transformada de Fourier[cite: 390].
+\end{enumerate}
+
+
+\subsection{Reglas pr\'{a}cticas para determinar la regi\'{o}n de convergencia}
+
+\begin{enumerate}
+	\item La regi\'{o}n de convergencia de $X(z)$ consiste en un anillo en el plano $z$ centrado en el origen[cite: 391].
+	\item La regi\'{o}n de convergencia no contiene polos.
+	\item Si la secuencia $x[n]$ es de duraci\'{o}n finita, entonces la regi\'{o}n de convergencia es el plano $z$ entero, excepto posiblemente en el origen $z=0$ y en el infinito $|z|=\infty$[cite: 392].
+	\item Si $x[n]$ es una secuencia derecha, y si el c\'{\i}rculo $|z|=r_{0}$ est\'{a} en la regi\'{o}n de convergencia, entonces todos los valores finitos de $z$ para los cuales $|z|>r_{0}$ est\'{a}n tambi\'{e}n en la regi\'{o}n de convergencia[cite: 393, 394].
+	\item Si $x[n]$ es una secuencia izquierda, y si el c\'{\i}rculo $|z|=r_{0}$ est\'{a} en la regi\'{o}n de convergencia, entonces todos los valores finitos de $z$ para los cuales $|z|<r_{0}$ est\'{a}n tambi\'{e}n en la regi\'{o}n de convergencia[cite: 395, 396].
+	\item Si $x[n]$ es una secuencia bilateral, y si el c\'{\i}rculo $|z|=r_{0}$ est\'{a} en la regi\'{o}n de convergencia, entonces la regi\'{o}n de convergencia consiste en un anillo que contiene a $|z|=r_{0}$[cite: 397, 398].
+	\item Si $X(z)$ correspondiente a $x[n]$ es racional, entonces la regi\'{o}n de convergencia est\'{a} limitada por polos o se extiende hasta el infinito[cite: 399].
+	\item Si $X(z)$ correspondiente a $x[n]$ es racional, y si $x[n]$ es derecha, entonces la regi\'{o}n de convergencia est\'{a} ubicada fuera del c\'{\i}rculo que contiene al polo de mayor magnitud[cite: 400]. Adem\'{a}s, si $x[n]$ es causal, entonces la regi\'{o}n de convergencia tambi\'{e}n incluye $z=\infty$[cite: 401].
+	\item Si $X(z)$ es racional y $x[n]$ es izquierda, entonces la regi\'{o}n de convergencia est\'{a} ubicada dentro del c\'{\i}rculo que contiene al polo de menor magnitud[cite: 401]. Adem\'{a}s, si $x[n]$ es no causal y nula para $n>0$, la regi\'{o}n de convergencia tambi\'{e}n incluye $z=0$[cite: 402].
+\end{enumerate}
+
+\section{La transformada Zeta bilateral y sus propiedades}
+
+\subsection{El par funci\'{o}n temporal transformada}
+Indicaremos el par formado por una funci\'{o}n temporal y su transformada como[cite: 403]:
+\begin{equation}
+	x[n] \stackrel{\mathcal{Z}}{\longleftrightarrow} X(z).
+\end{equation}
+
+\subsection{Propiedades fundamentales}
+
+La siguiente tabla resume algunas propiedades de la transformada $Z$ \textbf{bilateral}[cite: 404]:
+\begin{center}
+	\begin{tabular}{lll}
+		\textbf{Se\~{n}al} & \textbf{Transformada} & \textbf{Regi\'{o}n de convergencia} \\ 
+		\hline
+		$a x[n] + b y[n]$ & $a X(z) + b Y(z)$ & $\supset (R_{x} \cap R_{y})$ \\ 
+		$x[n-n_{0}]$ & $z^{-n_{0}} X(z)$ & $R_{x}$ [cite: 405] \\ 
+		$n x[n]$ & $-z \frac{dX(z)}{dz}$ & $R_{x}$ \\ 
+		$x[n] y[n]$ & $X(z) * Y(z)$ & $\supset (R_{x} \cap R_{y})$ [cite: 406] \\ 
+		$x[n] * y[n]$ & $X(z) Y(z)$ & $\supset (R_{x} \cap R_{y})$
+	\end{tabular}
+\end{center}
+
+\section{Relaci\'{o}n entre secuencias causales y diagramas de ceros y polos}
+
+\subsection{Secuencia exponencial causal}
+Recordemos que la transformada $Z$ de una exponencial \textbf{causal} $x[n] = a^{n} u[n]$ [cite: 415] es:
+\begin{equation}
+	X(z) = \frac{1}{1-a z^{-1}},
+\end{equation}
+donde $|a z^{-1}| < 1 \Leftrightarrow |z| > |a|$[cite: 416]. La regi\'{o}n de convergencia es el exterior de un c\'{\i}rculo de radio $|a|$ centrado en el origen[cite: 417].
+
+\subsection{Secuencia exponencial no causal}
+\begin{enumerate}
+	\item Calculemos la transformada $Z$ de una exponencial \textbf{no causal} $x[n] = -a^{n} u[-n-1]$[cite: 418].
+	\item En este caso especial, podemos escribir la ecuación de análisis[cite: 419]:
+	\begin{equation}
+		X(z) = \sum_{n=-\infty}^{\infty} \left( -a^{n} u[-n-1] \right) z^{-n}.
+	\end{equation}
+	\item Por lo tanto, resulta[cite: 420]:
+	\begin{equation}
+		X(z) = -\sum_{n=-\infty}^{-1} (a z^{-1})^{n} = -\sum_{n=1}^{\infty} (a^{-1} z)^{-n}.
+	\end{equation}
+	\item Finalmente evaluando la serie geométrica[cite: 421]:
+	\begin{equation}
+		X(z) = -\frac{(a^{-1} z)}{1-(a^{-1} z)}.
+	\end{equation}
+	\item Reacomodando el resultado anterior, obtenemos:
+	\begin{equation}
+		X(z) = \frac{1}{1-a z^{-1}},
+	\end{equation}
+	donde $|a^{-1} z| < 1 \Leftrightarrow |z| < |a|$[cite: 422].
+	\item La regi\'{o}n de convergencia es el \textbf{interior} del c\'{\i}rculo de radio $|a|$[cite: 423].
+\end{enumerate}
+
+\subsection{Comparaci\'{o}n entre secuencias causales y no causales}
+\begin{enumerate}
+	\item Las secuencias causales y anticausales pueden tener la misma transformada $Z$ pero distintas regiones de convergencia[cite: 424].
+	\item Las secuencias causales tienen regiones de convergencia en el exterior de un c\'{\i}rculo que intersecta al polo de la transformada $Z$.
+	\item Las secuencias anticausales tienen regiones de convergencia en el interior de un c\'{\i}rculo que intersecta al polo de la transformada $Z$.
+	\item Las secuencias estables tienen regiones de convergencia que incluyen el c\'{\i}rculo unitario[cite: 425].
+\end{enumerate}
+
+\subsection{Secuencias bilaterales}
+Consideremos la secuencia bilateral $x[n] = a^{-n} u[-n-1] + a^{n} u[n]$, donde $0<a<1$. Su transformada $Z$ se compone de ambas partes[cite: 426, 427, 428]:
+\begin{equation}
+	X(z) = \underbrace{\frac{1}{1-a^{-1} z^{-1}}}_{|z| < 1/a} + \underbrace{\frac{1}{1-a z^{-1}}}_{|z| > a} = \frac{z(a-a^{-1})}{(z-a^{-1})(z-a)}, \quad a < |z| < \frac{1}{a}.
+\end{equation}
+
+\section{La transformada Zeta Inversa}
+Veremos como determinar la secuencia a partir de su transformada Zeta[cite: 429].
+
+\subsection{Primer m\'{e}todo (Integral de contorno)}
+\begin{enumerate}
+	\item Recordemos que la transformada Zeta de una secuencia puede ser interpretada como la transformada de Fourier de una secuencia con coeficientes exponenciales[cite: 430]:
+	\begin{equation}
+		x[n] r^{-n} \stackrel{\mathcal{F}}{\longleftrightarrow} X(r e^{j \omega}),
+	\end{equation}
+	para todo valor de $r$ tal que $z = r e^{j \omega}$ pertenezca a la regi\'{o}n de convergencia[cite: 431].
+	\item Aplicando la transformada inversa de Fourier a ambos lados de la ecuaci\'{o}n obtenemos[cite: 432]:
+	\begin{equation}
+		x[n] r^{-n} = \frac{1}{2 \pi} \int^{2 \pi}_{0} X(r e^{j \omega}) e^{j \omega n} d \omega.
+	\end{equation}
+	\item Multiplicando ambos lados de la ecuaci\'{o}n por $r^{n}$ obtenemos[cite: 433]:
+	\begin{equation} \label{zetaanalisis}
+		x[n] = \frac{1}{2 \pi} \int^{2 \pi}_{0} X(r e^{j \omega}) (r e^{j \omega})^{n} d \omega.
+	\end{equation}
+	Esto significa que podemos recuperar $x[n]$ partiendo de su transformada $Z$ evaluada a lo largo de una trayectoria $z=r e^{j \omega}$ inclu\'{\i}da en su regi\'{o}n de convergencia[cite: 434].
+	\item Aplicando un cambio de variable de integraci\'{o}n definido por $z = r e^{j \omega}$ [cite: 435, 436, 437], la integral (\ref{zetaanalisis}) se puede reescribir como[cite: 438]:
+	\begin{equation}
+		x[n] = \frac{1}{2 \pi j} \oint_{C} X(z) z^{n-1} dz,
+	\end{equation}
+	donde $C$ simboliza el contorno de integraci\'{o}n[cite: 439].
+	\item Los teoremas de Cauchy nos permiten evaluar estas integrales curvil\'{\i}neas calculando los residuos en los polos de la función en el interior del contorno[cite: 440, 441, 442, 443, 444, 445, 446, 447, 448, 449].
+\end{enumerate}
+
+\subsection{Segundo y Tercer m\'{e}todo}
+Podemos expandir $X(z)$ en una serie de potencias de $z^{-n}$ [cite: 450], o expresarla como una combinaci\'{o}n lineal mediante expansión en fracciones parciales y aplicar linealidad[cite: 451, 452].
+
+\section{Transformada Zeta Unilateral}
+
+\subsection{Algunos comentarios}
+\begin{enumerate}
+	\item La Transformada Zeta Unilateral es \'{u}til para analizar sistemas causales que no est\'{a}n en reposo para un tiempo inicial dado[cite: 461, 462].
+	\item Se define mediante la ecuaci\'{o}n de an\'{a}lisis[cite: 463]:
+	\begin{equation}
+		X^{+}(z) = Z^{+}\{x[n]\} = \sum_{n=0}^{\infty} x[n] z^{-n}.
+	\end{equation}
+	\item La transformada unilateral $X^{+}(z)$ no contiene informaci\'{o}n de $x[n]$ para $n<0$ y es \'{u}nica s\'{o}lo para se\~{n}ales causales[cite: 464, 465].
+	\item Su relación con la versión bilateral es: $Z^{+}\{x[n]\} = Z\{x[n] u[n]\}$[cite: 466].
+	\item Las propiedades son similares a las de la transformada bilateral, excepto aquellas que impliquen un desplazamiento temporal[cite: 467].
+\end{enumerate}
+
+\subsection{Propiedades de la transformada $Z$ unilateral}
+Supondremos que para una secuencia $x[n]$ su transformada $Z$ unilateral existe: $x[n] \stackrel{\mathcal{Z}^+}{\longleftrightarrow} X^{+}(z)$[cite: 468].
+
+\subsubsection{Retardo de tiempo}
+Si $x[n]$ no es causal, entonces para $k > 0$[cite: 469]:
+\begin{equation}
+	x[n-k] \stackrel{\mathcal{Z}^+}{\longleftrightarrow} z^{-k} \left[ X^{+}(z) + \sum_{n=1}^{k} x[-n] z^{n} \right].
+\end{equation}
+Si $x[n]$ es causal, tenemos que para $k > 0$[cite: 470]:
+\begin{equation}
+	x[n-k] \stackrel{\mathcal{Z}^+}{\longleftrightarrow} z^{-k} X^{+}(z).
+\end{equation}
+
+\subsubsection{Avance de tiempo}
+Para $k > 0$[cite: 471]:
+\begin{equation}
+	x[n+k] \stackrel{\mathcal{Z}^+}{\longleftrightarrow} z^{k} \left[ X^{+}(z) - \sum_{n=0}^{k-1} x[n] z^{-n} \right].
+\end{equation}
+
+\subsubsection{Teorema del valor final}
+Si la regi\'{o}n de convergencia de $(z-1) X^{+}(z)$ incluye el c\'{\i}rculo unitario, entonces:
+\begin{equation}
+	\lim_{n \to \infty} x[n] = \lim_{z \to 1} (z - 1) X^{+}(z).
+\end{equation}

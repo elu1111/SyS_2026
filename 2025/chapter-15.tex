@@ -1,0 +1,1158 @@
+\chapter{La transformada de Laplace}
+
+La transformada de Laplace transforma un problema en el dominio del tiempo (encontrar la solución de una ecuación diferencial) en un problema en el dominio de la frecuencia compleja $s$ (encontrar la función temporal que corresponde a la función de transferencia asociada a la ecuación diferencial).
+
+Aplicaremos la transformadas de Laplace y Fourier al estudio de la respuesta temporal y en frecuencia de circuitos eléctricos y electrónicos.
+
+\section{Definiciones de la transformada de Laplace}
+
+\subsection{Transformada de Laplace bilateral}
+
+A continuaci\'{o}n vemos 
+\begin{enumerate}
+\item la ecuaci\'{o}n de an\'{a}lisis
+\begin{equation}
+	X\left( s\right) =\int_{-\infty }^{\infty }x\left( t\right) \, e^{-s\,
+		t} \, dt.
+\end{equation}
+\item la ecuaci\'{o}n de s\'{\i}ntesis de la transformada de Laplace bilateral
+\begin{equation}
+  x\left( t\right) =
+  \frac{1}{2 \, \pi \, j}\int_{\sigma -j \, \infty }^{\sigma +j \, \infty}X\left(
+    s\right) \, e^{s\, t} \, ds,
+\end{equation}
+\item y el par funci\'{o}n transformada de la transformada de Laplace bilateral
+\begin{equation}
+  x\left( t\right) 
+  \begin{array}{c}
+    L \\
+    \leftrightarrow
+  \end{array}
+  X\left( s\right).
+\end{equation}
+\end{enumerate}
+
+\subsection{Transformada de Laplace unilateral}
+
+A continuaci\'{o}n vemos 
+\begin{enumerate}
+\item la ecuaci\'{o}n de an\'{a}lisis
+\begin{equation}
+	X^{+}\left( s\right) =\int_{0}^{\infty }x\left( t\right) \, e^{-s \, t} \, dt,
+\end{equation}
+\item la ecuaci\'{o}n de s\'{\i}ntesis 
+\begin{equation}
+  x\left( t\right) =  \frac{1}{2 \, \pi \, j}\int_{\sigma - j \, \infty }^{\sigma +j \, \infty}X^{+}\left( s\right) \, e^{s \, t} \, ds 
+\end{equation}
+\item y el par funci\'{o}n transformada de la Transformada de Laplace unilateral
+\begin{equation}
+  x\left( t\right) 
+  \begin{array}{c}
+    L^{+} \\
+    \leftrightarrow
+  \end{array}
+  X^{+}\left( s\right).
+\end{equation} 
+\end{enumerate}
+
+\section{Relaci\'{o}n entre la Transformada de Laplace bilateral y la Transformada de Fourier}
+
+
+Cuando $s=j\omega ,$ la ecuaci\'{o}n de an\'{a}lisis de la transformada de Laplace bilateral
+\begin{equation}
+   X\left( s\right) = \int_{-\infty }^{\infty }x\left( t\right) \, e^{-s \, t} \, dt,
+\end{equation}
+se transforma en la  ecuaci\'{o}n de an\'{a}lisis de la transformada de Fourier de $x(t)$
+\begin{equation}
+        X\left( j\omega \right) =
+                \int_{-\infty }^{\infty }x\left( t\right) \, e^{-j \, \omega \, t} \, dt.
+\end{equation}
+
+
+\section{Existencia de la TL}
+
+Reemplazando $s = \sigma + j \, \omega$ en la ecuaci\'{o}n de
+an\'{a}lisis,
+\begin{equation}
+  X\left( s \right) =
+  X\left( \sigma + j \, \omega \right) =
+      \int_{-\infty }^{\infty }x\left( t\right) \, e^{-(\sigma + j \,
+        \omega) \, t} \, dt.
+\end{equation}
+y separando factores, obtenemos
+\begin{equation}
+  X\left( s \right) =
+  X\left( \sigma + j \, \omega \right) =
+      \int_{-\infty }^{\infty } \left(x\left( t\right) \, e^{-\sigma \,
+          t} \right) \, e^{-j \, \omega \, t} \, dt.
+\end{equation}
+Por lo tanto, para que exista la transformada de Laplace $X(s)$ debe
+existir la transformada de Fourier de la funci\'{o}n $x(t) \,
+e^{-\sigma \, t}$. 
+Recordando las condiciones de Dirichlet, podemos afirmar que 
+$X(s)$ existe si existe un n\'{u}mero real $\sigma$ tal que 
+\begin{equation}
+\begin{array}{c}
+Lim\\
+t \rightarrow \infty
+\end{array}
+x(t) \, e^{-\sigma \, t} = 0. \label{convergencia.Laplace}
+\end{equation}
+En general, $X(s)$ existe para la zona definida como
+$\alpha < \Re(s) < \beta$ denominada regi\'{o}n de convergencia. 
+
+En otras palabras, la transformada de Laplace bilateral puede no existir si no converje
+la integral de la ecuaci\'{o}n de an\'{a}lisis. Puede asegurarse la convergencia de esta integral
+si se verifica la condici\'{o}n (\ref{convergencia.Laplace}).
+
+\section{Relaci\'{o}n entre la transformada de Laplace y la integral de convoluci\'{o}n}
+
+\begin{enumerate}
+
+\item Hemos visto que la integral de convoluci\'{o}n es 
+\begin{equation}
+        y\left( t\right) =
+                \int_{-\infty }^{\infty }x\left( \tau \right) \, h\left(t-\tau \right) \, d\tau =
+                \int_{-\infty }^{\infty }x\left( t-\tau \right) \, h\left( \tau \right) \, d\tau =
+                x\left( t\right) * h\left( t\right) .
+\end{equation}
+Esta integral permite calcular para un sistema lineal invariante en el tiempo la respuesta 
+$y\left( t\right) $ generada por una entrada arbitraria $x\left(t\right) $ en funci\'{o}n de la respuesta al impulso $h\left( t\right)$. 
+
+\item Supongamos ahora que la entrada arbitraria es una exponencial compleja
+\begin{equation}
+        x\left( t\right) =e^{s \, t}.
+\end{equation}
+Entonces resulta 
+\begin{equation}
+        y\left( t\right) =
+                \int_{-\infty }^{\infty }x\left( t-\tau \right) \, h\left(\tau \right) \, d\tau =
+                \int_{-\infty }^{\infty }e^{s \, \left( t-\tau \right)} \, h\left( \tau \right) \, d\tau,
+                \label{laplaceconv}
+\end{equation}
+o sea
+\begin{equation}
+        y\left( t\right) =
+                \left( \int_{-\infty }^{\infty }h\left( \tau\right) \, e^{-s \, \tau } \, d\tau \right) e^{st},
+\end{equation}
+suponiendo que la integral exista (ver regi\'{o}n de convergencia).
+
+\item La funci\'{o}n definida como 
+\begin{equation}
+        H\left( s\right) =
+                \int_{-\infty }^{\infty }h\left( \tau \right) \, e^{-s \, \tau} \, d\tau ,
+\end{equation}
+es \textbf{la transformada de Laplace bilateral de la respuesta al impulso }$h\left(t\right) $ 
+del sistema lineal invariante en el tiempo. 
+Podemos escribir la respuesta del sistema a una exponencial compleja $e^{s \, t}$ como 
+\begin{equation}
+  y\left( t\right) = H\left( s\right) \, e^{s \, t}.
+\end{equation}
+ Esto nos da la posibilidad de interpretar la transformada de Laplace de una funci\'{o}n 
+$f\left( t\right) $ como la magnitud $F\left(s\right) $ de la respuesta a una exponencial 
+compleja $e^{st}$ de un sistema LIT con respuesta al impulso $f\left( t\right)$.
+
+\item Observe que en el caso de usar la transformada de Laplace unilateral al definir la funci\'{o}n
+de transferencia deber\'{\i}an coincidir los l\'{\i}mites de integraci\'{o}n de
+\begin{equation}
+  y\left( t\right) =
+  \left( \int_{-\infty}^{\infty }h\left( \tau\right) \, u\left( \tau\right) \, e^{-s \, \tau } \, d\tau \right) \, 
+     e^{s \, t},
+\end{equation}
+y
+\begin{equation}
+        H\left( s\right) =
+                \int_{0}^{\infty}h\left( \tau \right) \, e^{-s \, \tau} \, d\tau.
+\end{equation}
+En otras palabras, el empleo de la transformada de Laplace unilateral implica que la respuesta al impulso
+$h(t)$ comienza en $t=0$, y por lo tanto el sistema LIT es causal.
+
+\end{enumerate}
+
+\section{Regi\'{o}n de convergencia}
+
+\subsection{Ejemplo}
+
+\begin{enumerate}
+
+\item Consideremos la funci\'{o}n 
+\begin{equation}
+        x_{a}\left( t\right) =
+                e^{-at} \, u\left( t\right) . \label{convLaplaceUno}
+\end{equation}
+
+\item Su transformada de Fourier es
+\begin{equation}
+        X_{a}(j \omega) = 
+                \int_{-\infty}^{\infty} e^{-a \, t} \, u(t) \, e^{-j
+                  \, \omega \, t} dt =
+                \int_{0}^{\infty} e^{-a \, t} \, e^{-j \, \omega \, t} \, dt =
+                \frac{1}{j \omega + a}, \, a > 0.
+\end{equation}
+
+\item Calculemos su transformada de Laplace bilateral. Aplicando la ecuaci\'{o}n de an\'{a}lisis obtenemos
+\begin{equation}
+        X_{a}\left( s\right) =
+                \int_{-\infty }^{\infty } e^{-a \, t} \, u\left( t\right)
+                \, e^{-s \, t} \, dt.
+\end{equation}
+
+\item Ajustando los l\'{\i}mites de integraci\'{o}n para tener en cuenta el factor $u(t)$ del 
+integrando, se transforma en
+\begin{equation}
+        X_{a}\left( s\right) =
+                \int_{0}^{\infty } e^{-\left( s + a\right) \, t} \, dt.
+\end{equation}
+
+\item Con el reemplazo $s = \sigma + j \omega$, obtenemos
+\begin{equation}
+        X_{a}\left( \sigma + j \, \omega\right) =
+          \int_{0}^{\infty }e^{-\left( \sigma + j \, \omega + a\right)
+            \, t} \, dt = 
+          \int_{0}^{\infty }e^{-\left( \sigma + a \right) \, t} \,
+             e^{- \, j \, \omega \, t} \, dt. \label{convLaplaceDos}
+\end{equation}
+
+\item Comparando las ecuaciones (\ref{convLaplaceUno}) y
+  (\ref{convLaplaceDos}) podemos deducir que esta \'{u}ltima es la
+  transformada de Fourier de $e^{-(\sigma +a) \, t} \, u(t)$, y por lo tanto
+\begin{equation}
+        X_{a}(\sigma + j \omega) = 
+         \frac{1}{\sigma + j \, \omega + a}, 
+\end{equation}
+donde debe cumplirse $\sigma + a > 0$ para que la integral (\ref{convLaplaceDos}) converja.
+
+\item Dado que $s = \sigma + j \, \omega$ y $\Re{(s)} = \sigma$, se verifica
+\begin{equation}
+        X_{a}(s) = \frac{1}{s+a}, 
+\end{equation}
+con una regi\'{o}n de convergencia donde $\sigma = \Re{(s)} > -a$.
+
+\item Para comparar, calculemos ahora la transformada de Laplace de la se\~{n}al
+\begin{equation}
+        x_{b}(t) = -e^{-a \, t} \, u (-t).
+\end{equation}
+
+\item Entonces
+\begin{equation}
+  X_{b}(s) = 
+  -\int_{-\infty}^{\infty} e^{-a \, t} \, e^{-s \, t} \, u(-t) \, dt = 
+   -\int_{-\infty}^{0} e^{-(s+a) t} \, dt = \frac{1}{s+a}.
+\end{equation}
+La condici\'{o}n de convergencia en este caso es $\Re{(s+a)} < 0$, o sea $\Re{(s)} < -a$.
+
+\item Tenemos por lo tanto
+\begin{equation}
+        \begin{array}{cccc}
+    e^{-a t} \, u(t) & \begin{array}{c} L \\ \leftrightarrow \end{array} & \frac{1}{s+a}, & \Re{(s)} > -a, \\
+   -e^{-a t} \, u(-t) & \begin{array}{c} L \\ \leftrightarrow \end{array} & \frac{1}{s+a}, & \Re{(s)} < -a.
+        \end{array}
+\end{equation}
+Esto nos muestra que dos se\~{n}ales distintas pueden tener transformadas de Laplace 
+id\'{e}nticas algebraicamente, pero las zonas donde estas convergen son diferentes. 
+En general, la zona del plano $s$ donde converge una transformada de Laplace es la regi\'{o}n de 
+convergencia (abreviada RC).
+
+\end{enumerate}
+
+\subsection{Reglas para determinar la regi\'{o}n de convergencia de la TL}
+
+\begin{enumerate}
+\item  La regi\'{o}n de convergencia de $X\left( s\right) $ consiste de
+tiras paralelas al eje imaginario del plano $s.$
+
+\item  Para $X\left( s\right) $ racional, la regi\'{o}n de convergencia no
+contiene polos.
+
+\item  Si $x\left( t\right) $ es de duraci\'{o}n finita y es absolutamente
+integrable, entonces la regi\'{o}n de convergencia es el plano $s$ completo.
+
+\item  Si $x(t)$ es derecha, y si la l\'{\i}nea $\Re\left( s\right)
+=\sigma _{0}$ est\'{a} en la regi\'{o}n de convergencia, entonces todos los
+valores de $s$ para los cuales $\Re\left( s\right) >\sigma _{0}$
+est\'{a}n en la regi\'{o}n de convergencia.
+\end{enumerate}
+
+\subsection{Ejemplos de determinaci\'{o}n de regi\'{o}n de convergencia}
+
+\begin{enumerate}
+\item Sea la funci\'{o}n
+\begin{equation}
+  x(t) = \delta(t) - \frac{4}{3} \, e^{-t} \, u(t) + \frac{1}{3} \, e^{2 \, t} \, u(t). \label{convLaplaceTres}
+\end{equation}
+Considerando la ecuaci\'{o}n \ref{convLaplaceUno} podemos obtener la transformada de Laplace de los t\'{e}rminos exponenciales.
+La transformada de Laplace del impulso puede ser evaluada mediante la siguiente integral
+\begin{equation}
+  \begin{array}{cc}
+     L[\delta(t)] = \int_{-\infty}^{\infty} \delta(t) \, e^{s \, t} \, dt = 1, & \forall s,
+  \end{array}
+\end{equation}
+v\'{a}lida para cualquier valor de $s$. Vemos que al impulso $\delta(t)$ se le puede aplicar la regla $3$. Entonces, la regi\'{o}n de convergencia de la transformada de Laplace de la funci\'{o}n \ref{convLaplaceTres} es la intersecci\'{o}n del plano complejo con las regiones de convergencia correspondiente a los t\'{e}rminos exponenciales. Como podemos ver a continuaci\'{o}n,
+\begin{equation}
+  \begin{array}{cc}
+     L[e^{-t}] = \frac{1}{s + 1}, & \Re{(s)} > -1,
+  \end{array}
+\end{equation}
+\begin{equation}
+  \begin{array}{cc}
+     L[e^{2 \, t}] = \frac{1}{s + 2}, & \Re{(s)} < 2,
+  \end{array}
+\end{equation}
+los l\'{i}mites de las regiones de convergencia son paralelas al eje imaginario del plano $s$ (regla $1$).
+
+\end{enumerate}
+
+\section{Comparaci\'{o}n entre ambas TL}
+
+\subsection{Similitudes entre ambas TL}
+
+\begin{enumerate}
+
+\item $X\left( s\right) $ est\'{a} definida para una regi\'{o}n en el plano $s$,
+denominada la \textbf{regi\'{o}n de convergencia}, donde la integral de an\'{a}lisis est\'{a} definida.
+
+\item Dado que $s$ es una cantidad compleja, $X\left( s\right) $ es una funci\'{o}n compleja de variable 
+compleja, y $\sigma $ est\'{a} en la \textbf{regi\'{o}n de convergencia}.
+
+\item  Para resolver la ecuaci\'{o}n de s\'{\i}ntesis necesitamos integrar en el plano $s$ complejo. 
+Esta f\'{o}rmula ser\'{a} usada para probar teoremas pero no para calcular transformadas inversas.
+
+\item  La ecuaci\'{o}n de s\'{\i}ntesis permite ver que $x\left( t\right) $ se sintetiza mediante la 
+superposici\'{o}n de un n\'{u}mero infinito e incontable de exponenciales eternas $e^{s \, t}$ cada una de las 
+cuales tiene un valor diferente de $s$ y cada una de magnitud infinitesimal $X\left(s\right) ds.$
+
+\item Ambas transformadas de Laplace coinciden si la funci\'{o}n $x(t)$ es nula para $t < 0$.
+
+\end{enumerate}
+
+\subsection{La diferencia entre ambas TL}
+
+La diferencia obvia est\'{a} en el l\'{\i}mite inferior de integraci\'{o}n.
+\begin{equation}
+   \int_{-\infty }^{\infty } x(t) \, u(t) \, e^{-s \, t} \, dt = \int_{0}^{\infty} x(t) \, e^{-s \, t} \, dt.
+\end{equation}
+
+\begin{enumerate}
+
+\item  La transformada unilateral est\'{a} restringida a funciones laterales derechas, y 
+toma en cuenta a las condiciones iniciales en forma autom\'{a}tica y sistem\'{a}tica tanto en la 
+soluci\'{o}n de ecuaciones diferenciales como en el an\'{a}lisis de sistemas.
+
+\item  La transformada bilateral puede representar funciones bilaterales y unilaterales. Las condiciones 
+iniciales se toman en cuenta incluyendo entradas adicionales en los sistemas.
+
+\item Ambas transformadas de Laplace son diferentes  si la funci\'{o}n $x(t)$ es no nula para $t < 0$.
+
+\end{enumerate}
+
+\section{La transformada de Laplace bilateral}
+
+\subsection{Par funci\'{o}n transformada}
+
+Representaremos al par formado por una funci\'{o}n y su transformada de Laplace mediante la expresi\'{o}n
+\begin{equation}
+x\left( t\right) 
+\begin{array}{c}
+  L \\ 
+  \leftrightarrow
+\end{array}
+X\left( s\right),
+\end{equation}
+donde 
+\begin{equation}
+X\left( s\right) = L\left\{ x(t) \right\} = \int_{-\infty}^{\infty }e^{-s \, t} \, x(t) \, dt.
+\end{equation}
+
+Con los pares funci\'{o}n y transformada, podemos construir tablas que sumadas a las 
+propiedades de la transformada de Laplace que estudiaremos a continuaci\'{o}n, 
+nos permitir\'{a}n encontrar las transformadas de otras funciones compuestas.
+
+\subsection{Se\~{n}ales temporales y sus transformadas}
+
+Esta tabla nos da los pares de funci\'{o}n transformada de Laplace \textbf{bilateral}.
+
+\begin{center}
+\begin{tabular}{lll}
+$x\left( t\right) $     & $X\left( s\right) =L\left\{ x(t)\right\} $    & RC    \\ 
+                        &                                               &       \\      
+$\delta \left( t\right) $ & $1$                                         & $\forall s,$ \\ 
+                        &                        &       \\
+$\delta \left( t-t_{0}\right) $ & $e^{-s \, t_{0}}$
+& $\forall s,$ \\ 
+                        &                        &       \\
+$u\left( t\right) $     & $\frac{1}{s}$                                 & $\Re\left( s\right) >0,$ \\ 
+                        &                                               &       \\
+$-u\left( -t\right) $   & $\frac{1}{s}$                                 & $\Re\left( s\right) <0,$ \\ 
+                        &                                               &       \\
+$\frac{t^{n-1}u\left( t\right) }{\left( n-1\right) !}$ & $\frac{1}{s^n}$ & $\Re\left( s\right) >0,$ \\ 
+                        &                                               &       \\
+$-\frac{t^{n-1}u\left( -t\right) }{\left( n-1\right) !}$ & $\frac{1}{s^n}$ & $\Re\left( s\right) <0,$ \\ 
+                        &                                               &       \\
+$e^{-at}u\left( t\right) $ & $\frac{1}{s+a}$                            & $\Re\left( s\right)>-a,$ \\ 
+                        &                                               &       \\
+$-e^{-at}u\left( -t\right) $ & $\frac{1}{s+a}$                          & $\Re\left( s\right)<-a,$ \\ 
+                        &                                               &       \\
+$\frac{t^{n-1}e^{-at}u\left( t\right) }{\left( n-1\right) !}$   & $\frac{1}{\left( s+a\right) ^n}$ & 
+                                                       $\Re\left( s\right) >-a,$ \\ 
+                        &                                               &       \\
+$\cos \left( \omega _{0}t\right) u\left( t\right) $ & $\frac{s}{s^{2}+\omega _{0}^{2}}$ & 
+                                                       $\Re\left( s\right) >0,$ \\ 
+                        &                                               &       \\
+$\sin \left( \omega _{0}t\right) u\left( t\right) $ & $\frac{\omega _{0}}{s^{2}+\omega _{0}^{2}}$ & 
+                                                       $\Re\left( s\right) >0,$ \\ 
+                        &                                               &       \\
+$e^{-\alpha t}\cos \left( \omega _{0}t\right) u\left( t\right) $ & 
+                       $\frac{s+\alpha }{\left( s+\alpha \right) ^{2}+\omega _{0}^{2}}$ & 
+                                                       $\Re\left(s\right) >-\alpha ,$ \\ 
+                        &                                               &       \\
+$e^{-\alpha t}\sin \left( \omega _{0}t\right) u\left( t\right) $ & 
+      $\frac{\omega _{0}}{\left( s+\alpha \right) ^{2}+\omega _{0}^{2}}$ & 
+              $\Re\left( s\right) >-\alpha$.
+\end{tabular}
+\end{center}
+
+\section{Demostraciones de las propiedades}
+
+Definamos los pares funci\'{o}n transformada
+\begin{equation}
+x(t) \begin{array}{c} L \\ \rightarrow \end{array} X(s) = \int_{-\infty}^{\infty} x(t) \, e^{-s \, t} \, ds, \label{x.trans.laplace}
+\end{equation}
+\begin{equation}
+y(t) \begin{array}{c} L \\ \rightarrow \end{array} Y(s) = \int_{-\infty}^{\infty} y(t) \, e^{-s \, t} \, ds, \label{y.trans.laplace}
+\end{equation}
+\begin{equation}
+z(t) \begin{array}{c} L \\ \rightarrow \end{array} Z(s) = \int_{-\infty}^{\infty} z(t) \, e^{-s \, t} \, ds. \label{z.trans.laplace}
+\end{equation}
+que usaremos para explicar las propiedades de la transformada de Laplace
+
+\subsection{Linealidad de la transformada de Laplace bilateral}
+
+La transformada de Laplace de una combinaci\'{o}n lineal de funciones es la combinaci\'{o}n lineal de las transformadas de las funciones respectivas.
+
+\begin{enumerate}
+\item Si $z(t) = a \, x(t) + b \, y(t)$, podemos calcular la transformada de z(t) (\ref{z.trans.laplace}) calculando la integral
+\begin{equation}
+  Z(s) = \int_{-\infty}^{\infty}  z(t) \, e^{-s \, t} ds = \int_{-\infty}^{\infty} (a \, x(t) + b \, y(t) )  \, e^{-s \, t} ds,
+\end{equation}
+
+\item Dada la igualdad
+\begin{equation}
+  Z(s) = \int_{-\infty}^{\infty} (a \, x(t) + b \, y(t) )  \, e^{-s \, t} ds,
+\end{equation}
+y la linealidad de la operaci\'{o}n integral podemos escribir
+\begin{equation}
+  Z(s) = \int_{-\infty}^{\infty} (a \, x(t) + b \, y(t) )  \, e^{-s \, t} ds = 
+    a \,  \int_{-\infty}^{\infty} x(t) \, e^{-s \, t} ds + b \,  \int_{-\infty}^{\infty} y(t) \, e^{-s \, t} ds.
+\end{equation}
+
+\item Dada las igualdades
+\begin{equation}
+  Z(s) = a \,  \int_{-\infty}^{\infty} x(t) \, e^{-s \, t} ds + b \,  \int_{-\infty}^{\infty} y(t) \, e^{-s \, t} ds.
+\end{equation}
+y \ref{x.trans.laplace} y \ref{y.trans.laplace}, podemos escribir
+\begin{equation}
+  Z(s) = a \,  X(s) + b \, Y(s).
+\end{equation}
+
+\end{enumerate}
+
+Por inducci\'{o}n, es posible probar esta propiedad para cualquier n\'{u}mero de funciones. Hacer como ejercicio.
+
+\subsection{Se\~{n}al desplazada en el tiempo}
+
+\begin{enumerate}
+\item Supongamos que tenemos una se\~{n}al $x(t)$ con transformada bilateral de Laplace $X(s)$. 
+
+\item La transformada bilateral de Laplace de $y(t) = x(t - t_{0})$ es $Y(s) = X(s) \, e^{-s \, t_{0}}$.
+
+\item Para probarlo, podemos plantear la ecuaci\'{o}n de an\'{a}lisis para $y(t)$
+\begin{equation}
+  Y(s) = \int_{-\infty}^{\infty} y(t) \, e^{-s \, t} \, dt = \int_{-\infty}^{\infty} x(t - t_{0}) \, e^{-s \, t} \, dt.
+\end{equation}
+
+\item Podemos plantear un cambio de variables $v = t - t_{0}$ y obtener
+\begin{equation}
+  Y(s) = \int_{-\infty}^{\infty} x(t - t_{0}) \, e^{-s \, t} \, dt = \int_{-\infty}^{\infty} x(v) \, e^{-s \, (v + t_{0})} \, dv.
+\end{equation}
+
+\item Separamos la exponencial $e^{-s \, (v + t_{0})}$ en dos factores $e^{-s \, v} \, e^{-s \, t_{0}}$
+\begin{equation}
+  Y(s) = \int_{-\infty}^{\infty} x(v) \, e^{-s \, v} \, e^{-s \, t_{0}}\, dv.
+\end{equation}
+
+\item Observemos que el factor $e^{-s \, t_{0}}$ no depende de la variable de integraci\'{o}n y por lo tanto puede ser extra\'{i}do de la integral
+\begin{equation}
+  Y(s) = \left( \int_{-\infty}^{\infty} x(v) \, e^{-s \, v} \, dv \right) \, e^{-s \, t_{0}}. \label{delay.trans.laplace}
+\end{equation}
+Como vemos en la ecuaci\'{o}n (\ref{delay.trans.laplace}), la integral  es la transformada de Laplace bilateral $X(s)$, multiplicada por un factor $e^{-s \, t_{0}}$ donde aparece el desplazamiento temporal $t_{0}$. Por lo tanto, hemos probado la propiedad enunciada.
+
+\end{enumerate}
+
+\subsubsection{Ejemplo}
+
+\begin{enumerate}
+
+\item Por ejemplo, consideremos el pulso $p(t) = u(t) - u(t - t_{0})$. La transformada bilateral de Laplace del escal\'{o}n $u(t)$ es $U(s) = \frac{1}{s}$.
+
+\item Dado que el pulso $p(t)$ es una combinaci\'{o}n lineal de dos escalones, el primero con coeficiente $1$ y el segundo con coeficiente $-1$, las transformadas de ambos escalones tambi\'{e}n estar\'{a}n combinadas linealmente con los mismos coeficientes.
+
+\item Dado que el segundo escal\'{o}n del pulso est\'{a} desplazado en el tiempo, debe tener la misma transformada del primer escal\'{o}n multiplicada por un factor $e^{-s \, t_{0}}$.
+
+\item Finalmente, la transformada del pulso $p(t)$ es $P(s) = \frac{1 - e^{-s \, t_{0}}}{s}$.
+
+\end{enumerate}
+
+\subsection{Se\~{n}al modulada por una exponencial $e^{a \, t}$}
+
+\begin{enumerate}
+\item Supongamos que tenemos una se\~{n}al $x(t)$ con transformada bilateral de Laplace $X(s)$. 
+
+\item La transformada bilateral de Laplace de $y(t) = x(t) \, e^{-a \, t}$ es $Y(s) = X(s + a)$.
+
+\item Para probarlo, podemos plantear la ecuaci\'{o}n de an\'{a}lisis para $y(t)$
+\begin{equation}
+  Y(s) = \int_{-\infty}^{\infty} y(t) \, e^{-s \, t} \, dt = \int_{-\infty}^{\infty} x(t) \, e^{-a \, t} \, e^{-s \, t} \, dt.
+\end{equation}
+
+\item Reacomodando factores $e^{-a \, t} \, e^{-s \, t} = e^{-(s + a)\, t}$, podemos escribir
+\begin{equation}
+  Y(s) = \int_{-\infty}^{\infty} x(t) \, e^{-a \, t} \, e^{-s \, t} \, dt = \int_{-\infty}^{\infty} x(t) \, e^{-(s + a) \, t} \, dt.
+\end{equation}
+
+\item Planteando el cambio de variable $v = s + a$, podemos observar que la integral $\int_{-\infty}^{\infty} x(t) \, e^{-(s + a) \, t} \, dt$
+puede escribirse como
+\begin{equation}
+\int_{-\infty}^{\infty} x(t) \, e^{-(s + a) \, t} \, dt  = \int_{-\infty}^{\infty} x(t) \, e^{-v \, t} \, dt = Y(v) = Y(s + a)
+\end{equation}
+Por lo tanto, hemos demostrado la propiedad enunciada.
+\end{enumerate}
+
+\subsubsection{Ejemplo}
+
+\begin{enumerate}
+\item Calculemos la transformada bilateral de $x(t) = e^{-a \, t} \, u(t)$.
+
+\item La transformada bilateral del escal\'{o}n $u(t)$ es $U(s) = \frac{1}{s}$.
+
+\item Como el escal\'{o}n $u(t)$ aparece multiplicado por una exponencial $e^{-a \, t}$, la transfomada debe ser
+$X(s) = U(s + a) = \frac{1}{s + a}$, como ya se ha calculado. 
+\end{enumerate}
+
+
+\subsection{Conjugaci\'{o}n}
+
+\begin{enumerate}
+\item Supongamos que tenemos una se\~{n}al $x(t)$ con transformada bilateral de Laplace $X(s)$, con regi\'{o}n de convergencia $R$.
+
+\item La transformada bilateral de Laplace de $\overline{x}(t)$ (conjugado de $x(t)$) es $\overline{X}(\overline{s})$, 
+con regi\'{o}n de convergencia $R$.
+\end{enumerate}
+
+\subsection{Convoluci\'{o}n}
+
+La propiedad de convoluci\'{o}n es una de las más importantes ideas de esta asignatura.
+Si tenemos dos señales $x_{1}(t)$ y $x_{2}(t)$ con transformadas $X_{1}(s)$ y $X_{2}(s)$, y regiones
+de convergencia $R_{1}$ y $R_{2}$ entonces
+la convolución $y(t) = x_{1}(t) * x_{2}(t)$ tiene una transformada de Laplace 
+$Y(s) = X_{1}(s) \, X_{2}(s)$, y la región de convergencia correspondiente es la intersección de las 
+regiones $R_{1}$ y $R_{2}$.
+
+\subsection{Derivaci\'{o}n en el dominio del tiempo}
+
+\begin{enumerate}
+ \item Supongamos que tenemos una se\~{n}al $x(t)$ con transformada bilateral de Laplace $X(s)$, 
+ con regi\'{o}n de convergencia $R$.
+
+\item La transformada bilateral de Laplace de $\frac{dx(t)}{dt}$ (derivada de $x(t)$) es $s \times X(s)$, 
+con regi\'{o}n de convergencia $R$.
+\end{enumerate}
+
+\subsection{Integraci\'{o}n en el dominio del tiempo}
+
+\begin{enumerate}
+	\item Supongamos que tenemos una se\~{n}al $x(t)$ con transformada bilateral de Laplace $X(s)$, con regi\'{o}n de convergencia $R$.
+	
+	\item La transformada bilateral de Laplace de $\int_{0}^{t} x(v) \, dv$ 
+	(integrada de $x(t)$) es $\frac{X(s)}{s}$, con regi\'{o}n de convergencia $R$.
+\end{enumerate}
+
+
+\subsection{Derivaci\'{o}n en el dominio s}
+
+\begin{enumerate}
+ \item Supongamos que tenemos una se\~{n}al $x(t)$ con transformada bilateral de Laplace $X(s)$, con regi\'{o}n de convergencia $R$.
+
+\item La funci\'{o}n temporal correspondiente a $\frac{dX(s)}{ds}$, 
+la derivada de la transformada de Laplace respecto a $s$, es $-t \, x(t)$.
+\end{enumerate}
+
+
+
+
+\section{Tabla de propiedades}
+Esta tabla nos da los pares de funci\'{o}n transformada de Laplace \textbf{bilateral}.
+
+\begin{center}
+\begin{tabular}{lll}
+$x\left( t\right)$       & $X\left( s\right) $                           & RC                            \\
+                         &                                               &                               \\
+ $a \, x_{1}\left( t\right) +b \, x_{2}\left( t\right) $ & 
+     $a \, X_{1}\left(s\right) +b \, X_{2}\left( s\right)$ & 
+        $\supset ( R_{1}\cap R_{2})$  \\ 
+                         &                                               &                               \\
+ $x\left( t-t_{0}\right) $                           & 
+     $X\left( s\right) e^{-s \, t_{0}}$                    & 
+        $R$                           \\ 
+                         &                                               &                               \\
+ $\overline{x}(t)$       & 
+     $\overline{X}(\overline{s})$                  & 
+        $R$                                                                                              \\
+                         &                                               &                               \\
+ $x\left( t\right) e^{-at}$ & 
+     $X\left(s+a\right) $        & 
+        desplaza $R$ en $-a$                                                                             \\
+                         &                                               &                               \\
+ $x_{1}(t) * x_{2}(t)$   & 
+     $X_{1}(s) X_{2}(s)$   & 
+        m\'{\i}nimo $R_{1} \cap R_{2}$                                                                   \\
+                         &                                               &                               \\
+ $tx\left( t\right) $    & 
+     $-\frac{dX\left(s\right) }{ds}$  & 
+        $R$                                                                                              \\
+                         &                                               &                               \\
+ $\frac{dx\left( t\right) }{dt}$  & 
+     $sX\left(s\right) $            & 
+ \_                                                                                                      \\
+                         &                                               &                               \\
+ $\int_{-\infty }^{t}x\left( \tau \right) d\tau $ & 
+     $\frac{X\left( s\right) }{s}$  & 
+        $\supset (R\cap (\Re(s) >0)))$ \\ 
+                        &                                               &                       \\
+ $\int_{-\infty }^{\infty }x_{1}\left( \tau \right)x_{2}\left( t-\tau \right) d\tau $  & 
+                $X_{1}\left( s\right) X_{2}\left(s\right) $ & $\supset (R_{1}\cap R_{2}) $
+\end{tabular}
+\end{center}
+
+% \subsection{Ejercicios}
+% 
+% \begin{enumerate}
+% \item Uno
+% \item Dos
+% \item Tres
+% \item Cuatro
+% \item Cinco
+% \end{enumerate}
+
+
+
+\section{La Transformada Laplace Unilateral}
+
+\subsection{Motivaci\'{o}n}
+
+La Transformada de Laplace unilateral se emplea para 
+\begin{enumerate}
+   \item   Analizar sistemas LIT \textbf{causales}.
+   \item   Resolver ecuaciones diferenciales con coeficientes constantes y condiciones iniciales no  nulas.
+\end{enumerate}
+Insisto en este concepto porque en materias previas se trabaj\'{o} directamente con la Transformada 
+Unilateral de Laplace present\'{a}ndola como \textbf{LA} Transformada de Laplace, descartando de plano la 
+posibilidad de trabajar con sistemas no causales. Si bien eso es v\'{a}lido con sistemas de tiempo 
+continuo, es posible y deseable emplear sistemas de tiempo discreto no causales. Entonces, para mantener
+un paralelismo entre la teor\'{\i}a de sistemas de tiempo continuo y discreto, vemos las definiciones
+de las transformadas bilateral y unilateral.
+
+\subsubsection{Ejemplo}
+
+\begin{enumerate}
+
+\item Consideremos la se\~{n}al
+\begin{equation}
+        x(t) = e^{-a \, (t+1)} \, u(t+1).
+\end{equation}
+
+\item La Transformada Bilateral de Laplace es
+\begin{equation}
+ X(s) = \int_{-\infty}^{\infty} e^{-a \, (t+1)} \, u(t+1) \, e^{s \, t} dt.
+\end{equation}
+
+\item Dado que $dt = d(t+1)$,
+\begin{equation}
+ X(s) = \int_{-\infty}^{\infty} e^{-a \, (t+1)} \, u(t+1) \, e^{s \, t} d(t+1).
+\end{equation}
+y por lo tanto podemos hacer el cambio de variables $t+1 = v$. Resulta
+\begin{equation}
+ X(s) = \int_{-\infty}^{\infty} e^{-a \, v} \, u(v) \, e^{-s \, (v-1)} \, dv.
+\end{equation}
+
+\item Entonces, dado que $u(v) = 0$ para $v < 0$
+\begin{equation}
+ X(s) = \int_{0}^{\infty} e^{-a \, v} \, e^{-s \, (v-1)} \, dv.
+\end{equation}
+
+\item
+Podemos extraer un factor $e^{s}$ de la integral
+\begin{equation}
+ X(s) = e^{s} \, \int_{0}^{\infty} e^{-a \, v} \, e^{-s \, v} \, dv
+\end{equation}
+y agrupar las exponenciales
+\begin{equation}
+ X(s) = e^{s} \, \int_{0}^{\infty} e^{-(s + a) \, v} \, dv.
+\end{equation}
+
+\item Por lo tanto, resulta
+\begin{equation}
+  X(s) = \frac{e^{s}}{s+a},
+\end{equation}
+para una región de convergencia $R$ donde $\Re(s) > -a$.
+
+\item Planteamos la ecuaci\'{o}n de an\'{a}lisis de la Transformada Unilateral de Laplace
+\begin{equation}
+  X^{+}(s) = \int_{0}^{\infty} e^{-a (t+1)} \, u(t+1) \, e^{-s \, t} \, dt.
+\end{equation}
+
+\item Eliminamos el escal\'{o}n teniendo en cuenta que $u(t+1) = 1$ para $t>-1$
+\begin{equation}
+  X^{+}(s) = \int_{0}^{\infty} e^{-a \, (t+1)} \, e^{-s \, t} \, dt.
+\end{equation}
+
+\item Extraemos el factor común $e^{-a}$ 
+\begin{equation}
+  X^{+}(s) = e^{-a} \, \int_{0}^{\infty} e^{-a \, t} \, e^{-s \, t} \, dt,
+\end{equation}
+y agrupamos las exponenciales dentro de la integral
+\begin{equation}
+  X^{+}(s) = e^{-a} \, \int_{0}^{\infty} e^{-(s + a) \, t} \, dt,
+\end{equation}
+
+\item Obtenemos finalmente
+\begin{equation}
+  X^{+}(s) =  \frac{e^{-a}}{s+a},
+\end{equation}
+para una región de convergencia $R$ donde $\Re(s) > -a$.
+
+\item Para este ejemplo, las transformadas unilateral y bilateral son diferentes.
+
+\end{enumerate}
+
+\subsection{Tabla de propiedades de la Transformada Laplace unilateral}
+
+Recordamos la notaci\'{o}n de la transformada de Laplace \textbf{unilateral} 
+\begin{equation}
+  F^{+}\left( s\right) = L^{+}\left\{ f (t) \right\}.
+\end{equation}
+
+Esta es una tabla de propiedades de la transformada de Laplace \textbf{unilateral}
+\begin{center}
+  \begin{tabular}{ll}
+Se\~{n}al $x(t)$                        &       Transformada                            \\
+& \\
+$a \, x_{1}(t) + b \, x_{2}(t)$               &       $a \, X_{1}^{+}(s) + b \, X_{2}^{+}(s)$   \\
+& \\
+$e^{s_{0} \, t} \, x(t)$                      &       $X^{+}(s-s_{0})$                      \\
+& \\
+$x(a \, t),$ $a > 0,$                       &       $\frac{1}{a} \, X^{+}(\frac{s}{a})$      \\
+& \\
+$\bar{x}(t)$                       &       $\bar{X}^{+}(s)$                       \\
+& \\
+$x_{1}(t) * x_{2}(t)$                   &       $X_{1}^{+}(s) \, X_{2}^{+}(s)$         \\
+& \\
+$\frac{dx(t)}{dt}$                      &       $s \, X^{+}(s) - x(0-)$               \\
+& \\
+$-t \, x(t)$                               &       $\frac{dX^{+}(s)}{ds}$                      \\
+        \end{tabular}
+\end{center}
+
+\subsection{La TL de la derivada de una función}
+
+La transformada de Laplace de la derivada de una funci\'{o}n $f(t)$ continua en $t = 0$, 
+est\'{a} dada por
+\begin{equation}
+L^{+} \left\{ \frac{d \, f(t)}{dt}\right\} = s \, F^{+}(s) - f(0),
+\end{equation}
+donde $F^{+}(s)$ es la transformada de Laplace unilateral de $f(t)$, y 
+$f(0)$ es el valor de $f(t)$ en el tiempo $t = 0$ o condición inicial.
+
+En el caso que la funci\'{o}n $f(t)$ tuviera una discontinuidad en $t = 0$, 
+habr\'{i}a que tener en cuenta los l\'{i}mites a izquierda $f(0-)$ y derecha $f(0+)$. 
+Si estos l\'{\i}mites son diferentes, entonces la derivada contiene un impulso en $t = 0$, 
+y deber\'{i}amos escribir
+\begin{equation}
+L_{-}\left\{ \frac{d \, f(t)}{dt}\right\} = s \, F(s) - f(0-),
+\end{equation}
+\begin{equation}
+L_{+}\left\{ \frac{d \, f(t)}{dt}\right\} = s \, F(s) - f(0+).
+\end{equation}
+
+\begin{enumerate}
+\item Para probar este teorema, podemos integrar por partes la transformada de Laplace unilateral donde
+\begin{equation}
+ \int v \, du = v \, u - \int u \, dv,
+\end{equation}
+y $du = \frac{df(t)}{dt} \, dt = df$, y $v = e^{-s \, t}$. Entonces $u = f(t)$ y 
+$dv = -s \, e^{-s \, t} \, dt$.
+\item Entonces, integrando por partes
+\begin{equation}
+ \int_{0}^{\infty} \frac{d \, f(t)}{dt} \, e^{-s \, t} \, dt = 
+\left[ \left(f(t) \, e^{-s \, t}\right) \right]_{0}^{-\infty} + 
+s \, \int_{0}^{\infty} f(t) \, e^{-s \, t} \, dt.
+\end{equation}
+
+\item Finalmente
+\begin{equation}
+ \int_{0}^{\infty} \frac{d \, f(t)}{dt} \, e^{-s \, t} \, dt = 
+\left(
+ \begin{array}{c}
+ Lim \\
+ x \rightarrow \infty
+\end{array}
+f(x) \, e^{-s \, x} -
+f(0) \, e^{-s \, 0} \right)
++ s \, F(s).
+\end{equation}
+
+\item De la ecuaci\'{o}n anterior, podemos deducir
+\begin{equation}
+L^{+} \left\{ \frac{d \, f(t)}{dt}\right\} = s \, F^{+}(s) - f(0),
+\end{equation}
+y
+\begin{equation}
+F^{+}(s) = \frac{f(0)}{s} + \frac{1}{s} \, L^{+} \left\{ \frac{d \, f(t)}{dt}\right\}.
+\end{equation}
+
+\end{enumerate}
+
+Esta relaci\'{o}n puede generalizarse. Por ejemplo, para la derivada segunda resulta
+\begin{equation}
+L^{+} \left\{ \frac{d^{2} \, f(t)}{dt^{2}}\right\} = 
+s^{2} \, F^{+}(s) - s \, f(0) - \left(\frac{df(t)}{dt)} |_{t=0}\right),
+\end{equation}
+
+y en general
+\begin{equation}
+L \left\{ \frac{d^{n} \, f(t)}{dt^{n}}\right\} = s^{n} \, F(s) - s^{n-1} \, \left(\frac{df(t)}{dt)} |_{t=0}\right) - ... - \left(\frac{d^{n-1}f(t)}{dt^{n-1})} |_{t=0}\right).
+\end{equation}
+
+La transformada de la integral de $x(t)$ se obtiene considerando que si
+\begin{equation}
+y(t) = \int_{0}^{t} x(v) \, dv,
+\end{equation}
+entonces $\frac{d y(t)}{dt} = x(t)$, y por lo tanto podemos obtener la
+transformada de la derivada
+\begin{equation}
+  s \, Y^{+}(s) - y(0) = X^{+}(s),
+\end{equation}
+y por lo tanto
+\begin{equation}
+Y^{+}(s) = \frac{1}{s} \, (X^{+}(s) + y(0)).
+\end{equation}
+
+\subsubsection{Ejemplos}
+
+Sea la funci\'{o}n $x(t) = t \, u(t)$.
+\begin{enumerate}
+\item Su transformada de Laplace es
+\begin{equation}
+X(s) = \int_{0}^{\infty} t \, e^{-s \, t} \, dt = 
+\left[ t \, \frac{e^{-s \, t}}{-s}\right]_{0}^{\infty} - \int_{0}^{\infty} \frac{e^{-s \, t}}{s} \, dt = 
+-\frac{1}{s} \, \int_{0}^{\infty}e^{-s \, t} \, dt = \frac{1}{s^{2}}.
+\end{equation}
+\begin{equation}
+	X(s) =
+	-\frac{1}{s} \, \int_{0}^{\infty}e^{-s \, t} \, dt = 
+	\frac{1}{s^{2}} \, \int_{0}^{\infty}e^{-s \, t} \, d(-s)t =
+	\frac{1}{s^{2}} \, \left[e^{-s \, t}\right]_{0}^{\infty} =	
+	-\frac{1}{s^{2}}.
+\end{equation}
+\item Si la transformada de Laplace de $y(t) = 1 \, u(t)$ es $Y(s)$ entonces
+\begin{equation}
+	t \, y(t) \rightarrow -\frac{1}{s^{2}} = \frac{d \frac{1}{s} }{ds} = \frac{d Y(s) }{ds}.
+\end{equation}
+Por lo tanto
+\begin{equation}
+Y(s) = \frac{1}{s}.
+\end{equation}
+
+\item La transformada de Laplace de $z(t) = \frac{t^{2}}{2} \, u(t) = \frac{t}{2} \, x(t)$ es $Z(s) = -\frac{1}{2} \frac{d X(s)}{ds}$
+\begin{equation}
+Z(s) = -\frac{1}{2} \, \frac{-2 \, s}{s^{4}} = \frac{1}{s^{3}}.
+\end{equation}
+\end{enumerate}
+
+\subsection{Teorema del valor final}
+
+ Si $x(t)$ no contiene impulsos o singularidades de orden superior en $t=0$, entonces
+ \begin{equation}
+        \begin{array}{c}
+                lim     \\
+                t \rightarrow \infty
+        \end{array}
+        x(t) =        
+        \begin{array}{c}
+                lim     \\
+                s \rightarrow 0
+        \end{array}
+        s \, X^{+}(s).
+ \end{equation}
+
+\begin{enumerate}
+\item Para probar este teorema, consideremos la propiedad de la transformada de la derivada
+\begin{equation}
+L \left\{ \frac{d \, f(t)}{dt}\right\} = s \, F(s) - f(0),
+\end{equation}
+y calculemos el l\'{\i}mite para $s$ que tiende a $0$
+\begin{equation}
+\begin{array}{c}
+Lim \\
+s \rightarrow 0
+\end{array}
+\int_{0}^{\infty} \frac{d \, f(t)}{dt} \, e^{-s \, t} dt = 
+\begin{array}{c}
+Lim \\
+s \rightarrow 0
+\end{array}
+\left(s \, F(s) - f(0)\right).
+\end{equation}
+
+\item Dado que $lim_{s \rightarrow 0} \, e^{-s \, t} = 1$, obtenemos
+\begin{equation}
+\begin{array}{c} 
+Lim \\
+s \rightarrow 0
+\end{array}
+\int_{0}^{\infty} \frac{d \, f(t)}{dt} dt = \left[ f(t) \right]_{0}^{\infty} =
+\begin{array}{c}
+\begin{array}{c}
+	Lim \\
+	s \rightarrow 0
+\end{array}
+s \, F(s) - f(0).
+\end{array}
+\end{equation}
+
+\item Finalmente
+\begin{equation}
+\left(\begin{array}{c} 
+Lim \\
+t \rightarrow \infty
+\end{array}
+f(t)
+\right) - f(0) = 
+\begin{array}{c}
+\left(\begin{array}{c}
+	Lim \\
+	s \rightarrow 0
+\end{array}
+s \, F(s)
+\right) - f(0),
+\end{array}
+\end{equation}
+obteniendo así
+\begin{equation}
+	\begin{array}{c} 
+		Lim \\
+		t \rightarrow \infty
+	\end{array}
+	f(t) = 
+	\begin{array}{c}
+		\begin{array}{c}
+			Lim \\
+			s \rightarrow 0
+		\end{array}
+		s \, F(s).
+	\end{array}
+\end{equation}
+
+
+
+\end{enumerate}
+
+\subsubsection{Ejemplos}
+
+Considere $x(t) = (1 - e^{-a \, t}) \, u(t)$. Calcule el valor final (el l\'{\i}mite de $x(t)$ cuando $t$ tiende a $\infty$).
+
+Dado $X(s) = \frac{1}{s} - \frac{1}{s + a}$ podemos calcular 
+\begin{equation} 
+lim_{s \rightarrow 0} \, s \, X(s) =  
+lim_{s \rightarrow 0} \, s \, \frac{1}{s} - s \, \frac{1}{s + a} = 1. 
+\end{equation}
+
+
+\subsection{Teorema del valor inicial}
+
+ Si $x(t)$ no contiene impulsos o singularidades de orden superior en $t=0$, entonces
+ \begin{equation}
+        x(0) = 
+        \begin{array}{c}
+                lim     \\
+                s \rightarrow \infty
+        \end{array}
+        s   \,    X^{+}(s).
+ \end{equation}
+
+\begin{enumerate}
+ \item Sabemos que
+ \begin{equation}
+  \int \frac{df(t)}{dt} \, e^{-s \, t} \, dt = 
+  s \, F^{+}(s) - f(0^{+}).
+ \end{equation}
+
+ \item Tomamos el límite para $s \rightarrow \infty$, y dado que $lim_{s \rightarrow \infty} \, e^{-s \, t} = 0$,
+  \begin{equation}
+       \begin{array}{c}
+                lim     \\
+                s \rightarrow \infty
+        \end{array}
+  \int \frac{df(t)}{dt} \, e^{-s \, t} \, dt = 
+        \begin{array}{c}
+                lim     \\
+                s \rightarrow \infty
+        \end{array}
+  s \, F^{+}(s) - f(0) = 0.
+ \end{equation}
+
+ \item Por lo tanto, podemos escribir
+ \begin{equation}
+        \begin{array}{c}
+                lim     \\
+                s \rightarrow \infty
+        \end{array}
+  s \, F^{+}(s) = f(0).
+ \end{equation}
+\end{enumerate}
+
+\subsection{La integral de convoluci\'{o}n}
+
+Sea $y(t)$ el resultado de la convoluci\'{o}n de dos se\~{n}ales $x_{1}(t)$ y $x_{2}(t)$
+\begin{equation}
+ y(t) = \int_{0}^{t} x_{1}(v) \, x_{2}(t - v) \, dv,
+\end{equation}
+entonces
+la transformada de Laplace $Y(s)$ es el producto de las transformadas $X_{1}(s)$ y $X_{2}(s)$
+\begin{equation}
+ Y(s) = X_{1}(s) \, X_{2}(s).
+\end{equation}
+
+\subsection{El producto de dos se\~{n}ales}
+
+Sea $y(t)$ igual al producto de dos se\~{n}ales $x_{1}(t)$ y $x_{2}(t)$
+\begin{equation}
+ y(t) = x_{1}(t) \, x_{2}(t).
+\end{equation}
+Entonces la transformada de Laplace $Y(s)$ es la convoluci\'{o}n  de las transformadas $X_{1}(s)$ y $X_{2}(s)$,
+\begin{equation}
+ Y(s) = \int_{-\infty}^{\infty} X_{1}(v) \, X_{2}(s - v) \, dv.
+\end{equation}
+
+
+\subsection{Potencias de $t$}
+
+\begin{center}
+\begin{tabular}{ll}
+Se\~{n}al                               &       Transformada                            \\
+& \\
+$1$ & $\frac{1}{s}$ \\ 
+& \\
+$t$ & $\frac{1}{s^{2}}$ \\ 
+& \\
+$t^n$ & $\frac{n!}{s^{n+1}}$ , $n>0.$ \\ 
+& \\
+$t^{-1/2} $ & $\sqrt{\frac{\pi }{s}}$ \\
+& \\
+$t^{1/2}$ & $\frac{\sqrt{\pi }}{2s^{3/2}}$ \\ 
+& \\
+$t^{\alpha }$ & $\frac{\Gamma \left( \alpha +1\right) }{s^{\alpha +1}}$, $\alpha >-1$
+\end{tabular}
+\end{center}
+
+
+\subsection{Funciones exponenciales y trigonom\'{e}tricas}
+
+\begin{center}
+\begin{tabular}{ll}
+Se\~{n}al                               &       Transformada                            \\
+& \\
+$e^{at}\sin \left( \omega t\right) $ & $\frac{\omega }{\left( s-a\right)^{2}+\omega ^{2}}$ \\ 
+& \\
+$e^{at}\cos \left( \omega t\right)  $ & $\frac{s-a}{\left( s-a\right)^{2}+\omega ^{2}}$
+\end{tabular}
+\end{center}
+
+\subsection{Funciones exponenciales e hiperb\'{o}licas}
+
+\begin{center}
+\begin{tabular}{ll}
+Se\~{n}al                               &       Transformada                            \\
+& \\
+$e^{at}\sinh \left( kt\right) $ & $\frac{k}{\left( s-a\right) ^{2}-k^{2}}$ \\ 
+& \\
+$e^{at}\cosh \left( kt\right)  $ & $\frac{s-a}{\left( s-a\right)^{2}-k^{2}}$
+\end{tabular}
+
+\end{center}
+
+\subsection{\ Funciones trigonom\'{e}tricas e hiperb\'{o}licas}
+
+\begin{center}
+\begin{tabular}{ll}
+Se\~{n}al                               &       Transformada                            \\
+& \\
+$\sin \left( kt\right) \sinh \left( kt\right) $ & $\frac{2k^{2}s}{s^{2}+4k^{4}}$ \\ 
+& \\
+$\sin \left( kt\right) \cosh \left( kt\right) $ & $\frac{k\left(s^{2}+2k^{2}\right) }{s^{4}+4k^{4}}$ \\ 
+& \\
+$\cos \left( kt\right) \sinh \left( kt\right) $ & $\frac{k\left(s^{2}-2k^{2}\right) }{s^{4}+4k^{4}}$ \\ 
+& \\
+$\cos \left( kt\right) \cosh \left( kt\right)  $ & $\frac{s^{3}}{s^{4}+4k^{4}}$
+\end{tabular}
+\end{center}
+
+\subsection{Impulso unitario o Delta de Dirac}
+
+\begin{center}
+\begin{tabular}{ll}
+Se\~{n}al                               &       Transformada                            \\
+& \\
+$\delta \left( t\right) $ & $1$ \\ 
+& \\
+$\delta \left( t-t_{0}\right) $ & $e^{-st_{0}}$
+\end{tabular}
+
+\end{center}
+
+\subsection{Funci\'{o}n escal\'{o}n unitario}
+
+\begin{center}
+\begin{tabular}{ll}
+Se\~{n}al                               &       Transformada                            \\
+& \\
+$e^{at}f\left( t\right) $ & $F^{+}\left( s-a\right) $ \\ 
+& \\
+$f\left( t-a\right) u\left( t-a\right)  $ & $e^{-as}F^{+}\left( s\right) $ \\ 
+& \\
+$u\left( t-a\right) $ & $\frac{e^{-as}}{s}$
+\end{tabular}
+
+\end{center}
+
+\subsection{Funciones generales}
+
+\begin{center}
+\begin{tabular}{ll}
+Se\~{n}al                               &       Transformada                            \\
+& \\
+$e^{a \, t}f\left( t\right) $ & $F^{+}\left( s-a\right) $ \\ 
+& \\
+$f\left( t-a\right) \, u\left( t-a\right) $ & $e^{-a \, s} \, F^{+}\left( s\right) $ \\ 
+& \\
+$f^{\left( n\right) }\left(t\right) $ & 
+$s^n \, F^{+}\left(s\right) -
+s^{\left(n-1\right) } \, f\left( 0\right) -...-f^{\left( n-1\right) }\left( 0\right)$\\ 
+& \\
+$t^n \, f\left( t\right) $ & $\left( -1\right)^n \, \frac{d^n}{ds^n}F^{+}\left( s\right) $ \\ 
+& \\
+$\int_{0}^{t}f\left( \tau \right) g\left( t-\tau \right) d\tau  $ & 
+$F\left( s\right) \, G\left( s\right) $
+\end{tabular}
+\end{center}
+
+
